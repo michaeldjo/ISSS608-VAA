@@ -1,9 +1,23 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "href": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
     "title": "Hands-on Exercise 1",
     "section": "",
     "text": "Getting Started\n\nInstall and launching R packages.\nThe code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.\n\npacman::p_load(tidyverse)\n\n\n\nImporting the data\n\nexam_data <- read_csv(\"data/Exam_data.csv\")\n\n\n\nWorking with facet\nExample 1 Plotting trellis boxplot using facet_wrap by GENDER\n\nggplot(data = exam_data,\n       aes(x = CLASS,\n           y = MATHS)) +\n  geom_boxplot() +\n  facet_wrap(~ GENDER)\n\n\n\n\nExample 2 Plotting trellis boxplot using facet_grid by GENDER\n\nggplot(data = exam_data,\n       aes(x = CLASS,\n           y = MATHS)) +\n  geom_boxplot() +\n  facet_grid(GENDER ~ .)\n\n\n\n\nExample 3 Plotting 2-D trellis boxplot using facet_grid\n\nggplot(data = exam_data,\n       aes(x = GENDER,\n           y = MATHS)) +\n  geom_boxplot() +\n  facet_grid(GENDER ~ CLASS)\n\n\n\n\n\n\nWorking with theme\nExample 4 Changing theme of bar plot\n\nggplot(data=exam_data, \n       aes(x=RACE)) +\n  geom_bar() +\n  coord_flip() +\n  theme(panel.background = element_rect(fill = \"light blue\"),\n        panel.grid = element_line(color = \"white\"))\n\n\n\n\n\n\nDesigning Data-driven Graphics for Analysis\nExercise 1\n\nggplot(data=exam_data, \n       aes(x = fct_infreq(RACE))) +\n  geom_bar() +\n  geom_text(stat = \"count\", \n            aes(label = paste0(after_stat(count), \", \",\n                        round(after_stat(count)/sum(after_stat(count))*100,\n                        1), \"%\")), \n            vjust = -1) +\n  labs(\n    x = \"Race\",\n    y = \"No. of\\nPupils\") +\n  theme(axis.title.y = element_text(angle = 0))\n\n\n\n\nExercise 2\n\nggplot(data = exam_data,\n       aes(x = MATHS)) +\n  geom_histogram(bins = 20,\n                 color = \"black\",\n                 fill = \"light blue\") +\n  geom_vline(aes(xintercept = mean(MATHS)),\n             linetype = \"dashed\",\n             color = \"red\") +\n  geom_vline(aes(xintercept = median(MATHS)),\n             linetype = \"dashed\",\n             color = \"black\")\n\n\n\n\nExercise 3\n\nggplot(data = exam_data,\n       aes(x = ENGLISH)) +\n  geom_histogram(data = exam_data |> select(ENGLISH), \n                 bins = 30,\n                 alpha = 0.3) +\n  geom_histogram(aes(fill = GENDER),\n                 bins = 30,\n                 color = \"black\",\n                 show.legend = FALSE) +\n  facet_grid(~ GENDER) +\n  theme_bw()\n\n\n\n\nExercise 4\n\nggplot(data = exam_data,\n       aes(y = ENGLISH,\n           x = MATHS)) +\n  geom_point() +\n  coord_cartesian(xlim = c(0,100),\n                  ylim = c(0,100)) +\n  geom_vline(aes(xintercept = 50),\n             linetype = \"dashed\",\n             color = \"grey40\") +\n  geom_hline(aes(yintercept = 50),\n             linetype = \"dashed\",\n             color = \"grey40\")"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "ISSS608 Webpage",
+    "section": "",
+    "text": "Welcome to ISSS608 Visual Analytics and Application. This website hosted my coursework prepared for this course."
   }
 ]
