@@ -1,0 +1,134 @@
+---
+title: "Hands-on Exercise 1"
+author: "Michael Djohan"
+---
+
+# **Getting Started**
+
+### Install and launching R packages.
+
+The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.
+
+```{r}
+pacman::p_load(tidyverse)
+```
+
+### Importing the data
+
+```{r}
+#| output: false
+exam_data <- read_csv("data/Exam_data.csv")
+```
+
+### Working with facet
+
+*Example 1 Plotting trellis boxplot using facet_wrap by GENDER*
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = CLASS,
+           y = MATHS)) +
+  geom_boxplot() +
+  facet_wrap(~ GENDER)
+```
+
+*Example 2 Plotting trellis boxplot using facet_grid by GENDER*
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = CLASS,
+           y = MATHS)) +
+  geom_boxplot() +
+  facet_grid(GENDER ~ .)
+```
+
+*Example 3 Plotting 2-D trellis boxplot using facet_grid*
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = GENDER,
+           y = MATHS)) +
+  geom_boxplot() +
+  facet_grid(GENDER ~ CLASS)
+```
+
+### Working with theme
+
+*Example 4 Changing theme of bar plot*
+
+```{r}
+ggplot(data=exam_data, 
+       aes(x=RACE)) +
+  geom_bar() +
+  coord_flip() +
+  theme(panel.background = element_rect(fill = "light blue"),
+        panel.grid = element_line(color = "white"))
+```
+
+### Designing Data-driven Graphics for Analysis 
+
+*Exercise 1*
+
+```{r}
+ggplot(data=exam_data, 
+       aes(x = fct_infreq(RACE))) +
+  geom_bar() +
+  geom_text(stat = "count", 
+            aes(label = paste0(after_stat(count), ", ",
+                        round(after_stat(count)/sum(after_stat(count))*100,
+                        1), "%")), 
+            vjust = -1) +
+  labs(
+    x = "Race",
+    y = "No. of\nPupils") +
+  theme(axis.title.y = element_text(angle = 0))
+```
+
+*Exercise 2*
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = MATHS)) +
+  geom_histogram(bins = 20,
+                 color = "black",
+                 fill = "light blue") +
+  geom_vline(aes(xintercept = mean(MATHS)),
+             linetype = "dashed",
+             color = "red") +
+  geom_vline(aes(xintercept = median(MATHS)),
+             linetype = "dashed",
+             color = "black")
+```
+
+*Exercise 3*
+
+```{r}
+ggplot(data = exam_data,
+       aes(x = ENGLISH)) +
+  geom_histogram(data = exam_data |> select(ENGLISH), 
+                 bins = 30,
+                 alpha = 0.3) +
+  geom_histogram(aes(fill = GENDER),
+                 bins = 30,
+                 color = "black",
+                 show.legend = FALSE) +
+  facet_grid(~ GENDER) +
+  theme_bw()
+```
+
+*Exercise 4*
+
+```{r}
+ggplot(data = exam_data,
+       aes(y = ENGLISH,
+           x = MATHS)) +
+  geom_point() +
+  coord_cartesian(xlim = c(0,100),
+                  ylim = c(0,100)) +
+  geom_vline(aes(xintercept = 50),
+             linetype = "dashed",
+             color = "grey40") +
+  geom_hline(aes(yintercept = 50),
+             linetype = "dashed",
+             color = "grey40") 
+```
