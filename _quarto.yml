@@ -17,6 +17,7 @@ website:
 format:
   html:
     theme: lux
+    smooth-scroll: true
     css: styles.css
     toc: true
 

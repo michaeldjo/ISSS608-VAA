@@ -122,6 +122,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -179,14 +180,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><strong>Getting Started</strong></a>
-  <ul class="collapse">
-  <li><a href="#install-and-launching-r-packages." id="toc-install-and-launching-r-packages." class="nav-link" data-scroll-target="#install-and-launching-r-packages.">Install and launching R packages.</a></li>
-  <li><a href="#importing-the-data" id="toc-importing-the-data" class="nav-link" data-scroll-target="#importing-the-data">Importing the data</a></li>
-  <li><a href="#working-with-facet" id="toc-working-with-facet" class="nav-link" data-scroll-target="#working-with-facet">Working with facet</a></li>
-  <li><a href="#working-with-theme" id="toc-working-with-theme" class="nav-link" data-scroll-target="#working-with-theme">Working with theme</a></li>
-  <li><a href="#designing-data-driven-graphics-for-analysis" id="toc-designing-data-driven-graphics-for-analysis" class="nav-link" data-scroll-target="#designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</a></li>
-  </ul></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><strong>1. Getting Started</strong></a></li>
+  <li><a href="#try-it-yourself-exercise" id="toc-try-it-yourself-exercise" class="nav-link" data-scroll-target="#try-it-yourself-exercise">2. Try-It-Yourself Exercise</a></li>
   </ul>
 </nav>
     </div>
@@ -216,23 +211,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<section id="getting-started" class="level1">
-<h1><strong>Getting Started</strong></h1>
-<section id="install-and-launching-r-packages." class="level3">
-<h3 class="anchored" data-anchor-id="install-and-launching-r-packages.">Install and launching R packages.</h3>
+<section id="getting-started" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started"><strong>1. Getting Started</strong></h2>
+<section id="install-and-launching-r-packages." class="level4">
+<h4 class="anchored" data-anchor-id="install-and-launching-r-packages.">Install and launching R packages.</h4>
 <p>The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="importing-the-data" class="level3">
-<h3 class="anchored" data-anchor-id="importing-the-data">Importing the data</h3>
+<section id="importing-the-data" class="level4">
+<h4 class="anchored" data-anchor-id="importing-the-data">Importing the data</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>exam_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/Exam_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="working-with-facet" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-facet">Working with facet</h3>
+</section>
+<section id="try-it-yourself-exercise" class="level2">
+<h2 class="anchored" data-anchor-id="try-it-yourself-exercise">2. Try-It-Yourself Exercise</h2>
+<section id="working-with-facet" class="level4">
+<h4 class="anchored" data-anchor-id="working-with-facet">Working with facet</h4>
 <p><em>Example 1 Plotting trellis boxplot using facet_wrap by GENDER</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data,</span>
@@ -267,8 +265,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="working-with-theme" class="level3">
-<h3 class="anchored" data-anchor-id="working-with-theme">Working with theme</h3>
+<section id="working-with-theme" class="level4">
+<h4 class="anchored" data-anchor-id="working-with-theme">Working with theme</h4>
 <p><em>Example 4 Changing theme of bar plot</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -282,8 +280,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="designing-data-driven-graphics-for-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</h3>
+<section id="designing-data-driven-graphics-for-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</h4>
 <p><em>Exercise 1</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -497,4 +495,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
