@@ -1,11 +1,13 @@
 ---
 title: "Hands-on Exercise 1"
 author: "Michael Djohan"
+date: 14 Jan 2023
+fontsize: smaller
 ---
 
 ## **1. Getting Started**
 
-#### Install and launching R packages.
+### Install and launching R packages.
 
 The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.
 
@@ -22,7 +24,7 @@ exam_data <- read_csv("data/Exam_data.csv")
 
 ## 2. Try-It-Yourself Exercise
 
-#### Working with facet
+### Working with facet
 
 *Example 1 Plotting trellis boxplot using facet_wrap by GENDER*
 
@@ -54,7 +56,7 @@ ggplot(data = exam_data,
   facet_grid(GENDER ~ CLASS)
 ```
 
-#### Working with theme
+### Working with theme
 
 *Example 4 Changing theme of bar plot*
 
@@ -67,7 +69,7 @@ ggplot(data=exam_data,
         panel.grid = element_line(color = "white"))
 ```
 
-#### Designing Data-driven Graphics for Analysis
+### Designing Data-driven Graphics for Analysis
 
 *Exercise 1*
 

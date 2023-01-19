@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Djohan">
+<meta name="dcterms.date" content="2023-01-14">
 
-<title>ISSS608 Webpage - Hands-on Exercise 1</title>
+<title>ISSS608 - Michael Djohan - Hands-on Exercise 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -136,7 +137,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">ISSS608 Webpage</span>
+    <span class="navbar-title">ISSS608 - Michael Djohan</span>
     </a>
   </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -152,6 +153,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <li>
     <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html">
  <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
   </li>  
     </ul>
   </li>
@@ -180,8 +192,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><strong>1. Getting Started</strong></a></li>
-  <li><a href="#try-it-yourself-exercise" id="toc-try-it-yourself-exercise" class="nav-link" data-scroll-target="#try-it-yourself-exercise">2. Try-It-Yourself Exercise</a></li>
+  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started"><strong>1. Getting Started</strong></a>
+  <ul class="collapse">
+  <li><a href="#install-and-launching-r-packages." id="toc-install-and-launching-r-packages." class="nav-link" data-scroll-target="#install-and-launching-r-packages.">Install and launching R packages.</a></li>
+  </ul></li>
+  <li><a href="#try-it-yourself-exercise" id="toc-try-it-yourself-exercise" class="nav-link" data-scroll-target="#try-it-yourself-exercise">2. Try-It-Yourself Exercise</a>
+  <ul class="collapse">
+  <li><a href="#working-with-facet" id="toc-working-with-facet" class="nav-link" data-scroll-target="#working-with-facet">Working with facet</a></li>
+  <li><a href="#working-with-theme" id="toc-working-with-theme" class="nav-link" data-scroll-target="#working-with-theme">Working with theme</a></li>
+  <li><a href="#designing-data-driven-graphics-for-analysis" id="toc-designing-data-driven-graphics-for-analysis" class="nav-link" data-scroll-target="#designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -204,6 +224,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 14, 2023</p>
+    </div>
+  </div>
   
     
   </div>
@@ -213,13 +239,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="getting-started" class="level2">
 <h2 class="anchored" data-anchor-id="getting-started"><strong>1. Getting Started</strong></h2>
-<section id="install-and-launching-r-packages." class="level4">
-<h4 class="anchored" data-anchor-id="install-and-launching-r-packages.">Install and launching R packages.</h4>
+<section id="install-and-launching-r-packages." class="level3">
+<h3 class="anchored" data-anchor-id="install-and-launching-r-packages.">Install and launching R packages.</h3>
 <p>The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="importing-the-data" class="level4">
 <h4 class="anchored" data-anchor-id="importing-the-data">Importing the data</h4>
 <div class="cell">
@@ -227,10 +252,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </section>
 </section>
+</section>
 <section id="try-it-yourself-exercise" class="level2">
 <h2 class="anchored" data-anchor-id="try-it-yourself-exercise">2. Try-It-Yourself Exercise</h2>
-<section id="working-with-facet" class="level4">
-<h4 class="anchored" data-anchor-id="working-with-facet">Working with facet</h4>
+<section id="working-with-facet" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-facet">Working with facet</h3>
 <p><em>Example 1 Plotting trellis boxplot using facet_wrap by GENDER</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> exam_data,</span>
@@ -265,8 +291,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="working-with-theme" class="level4">
-<h4 class="anchored" data-anchor-id="working-with-theme">Working with theme</h4>
+<section id="working-with-theme" class="level3">
+<h3 class="anchored" data-anchor-id="working-with-theme">Working with theme</h3>
 <p><em>Example 4 Changing theme of bar plot</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>
@@ -280,8 +306,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </section>
-<section id="designing-data-driven-graphics-for-analysis" class="level4">
-<h4 class="anchored" data-anchor-id="designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</h4>
+<section id="designing-data-driven-graphics-for-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="designing-data-driven-graphics-for-analysis">Designing Data-driven Graphics for Analysis</h3>
 <p><em>Exercise 1</em></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>exam_data, </span>

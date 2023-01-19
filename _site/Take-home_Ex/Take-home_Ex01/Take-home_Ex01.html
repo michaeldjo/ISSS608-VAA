@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Michael Djohan">
+<meta name="dcterms.date" content="2023-01-22">
+
+<title>ISSS608 - Michael Djohan - Take-home Exercise 1</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">ISSS608 - Michael Djohan</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-hands-on-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Hands-on Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-hands-on-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html">
+ <span class="dropdown-text">Hands-on Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-take-home-exercise" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Take-home Exercise</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-take-home-exercise">    
+        <li>
+    <a class="dropdown-item" href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html">
+ <span class="dropdown-text">Take-home Exercise 1</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link active" data-scroll-target="#data-source"><strong>1. Data Source</strong></a></li>
+  <li><a href="#step-by-step-description" id="toc-step-by-step-description" class="nav-link" data-scroll-target="#step-by-step-description"><strong>2. Step-by-Step Description</strong></a>
+  <ul class="collapse">
+  <li><a href="#loading-and-cleaning-data" id="toc-loading-and-cleaning-data" class="nav-link" data-scroll-target="#loading-and-cleaning-data">2.1 Loading and cleaning data</a></li>
+  <li><a href="#creating-calculated-fields-to-make-trellis-chart" id="toc-creating-calculated-fields-to-make-trellis-chart" class="nav-link" data-scroll-target="#creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make Trellis Chart</a></li>
+  <li><a href="#creating-the-trellis-chart" id="toc-creating-the-trellis-chart" class="nav-link" data-scroll-target="#creating-the-trellis-chart">2.3 Creating the Trellis Chart</a></li>
+  <li><a href="#creating-dynamic-labels" id="toc-creating-dynamic-labels" class="nav-link" data-scroll-target="#creating-dynamic-labels">2.4 Creating Dynamic Labels</a></li>
+  <li><a href="#final-dashboard" id="toc-final-dashboard" class="nav-link" data-scroll-target="#final-dashboard">2.5 Final Dashboard</a></li>
+  </ul></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>3. Discussion</strong></a>
+  <ul class="collapse">
+  <li><a href="#unequal-population-distribution-by-planning-area" id="toc-unequal-population-distribution-by-planning-area" class="nav-link" data-scroll-target="#unequal-population-distribution-by-planning-area">3.1 Unequal population distribution by planning area</a></li>
+  <li><a href="#different-shapes-of-age-sex-pyramids-across-pas" id="toc-different-shapes-of-age-sex-pyramids-across-pas" class="nav-link" data-scroll-target="#different-shapes-of-age-sex-pyramids-across-pas">3.2 Different shapes of age-sex pyramids across PAs</a></li>
+  <li><a href="#gender-ratio-on-each-pa-is-relatively-constant" id="toc-gender-ratio-on-each-pa-is-relatively-constant" class="nav-link" data-scroll-target="#gender-ratio-on-each-pa-is-relatively-constant">3.3 Gender Ratio on each PA is relatively constant</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Take-home Exercise 1</h1>
+<p class="subtitle lead">Creating age-sex pyramid on Singapore population (June 2022) using Trellis display in Tableau, followed by discussion of the patterns revealed.</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Michael Djohan </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">January 22, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="data-source" class="level2">
+<h2 class="anchored" data-anchor-id="data-source"><strong>1. Data Source</strong></h2>
+<p>The original dataset was downloaded from <a href="https://www.singstat.gov.sg/">Department of Statistics, Singapore</a>, titled <em>Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022.</em></p>
+<p>The file downloaded was <em>respopagesextod2022.csv.</em></p>
+</section>
+<section id="step-by-step-description" class="level2">
+<h2 class="anchored" data-anchor-id="step-by-step-description"><strong>2. Step-by-Step Description</strong></h2>
+<p>This section details the step-by-step procedure to create age-sex pyramid on Singapore population (2022) using Trellis display in Tableau.</p>
+<section id="loading-and-cleaning-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-and-cleaning-data">2.1 Loading and cleaning data</h3>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Load <em>respopagesextod2022.csv</em> file in Tableau Desktop</td>
+<td><img src="images/Step_1.jpg" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Click on the drop-down button on field “AG”, choose Create Calculation Field</td>
+<td><img src="images/ag_calc_field.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Name the new field “Age Group” and key in the formula as per screenshot. This will create new field to replace the “_” with space</td>
+<td><img src="images/image-100734441.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Rename field “PA” to “Planning Area”</td>
+<td><img src="images/image-1367676538.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="creating-calculated-fields-to-make-trellis-chart" class="level3">
+<h3 class="anchored" data-anchor-id="creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make Trellis Chart</h3>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Create new worksheet and name it “<em>Singapore Population Pyramid Trellis Chart (2022)</em>”</td>
+<td><img src="images/image-303185035.png" class="img-fluid" width="1923"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Click on the drop-down button beside the Search are on the side bar, choose Create Calculation Field.</td>
+<td><img src="images/data_calc_field.png" class="img-fluid" width="469"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Name the new field “Columns” and key in the formula as per screenshot. This is required to create the Trellis Chart arrangements</td>
+<td><img src="images/image-1660151362.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Right Click on newly created field “Columns” and click “Convert to Discrete”</td>
+<td><img src="images/columns_discrete.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Right Click on “Columns” field and choose Duplicate this time. Rename the duplicated field “Rows” and key in the formula as per screenshot. Convert the “Rows” field to discrete as well</td>
+<td><img src="images/image-676769713.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Right Click on the “Sex” field, choose Create -&gt; Calculation Field</td>
+<td><img src="images/sex_calc_field.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Name the new field it “Male Population” and key in the formula as per screenshot</td>
+<td><img src="images/image-841634800.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Right Click on newly created field “Male Population” and choose Duplicate. Rename the duplicated field “Female Population” and key in the formula as per screenshot</td>
+<td><img src="images/image-1763399141.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="creating-the-trellis-chart" class="level3">
+<h3 class="anchored" data-anchor-id="creating-the-trellis-chart">2.3 Creating the Trellis Chart</h3>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><p>Drag “Columns”, “Male Population”, and “Female Population” to Columns.</p>
+<p>Drag “Rows” and “Age Group” to Rows</p></td>
+<td><img src="images/image-145915814.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Drag “Planning Area” to Detail</td>
+<td><img src="images/planning_area_detail.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Right click on “Male Population” axis and choose Edit Axis</td>
+<td><img src="images/edit_male_axis.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Click on Reversed. This will reverse the “Male Population” axis to be in the middle (same as Female Population axis)</td>
+<td><img src="images/edit_male_axis_rev.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Right click on “Male Population” axis and choose Sort descending. This will ensure the top Age Group is “90 and over” as per Age-Sex pyramid</td>
+<td><img src="images/age_group_order.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Right-click on “Columns” and choose Edit Table Calculation</td>
+<td><img src="images/columns_calc.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><p>In the Table Calculation pop-up, choose Specific Dimension and check both “Planning Area” and “Age Group”. Drag “Planning Area” above “Age Group”</p>
+<p>Choose “Planning Area” on At the level option.</p>
+<p>Repeat step 6 and 7 for “Rows”</p></td>
+<td><img src="images/columns_spc_dim.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Drag “Planning Area” to filter and click OK</td>
+<td><img src="images/pa_filter.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><p>Right-click on “Planning Area” on Filter tab and choose Show Filter.</p>
+<p>This will add the filter feature in the Worksheet</p></td>
+<td><img src="images/filter_show.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td><p>Navigate to Sum(Female Population) (red box) and click on the icon beside “Planning Area” and choose Label</p>
+<p>This will add “Planning Area” as label on the right-side of the age-sex pyramid</p></td>
+<td><img src="images/label.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td><p>Choose 9 Planning Areas randomly from the filter and choose Entire View from the Toolbar</p>
+<p>This will show 9 chosen PAs and fit the entire view</p></td>
+<td><img src="images/filter_entire_chart.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Right-click on the “Columns” axis and uncheck Show Header to hide the “Columns” header</td>
+<td><img src="images/hide_columns.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Right-click on the “Rows” axis and uncheck Show Header to hide the “Rows” header</td>
+<td><img src="images/hide_rows.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>14</td>
+<td><p>Drag “Male Population” to SUM(Male Population) Color</p>
+<p>Drag “Female Population” to SUM(Female Population) Color</p>
+<p>This will group the Sex by color in the dashboard</p></td>
+<td><img src="images/color.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>15</td>
+<td>Right-click on the “Age Group” axis and choose Format</td>
+<td><img src="images/format_age_group.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>Choose Right alignment and reduce Font to 7. This will improve the readability of the Age Group axis labels</td>
+<td><img src="images/format_age_group1.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>17</td>
+<td><p>Choose the same axis range for both Male and Female Population to ensure balanced view</p>
+<p>In this case, artificially fix this at 0 to 20,000</p></td>
+<td><img src="images/axis_range.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="creating-dynamic-labels" class="level3">
+<h3 class="anchored" data-anchor-id="creating-dynamic-labels">2.4 Creating Dynamic Labels</h3>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><p>Create new calculation field called “Max Population” and key in the formula as per screenshot</p>
+<p>This calculates the max population of female for each pane, which will be used to determine label position</p></td>
+<td><img src="images/max_pop.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><p>Create new calculation field called “Label Position” and key in the formula as per screenshot</p>
+<p>This ensures the label position is at the first index (top)</p></td>
+<td><img src="images/label_position.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Drag “Label Position” to Columns, to the right of “SUM(Female Population)” and change the style as Line to display the point (red-circled) indicating the future label position</td>
+<td><img src="images/label_posit_drag.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><p>Drag “Planning Area” to Label of “Label Position” tab to display the “Planning Area” as label (red-boxes)</p>
+<p>Click on Size to reduce the point size to minimum. Click on Color to make it transparent (green-boxes). This will remove the point from display</p></td>
+<td><img src="images/label_text.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>There will be sign showing “&gt;162 nulls” values related to “Label Position”. This is because of the If-Then statement, which returns <em>null</em> to other indexes other than 1. Hide this warning as this is not relevant.</td>
+<td><img src="images/hide_indicator.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Right Click on “Label Position”, uncheck Show Header and choose Dual Axis</td>
+<td><img src="images/dual_axis.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><p>Drag “Male Population” to to Label of “SUM(Male Population)” tab to display the population values as label on the charts</p>
+<p>Do the same for “Female Population”</p></td>
+<td><img src="images/value_label.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="final-dashboard" class="level3">
+<h3 class="anchored" data-anchor-id="final-dashboard">2.5 Final Dashboard</h3>
+<p>The final dashboard is shown in Figure 1 below.</p>
+<p>The default display shows age-sex (population) pyramid (June 2022) grouped by Singapore planning area in 3x3 trellis display. The user(s) will be able to select any planning areas of interest using the filter feature on the right without any restriction in number of choice. This gives them freedom to choose any planning areas of interest for study or comparison purposes.</p>
+<p>Note that the title of the dashboard is changed to <em>“Singapore Population Pyramid by Planning Area (June 2022)”</em> to give better describe the dashboard.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/final_look.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 1. Final dashboard display</figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion"><strong>3. Discussion</strong></h2>
+<p>This section discusses the reasoning behind decisions made in creating the visualization and patterns revealed by the analysis.</p>
+<section id="unequal-population-distribution-by-planning-area" class="level3">
+<h3 class="anchored" data-anchor-id="unequal-population-distribution-by-planning-area">3.1 Unequal population distribution by planning area</h3>
+<p>By choosing all the filters (Figure 2), we can roughly group the planning areas (PAs) to three different categories:</p>
+<ol type="1">
+<li><p>Non-residential PAs</p></li>
+<li><p>Lower populated PAs</p></li>
+<li><p>Higher populated PAs</p></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/figure2.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 2. Displaying all PAs reveals unequal population distribution across planning areas</figcaption><p></p>
+</figure>
+</div>
+<p>The first category would fall under non-residential zones, which are mainly used for either commercial (Downtown), industrial (Changi), or natural zone (Central Water Catchment). Note this does not necessarily mean zero population, areas like Downtown have small residential populations, most likely represented by high-end luxury apartments.</p>
+<p>The second category (i.e., Jurong East, Kallang, Novena) could be explained by mixed-area land-uses or simply due to smaller PA size, while the last category (i.e., Sengkang, Tampines, Yishun) is full-fledged residential area. Figure 3 below shows the three distinct PA categories.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/figure3.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 3. Three distinct PA categories revealed by the dashboard</figcaption><p></p>
+</figure>
+</div>
+<p>As such, it makes sense to show the absolute population instead of percentage of PA population in the x-axis to showcase this unequal distribution. On top of that, we will exclude non-residential PAs from the analysis as they hold little significance.</p>
+</section>
+<section id="different-shapes-of-age-sex-pyramids-across-pas" class="level3">
+<h3 class="anchored" data-anchor-id="different-shapes-of-age-sex-pyramids-across-pas">3.2 Different shapes of age-sex pyramids across PAs</h3>
+<p>From Figure 2 above, we can analyze not only the total population, but also the varying shapes of the pyramids across PAs. These pyramids have common features like thinning population at their pinnacles (eldest age-group) and thicker middle age-groups. However, there are notable differences as well.</p>
+<p>Referring to Figure 4 below, Bedok, Jurong West, and Ang Mo Kio pyramids are more rounded-shaped. Their highest age-group proportions lie around 50-70 years, with thinner population in other age-groups, indicating aging population.</p>
+<p>On the other hand, Chua Chu Kang, Pasir Ris and Tampines still have high 50-70 years age-group population, but there is clear emerging young populations (20-35 years), making the pyramids look more like arrow-shaped. These trends are more prominent on the younger towns. Punggol is an extreme case with highly accentuated 35-45 and 5-10 years age groups.</p>
+<p>Some unique cases like Sembawang and Toa Payoh offer unexpectedly high 30-35 age-group, which almost looks like outliers, making the pyramids look jagged.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/figure4.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 4. Analyzing different shapes of age-sex pyramids</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="gender-ratio-on-each-pa-is-relatively-constant" class="level3">
+<h3 class="anchored" data-anchor-id="gender-ratio-on-each-pa-is-relatively-constant">3.3 Gender Ratio on each PA is relatively constant</h3>
+<p>Choosing the 9 most populated PAs reveal relatively constant gender ratio on each PA, despite different shapes of the pyramids. This is accentuated in Figure 5 below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/figure5.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure 5. Nine most populated PA age-sex pyramids</figcaption><p></p>
+</figure>
+</div>
+<p>To illustrate this, we can examine Jurong West and Punggol age-sex pyramids closely. Jurong West pyramids look rounded. Meanwhile, Punggol has a completely different arrow-shaped pyramid. Despite these differences, the proportion of male vs female population remains rather constant for different age groups (mirror-image across central axis). This observation is quite consistent across different PAs chosen.</p>
+<p>It is noted, however, that at the higher age group, there tend to be more females than males. This is shown most clearly in Bedok PA (90 and over) with 1440 females vs 660 males. Combining this information with relatively uniform gender-ratio at the lower age group, this could be explained by higher life expectancy of females.</p>
+</section>
+<section id="section" class="level3">
+<h3 class="anchored" data-anchor-id="section"></h3>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
