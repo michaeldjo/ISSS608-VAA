@@ -192,7 +192,7 @@ Some unique cases like Sembawang and Toa Payoh offer unexpectedly high 30-35 age
 
 ![Figure 4. Analyzing different shapes of age-sex pyramids](images/figure4.png)
 
-### 3.3 Gender Ratio on each PA is relatively constant
+### **3.3 Gender Ratio on each PA is relatively constant**
 
 Choosing the 9 most populated PAs reveal relatively constant gender ratio on each PA, despite different shapes of the pyramids. This is accentuated in Figure 5 below.
 
