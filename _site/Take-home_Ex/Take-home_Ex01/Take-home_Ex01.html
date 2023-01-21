@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Djohan">
-<meta name="dcterms.date" content="2023-01-22">
+<meta name="dcterms.date" content="2023-01-21">
 
 <title>ISSS608 - Michael Djohan - Take-home Exercise 1</title>
 <style>
@@ -137,15 +137,16 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#step-by-step-description" id="toc-step-by-step-description" class="nav-link" data-scroll-target="#step-by-step-description"><strong>2. Step-by-Step Description</strong></a>
   <ul class="collapse">
   <li><a href="#loading-and-cleaning-data" id="toc-loading-and-cleaning-data" class="nav-link" data-scroll-target="#loading-and-cleaning-data">2.1 Loading and cleaning data</a></li>
-  <li><a href="#creating-calculated-fields-to-make-trellis-chart" id="toc-creating-calculated-fields-to-make-trellis-chart" class="nav-link" data-scroll-target="#creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make Trellis Chart</a></li>
-  <li><a href="#creating-the-trellis-chart" id="toc-creating-the-trellis-chart" class="nav-link" data-scroll-target="#creating-the-trellis-chart">2.3 Creating the Trellis Chart</a></li>
-  <li><a href="#creating-dynamic-labels" id="toc-creating-dynamic-labels" class="nav-link" data-scroll-target="#creating-dynamic-labels">2.4 Creating Dynamic Labels</a></li>
-  <li><a href="#final-dashboard" id="toc-final-dashboard" class="nav-link" data-scroll-target="#final-dashboard">2.5 Final Dashboard</a></li>
+  <li><a href="#creating-calculated-fields-to-make-trellis-chart" id="toc-creating-calculated-fields-to-make-trellis-chart" class="nav-link" data-scroll-target="#creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make trellis chart</a></li>
+  <li><a href="#creating-trellis-chart" id="toc-creating-trellis-chart" class="nav-link" data-scroll-target="#creating-trellis-chart">2.3 Creating trellis chart</a></li>
+  <li><a href="#creating-dynamic-labels" id="toc-creating-dynamic-labels" class="nav-link" data-scroll-target="#creating-dynamic-labels">2.4 Creating dynamic labels</a></li>
+  <li><a href="#final-touch-up-to-improve-aesthetics-and-clarity" id="toc-final-touch-up-to-improve-aesthetics-and-clarity" class="nav-link" data-scroll-target="#final-touch-up-to-improve-aesthetics-and-clarity">2.5 Final touch-up to improve aesthetics and clarity</a></li>
+  <li><a href="#final-dashboard" id="toc-final-dashboard" class="nav-link" data-scroll-target="#final-dashboard">2.6 Final Dashboard</a></li>
   </ul></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><strong>3. Discussion</strong></a>
   <ul class="collapse">
   <li><a href="#unequal-population-distribution-by-planning-area" id="toc-unequal-population-distribution-by-planning-area" class="nav-link" data-scroll-target="#unequal-population-distribution-by-planning-area">3.1 Unequal population distribution by planning area</a></li>
-  <li><a href="#different-shapes-of-age-sex-pyramids-across-pas" id="toc-different-shapes-of-age-sex-pyramids-across-pas" class="nav-link" data-scroll-target="#different-shapes-of-age-sex-pyramids-across-pas">3.2 Different shapes of age-sex pyramids across PAs</a></li>
+  <li><a href="#different-shapes-of-age-sex-pyramids-across-pa" id="toc-different-shapes-of-age-sex-pyramids-across-pa" class="nav-link" data-scroll-target="#different-shapes-of-age-sex-pyramids-across-pa">3.2 Different shapes of age-sex pyramids across PA</a></li>
   <li><a href="#gender-ratio-on-each-pa-is-relatively-constant" id="toc-gender-ratio-on-each-pa-is-relatively-constant" class="nav-link" data-scroll-target="#gender-ratio-on-each-pa-is-relatively-constant"><strong>3.3 Gender Ratio on each PA is relatively constant</strong></a></li>
   <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
   </ul></li>
@@ -175,7 +176,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 22, 2023</p>
+      <p class="date">January 21, 2023</p>
     </div>
   </div>
   
@@ -198,8 +199,8 @@ ul.task-list li input[type="checkbox"] {
 <table class="table">
 <colgroup>
 <col style="width: 5%">
-<col style="width: 15%">
-<col style="width: 80%">
+<col style="width: 30%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -233,12 +234,12 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <section id="creating-calculated-fields-to-make-trellis-chart" class="level3">
-<h3 class="anchored" data-anchor-id="creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make Trellis Chart</h3>
+<h3 class="anchored" data-anchor-id="creating-calculated-fields-to-make-trellis-chart">2.2 Creating calculated fields to make trellis chart</h3>
 <table class="table">
 <colgroup>
 <col style="width: 5%">
-<col style="width: 15%">
-<col style="width: 80%">
+<col style="width: 30%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -291,13 +292,13 @@ ul.task-list li input[type="checkbox"] {
 </tbody>
 </table>
 </section>
-<section id="creating-the-trellis-chart" class="level3">
-<h3 class="anchored" data-anchor-id="creating-the-trellis-chart">2.3 Creating the Trellis Chart</h3>
+<section id="creating-trellis-chart" class="level3">
+<h3 class="anchored" data-anchor-id="creating-trellis-chart">2.3 Creating trellis chart</h3>
 <table class="table">
 <colgroup>
 <col style="width: 5%">
-<col style="width: 15%">
-<col style="width: 80%">
+<col style="width: 30%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -405,12 +406,12 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </section>
 <section id="creating-dynamic-labels" class="level3">
-<h3 class="anchored" data-anchor-id="creating-dynamic-labels">2.4 Creating Dynamic Labels</h3>
+<h3 class="anchored" data-anchor-id="creating-dynamic-labels">2.4 Creating dynamic labels</h3>
 <table class="table">
 <colgroup>
 <col style="width: 5%">
-<col style="width: 15%">
-<col style="width: 80%">
+<col style="width: 30%">
+<col style="width: 65%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -459,14 +460,69 @@ ul.task-list li input[type="checkbox"] {
 <p>Do the same for “Female Population”</p></td>
 <td><img src="images/value_label.png" class="img-fluid"></td>
 </tr>
+<tr class="even">
+<td>8</td>
+<td><p>Click on the Label of “SUM(Male Population)” tab and format it to “Min/Max” and “Pane” to only highlight the min and max values per pane</p>
+<p>Do the same for “Female Population”</p></td>
+<td><img src="images/value_label1.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>9</td>
+<td><p>To display values for special highlighted bar, right-click on individual bar, select Mark Label and tick Always Show</p>
+<p>This will highlight relevant individual bars (refer to Section 3)</p></td>
+<td><img src="images/value_label2.png" class="img-fluid"></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="final-touch-up-to-improve-aesthetics-and-clarity" class="level3">
+<h3 class="anchored" data-anchor-id="final-touch-up-to-improve-aesthetics-and-clarity">2.5 Final touch-up to improve aesthetics and clarity</h3>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 30%">
+<col style="width: 65%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Step</th>
+<th>Screenshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><p>Double-click on the title to add the title</p>
+<p>Subtitle can be easily added by adding a new line with different font size</p>
+<p>This will help users to understand the content and details of the dashboard</p></td>
+<td><img src="images/change_title.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Click on Worksheet and click on Show Caption to show and edit the caption</td>
+<td><img src="images/caption.png" class="img-fluid"></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><p>Double-click on the caption box (red-box) and edit the caption</p>
+<p>In this case, we will add the source of the data. Format the text as shown on the right</p></td>
+<td><img src="images/caption1.png" class="img-fluid"></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><p>We will remove the x-axis title as there is already label to indicate Male and Female Population</p>
+<p>To do this, double-click on the axis title and delete the Axis Title (red-box)</p></td>
+<td><img src="images/remove_axis.png" class="img-fluid"></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="final-dashboard" class="level3">
-<h3 class="anchored" data-anchor-id="final-dashboard">2.5 Final Dashboard</h3>
+<h3 class="anchored" data-anchor-id="final-dashboard">2.6 Final Dashboard</h3>
 <p>The final dashboard is shown in Figure 1 below.</p>
 <p>The default display shows age-sex (population) pyramid (June 2022) grouped by Singapore planning area in 3x3 trellis display. The user(s) will be able to select any planning areas of interest using the filter feature on the right without any restriction in number of choice. This gives them freedom to choose any planning areas of interest for study or comparison purposes.</p>
-<p>Note that the title of the dashboard is changed to <em>“Singapore Population Pyramid by Planning Area (June 2022)”</em> to give better describe the dashboard.</p>
+<p>Note that the title and subtitle of the dashboard to highlight the purpose and the details of the visualization. The rationale in selecting the nine default planning areas will be explained in Section 3 below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/final_look.png" class="img-fluid figure-img"></p>
@@ -502,8 +558,8 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>As such, it makes sense to show the absolute population instead of percentage of PA population in the x-axis to showcase this unequal distribution. On top of that, we will exclude non-residential PAs from the analysis as they hold little significance.</p>
 </section>
-<section id="different-shapes-of-age-sex-pyramids-across-pas" class="level3">
-<h3 class="anchored" data-anchor-id="different-shapes-of-age-sex-pyramids-across-pas">3.2 Different shapes of age-sex pyramids across PAs</h3>
+<section id="different-shapes-of-age-sex-pyramids-across-pa" class="level3">
+<h3 class="anchored" data-anchor-id="different-shapes-of-age-sex-pyramids-across-pa">3.2 Different shapes of age-sex pyramids across PA</h3>
 <p>From Figure 2 above, we can analyze not only the total population, but also the varying shapes of the pyramids across PAs. These pyramids have common features like thinning population at their pinnacles (eldest age-group) and thicker middle age-groups. However, there are notable differences as well.</p>
 <p>Referring to Figure 4 below, Bedok, Jurong West, and Ang Mo Kio pyramids are more rounded-shaped. Their highest age-group proportions lie around 50-70 years, with thinner population in other age-groups, indicating aging population.</p>
 <p>On the other hand, Chua Chu Kang, Pasir Ris and Tampines still have high 50-70 years age-group population, but there is clear emerging young populations (20-35 years), making the pyramids look more like arrow-shaped. These trends are more prominent on the younger towns. Punggol is an extreme case with highly accentuated 35-45 and 5-10 years age groups.</p>
@@ -525,7 +581,8 @@ ul.task-list li input[type="checkbox"] {
 </figure>
 </div>
 <p>To illustrate this, we can examine Jurong West and Punggol age-sex pyramids closely. Jurong West pyramids look rounded. Meanwhile, Punggol has a completely different arrow-shaped pyramid. Despite these differences, the proportion of male vs female population remains rather constant for different age groups (mirror-image across central axis). This observation is quite consistent across different PAs chosen.</p>
-<p>It is noted, however, that at the higher age group, there tend to be more females than males. This is shown most clearly in Bedok PA (90 and over) with 1440 females vs 660 males. Combining this information with relatively uniform gender-ratio at the lower age group, this could be explained by higher life expectancy of females.</p>
+<p>It is noted, however, that at the higher age group, there tend to be more females than males. This is shown most clearly in Bedok (90 and over) with 1440 females vs 660 males. Combining this information with relatively uniform gender-ratio at the lower age group, this could be explained by higher life expectancy of females.</p>
+<p>Regardless, this trend was also observed in Figure 4 as well. Hence it was decided to select Figure 4 as the default PA filter as it highlights variations in pyramid shapes and total population.</p>
 </section>
 <section id="section" class="level3">
 <h3 class="anchored" data-anchor-id="section"></h3>

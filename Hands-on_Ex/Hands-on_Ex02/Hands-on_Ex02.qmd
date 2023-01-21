@@ -1,7 +1,7 @@
 ---
-title: "Hands-on Exercise 2"
+title: "Hands-on Exercise 2: Creating Elegant Graphics with ggplot2"
 author: "Michael Djohan"
-date: 20 Jan 2023
+date: "`r Sys.Date()`"
 fontsize: smaller
 ---
 
@@ -9,7 +9,7 @@ fontsize: smaller
 
 ### Install and launching R packages.
 
-The code chunk below uses p_load() of pacman package to check if tidyverse packages are installed in the computer. If they are, then they will be launched into R.
+The code chunk below uses p_load() of pacman package to check if packages are installed in the computer. If they are, then they will be launched into R.
 
 ```{r}
 pacman::p_load(tidyverse, ggdist, ggridges, 
