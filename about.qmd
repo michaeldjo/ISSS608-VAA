@@ -1,9 +1,6 @@
 ---
-title: "About"
+title: "About this site"
 ---
 
-About this site
+This website consists of a collection of works done for the visual analytics course I took during my MITB journey. I hope you enjoy reading them!
 
-```{r}
-1 + 1
-```
