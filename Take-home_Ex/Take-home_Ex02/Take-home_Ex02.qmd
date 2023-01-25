@@ -62,7 +62,7 @@ The embedded dashboard Tableau dashboard is presented below as well. The link to
 
 -   Soft grid lines are not distracting.
 
--   Y-axis labels are not very easy to read due to presence of "\_".
+-   Y-axis labels are not very easy to read due to presence of '\_'.
 
 ###### 
 
@@ -102,7 +102,9 @@ sgpop <- read_csv("data/respopagesextod2022.csv", show_col_types = FALSE)
 
 -   Convert Males population to negative to reverse the bar chart axis using `dplyr::mutate` and `ifelse`.
 
--   Derive variables `min_pop` and `max_pop` to determine the min and max male & female population values for each planning area (PA) across age group (AG). This will be used in conjunction with `signal` below for data labeling purpose.
+-   Eliminate the '\_', 'to', 'and over' in age group (`AG`) using `dplyr::mutate` and `gsub`.
+
+-   Derive variables `min_pop` and `max_pop` to determine the min and max male & female population values for each planning area (`PA`) across age group (`AG`). This will be used in conjunction with `signal` below for data labeling purpose.
 
 -   Derive new variables to calculate population proportion : sum of population by PA (`sum_pop_pa`), sum of population by age and sex (`sum_pop_total`), sum of total Singapore population (`sum_pop_total_sg`)
 
@@ -115,7 +117,8 @@ sgpop <- read_csv("data/respopagesextod2022.csv", show_col_types = FALSE)
 #Data Cleaning
 #sgpop_group groups total population by PA, AG, and Sex to create base data for population pyramid
 sgpop_group <- sgpop |> 
-  mutate(AG = gsub('_',' ', AG),
+  mutate(AG = gsub('_to_',' - ', AG),
+         AG = gsub('_and_over', '+', AG),
          Pop = ifelse(Sex == "Males", Pop*(-1), Pop)) |>
   group_by(PA, AG, Sex) |> 
   summarise(sum_pop = sum(Pop)) 
@@ -133,7 +136,8 @@ sgpop_sum <- sgpop_group |>
 
 #sgpop_total groups total population by AG and Sex to create base data for total Singapore population (across different PA)
 sgpop_total <- sgpop |>
-  mutate(AG = gsub('_',' ', AG),
+  mutate(AG = gsub('_to_',' - ', AG),
+         AG = gsub('_and_over', '+', AG),
          Pop = ifelse(Sex == "Males", Pop*(-1), Pop)) |>
   group_by(AG, Sex) |> 
   summarise(sum_pop_total = sum(Pop)) 
@@ -181,7 +185,7 @@ sgpop_clean <- sgpop_clean |>
 
 #Order factors
 sgpop_clean$Sex <- fct_relevel(sgpop_clean$Sex, "Males")
-sgpop_clean$AG  <- fct_relevel(sgpop_clean$AG, "0 to 4", "5 to 9")
+sgpop_clean$AG  <- fct_relevel(sgpop_clean$AG, "0 - 4", "5 - 9")
 ```
 
 ###### 
@@ -272,6 +276,7 @@ plot_PA_pop <- function(planning_area) {
     cowplot::theme_cowplot() +
     theme(axis.title.x = element_text(vjust = 0.5),
           axis.title.y = element_blank(),
+          axis.ticks.y = element_blank(),
           panel.grid.major.x = element_line(color = "grey90", linetype = "solid"),
           panel.grid.major.y = element_line(color = "grey90", linetype = "solid"),
           legend.position = 'top',
@@ -288,8 +293,8 @@ plot_PA_pop <- function(planning_area) {
 #| code-fold: true
 #| code-summary: "Show the code"
 #Setting the axis range and limits
-pop_range_breaks_prop = seq(-10,10,5)                     
-pop_range_limits_prop = c(-10.5, 10.5)                         
+pop_range_breaks_prop = seq(-8,8,4)                     
+pop_range_limits_prop = c(-9, 9)                         
 
 #Create function to plot based on population proportion 
 plot_PA_prop <- function(planning_area) {
@@ -315,11 +320,13 @@ plot_PA_prop <- function(planning_area) {
       aes(x = AG,
           y = -prop_pop_total),
       linetype = "dashed",
+      linewidth = 0.6,
       color ="black") +
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Females"),
       aes(x = AG,
           y = prop_pop_total),
       linetype = "dashed",
+      linewidth = 0.6,
       color ="black") +
     
     coord_flip() +
@@ -344,7 +351,7 @@ plot_PA_prop <- function(planning_area) {
     facet_wrap(~PA) +
     geom_label(
       x = 18,
-      y = 6,
+      y = 5,
       aes(label = paste("Total Pop", comma(sum_pop_pa), sep = "\n")),
       hjust = "left") +
         
@@ -352,6 +359,7 @@ plot_PA_prop <- function(planning_area) {
     cowplot::theme_cowplot() +
     theme(axis.title.x = element_text(vjust = 0.5),
           axis.title.y = element_blank(),
+          axis.ticks.y = element_blank(),
           panel.grid.major.x = element_line(color = "grey90", linetype = "solid"),
           panel.grid.major.y = element_line(color = "grey90", linetype = "solid"),
           legend.position = 'top',
@@ -414,7 +422,11 @@ plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "S
 
 -   Soft solid grid lines are not distracting.
 
--   Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines
+-   Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines.
+
+-   Tick-marks for y-axis (age group) are removed as they are superfluous for categorical variables.
+
+-   The y-axis label "Age Group" is removed as the subtitle already describes it as age-sex pyramids.
 
 ###### 
 
