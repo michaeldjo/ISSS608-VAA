@@ -8,7 +8,7 @@ fontsize: smaller
 
 ## **1. Overview**
 
-This exercise aims to provide critique and improvements to age-sex (population) pyramid created by peer in Take Home Exercise 1 using Tableau. This will be done based on clarity and aesthetics. The original design will then be remade using data visualization design principles and best practices using `ggplot2`, its extensions, and `tidyverse` packages.
+This exercise aims to provide critique and improvements to age-sex (population) pyramid created by peer in Take-home Exercise 1 using Tableau. This will be done based on clarity and aesthetics. The original design will then be remade using data visualization design principles and best practices using `ggplot2`, its extensions, and `tidyverse` packages.
 
 The original dataset was downloaded from [Department of Statistics, Singapore](https://www.singstat.gov.sg/), titled *Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022.*
 
@@ -24,7 +24,7 @@ Figure 1 below shows the original design of the Singapore population pyramid by 
 
 ![Figure 1. Original design of age-sex pyramid prepared by peer in Take Home Exercise 1 using Tableau](images/image-277094904.png)
 
-The embedded dashboard Tableau dashboard is presented below as well. It can also be referred [here](https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link)
+The embedded dashboard Tableau dashboard is presented below as well. The link to the actual dashboard can be accessed [here](https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
 
 ```{=html}
 
@@ -34,25 +34,25 @@ The embedded dashboard Tableau dashboard is presented below as well. It can also
 
 ### 2.2 Critique : Clarity and Aesthetics
 
-#### Clarity
+#### [Clarity]{.underline}
 
--   While Tableau displays dynamic chart, the lack of x-axis here makes it difficult to gauge the data (male and female population). This also potentially mislead audience as it wrongly presents different planning areas have similar population size (i.e., population size of Downtown Core is much smaller than Tampines, but the length of the bars show that they are similar). This is because the scales of x-axis for different pyramids are inconsistent.
+-   While Tableau displays dynamic chart, the lack of x-axis in the plot makes it difficult to gauge the male and female population. This also potentially misleads audience as it wrongly presents different planning areas having comparable population size (i.e., population size of Downtown Core is much smaller than Tampines, but the length of the bars show that they are similar). This is because the scales of x-axis for different pyramids (in different planning areas) are inconsistent.
 
--   Lack of legends, making it difficult to determine which side represents Male or Female population.
+-   Lack of legend, making it difficult to determine which side represents Male or Female population. Note that traditionally, the Male population is on the left side of the pyramids, hence initially creating confusion between color and position without legend.
 
 -   The title is descriptive, but not specific. For instance, it does not tell the audience which period was this from. Additionally, it does not tell the audience the context of the visualization (i.e., main highlight, story, etc). A well-worded title and subtitle should help here.
 
 -   Lack of references for audience to compare across different facets, having relevant data labels or reference line would improve readability.
 
+-   The presence of grid lines without x-axis is meaningless as there is no reference point.
+
 -   Audience has to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.
 
 -   The order of the planning areas in the trellis chart is not meaningful.
 
--   The presence of grid lines without x-axis is meaningless.
-
 -   Lack of caption to present the source of data.
 
-#### Aesthetics
+#### [Aesthetics]{.underline}
 
 -   Good color choices representing Male and Female population, making it easy to read.
 
@@ -70,13 +70,11 @@ The embedded dashboard Tableau dashboard is presented below as well. It can also
 
 ### 3.1 Proposed Sketch
 
-Rough sketch of proposed design is shown below
-
-From the original visualization, it seems that the original author intends to contrast different population sizes and patterns across Singapore planning areas. This might be the reason for choosing low populated area like "Downtown Core" and highly populated area like "Tampines". As such, it is proposed to plot the absolute (based on total population) of the age-sex pyramids of the original planning areas, ordered based on population sizes. Rough sketch of proposed design is shown below.
+From the original visualization, it seems that the original author intends to contrast different population sizes and patterns across Singapore planning areas. This might be the reason for presenting low populated area like "Downtown Core" and highly populated area like "Tampines" together. One way to do this is to plot the absolute pyramids (based on actual population) of the original planning areas, ordered based on population sizes. Rough sketch of proposed design is shown below.
 
 ![Figure 2. Proposed sketch of the first plot](images/sketch_plot1.JPG)
 
-Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of total population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference step chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to avoid misleading the audience.
+Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference step chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to still highlight the differences in population sizes.
 
 ![Figure 3. Proposed sketch of the second plot](images/sketch_plot2.JPG)
 
@@ -84,7 +82,9 @@ Another angle of visualizing age-sex pyramids is by plotting the proportion pyra
 
 ### 3.2 Data Preparation
 
-Launch R packages and import data from csv
+Launch R packages and import data from csv using `readr::read_csv.`
+
+The packages installed are `tidyverse`, `cowplot` and `scales`. While `tidyverse` contains all useful R packages used for cleaning data and plotting graph, `cowplot` provides simple theme for `ggplot2` and `scales` helps to add comma and/or percentage for labels display. All packages can be found within CRAN.
 
 ```{r}
 #| code-fold: true
@@ -96,17 +96,17 @@ pacman::p_load(tidyverse, cowplot, scales)
 sgpop <- read_csv("data/respopagesextod2022.csv", show_col_types = FALSE)
 ```
 
-The loaded data needs to be modified before plotting. The list of modifications are as follows:
+#### [Modifying the loaded data]{.underline}
 
--   Group the original data by planning area, age, and sex
+-   Group the original data by planning area (PA), age group (AG), and gender (Sex) using `dplyr::group_by` and `dplyr::summarise`, deriving new variable called `sum_pop`, which is the sum of population grouped by the three variables mentioned.
 
--   Convert Males population to negative to reverse the bar chart axis
+-   Convert Males population to negative to reverse the bar chart axis using `dplyr::mutate` and `ifelse`.
 
--   Derive new variables to calculate population proportion - sum of population by PA, sum of total population, and the relevant proportions
+-   Derive variables `min_pop` and `max_pop` to determine the min and max male & female population values for each planning area (PA) across age group (AG). This will be used in conjunction with `signal` below for data labeling purpose.
 
--   Derive "signal" variable to help to position data labels in min/max values on the respective Males and Females charts
+-   Derive new variables to calculate population proportion : sum of population by PA (`sum_pop_pa`), sum of population by age and sex (`sum_pop_total`), sum of total Singapore population (`sum_pop_total_sg`)
 
--   Factorize "Sex" and "AG" to order its level in the plots
+-   Using `left_join` to create new clean tibble called `sgpop_clean` which will be used as final dataset for plotting
 
 ```{r}
 #| code-fold: true
@@ -149,7 +149,24 @@ sgpop_draft1 = sgpop_group |> left_join(sgpop_max_min, by = c('PA'='PA', 'Sex' =
 sgpop_draft2 = sgpop_draft1 |> left_join(sgpop_sum, by = c('PA' = 'PA'))
 sgpop_draft3 = sgpop_draft2 |> left_join(sgpop_total, by = c('AG' = 'AG', 'Sex' = 'Sex'))
 sgpop_clean = sgpop_draft3 |> left_join(sgpop_total_summ, by = 'Sex')
+```
 
+#### [Final touch-up of the data `sgpop_clean`]{.underline}
+
+-   Derive new variables to calculate proportion of population for the second plot. There are two proportions:
+
+    -   `prop_pop` which calculates proportion of population by age and sex in a given planning area
+
+    -   `prop_pop_total` which calculates proportion of population by age and sex for the entire Singapore. This is required to create the reference step chart
+
+-   Derive `signal` variable from `min_pop` and `max_pop` to help to position data labels in min/max values on the respective Males and Females charts. `case_when` is used to assign the values of -1, 1, 0 for max/min Males, max/min Females, and others respectively.
+
+-   Variable `Sex` and `AG` needs to be ordered to ensure that it appears as intended when plotting. As such `forcats::fct_relevel` is used to order them manually.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| output: false
 #adding new variables:
 #signal is used to display labels for min and max values in population pyramid
 #prop_pop is proportion population per planning area
@@ -169,9 +186,33 @@ sgpop_clean$AG  <- fct_relevel(sgpop_clean$AG, "0 to 4", "5 to 9")
 
 ###### 
 
-### 3.2 Creating function to plot the charts
+### 3.3 Creating functions to plot the charts
 
-Functions are used to plot the charts to give flexibility to user(s) to input their selected 9 planning areas, ordered by their preference. In this case, however, we will use the original 9 planning areas in the original design. Two functions are created :
+Functions are used to plot the charts to give flexibility to user(s) to input their selected 9 planning areas, ordered by their preference. In this case, however, we will use the original 9 planning areas in the original design.
+
+#### [The multiple layers of the visualization function]{.underline}
+
+-   Variable `PA` needs to be ordered to ensure that it appears as intended when plotting. As such `forcats::fct_relevel` is used to order them manually. This is because we want to plot the trellis chart in the order of the function input (vector of string).
+
+-   `ggplot2::geom_col` to plot the pyramids. This is used instead of `ggplot2::geom_bar` as we are plotting the values in the data instead of frequency of occurrence.
+
+-   Adding labels on min and max values is achieved using `ggplot2::geom_text`. The variable `signal` is used here to determine whether the labels appear or not. The `signal` is multiplied by certain value to give certain distance from the end of the bar.
+
+-   Only for second plot, `ggplot2::geom_step` is used to create the dashed reference line representing Singapore overall population proportion (%).
+
+-   Customise legend and color using `ggplot2::scale_fill_manual`.
+
+-   Customise x-axis (population) scales using `ggplot2::scale_y_continuous`. Note that we are not using `ggplot2::scale_x_continuous` as we used `ggplot2::coord_flip` before. Reason for this is because `ggplot2::geom_step` is unable to plot categorical variables in y-axis.
+
+-   To customise the title, subtitle, and caption, `ggplot2::labs` is used.
+
+-   Trellis plot is created using `ggplot2::facet_wrap`. Note that we are not using `ggplot2::facet_grid` as we are creating the facets using one variable - `PA`.
+
+-   Labels for "Total Population" for each planning area is created using `ggplot2::geom_label` to add nice border around the text.
+
+-   `cowplot::theme_cowplot` is used to create more clean and professional look. Other theme adjustments utilise `ggplot2::theme`.
+
+#### [Creating the two functions]{.underline}
 
 1.  Function `plot_PA_pop` is created to plot age-sex pyramids based on absolute population. This takes argument of vector of strings of the planning areas.
 
@@ -189,18 +230,18 @@ plot_PA_pop <- function(planning_area) {
            filter(PA %in% planning_area)) +
     
     #creating bar charts
-    geom_bar(aes(x = AG,
+    geom_col(aes(x = AG,
                  y = sum_pop, 
-                 fill = Sex),
-             stat = "identity") +
+                 fill = Sex)) +
     
     #adding labels on min and max values
     geom_text(
       data = sgpop_clean |> filter(PA %in% planning_area & signal != 0),
       aes(x = AG,
-          y = sum_pop+signal*3500,
+          y = sum_pop+signal*2500,
           label = comma(abs(sum_pop))
           )) +
+    
     coord_flip() +
     
     #adding legends and customize colors
@@ -215,7 +256,7 @@ plot_PA_pop <- function(planning_area) {
                        labels = function(x){paste0(abs(x/1000),'K')}) +
     
     #adding title, subtitle, and caption
-    labs(title = "Population size and patterns can differ drastically across Singapore planning areas",
+    labs(title = "Population sizes and patterns can differ drastically across Singapore planning areas",
          subtitle = paste0("Singapore age-sex pyramids (absolute population) by Planning Area, June 2022\nTotal Singapore Residents Population : ", comma(sgpop_clean$sum_pop_total_sg)),
          caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
     
@@ -248,7 +289,7 @@ plot_PA_pop <- function(planning_area) {
 #| code-summary: "Show the code"
 #Setting the axis range and limits
 pop_range_breaks_prop = seq(-10,10,5)                     
-pop_range_limits_prop = c(-11, 11)                         
+pop_range_limits_prop = c(-10.5, 10.5)                         
 
 #Create function to plot based on population proportion 
 plot_PA_prop <- function(planning_area) {
@@ -257,16 +298,15 @@ plot_PA_prop <- function(planning_area) {
          aes(group = 1)) +
     
     #creating bar charts
-    geom_bar(aes(x = AG,
+    geom_col(aes(x = AG,
                  y = prop_pop, 
-                 fill = Sex),
-             stat = "identity") +
+                 fill = Sex)) +
     
     #adding labels on min and max values
     geom_text(
       data = sgpop_clean |> filter(PA %in% planning_area & signal != 0),
       aes(x = AG,
-          y = prop_pop+signal*2,
+          y = prop_pop+signal*1.5,
           label = paste0(abs(prop_pop),'%')
           )) +
     
@@ -274,13 +314,14 @@ plot_PA_prop <- function(planning_area) {
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Males"),
       aes(x = AG,
           y = -prop_pop_total),
-      linetype = "solid",
+      linetype = "dashed",
       color ="black") +
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Females"),
       aes(x = AG,
           y = prop_pop_total),
-      linetype = "solid",
+      linetype = "dashed",
       color ="black") +
+    
     coord_flip() +
     
     #adding legends and customize colors
@@ -296,7 +337,7 @@ plot_PA_prop <- function(planning_area) {
     
     #adding title, subtitle, and caption
     labs(title = "Different demographic patterns are revealed when population proportion (%) is used in the pyramid",
-         subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ", comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart represents Singapore overall population proportion (%)"),
+         subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ", comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
          caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
     
     #create trellis plot and PA population label
@@ -323,9 +364,9 @@ plot_PA_prop <- function(planning_area) {
 
 ###### 
 
-### 3.3 Plotting the makeover charts
+### 3.4 Plotting the makeover charts
 
-As mentioned above, the first plot contrasts different population sizes and patterns across Singapore planning areas. As such absolute age-sex pyramids are plotted in 3x3 trellis chart. The reasons for choosing 3x3 is to optimize the display in webpage. Having 9x1 or 1x9 will either require audience to scroll or squeeze the pyramids too closely together.
+As mentioned above, the first plot contrasts different population sizes and patterns across Singapore planning areas. As such absolute age-sex pyramids are plotted in 3x3 trellis chart. The reason for choosing 3x3 is to fit the display in one screen webpage (using quarto). Having 9x1 or 1x9 will either require audience to scroll or squeeze the pyramids too closely together.
 
 ```{r}
 #| code-fold: true
@@ -347,37 +388,33 @@ The second plot presents an alternative angle to the same planning areas, highli
 plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
 ```
 
-#### Clarity
+#### [Clarity Improvements]{.underline}
 
--   Consistent scale of x-axis allows fair comparisons of population size and patterns across different planning areas. This is especially important since the range of population sizes for the planning areas differ greatly.
+-   Consistent scale of x-axis allows fair comparisons of population size and patterns across different planning areas. This is especially important since the population sizes for different planning areas differ greatly.
 
--   As ggplot2 plots a static chart, having grid lines are important for audience for referencing. In this case, both y and x-axis grid lines are kept to allow audience to refer even the further pyramid from the axis (top right).
+-   As ggplot2 plots a static chart, having grid lines are important for audience for referencing. In this case, both y and x-axis grid lines are kept to ease readability, allowing audience to refer even the furthest pyramid from the axis (top right pyramid).
+
+-   Legend is provided and the "Male" bar chart is put to the left, allowing faster recognition.
 
 -   The title describes the context of the visualization, which is to contrast population sizes and patterns across different planning areas. Subtitle also provides factual clarity of the plots with total population displayed as reference.
 
--   Only data labels for min and max age groups for each planning areas are provided. This is provided to still provide reference for audience without overwhelming them with too much labels.
+-   Only data labels for min and max population across age groups for each planning areas are provided. This gives reference for audience without overwhelming them with too much text labels.
 
--   Annotations on each facets with total population for different planning areas help highlighting the context further.
+-   Annotations on each facets highlighting the total population for different planning areas gives an anchor point for audience, further spotlighting the context (different population sizes) of visualization.
 
 -   Reference step chart of second plot adds another dimension of comparison for audience.
 
--   Audience can compare and contrast all pyramids in one look.
+-   Audience can compare and contrast all pyramids in one look in one view without the need to scroll.
 
--   The order of the planning areas in the trellis chart is by population size in ascending order
+-   The planning area is ordered by population sizes, allowing audience to contrast the pyramid sizes per row (for the first plot)
 
 -   Caption is provided to present the source of data.
 
-#### Aesthetics
+#### [Aesthetics Improvements]{.underline}
 
--   Clear color choices representing Male and Female population, making it easy to read.
+-   Soft solid grid lines are not distracting.
 
--   Clear planning area labels for each population pyramid.
-
--   Uniform white background gives a clean look.
-
--   Soft grid lines are not distracting.
-
--   Reference chart is solid line in step chart to mimic the shape of population pyramids.
+-   Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines
 
 ###### 
 

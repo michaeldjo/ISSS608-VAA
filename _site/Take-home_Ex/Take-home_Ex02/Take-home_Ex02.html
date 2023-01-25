@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Djohan">
-<meta name="dcterms.date" content="2023-01-24">
+<meta name="dcterms.date" content="2023-01-25">
 
 <title>ISSS608 - Michael Djohan - Take-home Exercise 2</title>
 <style>
@@ -210,8 +210,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#proposed-sketch" id="toc-proposed-sketch" class="nav-link" data-scroll-target="#proposed-sketch">3.1 Proposed Sketch</a></li>
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation">3.2 Data Preparation</a></li>
-  <li><a href="#creating-function-to-plot-the-charts" id="toc-creating-function-to-plot-the-charts" class="nav-link" data-scroll-target="#creating-function-to-plot-the-charts">3.2 Creating function to plot the charts</a></li>
-  <li><a href="#plotting-the-makeover-charts" id="toc-plotting-the-makeover-charts" class="nav-link" data-scroll-target="#plotting-the-makeover-charts">3.3 Plotting the makeover charts</a></li>
+  <li><a href="#creating-functions-to-plot-the-charts" id="toc-creating-functions-to-plot-the-charts" class="nav-link" data-scroll-target="#creating-functions-to-plot-the-charts">3.3 Creating functions to plot the charts</a></li>
+  <li><a href="#plotting-the-makeover-charts" id="toc-plotting-the-makeover-charts" class="nav-link" data-scroll-target="#plotting-the-makeover-charts">3.4 Plotting the makeover charts</a></li>
   </ul></li>
   <li><a href="#learning-points" id="toc-learning-points" class="nav-link" data-scroll-target="#learning-points"><strong>4. Learning Points</strong></a></li>
   </ul>
@@ -240,7 +240,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 24, 2023</p>
+      <p class="date">January 25, 2023</p>
     </div>
   </div>
   
@@ -252,7 +252,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview"><strong>1. Overview</strong></h2>
-<p>This exercise aims to provide critique and improvements to age-sex (population) pyramid created by peer in Take Home Exercise 1 using Tableau. This will be done based on clarity and aesthetics. The original design will then be remade using data visualization design principles and best practices using <code>ggplot2</code>, its extensions, and <code>tidyverse</code> packages.</p>
+<p>This exercise aims to provide critique and improvements to age-sex (population) pyramid created by peer in Take-home Exercise 1 using Tableau. This will be done based on clarity and aesthetics. The original design will then be remade using data visualization design principles and best practices using <code>ggplot2</code>, its extensions, and <code>tidyverse</code> packages.</p>
 <p>The original dataset was downloaded from <a href="https://www.singstat.gov.sg/">Department of Statistics, Singapore</a>, titled <em>Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022.</em></p>
 <p>The file downloaded was <em>respopagesextod2022.csv.</em></p>
 <section id="section" class="level6">
@@ -270,7 +270,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p></p><figcaption class="figure-caption">Figure 1. Original design of age-sex pyramid prepared by peer in Take Home Exercise 1 using Tableau</figcaption><p></p>
 </figure>
 </div>
-<p>The embedded dashboard Tableau dashboard is presented below as well. It can also be referred <a href="https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link">here</a></p>
+<p>The embedded dashboard Tableau dashboard is presented below as well. The link to the actual dashboard can be accessed <a href="https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&amp;publish=yes&amp;:display_count=n&amp;:origin=viz_share_link">here</a>.</p>
 
 
 <div class="tableauPlaceholder" id="viz1674531147820" style="position: relative"><noscript><a href="#"><img alt="Singapore Age &amp; Sex by Planning Area " src="https://public.tableau.com/static/images/Ta/TakeHomeExercise01/Dashboard1/1_rss.png" style="border: none"></a></noscript><object class="tableauViz" style="display:none;"><param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F"> <param name="embed_code_version" value="3"> <param name="site_root" value=""><param name="name" value="TakeHomeExercise01/Dashboard1"><param name="tabs" value="no"><param name="toolbar" value="yes"><param name="static_image" value="https://public.tableau.com/static/images/Ta/TakeHomeExercise01/Dashboard1/1.png"> <param name="animate_transition" value="yes"><param name="display_static_image" value="yes"><param name="display_spinner" value="yes"><param name="display_overlay" value="yes"><param name="display_count" value="yes"><param name="language" value="en-US"><param name="filter" value="publish=yes"></object></div>                <script type="text/javascript">                    var divElement = document.getElementById('viz1674531147820');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='2377px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
@@ -281,20 +281,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="critique-clarity-and-aesthetics" class="level3">
 <h3 class="anchored" data-anchor-id="critique-clarity-and-aesthetics">2.2 Critique : Clarity and Aesthetics</h3>
 <section id="clarity" class="level4">
-<h4 class="anchored" data-anchor-id="clarity">Clarity</h4>
+<h4 class="anchored" data-anchor-id="clarity"><u>Clarity</u></h4>
 <ul>
-<li><p>While Tableau displays dynamic chart, the lack of x-axis here makes it difficult to gauge the data (male and female population). This also potentially mislead audience as it wrongly presents different planning areas have similar population size (i.e., population size of Downtown Core is much smaller than Tampines, but the length of the bars show that they are similar). This is because the scales of x-axis for different pyramids are inconsistent.</p></li>
-<li><p>Lack of legends, making it difficult to determine which side represents Male or Female population.</p></li>
+<li><p>While Tableau displays dynamic chart, the lack of x-axis in the plot makes it difficult to gauge the male and female population. This also potentially misleads audience as it wrongly presents different planning areas having comparable population size (i.e., population size of Downtown Core is much smaller than Tampines, but the length of the bars show that they are similar). This is because the scales of x-axis for different pyramids (in different planning areas) are inconsistent.</p></li>
+<li><p>Lack of legend, making it difficult to determine which side represents Male or Female population. Note that traditionally, the Male population is on the left side of the pyramids, hence initially creating confusion between color and position without legend.</p></li>
 <li><p>The title is descriptive, but not specific. For instance, it does not tell the audience which period was this from. Additionally, it does not tell the audience the context of the visualization (i.e., main highlight, story, etc). A well-worded title and subtitle should help here.</p></li>
 <li><p>Lack of references for audience to compare across different facets, having relevant data labels or reference line would improve readability.</p></li>
+<li><p>The presence of grid lines without x-axis is meaningless as there is no reference point.</p></li>
 <li><p>Audience has to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.</p></li>
 <li><p>The order of the planning areas in the trellis chart is not meaningful.</p></li>
-<li><p>The presence of grid lines without x-axis is meaningless.</p></li>
 <li><p>Lack of caption to present the source of data.</p></li>
 </ul>
 </section>
 <section id="aesthetics" class="level4">
-<h4 class="anchored" data-anchor-id="aesthetics">Aesthetics</h4>
+<h4 class="anchored" data-anchor-id="aesthetics"><u>Aesthetics</u></h4>
 <ul>
 <li><p>Good color choices representing Male and Female population, making it easy to read.</p></li>
 <li><p>Clear planning area labels for each population pyramid.</p></li>
@@ -312,15 +312,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="makeover-design"><strong>3. Makeover Design</strong></h2>
 <section id="proposed-sketch" class="level3">
 <h3 class="anchored" data-anchor-id="proposed-sketch">3.1 Proposed Sketch</h3>
-<p>Rough sketch of proposed design is shown below</p>
-<p>From the original visualization, it seems that the original author intends to contrast different population sizes and patterns across Singapore planning areas. This might be the reason for choosing low populated area like “Downtown Core” and highly populated area like “Tampines”. As such, it is proposed to plot the absolute (based on total population) of the age-sex pyramids of the original planning areas, ordered based on population sizes. Rough sketch of proposed design is shown below.</p>
+<p>From the original visualization, it seems that the original author intends to contrast different population sizes and patterns across Singapore planning areas. This might be the reason for presenting low populated area like “Downtown Core” and highly populated area like “Tampines” together. One way to do this is to plot the absolute pyramids (based on actual population) of the original planning areas, ordered based on population sizes. Rough sketch of proposed design is shown below.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/sketch_plot1.JPG" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Figure 2. Proposed sketch of the first plot</figcaption><p></p>
 </figure>
 </div>
-<p>Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of total population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference step chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to avoid misleading the audience.</p>
+<p>Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference step chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to still highlight the differences in population sizes.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/sketch_plot2.JPG" class="img-fluid figure-img"></p>
@@ -333,7 +332,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">3.2 Data Preparation</h3>
-<p>Launch R packages and import data from csv</p>
+<p>Launch R packages and import data from csv using <code>readr::read_csv.</code></p>
+<p>The packages installed are <code>tidyverse</code>, <code>cowplot</code> and <code>scales</code>. While <code>tidyverse</code> contains all useful R packages used for cleaning data and plotting graph, <code>cowplot</code> provides simple theme for <code>ggplot2</code> and <code>scales</code> helps to add comma and/or percentage for labels display. All packages can be found within CRAN.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -344,13 +344,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>sgpop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesextod2022.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<p>The loaded data needs to be modified before plotting. The list of modifications are as follows:</p>
+<section id="modifying-the-loaded-data" class="level4">
+<h4 class="anchored" data-anchor-id="modifying-the-loaded-data"><u>Modifying the loaded data</u></h4>
 <ul>
-<li><p>Group the original data by planning area, age, and sex</p></li>
-<li><p>Convert Males population to negative to reverse the bar chart axis</p></li>
-<li><p>Derive new variables to calculate population proportion - sum of population by PA, sum of total population, and the relevant proportions</p></li>
-<li><p>Derive “signal” variable to help to position data labels in min/max values on the respective Males and Females charts</p></li>
-<li><p>Factorize “Sex” and “AG” to order its level in the plots</p></li>
+<li><p>Group the original data by planning area (PA), age group (AG), and gender (Sex) using <code>dplyr::group_by</code> and <code>dplyr::summarise</code>, deriving new variable called <code>sum_pop</code>, which is the sum of population grouped by the three variables mentioned.</p></li>
+<li><p>Convert Males population to negative to reverse the bar chart axis using <code>dplyr::mutate</code> and <code>ifelse</code>.</p></li>
+<li><p>Derive variables <code>min_pop</code> and <code>max_pop</code> to determine the min and max male &amp; female population values for each planning area (PA) across age group (AG). This will be used in conjunction with <code>signal</code> below for data labeling purpose.</p></li>
+<li><p>Derive new variables to calculate population proportion : sum of population by PA (<code>sum_pop_pa</code>), sum of population by age and sex (<code>sum_pop_total</code>), sum of total Singapore population (<code>sum_pop_total_sg</code>)</p></li>
+<li><p>Using <code>left_join</code> to create new clean tibble called <code>sgpop_clean</code> which will be used as final dataset for plotting</p></li>
 </ul>
 <div class="cell">
 <details>
@@ -391,99 +392,133 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>sgpop_draft1 <span class="ot">=</span> sgpop_group <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_max_min, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span><span class="ot">=</span><span class="st">'PA'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>)) </span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>sgpop_draft2 <span class="ot">=</span> sgpop_draft1 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_sum, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span> <span class="ot">=</span> <span class="st">'PA'</span>))</span>
 <span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>sgpop_draft3 <span class="ot">=</span> sgpop_draft2 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_total, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'AG'</span> <span class="ot">=</span> <span class="st">'AG'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>))</span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">=</span> sgpop_draft3 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_total_summ, <span class="at">by =</span> <span class="st">'Sex'</span>)</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a><span class="co">#adding new variables:</span></span>
-<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co">#signal is used to display labels for min and max values in population pyramid</span></span>
-<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop is proportion population per planning area</span></span>
-<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop_total is proportion population of Singapore</span></span>
-<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">&lt;-</span> sgpop_clean <span class="sc">|&gt;</span> </span>
-<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">signal =</span> <span class="fu">case_when</span>((min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Males"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>                            (min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Females"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">0</span>),</span>
-<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop =</span> <span class="fu">round</span>(sum_pop<span class="sc">/</span>sum_pop_pa<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>),</span>
-<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop_total =</span> <span class="fu">abs</span>(<span class="fu">round</span>(sum_pop_total<span class="sc">/</span>sum_pop_total_sg<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>))</span>
-<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a><span class="co">#Order factors</span></span>
-<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>Sex, <span class="st">"Males"</span>)</span>
-<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>AG  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>AG, <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">=</span> sgpop_draft3 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_total_summ, <span class="at">by =</span> <span class="st">'Sex'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="final-touch-up-of-the-data-sgpop_clean" class="level4">
+<h4 class="anchored" data-anchor-id="final-touch-up-of-the-data-sgpop_clean"><u>Final touch-up of the data <code>sgpop_clean</code></u></h4>
+<ul>
+<li><p>Derive new variables to calculate proportion of population for the second plot. There are two proportions:</p>
+<ul>
+<li><p><code>prop_pop</code> which calculates proportion of population by age and sex in a given planning area</p></li>
+<li><p><code>prop_pop_total</code> which calculates proportion of population by age and sex for the entire Singapore. This is required to create the reference step chart</p></li>
+</ul></li>
+<li><p>Derive <code>signal</code> variable from <code>min_pop</code> and <code>max_pop</code> to help to position data labels in min/max values on the respective Males and Females charts. <code>case_when</code> is used to assign the values of -1, 1, 0 for max/min Males, max/min Females, and others respectively.</p></li>
+<li><p>Variable <code>Sex</code> and <code>AG</code> needs to be ordered to ensure that it appears as intended when plotting. As such <code>forcats::fct_relevel</code> is used to order them manually.</p></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#adding new variables:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#signal is used to display labels for min and max values in population pyramid</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop is proportion population per planning area</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop_total is proportion population of Singapore</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">&lt;-</span> sgpop_clean <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">signal =</span> <span class="fu">case_when</span>((min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Males"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                            (min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Females"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">0</span>),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop =</span> <span class="fu">round</span>(sum_pop<span class="sc">/</span>sum_pop_pa<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop_total =</span> <span class="fu">abs</span>(<span class="fu">round</span>(sum_pop_total<span class="sc">/</span>sum_pop_total_sg<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>))</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Order factors</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>Sex, <span class="st">"Males"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>AG  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>AG, <span class="st">"0 to 4"</span>, <span class="st">"5 to 9"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="section-4" class="level6">
 <h6 class="anchored" data-anchor-id="section-4"></h6>
 </section>
 </section>
-<section id="creating-function-to-plot-the-charts" class="level3">
-<h3 class="anchored" data-anchor-id="creating-function-to-plot-the-charts">3.2 Creating function to plot the charts</h3>
-<p>Functions are used to plot the charts to give flexibility to user(s) to input their selected 9 planning areas, ordered by their preference. In this case, however, we will use the original 9 planning areas in the original design. Two functions are created :</p>
+</section>
+<section id="creating-functions-to-plot-the-charts" class="level3">
+<h3 class="anchored" data-anchor-id="creating-functions-to-plot-the-charts">3.3 Creating functions to plot the charts</h3>
+<p>Functions are used to plot the charts to give flexibility to user(s) to input their selected 9 planning areas, ordered by their preference. In this case, however, we will use the original 9 planning areas in the original design.</p>
+<section id="the-multiple-layers-of-the-visualization-function" class="level4">
+<h4 class="anchored" data-anchor-id="the-multiple-layers-of-the-visualization-function"><u>The multiple layers of the visualization function</u></h4>
+<ul>
+<li><p>Variable <code>PA</code> needs to be ordered to ensure that it appears as intended when plotting. As such <code>forcats::fct_relevel</code> is used to order them manually. This is because we want to plot the trellis chart in the order of the function input (vector of string).</p></li>
+<li><p><code>ggplot2::geom_col</code> to plot the pyramids. This is used instead of <code>ggplot2::geom_bar</code> as we are plotting the values in the data instead of frequency of occurrence.</p></li>
+<li><p>Adding labels on min and max values is achieved using <code>ggplot2::geom_text</code>. The variable <code>signal</code> is used here to determine whether the labels appear or not. The <code>signal</code> is multiplied by certain value to give certain distance from the end of the bar.</p></li>
+<li><p>Only for second plot, <code>ggplot2::geom_step</code> is used to create the dashed reference line representing Singapore overall population proportion (%).</p></li>
+<li><p>Customise legend and color using <code>ggplot2::scale_fill_manual</code>.</p></li>
+<li><p>Customise x-axis (population) scales using <code>ggplot2::scale_y_continuous</code>. Note that we are not using <code>ggplot2::scale_x_continuous</code> as we used <code>ggplot2::coord_flip</code> before. Reason for this is because <code>ggplot2::geom_step</code> is unable to plot categorical variables in y-axis.</p></li>
+<li><p>To customise the title, subtitle, and caption, <code>ggplot2::labs</code> is used.</p></li>
+<li><p>Trellis plot is created using <code>ggplot2::facet_wrap</code>. Note that we are not using <code>ggplot2::facet_grid</code> as we are creating the facets using one variable - <code>PA</code>.</p></li>
+<li><p>Labels for “Total Population” for each planning area is created using <code>ggplot2::geom_label</code> to add nice border around the text.</p></li>
+<li><p><code>cowplot::theme_cowplot</code> is used to create more clean and professional look. Other theme adjustments utilise <code>ggplot2::theme</code>.</p></li>
+</ul>
+</section>
+<section id="creating-the-two-functions" class="level4">
+<h4 class="anchored" data-anchor-id="creating-the-two-functions"><u>Creating the two functions</u></h4>
 <ol type="1">
 <li>Function <code>plot_PA_pop</code> is created to plot age-sex pyramids based on absolute population. This takes argument of vector of strings of the planning areas.</li>
 </ol>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the axis range and limits</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>pop_range_breaks <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">15000</span>,<span class="dv">15000</span>,<span class="dv">7500</span>)   </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>pop_range_limits <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">16000</span>, <span class="dv">16000</span>)                   </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on absolute population</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>plot_PA_pop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area)) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#creating bar charts</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> sum_pop, </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Sex),</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding labels on min and max values</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> signal <span class="sc">!=</span> <span class="dv">0</span>),</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> sum_pop<span class="sc">+</span>signal<span class="sc">*</span><span class="dv">3500</span>,</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="fu">comma</span>(<span class="fu">abs</span>(sum_pop))</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>          )) <span class="sc">+</span></span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding legends and customize colors</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"#f6546a"</span>),</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale axis</span></span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="st">"Population"</span>,</span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> pop_range_limits,</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> pop_range_breaks,</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="fu">abs</span>(x<span class="sc">/</span><span class="dv">1000</span>),<span class="st">'K'</span>)}) <span class="sc">+</span></span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population size and patterns can differ drastically across Singapore planning areas"</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (absolute population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg)),</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>PA) <span class="sc">+</span></span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(</span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="dv">18</span>,</span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="dv">9000</span>,</span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Total Pop"</span>, <span class="fu">comma</span>(sum_pop_pa), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)),</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="st">"left"</span>) <span class="sc">+</span></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setting theme and aesthetics</span></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>    cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">'top'</span>,</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="st">'center'</span>,</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>))</span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the axis range and limits</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pop_range_breaks <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">15000</span>,<span class="dv">15000</span>,<span class="dv">7500</span>)   </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pop_range_limits <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">16000</span>, <span class="dv">16000</span>)                   </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on absolute population</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plot_PA_pop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area)) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#creating bar charts</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> sum_pop, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding labels on min and max values</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> signal <span class="sc">!=</span> <span class="dv">0</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> sum_pop<span class="sc">+</span>signal<span class="sc">*</span><span class="dv">2500</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="fu">comma</span>(<span class="fu">abs</span>(sum_pop))</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>          )) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding legends and customize colors</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"#f6546a"</span>),</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale axis</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="st">"Population"</span>,</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> pop_range_limits,</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> pop_range_breaks,</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="fu">abs</span>(x<span class="sc">/</span><span class="dv">1000</span>),<span class="st">'K'</span>)}) <span class="sc">+</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population sizes and patterns can differ drastically across Singapore planning areas"</span>,</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (absolute population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg)),</span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>PA) <span class="sc">+</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="dv">18</span>,</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="dv">9000</span>,</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Total Pop"</span>, <span class="fu">comma</span>(sum_pop_pa), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)),</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="st">"left"</span>) <span class="sc">+</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setting theme and aesthetics</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">'top'</span>,</span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="st">'center'</span>,</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>))</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <ol start="2" type="1">
@@ -492,131 +527,130 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the axis range and limits</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pop_range_breaks_prop <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">5</span>)                     </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pop_range_limits_prop <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">11</span>)                         </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on population proportion </span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plot_PA_prop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area),</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#creating bar charts</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> prop_pop, </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Sex),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding labels on min and max values</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> signal <span class="sc">!=</span> <span class="dv">0</span>),</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> prop_pop<span class="sc">+</span>signal<span class="sc">*</span><span class="dv">2</span>,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">abs</span>(prop_pop),<span class="st">'%'</span>)</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>          )) <span class="sc">+</span></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding reference step chart</span></span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_step</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Males"</span>),</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="sc">-</span>prop_pop_total),</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">"solid"</span>,</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_step</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Females"</span>),</span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> prop_pop_total),</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">"solid"</span>,</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span><span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding legends and customize colors</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"#f6546a"</span>),</span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"%Male"</span>, <span class="st">"%Female"</span>),</span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale axis</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="st">"Population Proportion"</span>,</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> pop_range_limits_prop,</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> pop_range_breaks_prop,</span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="fu">abs</span>(x),<span class="st">'%'</span>)}) <span class="sc">+</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Different demographic patterns are revealed when population proportion (%) is used in the pyramid"</span>,</span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (proportion population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg),<span class="st">"</span><span class="sc">\n</span><span class="st">Reference step chart represents Singapore overall population proportion (%)"</span>),</span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>PA) <span class="sc">+</span></span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="dv">18</span>,</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="dv">6</span>,</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Total Pop"</span>, <span class="fu">comma</span>(sum_pop_pa), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)),</span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="st">"left"</span>) <span class="sc">+</span></span>
-<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setting theme and aesthetics</span></span>
-<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
-<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
-<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
-<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">'top'</span>,</span>
-<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="st">'center'</span>,</span>
-<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
-<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
-<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>)) </span>
-<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the axis range and limits</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>pop_range_breaks_prop <span class="ot">=</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">5</span>)                     </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>pop_range_limits_prop <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">10.5</span>, <span class="fl">10.5</span>)                         </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on population proportion </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plot_PA_prop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#creating bar charts</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_col</span>(<span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> prop_pop, </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Sex)) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding labels on min and max values</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> signal <span class="sc">!=</span> <span class="dv">0</span>),</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> prop_pop<span class="sc">+</span>signal<span class="sc">*</span><span class="fl">1.5</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">abs</span>(prop_pop),<span class="st">'%'</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>          )) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding reference step chart</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_step</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Males"</span>),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> <span class="sc">-</span>prop_pop_total),</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_step</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Females"</span>),</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> AG,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">y =</span> prop_pop_total),</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>      <span class="at">color =</span><span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding legends and customize colors</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"#f6546a"</span>),</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"%Male"</span>, <span class="st">"%Female"</span>),</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>                      <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="co">#scale axis</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="st">"Population Proportion"</span>,</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>                       <span class="at">limits =</span> pop_range_limits_prop,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>                       <span class="at">breaks =</span> pop_range_breaks_prop,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="fu">abs</span>(x),<span class="st">'%'</span>)}) <span class="sc">+</span></span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Different demographic patterns are revealed when population proportion (%) is used in the pyramid"</span>,</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (proportion population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg),<span class="st">"</span><span class="sc">\n</span><span class="st">Reference step chart (dashed line) represents Singapore overall population proportion (%)"</span>),</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>PA) <span class="sc">+</span></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_label</span>(</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="dv">18</span>,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>      <span class="at">y =</span> <span class="dv">6</span>,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="st">"Total Pop"</span>, <span class="fu">comma</span>(sum_pop_pa), <span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)),</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="st">"left"</span>) <span class="sc">+</span></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    <span class="co">#setting theme and aesthetics</span></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.position =</span> <span class="st">'top'</span>,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.justification =</span> <span class="st">'center'</span>,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>)) </span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="section-5" class="level6">
 <h6 class="anchored" data-anchor-id="section-5"></h6>
 </section>
 </section>
+</section>
 <section id="plotting-the-makeover-charts" class="level3">
-<h3 class="anchored" data-anchor-id="plotting-the-makeover-charts">3.3 Plotting the makeover charts</h3>
-<p>As mentioned above, the first plot contrasts different population sizes and patterns across Singapore planning areas. As such absolute age-sex pyramids are plotted in 3x3 trellis chart. The reasons for choosing 3x3 is to optimize the display in webpage. Having 9x1 or 1x9 will either require audience to scroll or squeeze the pyramids too closely together.</p>
+<h3 class="anchored" data-anchor-id="plotting-the-makeover-charts">3.4 Plotting the makeover charts</h3>
+<p>As mentioned above, the first plot contrasts different population sizes and patterns across Singapore planning areas. As such absolute age-sex pyramids are plotted in 3x3 trellis chart. The reason for choosing 3x3 is to fit the display in one screen webpage (using quarto). Having 9x1 or 1x9 will either require audience to scroll or squeeze the pyramids too closely together.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot absolute population pyramid by the nine planning areas selected by peer</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_pop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot absolute population pyramid by the nine planning areas selected by peer</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_pop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1200"></p>
+<p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1200"></p>
 </div>
 </div>
 <p>The second plot presents an alternative angle to the same planning areas, highlighting the population patterns better without being influenced by the population size. Reference step chart based on Singapore overall population proportion % is added to allow audience to see how different planning areas population patterns differ from national proportion. Note that the reference chart is only possible to be added in the second plot as putting this in first plot will overshadow individual planning area pyramids. This is due to sheer size of Singapore population relative to each planning area.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_prop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_prop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="1200"></p>
+<p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1200"></p>
 </div>
 </div>
-<section id="clarity-1" class="level4">
-<h4 class="anchored" data-anchor-id="clarity-1">Clarity</h4>
+<section id="clarity-improvements" class="level4">
+<h4 class="anchored" data-anchor-id="clarity-improvements"><u>Clarity Improvements</u></h4>
 <ul>
-<li><p>Consistent scale of x-axis allows fair comparisons of population size and patterns across different planning areas. This is especially important since the range of population sizes for the planning areas differ greatly.</p></li>
-<li><p>As ggplot2 plots a static chart, having grid lines are important for audience for referencing. In this case, both y and x-axis grid lines are kept to allow audience to refer even the further pyramid from the axis (top right).</p></li>
+<li><p>Consistent scale of x-axis allows fair comparisons of population size and patterns across different planning areas. This is especially important since the population sizes for different planning areas differ greatly.</p></li>
+<li><p>As ggplot2 plots a static chart, having grid lines are important for audience for referencing. In this case, both y and x-axis grid lines are kept to ease readability, allowing audience to refer even the furthest pyramid from the axis (top right pyramid).</p></li>
+<li><p>Legend is provided and the “Male” bar chart is put to the left, allowing faster recognition.</p></li>
 <li><p>The title describes the context of the visualization, which is to contrast population sizes and patterns across different planning areas. Subtitle also provides factual clarity of the plots with total population displayed as reference.</p></li>
-<li><p>Only data labels for min and max age groups for each planning areas are provided. This is provided to still provide reference for audience without overwhelming them with too much labels.</p></li>
-<li><p>Annotations on each facets with total population for different planning areas help highlighting the context further.</p></li>
+<li><p>Only data labels for min and max population across age groups for each planning areas are provided. This gives reference for audience without overwhelming them with too much text labels.</p></li>
+<li><p>Annotations on each facets highlighting the total population for different planning areas gives an anchor point for audience, further spotlighting the context (different population sizes) of visualization.</p></li>
 <li><p>Reference step chart of second plot adds another dimension of comparison for audience.</p></li>
-<li><p>Audience can compare and contrast all pyramids in one look.</p></li>
-<li><p>The order of the planning areas in the trellis chart is by population size in ascending order</p></li>
+<li><p>Audience can compare and contrast all pyramids in one look in one view without the need to scroll.</p></li>
+<li><p>The planning area is ordered by population sizes, allowing audience to contrast the pyramid sizes per row (for the first plot)</p></li>
 <li><p>Caption is provided to present the source of data.</p></li>
 </ul>
 </section>
-<section id="aesthetics-1" class="level4">
-<h4 class="anchored" data-anchor-id="aesthetics-1">Aesthetics</h4>
+<section id="aesthetics-improvements" class="level4">
+<h4 class="anchored" data-anchor-id="aesthetics-improvements"><u>Aesthetics Improvements</u></h4>
 <ul>
-<li><p>Clear color choices representing Male and Female population, making it easy to read.</p></li>
-<li><p>Clear planning area labels for each population pyramid.</p></li>
-<li><p>Uniform white background gives a clean look.</p></li>
-<li><p>Soft grid lines are not distracting.</p></li>
-<li><p>Reference chart is solid line in step chart to mimic the shape of population pyramids.</p></li>
+<li><p>Soft solid grid lines are not distracting.</p></li>
+<li><p>Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines</p></li>
 </ul>
 <section id="section-6" class="level6">
 <h6 class="anchored" data-anchor-id="section-6"></h6>
