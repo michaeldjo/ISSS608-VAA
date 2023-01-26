@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Djohan">
-<meta name="dcterms.date" content="2023-01-25">
+<meta name="dcterms.date" content="2023-01-26">
 
 <title>ISSS608 - Michael Djohan - Take-home Exercise 2</title>
 <style>
@@ -158,6 +158,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html">
  <span class="dropdown-text">Hands-on Exercise 2</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html">
+ <span class="dropdown-text">Hands-on Exercise 3</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -240,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">January 25, 2023</p>
+      <p class="date">January 26, 2023</p>
     </div>
   </div>
   
@@ -286,9 +290,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>While Tableau displays dynamic chart, the lack of x-axis in the plot makes it difficult to gauge the male and female population. This also potentially misleads audience as it wrongly presents different planning areas having comparable population size (i.e., population size of Downtown Core is much smaller than Tampines, but the length of the bars show that they are similar). This is because the scales of x-axis for different pyramids (in different planning areas) are inconsistent.</p></li>
 <li><p>Lack of legend, making it difficult to determine which side represents Male or Female population. Note that traditionally, the Male population is on the left side of the pyramids, hence initially creating confusion between color and position without legend.</p></li>
 <li><p>The title is descriptive, but not specific. For instance, it does not tell the audience which period was this from. Additionally, it does not tell the audience the context of the visualization (i.e., main highlight, story, etc). A well-worded title and subtitle should help here.</p></li>
+<li><p>The original data age group binning (5 years) was kept. This is good as it keeps the resolution, grouping this to lower resolution (i.e., 10 years) might lead to detail loss. However, this leads to audience having to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.</p></li>
 <li><p>Lack of references for audience to compare across different facets, having relevant data labels or reference line would improve readability.</p></li>
 <li><p>The presence of grid lines without x-axis is meaningless as there is no reference point.</p></li>
-<li><p>Audience has to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.</p></li>
 <li><p>The order of the planning areas in the trellis chart is not meaningful.</p></li>
 <li><p>Lack of caption to present the source of data.</p></li>
 </ul>
@@ -332,8 +336,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">3.2 Data Preparation</h3>
-<p>Launch R packages and import data from csv using <code>readr::read_csv.</code></p>
-<p>The packages installed are <code>tidyverse</code>, <code>cowplot</code> and <code>scales</code>. While <code>tidyverse</code> contains all useful R packages used for cleaning data and plotting graph, <code>cowplot</code> provides simple theme for <code>ggplot2</code> and <code>scales</code> helps to add comma and/or percentage for labels display. All packages can be found within CRAN.</p>
+<p>Launch R packages and import data from csv using <code>readr::read_csv()</code>.</p>
+<p>The packages installed are <code>tidyverse</code>, <code>cowplot</code> and <code>scales</code>. While <code>tidyverse</code> contains all useful R packages used for cleaning data and plotting graph, <code>cowplot</code> is <code>ggplot2</code> extension, providing professional-looking figure. <code>scales</code> helps to add comma and/or percentage for labels display. All packages can be found within CRAN.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -347,12 +351,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="modifying-the-loaded-data" class="level4">
 <h4 class="anchored" data-anchor-id="modifying-the-loaded-data"><u>Modifying the loaded data</u></h4>
 <ul>
-<li><p>Group the original data by planning area (PA), age group (AG), and gender (Sex) using <code>dplyr::group_by</code> and <code>dplyr::summarise</code>, deriving new variable called <code>sum_pop</code>, which is the sum of population grouped by the three variables mentioned.</p></li>
-<li><p>Convert Males population to negative to reverse the bar chart axis using <code>dplyr::mutate</code> and <code>ifelse</code>.</p></li>
-<li><p>Eliminate the ‘_’, ‘to’, ‘and over’ in age group (<code>AG</code>) using <code>dplyr::mutate</code> and <code>gsub</code>.</p></li>
+<li><p>Group the original data by planning area (PA), age group (AG), and gender (Sex) using <code>dplyr::group_by()</code> and <code>dplyr::summarise()</code>, deriving new variable called <code>sum_pop</code>, which is the sum of population grouped by the three variables mentioned.</p></li>
+<li><p>Convert Males population to negative to reverse the bar chart axis using <code>dplyr::mutate()</code> and <code>ifelse</code>.</p></li>
+<li><p>Eliminate the ‘_’, ‘to’, ‘and over’ in age group (<code>AG</code>) using <code>dplyr::mutate()</code> and <code>gsub()</code>.</p></li>
 <li><p>Derive variables <code>min_pop</code> and <code>max_pop</code> to determine the min and max male &amp; female population values for each planning area (<code>PA</code>) across age group (<code>AG</code>). This will be used in conjunction with <code>signal</code> below for data labeling purpose.</p></li>
 <li><p>Derive new variables to calculate population proportion : sum of population by PA (<code>sum_pop_pa</code>), sum of population by age and sex (<code>sum_pop_total</code>), sum of total Singapore population (<code>sum_pop_total_sg</code>)</p></li>
-<li><p>Using <code>left_join</code> to create new clean tibble called <code>sgpop_clean</code> which will be used as final dataset for plotting</p></li>
+<li><p>Using <code>left_join()</code> to create new clean tibble called <code>sgpop_clean</code> which will be used as final dataset for plotting</p></li>
 </ul>
 <div class="cell">
 <details>
@@ -392,10 +396,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sum_pop_total_sg =</span> <span class="fu">sum</span>(<span class="fu">abs</span>(sum_pop_total_ag)))</span>
 <span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="co">#joining multiple tibbles to create final sgpop_clean</span></span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>sgpop_draft1 <span class="ot">=</span> sgpop_group <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_max_min, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span><span class="ot">=</span><span class="st">'PA'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>)) </span>
-<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>sgpop_draft2 <span class="ot">=</span> sgpop_draft1 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_sum, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span> <span class="ot">=</span> <span class="st">'PA'</span>))</span>
-<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>sgpop_draft3 <span class="ot">=</span> sgpop_draft2 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_total, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'AG'</span> <span class="ot">=</span> <span class="st">'AG'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>))</span>
-<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">=</span> sgpop_draft3 <span class="sc">|&gt;</span> <span class="fu">left_join</span>(sgpop_total_summ, <span class="at">by =</span> <span class="st">'Sex'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>sgpop_draft1 <span class="ot">=</span> sgpop_group <span class="sc">|&gt;</span> </span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgpop_max_min, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span><span class="ot">=</span><span class="st">'PA'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>)) </span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>sgpop_draft2 <span class="ot">=</span> sgpop_draft1 <span class="sc">|&gt;</span> </span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgpop_sum, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'PA'</span> <span class="ot">=</span> <span class="st">'PA'</span>))</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>sgpop_draft3 <span class="ot">=</span> sgpop_draft2 <span class="sc">|&gt;</span> </span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgpop_total, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'AG'</span> <span class="ot">=</span> <span class="st">'AG'</span>, <span class="st">'Sex'</span> <span class="ot">=</span> <span class="st">'Sex'</span>))</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">=</span> sgpop_draft3 <span class="sc">|&gt;</span> </span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgpop_total_summ, <span class="at">by =</span> <span class="st">'Sex'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -408,7 +416,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>prop_pop_total</code> which calculates proportion of population by age and sex for the entire Singapore. This is required to create the reference step chart</p></li>
 </ul></li>
 <li><p>Derive <code>signal</code> variable from <code>min_pop</code> and <code>max_pop</code> to help to position data labels in min/max values on the respective Males and Females charts. <code>case_when</code> is used to assign the values of -1, 1, 0 for max/min Males, max/min Females, and others respectively.</p></li>
-<li><p>Variable <code>Sex</code> and <code>AG</code> needs to be ordered to ensure that it appears as intended when plotting. As such <code>forcats::fct_relevel</code> is used to order them manually.</p></li>
+<li><p>Variable <code>Sex</code> and <code>AG</code> needs to be ordered to ensure that it appears as intended when plotting. As such <code>forcats::fct_relevel()</code> is used to order them manually.</p></li>
 </ul>
 <div class="cell">
 <details>
@@ -418,16 +426,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop is proportion population per planning area</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#prop_pop_total is proportion population of Singapore</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>sgpop_clean <span class="ot">&lt;-</span> sgpop_clean <span class="sc">|&gt;</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">signal =</span> <span class="fu">case_when</span>((min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Males"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                            (min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span> Sex <span class="sc">==</span> <span class="st">"Females"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">0</span>),</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop =</span> <span class="fu">round</span>(sum_pop<span class="sc">/</span>sum_pop_pa<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>),</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop_total =</span> <span class="fu">abs</span>(<span class="fu">round</span>(sum_pop_total<span class="sc">/</span>sum_pop_total_sg<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>))</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#Order factors</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>Sex, <span class="st">"Males"</span>)</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>AG  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>AG, <span class="st">"0 - 4"</span>, <span class="st">"5 - 9"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">signal =</span> <span class="fu">case_when</span>((min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                              Sex <span class="sc">==</span> <span class="st">"Males"</span> <span class="sc">~</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                            (min_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop) <span class="sc">|</span> max_pop <span class="sc">==</span> <span class="fu">abs</span>(sum_pop)) <span class="sc">&amp;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                              Sex <span class="sc">==</span> <span class="st">"Females"</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                            <span class="cn">TRUE</span><span class="sc">~</span><span class="dv">0</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop =</span> <span class="fu">round</span>(sum_pop<span class="sc">/</span>sum_pop_pa<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">prop_pop_total =</span> <span class="fu">abs</span>(<span class="fu">round</span>(sum_pop_total<span class="sc">/</span>sum_pop_total_sg<span class="sc">*</span><span class="dv">100</span>, <span class="dv">1</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Order factors</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>Sex <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>Sex, <span class="st">"Males"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>sgpop_clean<span class="sc">$</span>AG  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>AG, <span class="st">"0 - 4"</span>, <span class="st">"5 - 9"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <section id="section-4" class="level6">
@@ -441,16 +451,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="the-multiple-layers-of-the-visualization-function" class="level4">
 <h4 class="anchored" data-anchor-id="the-multiple-layers-of-the-visualization-function"><u>The multiple layers of the visualization function</u></h4>
 <ul>
-<li><p>Variable <code>PA</code> needs to be ordered to ensure that it appears as intended when plotting. As such <code>forcats::fct_relevel</code> is used to order them manually. This is because we want to plot the trellis chart in the order of the function input (vector of string).</p></li>
-<li><p><code>ggplot2::geom_col</code> to plot the pyramids. This is used instead of <code>ggplot2::geom_bar</code> as we are plotting the values in the data instead of frequency of occurrence.</p></li>
-<li><p>Adding labels on min and max values is achieved using <code>ggplot2::geom_text</code>. The variable <code>signal</code> is used here to determine whether the labels appear or not. The <code>signal</code> is multiplied by certain value to give certain distance from the end of the bar.</p></li>
-<li><p>Only for second plot, <code>ggplot2::geom_step</code> is used to create the dashed reference line representing Singapore overall population proportion (%).</p></li>
-<li><p>Customise legend and color using <code>ggplot2::scale_fill_manual</code>.</p></li>
-<li><p>Customise x-axis (population) scales using <code>ggplot2::scale_y_continuous</code>. Note that we are not using <code>ggplot2::scale_x_continuous</code> as we used <code>ggplot2::coord_flip</code> before. Reason for this is because <code>ggplot2::geom_step</code> is unable to plot categorical variables in y-axis.</p></li>
-<li><p>To customise the title, subtitle, and caption, <code>ggplot2::labs</code> is used.</p></li>
-<li><p>Trellis plot is created using <code>ggplot2::facet_wrap</code>. Note that we are not using <code>ggplot2::facet_grid</code> as we are creating the facets using one variable - <code>PA</code>.</p></li>
-<li><p>Labels for “Total Population” for each planning area is created using <code>ggplot2::geom_label</code> to add nice border around the text.</p></li>
-<li><p><code>cowplot::theme_cowplot</code> is used to create more clean and professional look. Other theme adjustments utilise <code>ggplot2::theme</code>.</p></li>
+<li><p>Variable <code>PA</code> needs to be ordered to ensure that it appears as intended when plotting the trellis chart. As such <code>forcats::fct_reorder()</code> is used to order them by population size (<code>sum_pop_pa</code>).</p></li>
+<li><p><code>ggplot2::geom_col()</code> to plot the pyramids. This is used instead of <code>ggplot2::geom_bar()</code> as we are plotting the values in the data instead of frequency of occurrence.</p></li>
+<li><p>Adding labels on min and max values is achieved using <code>ggplot2::geom_text()</code>. The variable <code>signal</code> is used here to determine whether the labels appear or not. The <code>signal</code> is multiplied by certain value to give certain distance from the end of the bar.</p></li>
+<li><p>Only for second plot, <code>ggplot2::geom_step()</code> is used to create the dashed reference line representing Singapore overall population proportion (%).</p></li>
+<li><p>Customise legend and color using <code>ggplot2::scale_fill_manual()</code>.</p></li>
+<li><p>Customise x-axis (population) scales using <code>ggplot2::scale_y_continuous()</code>. Note that we are not using <code>ggplot2::scale_x_continuous()</code> as we used <code>ggplot2::coord_flip()</code> before. Reason for this is because <code>ggplot2::geom_step()</code> is unable to plot categorical variables in y-axis.</p></li>
+<li><p>To customise the title, subtitle, and caption, <code>ggplot2::labs()</code> is used.</p></li>
+<li><p>Trellis plot is created using <code>ggplot2::facet_wrap()</code>. Note that we are not using <code>ggplot2::facet_grid()</code> as we are creating the facets using one variable - <code>PA</code>.</p></li>
+<li><p>Labels for “Total Population” for each planning area is created using <code>ggplot2::geom_label()</code> to add nice border around the text.</p></li>
+<li><p><code>cowplot::theme_cowplot()</code> is used to create more clean and professional look. Other theme adjustments utilise <code>ggplot2::theme()</code>.</p></li>
 </ul>
 </section>
 <section id="creating-the-two-functions" class="level4">
@@ -467,7 +477,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on absolute population</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>plot_PA_pop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(sgpop_clean<span class="sc">$</span>PA, sgpop_clean<span class="sc">$</span>sum_pop_pa)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> </span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>           <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area)) <span class="sc">+</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -499,7 +509,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
 <span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population sizes and patterns can differ drastically across Singapore planning areas"</span>,</span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (absolute population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg)),</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (absolute population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>,<span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg)),</span>
 <span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
 <span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
@@ -537,7 +547,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Create function to plot based on population proportion </span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plot_PA_prop <span class="ot">&lt;-</span> <span class="cf">function</span>(planning_area) {</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_relevel</span>(sgpop_clean<span class="sc">$</span>PA, planning_area)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  sgpop_clean<span class="sc">$</span>PA  <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(sgpop_clean<span class="sc">$</span>PA, sgpop_clean<span class="sc">$</span>sum_pop_pa)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data =</span> sgpop_clean <span class="sc">|&gt;</span> <span class="fu">filter</span>(PA <span class="sc">%in%</span> planning_area),</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>         <span class="fu">aes</span>(<span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    </span>
@@ -583,7 +593,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="co">#adding title, subtitle, and caption</span></span>
 <span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Different demographic patterns are revealed when population proportion (%) is used in the pyramid"</span>,</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (proportion population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>, <span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg),<span class="st">"</span><span class="sc">\n</span><span class="st">Reference step chart (dashed line) represents Singapore overall population proportion (%)"</span>),</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids (proportion population) by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>,<span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg),<span class="st">"</span><span class="sc">\n</span><span class="st">Reference step chart (dashed line) represents Singapore overall population proportion (%)"</span>),</span>
 <span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>) <span class="sc">+</span></span>
 <span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="co">#create trellis plot and PA population label</span></span>
@@ -645,10 +655,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>As ggplot2 plots a static chart, having grid lines are important for audience for referencing. In this case, both y and x-axis grid lines are kept to ease readability, allowing audience to refer even the furthest pyramid from the axis (top right pyramid).</p></li>
 <li><p>Legend is provided and the “Male” bar chart is put to the left, allowing faster recognition.</p></li>
 <li><p>The title describes the context of the visualization, which is to contrast population sizes and patterns across different planning areas. Subtitle also provides factual clarity of the plots with total population displayed as reference.</p></li>
+<li><p>By adjusting the plot height, the solutions presented still keep the original resolution (5-year), without audience having to scroll down on each individual facet. This eases comparison among all pyramids in one view.</p></li>
 <li><p>Only data labels for min and max population across age groups for each planning areas are provided. This gives reference for audience without overwhelming them with too much text labels.</p></li>
 <li><p>Annotations on each facets highlighting the total population for different planning areas gives an anchor point for audience, further spotlighting the context (different population sizes) of visualization.</p></li>
 <li><p>Reference step chart of second plot adds another dimension of comparison for audience.</p></li>
-<li><p>Audience can compare and contrast all pyramids in one look in one view without the need to scroll.</p></li>
 <li><p>The planning area is ordered by population sizes, allowing audience to contrast the pyramid sizes per row (for the first plot)</p></li>
 <li><p>Caption is provided to present the source of data.</p></li>
 </ul>

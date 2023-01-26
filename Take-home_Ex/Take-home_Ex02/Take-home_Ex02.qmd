@@ -42,11 +42,11 @@ The embedded dashboard Tableau dashboard is presented below as well. The link to
 
 -   The title is descriptive, but not specific. For instance, it does not tell the audience which period was this from. Additionally, it does not tell the audience the context of the visualization (i.e., main highlight, story, etc). A well-worded title and subtitle should help here.
 
+-   The original data age group binning (5 years) was kept. This is good as it keeps the resolution, grouping this to lower resolution (i.e., 10 years) might lead to detail loss. However, this leads to audience having to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.
+
 -   Lack of references for audience to compare across different facets, having relevant data labels or reference line would improve readability.
 
 -   The presence of grid lines without x-axis is meaningless as there is no reference point.
-
--   Audience has to scroll down on each individual pyramid, making it difficult to observe patterns from quick glance.
 
 -   The order of the planning areas in the trellis chart is not meaningful.
 
@@ -82,9 +82,9 @@ Another angle of visualizing age-sex pyramids is by plotting the proportion pyra
 
 ### 3.2 Data Preparation
 
-Launch R packages and import data from csv using `readr::read_csv.`
+Launch R packages and import data from csv using `readr::read_csv()`.
 
-The packages installed are `tidyverse`, `cowplot` and `scales`. While `tidyverse` contains all useful R packages used for cleaning data and plotting graph, `cowplot` provides simple theme for `ggplot2` and `scales` helps to add comma and/or percentage for labels display. All packages can be found within CRAN.
+The packages installed are `tidyverse`, `cowplot` and `scales`. While `tidyverse` contains all useful R packages used for cleaning data and plotting graph, `cowplot` is `ggplot2` extension, providing professional-looking figure. `scales` helps to add comma and/or percentage for labels display. All packages can be found within CRAN.
 
 ```{r}
 #| code-fold: true
@@ -98,17 +98,17 @@ sgpop <- read_csv("data/respopagesextod2022.csv", show_col_types = FALSE)
 
 #### [Modifying the loaded data]{.underline}
 
--   Group the original data by planning area (PA), age group (AG), and gender (Sex) using `dplyr::group_by` and `dplyr::summarise`, deriving new variable called `sum_pop`, which is the sum of population grouped by the three variables mentioned.
+-   Group the original data by planning area (PA), age group (AG), and gender (Sex) using `dplyr::group_by()` and `dplyr::summarise()`, deriving new variable called `sum_pop`, which is the sum of population grouped by the three variables mentioned.
 
--   Convert Males population to negative to reverse the bar chart axis using `dplyr::mutate` and `ifelse`.
+-   Convert Males population to negative to reverse the bar chart axis using `dplyr::mutate()` and `ifelse`.
 
--   Eliminate the '\_', 'to', 'and over' in age group (`AG`) using `dplyr::mutate` and `gsub`.
+-   Eliminate the '\_', 'to', 'and over' in age group (`AG`) using `dplyr::mutate()` and `gsub()`.
 
 -   Derive variables `min_pop` and `max_pop` to determine the min and max male & female population values for each planning area (`PA`) across age group (`AG`). This will be used in conjunction with `signal` below for data labeling purpose.
 
 -   Derive new variables to calculate population proportion : sum of population by PA (`sum_pop_pa`), sum of population by age and sex (`sum_pop_total`), sum of total Singapore population (`sum_pop_total_sg`)
 
--   Using `left_join` to create new clean tibble called `sgpop_clean` which will be used as final dataset for plotting
+-   Using `left_join()` to create new clean tibble called `sgpop_clean` which will be used as final dataset for plotting
 
 ```{r}
 #| code-fold: true
@@ -149,10 +149,14 @@ sgpop_total_summ <- sgpop_total |>
   mutate(sum_pop_total_sg = sum(abs(sum_pop_total_ag)))
 
 #joining multiple tibbles to create final sgpop_clean
-sgpop_draft1 = sgpop_group |> left_join(sgpop_max_min, by = c('PA'='PA', 'Sex' = 'Sex')) 
-sgpop_draft2 = sgpop_draft1 |> left_join(sgpop_sum, by = c('PA' = 'PA'))
-sgpop_draft3 = sgpop_draft2 |> left_join(sgpop_total, by = c('AG' = 'AG', 'Sex' = 'Sex'))
-sgpop_clean = sgpop_draft3 |> left_join(sgpop_total_summ, by = 'Sex')
+sgpop_draft1 = sgpop_group |> 
+  left_join(sgpop_max_min, by = c('PA'='PA', 'Sex' = 'Sex')) 
+sgpop_draft2 = sgpop_draft1 |> 
+  left_join(sgpop_sum, by = c('PA' = 'PA'))
+sgpop_draft3 = sgpop_draft2 |> 
+  left_join(sgpop_total, by = c('AG' = 'AG', 'Sex' = 'Sex'))
+sgpop_clean = sgpop_draft3 |> 
+  left_join(sgpop_total_summ, by = 'Sex')
 ```
 
 #### [Final touch-up of the data `sgpop_clean`]{.underline}
@@ -165,7 +169,7 @@ sgpop_clean = sgpop_draft3 |> left_join(sgpop_total_summ, by = 'Sex')
 
 -   Derive `signal` variable from `min_pop` and `max_pop` to help to position data labels in min/max values on the respective Males and Females charts. `case_when` is used to assign the values of -1, 1, 0 for max/min Males, max/min Females, and others respectively.
 
--   Variable `Sex` and `AG` needs to be ordered to ensure that it appears as intended when plotting. As such `forcats::fct_relevel` is used to order them manually.
+-   Variable `Sex` and `AG` needs to be ordered to ensure that it appears as intended when plotting. As such `forcats::fct_relevel()` is used to order them manually.
 
 ```{r}
 #| code-fold: true
@@ -176,8 +180,10 @@ sgpop_clean = sgpop_draft3 |> left_join(sgpop_total_summ, by = 'Sex')
 #prop_pop is proportion population per planning area
 #prop_pop_total is proportion population of Singapore
 sgpop_clean <- sgpop_clean |> 
-  mutate(signal = case_when((min_pop == abs(sum_pop) | max_pop == abs(sum_pop)) & Sex == "Males" ~ -1,
-                            (min_pop == abs(sum_pop) | max_pop == abs(sum_pop)) & Sex == "Females" ~ 1,
+  mutate(signal = case_when((min_pop == abs(sum_pop) | max_pop == abs(sum_pop)) &
+                              Sex == "Males" ~ -1,
+                            (min_pop == abs(sum_pop) | max_pop == abs(sum_pop)) &
+                              Sex == "Females" ~ 1,
                             TRUE~0),
          prop_pop = round(sum_pop/sum_pop_pa*100, 1),
          prop_pop_total = abs(round(sum_pop_total/sum_pop_total_sg*100, 1))
@@ -196,25 +202,25 @@ Functions are used to plot the charts to give flexibility to user(s) to input th
 
 #### [The multiple layers of the visualization function]{.underline}
 
--   Variable `PA` needs to be ordered to ensure that it appears as intended when plotting. As such `forcats::fct_relevel` is used to order them manually. This is because we want to plot the trellis chart in the order of the function input (vector of string).
+-   Variable `PA` needs to be ordered to ensure that it appears as intended when plotting the trellis chart. As such `forcats::fct_reorder()` is used to order them by population size (`sum_pop_pa`).
 
--   `ggplot2::geom_col` to plot the pyramids. This is used instead of `ggplot2::geom_bar` as we are plotting the values in the data instead of frequency of occurrence.
+-   `ggplot2::geom_col()` to plot the pyramids. This is used instead of `ggplot2::geom_bar()` as we are plotting the values in the data instead of frequency of occurrence.
 
--   Adding labels on min and max values is achieved using `ggplot2::geom_text`. The variable `signal` is used here to determine whether the labels appear or not. The `signal` is multiplied by certain value to give certain distance from the end of the bar.
+-   Adding labels on min and max values is achieved using `ggplot2::geom_text()`. The variable `signal` is used here to determine whether the labels appear or not. The `signal` is multiplied by certain value to give certain distance from the end of the bar.
 
--   Only for second plot, `ggplot2::geom_step` is used to create the dashed reference line representing Singapore overall population proportion (%).
+-   Only for second plot, `ggplot2::geom_step()` is used to create the dashed reference line representing Singapore overall population proportion (%).
 
--   Customise legend and color using `ggplot2::scale_fill_manual`.
+-   Customise legend and color using `ggplot2::scale_fill_manual()`.
 
--   Customise x-axis (population) scales using `ggplot2::scale_y_continuous`. Note that we are not using `ggplot2::scale_x_continuous` as we used `ggplot2::coord_flip` before. Reason for this is because `ggplot2::geom_step` is unable to plot categorical variables in y-axis.
+-   Customise x-axis (population) scales using `ggplot2::scale_y_continuous()`. Note that we are not using `ggplot2::scale_x_continuous()` as we used `ggplot2::coord_flip()` before. Reason for this is because `ggplot2::geom_step()` is unable to plot categorical variables in y-axis.
 
--   To customise the title, subtitle, and caption, `ggplot2::labs` is used.
+-   To customise the title, subtitle, and caption, `ggplot2::labs()` is used.
 
--   Trellis plot is created using `ggplot2::facet_wrap`. Note that we are not using `ggplot2::facet_grid` as we are creating the facets using one variable - `PA`.
+-   Trellis plot is created using `ggplot2::facet_wrap()`. Note that we are not using `ggplot2::facet_grid()` as we are creating the facets using one variable - `PA`.
 
--   Labels for "Total Population" for each planning area is created using `ggplot2::geom_label` to add nice border around the text.
+-   Labels for "Total Population" for each planning area is created using `ggplot2::geom_label()` to add nice border around the text.
 
--   `cowplot::theme_cowplot` is used to create more clean and professional look. Other theme adjustments utilise `ggplot2::theme`.
+-   `cowplot::theme_cowplot()` is used to create more clean and professional look. Other theme adjustments utilise `ggplot2::theme()`.
 
 #### [Creating the two functions]{.underline}
 
@@ -229,7 +235,7 @@ pop_range_limits = c(-16000, 16000)
 
 #Create function to plot based on absolute population
 plot_PA_pop <- function(planning_area) {
-  sgpop_clean$PA  <- fct_relevel(sgpop_clean$PA, planning_area)
+  sgpop_clean$PA  <- fct_reorder(sgpop_clean$PA, sgpop_clean$sum_pop_pa)
   ggplot(data = sgpop_clean |> 
            filter(PA %in% planning_area)) +
     
@@ -261,7 +267,7 @@ plot_PA_pop <- function(planning_area) {
     
     #adding title, subtitle, and caption
     labs(title = "Population sizes and patterns can differ drastically across Singapore planning areas",
-         subtitle = paste0("Singapore age-sex pyramids (absolute population) by Planning Area, June 2022\nTotal Singapore Residents Population : ", comma(sgpop_clean$sum_pop_total_sg)),
+         subtitle = paste0("Singapore age-sex pyramids (absolute population) by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg)),
          caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
     
     #create trellis plot and PA population label
@@ -298,7 +304,7 @@ pop_range_limits_prop = c(-9, 9)
 
 #Create function to plot based on population proportion 
 plot_PA_prop <- function(planning_area) {
-  sgpop_clean$PA  <- fct_relevel(sgpop_clean$PA, planning_area)
+  sgpop_clean$PA  <- fct_reorder(sgpop_clean$PA, sgpop_clean$sum_pop_pa)
   ggplot(data = sgpop_clean |> filter(PA %in% planning_area),
          aes(group = 1)) +
     
@@ -344,7 +350,7 @@ plot_PA_prop <- function(planning_area) {
     
     #adding title, subtitle, and caption
     labs(title = "Different demographic patterns are revealed when population proportion (%) is used in the pyramid",
-         subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ", comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
+         subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
          caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
     
     #create trellis plot and PA population label
@@ -406,13 +412,13 @@ plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "S
 
 -   The title describes the context of the visualization, which is to contrast population sizes and patterns across different planning areas. Subtitle also provides factual clarity of the plots with total population displayed as reference.
 
+-   By adjusting the plot height, the solutions presented still keep the original resolution (5-year), without audience having to scroll down on each individual facet. This eases comparison among all pyramids in one view.
+
 -   Only data labels for min and max population across age groups for each planning areas are provided. This gives reference for audience without overwhelming them with too much text labels.
 
 -   Annotations on each facets highlighting the total population for different planning areas gives an anchor point for audience, further spotlighting the context (different population sizes) of visualization.
 
 -   Reference step chart of second plot adds another dimension of comparison for audience.
-
--   Audience can compare and contrast all pyramids in one look in one view without the need to scroll.
 
 -   The planning area is ordered by population sizes, allowing audience to contrast the pyramid sizes per row (for the first plot)
 

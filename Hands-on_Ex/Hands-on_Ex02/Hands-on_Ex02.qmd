@@ -17,7 +17,7 @@ pacman::p_load(tidyverse, ggdist, ggridges,
                ggrepel, ggforce)
 ```
 
-#### Importing the data
+### Importing the data
 
 ```{r}
 #| output: false
@@ -154,11 +154,14 @@ p1 + p2 / p3
 ```
 
 Combining patchwork and themes
+
 ```{r}
 ((p1 / p2) | p3) & theme_economist()
 #this will auto-tag the subplots in text
 ```
+
 Insert another plot in a plot
+
 ```{r}
 p3 + inset_element(p2,
                    left = 0.02,
