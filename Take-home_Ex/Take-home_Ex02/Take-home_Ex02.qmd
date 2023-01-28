@@ -25,12 +25,8 @@ Figure 1 below shows the original design of the Singapore population pyramid by 
 
 ![Figure 1. Original design of age-sex pyramid prepared by peer in Take Home Exercise 1 using Tableau](images/image-277094904.png)
 
-The embedded dashboard Tableau dashboard is presented below as well. The link to the actual dashboard can be accessed [here](https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
+The link to the actual dashboard can be accessed [here](https://public.tableau.com/views/TakeHomeExercise01/Dashboard1?:language=en-US&publish=yes&:display_count=n&:origin=viz_share_link).
 
-```{=html}
-
-<div class='tableauPlaceholder' id='viz1674531147820' style='position: relative'><noscript><a href='#'><img alt='Singapore Age &amp; Sex by Planning Area ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;TakeHomeExercise01&#47;Dashboard1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='TakeHomeExercise01&#47;Dashboard1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ta&#47;TakeHomeExercise01&#47;Dashboard1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1674531147820');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';} else { vizElement.style.width='100%';vizElement.style.height='2377px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
-```
 ###### 
 
 ### 2.2 Critique : Clarity and Aesthetics
@@ -75,7 +71,7 @@ From the original visualization, it seems that the original author intends to co
 
 ![Figure 2. Proposed sketch of the first plot](images/sketch_plot1.JPG)
 
-Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference step chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to still highlight the differences in population sizes.
+Another angle of visualizing age-sex pyramids is by plotting the proportion pyramids (based on proportion% of population). This will highlight the population patterns better without being influenced by the population size. With this, we could also add reference chart based on Singapore overall population proportion %. It is also important to have data labels highlighting the population of each planning area to still highlight the differences in population sizes.
 
 ![Figure 3. Proposed sketch of the second plot](images/sketch_plot2.JPG)
 
@@ -171,7 +167,7 @@ sgpop_clean = sgpop_draft3 |>
 
     -   `prop_pop` which calculates proportion of population by age and sex in a given planning area
 
-    -   `prop_pop_total` which calculates proportion of population by age and sex for the entire Singapore. This is required to create the reference step chart
+    -   `prop_pop_total` which calculates proportion of population by age and sex for the entire Singapore. This is required to create the reference chart
 
 -   Derive `signal` variable from `min_pop` and `max_pop` to help to position data labels in min/max values on the respective Males and Females charts. `case_when` is used to assign the values of -1, 1, 0 for max/min Males, max/min Females, and others respectively.
 
@@ -299,14 +295,16 @@ plot_PA_pop <- function(planning_area) {
 }
 ```
 
-2.  Function `plot_PA_prop` is created to plot age-sex pyramids based on population proportion (%). This also takes argument of vector of strings of the planning areas. However this chart also shows the reference step chart based on Singapore overall population proportion %.
+2.  Function is created to plot age-sex pyramids based on population proportion (%). This also takes argument of vector of strings of the planning areas. However this chart also shows the reference chart based on Singapore overall population proportion %. There are two versions of the reference charts created:
+
+a.  Representing Singapore population proportion % with reference-step line (`plot_PA_prop`)
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #Setting the axis range and limits
 pop_range_breaks_prop = seq(-8,8,4)                     
-pop_range_limits_prop = c(-9, 9)                         
+pop_range_limits_prop = c(-9, 9)   
 
 #Create function to plot based on population proportion 
 plot_PA_prop <- function(planning_area) {
@@ -345,7 +343,7 @@ plot_PA_prop <- function(planning_area) {
     
     #adding legends and customize colors
     scale_fill_manual(values = c("steelblue", "#f6546a"),
-                      labels = c("%Male", "%Female"),
+                      labels = c("Male%", "Female%"),
                       name = NULL) +
     
     #scale axis
@@ -357,6 +355,88 @@ plot_PA_prop <- function(planning_area) {
     #adding title, subtitle, and caption
     labs(title = "Different demographic patterns are revealed when population proportion (%) is used in the pyramid",
          subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
+         caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
+    
+    #create trellis plot and PA population label
+    facet_wrap(~PA) +
+    geom_label(
+      x = 18,
+      y = 5,
+      aes(label = paste("Total Pop", comma(sum_pop_pa), sep = "\n")),
+      hjust = "left") +
+        
+    #setting theme and aesthetics
+    cowplot::theme_cowplot() +
+    theme(axis.title.x = element_text(vjust = 0.5),
+          axis.title.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          panel.grid.major.x = element_line(color = "grey90", linetype = "solid"),
+          panel.grid.major.y = element_line(color = "grey90", linetype = "solid"),
+          legend.position = 'top',
+          legend.justification = 'center',
+          panel.border = element_rect(color = "grey60", linetype = "solid", linewidth = 0.5),
+          panel.spacing.x = unit(0,"line"),
+          panel.spacing.y = unit(0,"line")) 
+}
+```
+
+b.  Representing Singapore population proportion % with reference bar chart (`plot_PA_prop_bar`)
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#Setting the axis range and limits
+pop_range_breaks_prop = seq(-8,8,4)                     
+pop_range_limits_prop = c(-9, 9)
+
+#Create function to plot based on population proportion 
+plot_PA_prop_bar <- function(planning_area) {
+  sgpop_clean$PA  <- fct_reorder(sgpop_clean$PA, sgpop_clean$sum_pop_pa)
+  ggplot(data = sgpop_clean |> filter(PA %in% planning_area),
+         aes(group = 1)) +
+    
+    #creating bar charts
+    geom_col(aes(x = AG,
+                 y = prop_pop, 
+                 fill = Sex)) +
+    
+    #adding labels on min and max values
+    geom_text(
+      data = sgpop_clean |> filter(PA %in% planning_area & signal != 0),
+      aes(x = AG,
+          y = prop_pop+signal*1.5,
+          label = paste0(abs(prop_pop),'%')
+          )) +
+    
+    #adding reference bar chart
+    geom_col(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Males"),
+      aes(x = AG,
+          y = -prop_pop_total,
+          fill ="singpop"),
+      alpha = 0.6) +
+    geom_col(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Females"),
+      aes(x = AG,
+          y = prop_pop_total,
+          fill ="singpop"),
+      alpha = 0.6) +
+    
+    coord_flip() +
+    
+    #adding legends and customize colors
+    scale_fill_manual(values = c("Males" = "steelblue", "Females" = "#f6546a", "singpop" = "grey60"),
+                      breaks = c("Males", "Females", "singpop"),
+                      labels = c("Males" = "Male%", "Females" = "Female%", "singpop" = "Singapore Population%"),
+                      name = NULL) +
+    
+    #scale axis
+    scale_y_continuous("Population Proportion",
+                       limits = pop_range_limits_prop,
+                       breaks = pop_range_breaks_prop,
+                       labels = function(x){paste0(abs(x),'%')}) +
+    
+    #adding title, subtitle, and caption
+    labs(title = "Different demographic patterns are revealed when population proportion (%) is used in the pyramid",
+         subtitle = paste0("Singapore age-sex pyramids (proportion population) by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference bar chart (transparent grey) represents Singapore overall population proportion (%)"),
          caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore") +
     
     #create trellis plot and PA population label
@@ -397,8 +477,9 @@ As mentioned above, the first plot contrasts different population sizes and patt
 plot_PA_pop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
 ```
 
-The second plot presents an alternative angle to the same planning areas, highlighting the population patterns better without being influenced by the population size. Reference step chart based on Singapore overall population proportion % is added to allow audience to see how different planning areas population patterns differ from national proportion. Note that the reference chart is only possible to be added in the second plot as putting this in first plot will overshadow individual planning area pyramids. This is due to sheer size of Singapore population relative to each planning area.
+The second plot presents an alternative angle to the same planning areas, highlighting the population patterns better without being influenced by the population size. Reference chart based on Singapore overall population proportion % is added to allow audience to see how different planning areas population patterns differ from national proportion. Note that the reference chart is only possible to be added in the second plot as putting this in first plot will overshadow individual planning area pyramids. This is due to sheer size of Singapore population relative to each planning area. The two versions of the second plot is presented below.
 
+a.  Representing Singapore population proportion % with reference-step line
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -407,6 +488,18 @@ The second plot presents an alternative angle to the same planning areas, highli
 #Calling the function to plot proportion population pyramid by the nine planning areas selected by peer
 plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
 ```
+
+b.  Representing Singapore population proportion % with reference bar chart
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 12.5
+#| fig-width: 12.5
+#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer
+plot_PA_prop_bar(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
+```
+
+Note that it is quite difficult to see the reference bar chart, especially for certain planning areas like Clementi or Hougang, in which there is large overlap with overall Singapore Population pyramid. As such it might make sense to use the step chart instead as the final visualization. 
 
 #### [Clarity Improvements]{.underline}
 
@@ -424,7 +517,7 @@ plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "S
 
 -   Annotations on each facets highlighting the total population for different planning areas gives an anchor point for audience, further spotlighting the context (different population sizes) of visualization.
 
--   Reference step chart of second plot adds another dimension of comparison for audience.
+-   Reference chart of second plot adds another dimension of comparison for audience.
 
 -   The planning area is ordered by population sizes, allowing audience to contrast the pyramid sizes per row (for the first plot)
 
@@ -434,7 +527,7 @@ plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "S
 
 -   Soft solid grid lines are not distracting.
 
--   Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines.
+-   Reference chart is in step chart to mimic the shape of population pyramids. It is also dashed to better distinguish from the grid lines. As discussed above, this offers better overall visualization than the transparent bar charts.
 
 -   Tick-marks for y-axis (age group) are removed as they are superfluous for categorical variables.
 
