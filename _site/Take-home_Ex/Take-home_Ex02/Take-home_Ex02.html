@@ -351,12 +351,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="data-preparation" class="level3">
 <h3 class="anchored" data-anchor-id="data-preparation">3.2 Data Preparation</h3>
 <p>Launch R packages and import data from csv using <code>readr::read_csv()</code>.</p>
-<p>The packages installed are <code>tidyverse</code>, <code>cowplot</code> and <code>scales</code>. While <code>tidyverse</code> contains all useful R packages used for cleaning data and plotting graph, <code>cowplot</code> is <code>ggplot2</code> extension, providing professional-looking figure. <code>scales</code> helps to add comma and/or percentage for labels display. All packages can be found within CRAN.</p>
+<p>The packages installed are <code>tidyverse</code>, <code>cowplot</code> and <code>scales</code>. While <code>tidyverse</code> contains all useful R packages used for cleaning data and plotting graph, <code>cowplot</code> is <code>ggplot2</code> extension, providing professional-looking figure. <code>scales</code> helps to add comma and/or percentage for labels display. <code>patchwork</code> is used to combine the two visualizations. All packages can be found within CRAN.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, cowplot, scales)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(cowplot, scales, patchwork, tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Import data</span></span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>sgpop <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagesextod2022.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -557,6 +557,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol start="2" type="1">
 <li>Function is created to plot age-sex pyramids based on population proportion (%). This also takes argument of vector of strings of the planning areas. However this chart also shows the reference chart based on Singapore overall population proportion %. There are two versions of the reference charts created:</li>
 </ol>
+<!-- -->
 <ol type="a">
 <li>Representing Singapore population proportion % with reference-step line (<code>plot_PA_prop</code>)</li>
 </ol>
@@ -736,7 +737,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot absolute population pyramid by the nine planning areas selected by peer</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_pop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">plot_PA_pop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="1200"></p>
@@ -750,7 +752,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_prop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">plot_PA_prop</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="1200"></p>
@@ -763,13 +766,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_PA_prop_bar</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">plot_PA_prop_bar</span>(<span class="fu">c</span>(<span class="st">"Changi"</span>, <span class="st">"Downtown Core"</span>, <span class="st">"Newton"</span>, <span class="st">"Bukit Timah"</span>,<span class="st">"Clementi"</span>, <span class="st">"Sembawang"</span>, <span class="st">"Serangoon"</span>, <span class="st">"Hougang"</span>, <span class="st">"Tampines"</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="1200"></p>
 </div>
 </div>
 <p>Note that it is quite difficult to see the reference bar chart, especially for certain planning areas like Clementi or Hougang, in which there is large overlap with overall Singapore Population pyramid. As such it might make sense to use the step chart instead as the final visualization.</p>
+<section id="final-visualization" class="level4">
+<h4 class="anchored" data-anchor-id="final-visualization"><u>Final Visualization</u></h4>
+<p>The final visualization is created using <code>patchwork</code> to stitch the two plots together. This will put the two trellis charts side-by-side, showcasing the different angles brought about by the two plots.</p>
+<div class="cell">
+
+</div>
+<div class="cell">
+
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Calling the function to plot proportion population pyramid by the nine planning areas selected by peer</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> p1 <span class="sc">+</span> p2a</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>final_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">'Population sizes differ drastically across Singapore planning areas, however its pattern differences are further revealed when population proportion (%) is plotted'</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"Singapore age-sex pyramids by Planning Area, June 2022</span><span class="sc">\n</span><span class="st">Total Singapore Residents Population : "</span>,<span class="fu">comma</span>(sgpop_clean<span class="sc">$</span>sum_pop_total_sg),<span class="st">"</span><span class="sc">\n</span><span class="st">Reference step chart (dashed line) represents Singapore overall population proportion (%)"</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">18</span>))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Take-home_Ex02_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="2400"></p>
+</div>
+</div>
+</section>
 <section id="clarity-improvements" class="level4">
 <h4 class="anchored" data-anchor-id="clarity-improvements"><u>Clarity Improvements</u></h4>
 <ul>
