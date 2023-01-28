@@ -491,8 +491,8 @@ a.  Representing Singapore population proportion % with reference-step line
 #| fig-height: 12.5
 #| fig-width: 12.5
 #Calling the function to plot proportion population pyramid by the nine planning areas selected by peer
-p2 <- plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
-p2
+p2a <- plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
+p2a
 ```
 
 b.  Representing Singapore population proportion % with reference bar chart
@@ -503,8 +503,8 @@ b.  Representing Singapore population proportion % with reference bar chart
 #| fig-height: 12.5
 #| fig-width: 12.5
 #Calling the function to plot proportion population pyramid by the nine planning areas selected by peer
-p3 <- plot_PA_prop_bar(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
-p3
+p2b <- plot_PA_prop_bar(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clementi", "Sembawang", "Serangoon", "Hougang", "Tampines"))
+p2b
 ```
 
 Note that it is quite difficult to see the reference bar chart, especially for certain planning areas like Clementi or Hougang, in which there is large overlap with overall Singapore Population pyramid. As such it might make sense to use the step chart instead as the final visualization.
