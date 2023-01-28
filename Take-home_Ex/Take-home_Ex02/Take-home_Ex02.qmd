@@ -672,7 +672,7 @@ p2a <- plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clemen
 #Calling the function to plot proportion population pyramid by the nine planning areas selected by peer
 final_plot <- p1 + p2a
 final_plot + plot_annotation(
-  title = 'Population sizes differ drastically across Singapore planning areas, however its pattern differences are further revealed when population proportion (%) is plotted',
+  title = 'Population sizes differ drastically across Singapore planning areas, however its pattern differences are further revealed with proportion pyramid (%)',
   subtitle = paste0("Singapore age-sex pyramids by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
   caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore",
   theme = theme(plot.title = element_text(face = "bold", size = 24),
