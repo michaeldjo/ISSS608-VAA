@@ -98,7 +98,7 @@ sgpop <- read_csv("data/respopagesextod2022.csv", show_col_types = FALSE)
 
 #### [Modifying the loaded data]{.underline}
 
--   Group the original data by planning area (PA), age group (AG), and gender (Sex) using `dplyr::group_by()` and `dplyr::summarise()`, deriving new variable called `sum_pop`, which is the sum of population grouped by the three variables mentioned.
+-   Group the original data by planning area (PA), age group (AG), and gender (Sex) using `dplyr::group_by()` and `dplyr::summarise()`, deriving new variable called `sum_pop`, which is the sum of population grouped by the three variables mentioned. `dplyr::ungroup()` is used to avoid further complications.
 
 -   Convert Males population to negative to reverse the bar chart axis using `dplyr::mutate()` and `ifelse`.
 
@@ -121,18 +121,21 @@ sgpop_group <- sgpop |>
          AG = gsub('_and_over', '+', AG),
          Pop = ifelse(Sex == "Males", Pop*(-1), Pop)) |>
   group_by(PA, AG, Sex) |> 
-  summarise(sum_pop = sum(Pop)) 
+  summarise(sum_pop = sum(Pop)) |> 
+  ungroup()
 
 #sgpop_max_min creates summary parameters for max, min, and sum by grouping them on PA and Sex. AG is not included since we want to find total population across age group
 sgpop_max_min <- sgpop_group |> 
   group_by(PA, Sex) |> 
   summarise(max_pop = max(abs(sum_pop)),
-            min_pop = min(abs(sum_pop)))
+            min_pop = min(abs(sum_pop))) |> 
+  ungroup()
 
 #sgpop_sum sums up the total population by planning area. This will be used to create proportion population per planning area
 sgpop_sum <- sgpop_group |> 
   group_by (PA) |> 
-  summarise(sum_pop_pa = sum(abs(sum_pop)))
+  summarise(sum_pop_pa = sum(abs(sum_pop))) |> 
+  ungroup()
 
 #sgpop_total groups total population by AG and Sex to create base data for total Singapore population (across different PA)
 sgpop_total <- sgpop |>
@@ -140,13 +143,15 @@ sgpop_total <- sgpop |>
          AG = gsub('_and_over', '+', AG),
          Pop = ifelse(Sex == "Males", Pop*(-1), Pop)) |>
   group_by(AG, Sex) |> 
-  summarise(sum_pop_total = sum(Pop)) 
+  summarise(sum_pop_total = sum(Pop)) |> 
+  ungroup()
 
 #sgpop_total_summ sums total Singapore population. This will be used to create Singapore proportion population for reference
 sgpop_total_summ <- sgpop_total |> 
   group_by (Sex) |> 
   summarise(sum_pop_total_ag = sum(sum_pop_total)) |> 
-  mutate(sum_pop_total_sg = sum(abs(sum_pop_total_ag)))
+  mutate(sum_pop_total_sg = sum(abs(sum_pop_total_ag))) |> 
+  ungroup()
 
 #joining multiple tibbles to create final sgpop_clean
 sgpop_draft1 = sgpop_group |> 

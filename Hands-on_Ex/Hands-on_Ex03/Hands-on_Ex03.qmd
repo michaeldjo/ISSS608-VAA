@@ -509,3 +509,10 @@ crosstalk::bscols(gg,
 -   `ease_aes()` defines how different aesthetics should be eased during transitions.
 
 Import data from the *Data* worksheet from *GlobalPopulation* Excel workbook.
+
+```{r}
+#col <- c("country", "Continent")
+#globalPop <- read_xls("data/GlobalPopulation.xls", 
+#                      sheet = "Data") |> 
+
+```
