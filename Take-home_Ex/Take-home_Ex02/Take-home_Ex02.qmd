@@ -2,7 +2,8 @@
 title: "Take-home Exercise 2"
 subtitle: "Peer critique and viz makeover of age-sex pyramid design."
 author: "Michael Djohan"
-date: "`r Sys.Date()`"
+date: 23 January 2023
+date-modified: "`r Sys.Date()`"
 fontsize: smaller
 ---
 
