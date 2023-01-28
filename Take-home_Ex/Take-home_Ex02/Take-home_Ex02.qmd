@@ -297,9 +297,8 @@ plot_PA_pop <- function(planning_area) {
 
 2.  Function is created to plot age-sex pyramids based on population proportion (%). This also takes argument of vector of strings of the planning areas. However this chart also shows the reference chart based on Singapore overall population proportion %. There are two versions of the reference charts created:
 
-```{=html}
 <!-- -->
-```
+
 a.  Representing Singapore population proportion % with reference-step line (`plot_PA_prop`)
 
 ```{r}
@@ -511,7 +510,7 @@ Note that it is quite difficult to see the reference bar chart, especially for c
 
 #### [Final Visualization]{.underline}
 
-The final visualization is created using `patchwork` to stitch the two plots together. This will put the two trellis charts side-by-side, showcasing the different angles brought about by the two plots.  
+The final visualization is created using `patchwork` to stitch the two plots together. This will put the two trellis charts side-by-side, showcasing the different angles brought about by the two plots.
 
 ```{r}
 #| echo: false
@@ -552,7 +551,7 @@ plot_PA_pop <- function(planning_area) {
                        labels = function(x){paste0(abs(x/1000),'K')}) +
     
     #adding title
-    labs(title = "Plot 1. Absolute age-sex pyramid") +
+    labs(subtitle = "Plot 1. Absolute age-sex pyramid") +
     
     #create trellis plot and PA population label
     facet_wrap(~PA) +
@@ -564,7 +563,8 @@ plot_PA_pop <- function(planning_area) {
     
     #setting theme and aesthetics
     cowplot::theme_cowplot() +
-    theme(axis.title.x = element_text(vjust = 0.5),
+    theme(plot.subtitle = element_text(face = "bold", size = 16),
+          axis.title.x = element_text(vjust = 0.5),
           axis.title.y = element_blank(),
           axis.ticks.y = element_blank(),
           panel.grid.major.x = element_line(color = "grey90", linetype = "solid"),
@@ -633,7 +633,7 @@ plot_PA_prop <- function(planning_area) {
                        labels = function(x){paste0(abs(x),'%')}) +
     
     #adding title
-    labs(title = "Plot 2. Proportion age-sex pyramid") +
+    labs(subtitle = "Plot 2. Proportion age-sex pyramid") +
     
     #create trellis plot and PA population label
     facet_wrap(~PA) +
@@ -645,7 +645,8 @@ plot_PA_prop <- function(planning_area) {
         
     #setting theme and aesthetics
     cowplot::theme_cowplot() +
-    theme(axis.title.x = element_text(vjust = 0.5),
+    theme(plot.subtitle = element_text(face = "bold", size = 16),
+          axis.title.x = element_text(vjust = 0.5),
           axis.title.y = element_blank(),
           axis.text.y = element_blank(),
           axis.ticks.y = element_blank(),
@@ -674,7 +675,8 @@ final_plot + plot_annotation(
   title = 'Population sizes differ drastically across Singapore planning areas, however its pattern differences are further revealed when population proportion (%) is plotted',
   subtitle = paste0("Singapore age-sex pyramids by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
   caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore",
-  theme = theme(plot.title = element_text(face = "bold", size = 18))
+  theme = theme(plot.title = element_text(face = "bold", size = 24),
+                plot.subtitle = element_text(size = 18))
 )
 ```
 
