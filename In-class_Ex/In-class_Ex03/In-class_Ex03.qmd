@@ -26,14 +26,19 @@ pacman::p_load(ggiraph, tidyverse)
 #| output: false
 exam_data <- read_csv('data/Exam_data.csv')
 ```
+
 ### Plotting the graph
+
 Using ggplot2 (non-interactive)
+
 ```{r}
 ggplot(data = exam_data,
        aes(x = MATHS)) +
   geom_dotplot(dotsize = 0.5)
 ```
+
 Using ggirafe (interactive)
+
 ```{r}
 p <- ggplot(data = exam_data,
        aes(x = MATHS)) +
