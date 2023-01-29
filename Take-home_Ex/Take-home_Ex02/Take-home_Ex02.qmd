@@ -330,16 +330,16 @@ plot_PA_prop <- function(planning_area) {
     #adding reference step chart
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Males"),
       aes(x = AG,
-          y = -prop_pop_total),
+          y = -prop_pop_total,
+          color ="singpopline"),
       linetype = "dashed",
-      linewidth = 0.6,
-      color ="black") +
+      linewidth = 0.6) +
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Females"),
       aes(x = AG,
-          y = prop_pop_total),
+          y = prop_pop_total,
+          color ="singpopline"),
       linetype = "dashed",
-      linewidth = 0.6,
-      color ="black") +
+      linewidth = 0.6) +
     
     coord_flip() +
     
@@ -347,6 +347,10 @@ plot_PA_prop <- function(planning_area) {
     scale_fill_manual(values = c("steelblue", "#f6546a"),
                       labels = c("Male%", "Female%"),
                       name = NULL) +
+    
+    scale_color_manual(values = ("singpopline" = "black"),
+                       labels = ("singpopline" = "Singapore Population%"),
+                       name = NULL) +
     
     #scale axis
     scale_y_continuous("Population Proportion",
@@ -426,7 +430,7 @@ plot_PA_prop_bar <- function(planning_area) {
     
     #adding legends and customize colors
     scale_fill_manual(values = c("Males" = "steelblue", "Females" = "#f6546a", "singpop" = "grey60"),
-                      breaks = c("Males", "Females", "singpop"),
+                      breaks = c("singpop", "Males", "Females"),
                       labels = c("Males" = "Male%", "Females" = "Female%", "singpop" = "Singapore Population%"),
                       name = NULL) +
     
@@ -608,16 +612,17 @@ plot_PA_prop <- function(planning_area) {
     #adding reference step chart
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Males"),
       aes(x = AG,
-          y = -prop_pop_total),
+          y = -prop_pop_total,
+          color ="singpopline"),
       linetype = "dashed",
-      linewidth = 0.6,
-      color ="black") +
+      linewidth = 0.6) +
+    
     geom_step(data = sgpop_clean |> filter(PA %in% planning_area & Sex == "Females"),
       aes(x = AG,
-          y = prop_pop_total),
+          y = prop_pop_total,
+          color ="singpopline"),
       linetype = "dashed",
-      linewidth = 0.6,
-      color ="black") +
+      linewidth = 0.6) +
     
     coord_flip() +
     
@@ -625,6 +630,10 @@ plot_PA_prop <- function(planning_area) {
     scale_fill_manual(values = c("steelblue", "#f6546a"),
                       labels = c("Male%", "Female%"),
                       name = NULL) +
+    
+    scale_color_manual(values = ("singpopline" = "black"),
+                       labels = ("singpopline" = "Singapore Population%"),
+                       name = NULL) +
     
     #scale axis
     scale_y_continuous("Population Proportion",
@@ -673,7 +682,7 @@ p2a <- plot_PA_prop(c("Changi", "Downtown Core", "Newton", "Bukit Timah","Clemen
 final_plot <- p1 + p2a
 final_plot + plot_annotation(
   title = 'Population sizes differ drastically across Singapore planning areas, however its pattern differences are further revealed with proportion pyramid (%)',
-  subtitle = paste0("Singapore age-sex pyramids by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) represents Singapore overall population proportion (%)"),
+  subtitle = paste0("Singapore age-sex pyramids by Planning Area, June 2022\nTotal Singapore Residents Population : ",comma(sgpop_clean$sum_pop_total_sg),"\nReference step chart (dashed line) on Plot 2 represents Singapore overall population proportion (%)"),
   caption = "Singapore Residents by Planning Area / Subzone, Age Group, Sex and Type of Dwelling, June 2022 from Department of Statistics, Singapore",
   theme = theme(plot.title = element_text(face = "bold", size = 24),
                 plot.subtitle = element_text(size = 18))
