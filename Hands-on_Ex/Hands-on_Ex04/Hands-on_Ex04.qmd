@@ -193,3 +193,137 @@ Using [*ggcoefstats()*](https://indrajeetpatil.github.io/ggstatsplot/reference/g
 ggcoefstats(model1, 
             output = "plot")
 ```
+
+## 4. Visualising Uncertainty
+
+### 4.1 Preparation
+
+```{r}
+pacman::p_load(tidyverse, plotly, crosstalk, DT, ggdist, gganimate)
+```
+
+### 4.2 Visualizing uncertainty of point estimates using `ggplot2`
+
+-   A point estimate is a single number, such as a mean.
+-   Uncertainty is expressed as standard error, confidence interval, or credible interval
+-   Don't confuse the uncertainty of a point estimate with the variation in the sample
+
+```{r}
+#group by RACE and calculate mean, sd, and se of MATHS score
+my_sum <- exam_data |> 
+  group_by(RACE) |> 
+  summarize(
+    n = n(),
+    mean = mean(MATHS),
+    sd = sd(MATHS)) |>
+  mutate(se = sd/sqrt(n-1))
+head(my_sum)
+```
+
+showing the tibble in html format
+
+```{r}
+knitr::kable(head(my_sum), format = 'html')
+```
+
+Using `ggplot2` to reveal the standard error of mean maths score by race
+```{r}
+ggplot(my_sum) +
+  
+  geom_errorbar(
+    aes(x = RACE,
+        ymin = mean - se,
+        ymax = mean + se),
+    width = 0.2,
+    colour = "black",
+    alpha = 0.9,
+    linewidth = 0.5) +
+  
+  geom_point(
+    aes(x = RACE,
+        y = mean),
+    stat = "identity",
+    colour = "red",
+    size = 1.5,
+    alpha = 1) +
+  
+  ggtitle("Standard error of mean
+          maths score by race")
+  
+```
+Using `ggplot2` to reveal the 95% confidence interval of mean maths score by race
+```{r}
+my_sum1 <- exam_data |> 
+  group_by(RACE) |> 
+  summarize(
+    n = n(),
+    mean = mean(MATHS),
+    sd = sd(MATHS)) |>
+  mutate(se = sd/sqrt(n-1),
+         ci95 = 1.96*se,
+         ci99 = 2.58*se)
+
+my_sum1$RACE  <- fct_reorder(my_sum1$RACE, my_sum1$mean, .desc = TRUE)
+```
+
+
+```{r}
+ggplot(my_sum1) +
+  
+  geom_errorbar(
+    aes(x = RACE,
+        ymin = mean - ci95,
+        ymax = mean + ci95),
+    width = 0.2,
+    colour = "black",
+    alpha = 0.9,
+    linewidth = 0.5) +
+  
+  geom_point(
+    aes(x = RACE,
+        y = mean),
+    stat = "identity",
+    colour = "red",
+    size = 1.5,
+    alpha = 1) +
+  
+  ggtitle("95% confidence interval of mean maths score by race")
+  
+```
+Visualizing the uncertainty of point estimates with interactive error bars
+```{r}
+d <- highlight_key(my_sum)
+
+p <- ggplot(my_sum1) +
+  
+  geom_errorbar(
+    aes(x = RACE,
+        ymin = mean - ci99,
+        ymax = mean + ci99),
+    width = 0.2,
+    colour = "black",
+    alpha = 0.9,
+    linewidth = 0.5) +
+  
+  geom_point(
+    aes(x = RACE,
+        y = mean),
+    stat = "identity",
+    colour = "red",
+    size = 1.5,
+    alpha = 1) +
+  
+  ggtitle("99% confidence interval of mean maths score by race")
+
+gg <- highlight(ggplotly(p),
+                "plotly_selected")
+
+dt <- DT::datatable(d, 
+                    colnames = c("", "No. of pupils", "Avg Scores", "Std Dev", "Std Error")) |> 
+  formatRound(columns = c("mean", "sd", "se"), digits = 2)
+
+crosstalk::bscols(gg,
+                  dt,
+                  widths = 5)
+```
+

@@ -125,6 +125,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
 
+<script src="../../site_libs/htmlwidgets-1.6.0/htmlwidgets.js"></script>
+<script src="../../site_libs/plotly-binding-4.10.1/plotly.js"></script>
+<script src="../../site_libs/typedarray-0.1/typedarray.min.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<link href="../../site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="../../site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="../../site_libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="../../site_libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+<link href="../../site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="../../site_libs/datatables-binding-0.27/datatables.js"></script>
+<link href="../../site_libs/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="../../site_libs/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="../../site_libs/dt-core-1.12.1/js/jquery.dataTables.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="../../site_libs/bootstrap-grid-3.4.1/bootstrap-grid.min.css" rel="stylesheet">
+
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -241,6 +257,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#checking-for-homogeneity-of-variances-using-check_heteroscedasticity" id="toc-checking-for-homogeneity-of-variances-using-check_heteroscedasticity" class="nav-link" data-scroll-target="#checking-for-homogeneity-of-variances-using-check_heteroscedasticity">3.5 Checking for homogeneity of variances using <code>check_heteroscedasticity()</code></a></li>
   <li><a href="#complete-check-using-check_model" id="toc-complete-check-using-check_model" class="nav-link" data-scroll-target="#complete-check-using-check_model">3.6 Complete check using <code>check_model()</code></a></li>
   <li><a href="#visualising-regression-parameters" id="toc-visualising-regression-parameters" class="nav-link" data-scroll-target="#visualising-regression-parameters">3.7 Visualising Regression Parameters</a></li>
+  </ul></li>
+  <li><a href="#visualising-uncertainty" id="toc-visualising-uncertainty" class="nav-link" data-scroll-target="#visualising-uncertainty">4. Visualising Uncertainty</a>
+  <ul class="collapse">
+  <li><a href="#preparation-1" id="toc-preparation-1" class="nav-link" data-scroll-target="#preparation-1">4.1 Preparation</a></li>
+  <li><a href="#visualizing-uncertainty-of-point-estimates-using-ggplot2" id="toc-visualizing-uncertainty-of-point-estimates-using-ggplot2" class="nav-link" data-scroll-target="#visualizing-uncertainty-of-point-estimates-using-ggplot2">4.2 Visualizing uncertainty of point estimates using <code>ggplot2</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -508,6 +529,209 @@ High Correlation
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">output =</span> <span class="st">"plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Hands-on_Ex04_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="visualising-uncertainty" class="level2">
+<h2 class="anchored" data-anchor-id="visualising-uncertainty">4. Visualising Uncertainty</h2>
+<section id="preparation-1" class="level3">
+<h3 class="anchored" data-anchor-id="preparation-1">4.1 Preparation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(tidyverse, plotly, crosstalk, DT, ggdist, gganimate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-uncertainty-of-point-estimates-using-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-uncertainty-of-point-estimates-using-ggplot2">4.2 Visualizing uncertainty of point estimates using <code>ggplot2</code></h3>
+<ul>
+<li>A point estimate is a single number, such as a mean.</li>
+<li>Uncertainty is expressed as standard error, confidence interval, or credible interval</li>
+<li>Don’t confuse the uncertainty of a point estimate with the variation in the sample</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co">#group by RACE and calculate mean, sd, and se of MATHS score</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>my_sum <span class="ot">&lt;-</span> exam_data <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(RACE) <span class="sc">|&gt;</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(MATHS),</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(MATHS)) <span class="sc">|&gt;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">se =</span> sd<span class="sc">/</span><span class="fu">sqrt</span>(n<span class="dv">-1</span>))</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(my_sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 5
+  RACE        n  mean    sd    se
+  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Chinese   193  76.5  15.7  1.13
+2 Indian     12  60.7  23.4  7.04
+3 Malay     108  57.4  21.1  2.04
+4 Others      9  69.7  10.7  3.79</code></pre>
+</div>
+</div>
+<p>showing the tibble in html format</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(my_sum), <span class="at">format =</span> <span class="st">'html'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> RACE </th>
+   <th style="text-align:right;"> n </th>
+   <th style="text-align:right;"> mean </th>
+   <th style="text-align:right;"> sd </th>
+   <th style="text-align:right;"> se </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Chinese </td>
+   <td style="text-align:right;"> 193 </td>
+   <td style="text-align:right;"> 76.50777 </td>
+   <td style="text-align:right;"> 15.69040 </td>
+   <td style="text-align:right;"> 1.132357 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Indian </td>
+   <td style="text-align:right;"> 12 </td>
+   <td style="text-align:right;"> 60.66667 </td>
+   <td style="text-align:right;"> 23.35237 </td>
+   <td style="text-align:right;"> 7.041005 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Malay </td>
+   <td style="text-align:right;"> 108 </td>
+   <td style="text-align:right;"> 57.44444 </td>
+   <td style="text-align:right;"> 21.13478 </td>
+   <td style="text-align:right;"> 2.043177 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Others </td>
+   <td style="text-align:right;"> 9 </td>
+   <td style="text-align:right;"> 69.66667 </td>
+   <td style="text-align:right;"> 10.72381 </td>
+   <td style="text-align:right;"> 3.791438 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>Using <code>ggplot2</code> to reveal the standard error of mean maths score by race</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_sum) <span class="sc">+</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin =</span> mean <span class="sc">-</span> se,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> mean <span class="sc">+</span> se),</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.9</span>,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> mean),</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"red"</span>,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Standard error of mean</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a><span class="st">          maths score by race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Hands-on_Ex04_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Using <code>ggplot2</code> to reveal the 95% confidence interval of mean maths score by race</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>my_sum1 <span class="ot">&lt;-</span> exam_data <span class="sc">|&gt;</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(RACE) <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">mean</span>(MATHS),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd =</span> <span class="fu">sd</span>(MATHS)) <span class="sc">|&gt;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">se =</span> sd<span class="sc">/</span><span class="fu">sqrt</span>(n<span class="dv">-1</span>),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci95 =</span> <span class="fl">1.96</span><span class="sc">*</span>se,</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">ci99 =</span> <span class="fl">2.58</span><span class="sc">*</span>se)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>my_sum1<span class="sc">$</span>RACE  <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(my_sum1<span class="sc">$</span>RACE, my_sum1<span class="sc">$</span>mean, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(my_sum1) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin =</span> mean <span class="sc">-</span> ci95,</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> mean <span class="sc">+</span> ci95),</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.9</span>,</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> mean),</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"red"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"95% confidence interval of mean maths score by race"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Hands-on_Ex04_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Visualizing the uncertainty of point estimates with interactive error bars</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">highlight_key</span>(my_sum)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(my_sum1) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymin =</span> mean <span class="sc">-</span> ci99,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">ymax =</span> mean <span class="sc">+</span> ci99),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">width =</span> <span class="fl">0.2</span>,</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"black"</span>,</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.9</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> RACE,</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> mean),</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">stat =</span> <span class="st">"identity"</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"red"</span>,</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="fl">1.5</span>,</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"99% confidence interval of mean maths score by race"</span>)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="fu">highlight</span>(<span class="fu">ggplotly</span>(p),</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>                <span class="st">"plotly_selected"</span>)</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> DT<span class="sc">::</span><span class="fu">datatable</span>(d, </span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>                    <span class="at">colnames =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"No. of pupils"</span>, <span class="st">"Avg Scores"</span>, <span class="st">"Std Dev"</span>, <span class="st">"Std Error"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">formatRound</span>(<span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"sd"</span>, <span class="st">"se"</span>), <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>crosstalk<span class="sc">::</span><span class="fu">bscols</span>(gg,</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>                  dt,</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>                  <span class="at">widths =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div class="container-fluid crosstalk-bscols">
+<div class="row">
+<div class="col-xs-5">
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-1033ee0332ddefd01482" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-1033ee0332ddefd01482">{"x":{"data":[{"x":[1,3,4,2],"y":[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],"text":["RACE: Chinese<br />mean - ci99: 73.58629<br />mean + ci99: 79.42925","RACE: Indian<br />mean - ci99: 42.50087<br />mean + ci99: 78.83246","RACE: Malay<br />mean - ci99: 52.17305<br />mean + ci99: 62.71584","RACE: Others<br />mean - ci99: 59.88476<br />mean + ci99: 79.44858"],"type":"scatter","mode":"lines","opacity":0.9,"line":{"color":"transparent"},"error_y":{"array":[2.92148180332821,18.1657940296391,5.2713960499886,9.78190932282649],"arrayminus":[2.92148180332821,18.1657940296391,5.2713960499886,9.7819093228265],"type":"data","width":21.3333333333334,"symmetric":false,"color":"rgba(0,0,0,1)"},"showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1,3,4,2],"y":[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],"text":["RACE: Chinese<br />mean: 76.50777","RACE: Indian<br />mean: 60.66667","RACE: Malay<br />mean: 57.44444","RACE: Others<br />mean: 69.66667"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,0,0,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(255,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":40.1826484018265,"l":37.2602739726027},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"99% confidence interval of mean maths score by race","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":["Chinese","Others","Indian","Malay"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":["Chinese","Others","Indian","Malay"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"RACE","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[40.6534874694042,81.2959611571165],"tickmode":"array","ticktext":["50","60","70","80"],"tickvals":[50,60,70,80],"categoryorder":"array","categoryarray":["50","60","70","80"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"mean","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":false,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"282c73b8402a":{"x":{},"ymin":{},"ymax":{},"type":"scatter"},"282c44033d7f":{"x":{},"y":{}}},"cur_data":"282c73b8402a","visdat":{"282c73b8402a":["function (y) ","x"],"282c44033d7f":["function (y) ","x"]},"highlight":{"on":"plotly_selected","off":"plotly_deselect","persistent":false,"dynamic":false,"color":null,"selectize":false,"defaultValues":null,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div class="col-xs-5">
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-dc4efa201bf15143eec0" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-dc4efa201bf15143eec0">{"x":{"crosstalkOptions":{"key":["1","2","3","4"],"group":"SharedData6cc133be"},"filter":"none","vertical":false,"data":[["1","2","3","4"],["Chinese","Indian","Malay","Others"],[193,12,108,9],[76.5077720207254,60.6666666666667,57.4444444444444,69.6666666666667],[15.6904028426431,23.3523731841827,21.1347847806846,10.7238052947636],[1.1323572881117,7.04100543784463,2.04317676356147,3.79143772202577]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th><\/th>\n      <th>No. of pupils<\/th>\n      <th>Avg Scores<\/th>\n      <th>Std Dev<\/th>\n      <th>Std Error<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"targets":3,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":4,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"targets":5,"render":"function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatRound(data, 2, 3, \",\", \".\", null);\n  }"},{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row","selectable":null}},"evals":["options.columnDefs.0.render","options.columnDefs.1.render","options.columnDefs.2.render"],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
 </div>
 </div>
 
