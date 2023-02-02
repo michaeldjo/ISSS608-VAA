@@ -217,7 +217,7 @@ my_sum <- exam_data |>
     mean = mean(MATHS),
     sd = sd(MATHS)) |>
   mutate(se = sd/sqrt(n-1))
-head(my_sum)
+my_sum$RACE  <- fct_reorder(my_sum$RACE, my_sum$mean, .desc = TRUE)
 ```
 
 showing the tibble in html format
@@ -252,28 +252,14 @@ ggplot(my_sum) +
   
 ```
 Using `ggplot2` to reveal the 95% confidence interval of mean maths score by race
-```{r}
-my_sum1 <- exam_data |> 
-  group_by(RACE) |> 
-  summarize(
-    n = n(),
-    mean = mean(MATHS),
-    sd = sd(MATHS)) |>
-  mutate(se = sd/sqrt(n-1),
-         ci95 = 1.96*se,
-         ci99 = 2.58*se)
-
-my_sum1$RACE  <- fct_reorder(my_sum1$RACE, my_sum1$mean, .desc = TRUE)
-```
-
 
 ```{r}
-ggplot(my_sum1) +
+ggplot(my_sum) +
   
   geom_errorbar(
     aes(x = RACE,
-        ymin = mean - ci95,
-        ymax = mean + ci95),
+        ymin = mean - 1.96*se,
+        ymax = mean + 1.96*se),
     width = 0.2,
     colour = "black",
     alpha = 0.9,
@@ -294,20 +280,22 @@ Visualizing the uncertainty of point estimates with interactive error bars
 ```{r}
 d <- highlight_key(my_sum)
 
-p <- ggplot(my_sum1) +
-  
+p <- ggplot(d) +
   geom_errorbar(
     aes(x = RACE,
-        ymin = mean - ci99,
-        ymax = mean + ci99),
+        ymin = mean - 2.58*se,
+        ymax = mean + 2.58*se),
     width = 0.2,
     colour = "black",
     alpha = 0.9,
     linewidth = 0.5) +
-  
   geom_point(
     aes(x = RACE,
-        y = mean),
+        y = mean,
+        text = paste("Race:", RACE,
+                     "<br>N:", n,
+                     "<br>Avg. Scores:", round(mean, digits = 2),
+                     "<br>99% CI:[", round(mean - 2.58*se, digits = 2), ", ", round(mean + 2.58*se, digits = 2), "]")),
     stat = "identity",
     colour = "red",
     size = 1.5,
@@ -315,11 +303,11 @@ p <- ggplot(my_sum1) +
   
   ggtitle("99% confidence interval of mean maths score by race")
 
-gg <- highlight(ggplotly(p),
+gg <- highlight(ggplotly(p, tooltip = "text"),
                 "plotly_selected")
 
-dt <- DT::datatable(d, 
-                    colnames = c("", "No. of pupils", "Avg Scores", "Std Dev", "Std Error")) |> 
+dt <- DT::datatable(d,
+                    colnames = c("","No. of pupils", "Avg Scores", "Std Dev", "Std Error")) |> 
   formatRound(columns = c("mean", "sd", "se"), digits = 2)
 
 crosstalk::bscols(gg,
