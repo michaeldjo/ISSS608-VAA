@@ -155,7 +155,7 @@ In this example, a function is used to compute 90% confident interval of the mea
 tooltip_fn <- function(y, ymax, accuracy = .01) {   
   mean <- scales::number(y, accuracy = accuracy) 
   sem <- scales::number(ymax - y, accuracy = accuracy) 
-  #paste("Mean maths scores:", mean, "+/-", sem)                      #this line of code does not mean anything here
+  paste("Mean maths scores:", mean, "+/-", sem)                      
 } 
 
 gg_point <- ggplot(data = exam_data,

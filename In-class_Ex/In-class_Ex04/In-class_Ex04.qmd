@@ -1,0 +1,35 @@
+---
+title: "In-class Exercise 4"
+author: "Michael Djohan"
+date: 04 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  echo: true
+  eval: true
+  warning: false
+format: html
+editor: visual
+---
+
+### Install and loading R packages
+
+Two packages will be installed and loaded. They are: `plotly`, `DT`, `patchwork`,and `tidyverse`.
+
+```{r}
+pacman::p_load(plotly, DT, patchwork, tidyverse)
+```
+
+### Importing Data
+```{r}
+exam_data <- read_csv("data/Exam_data.csv")
+```
+### Plotting
+#### Plotting with native plot_ly
+```{r}
+plot_ly(data = exam_data,
+        x = ~ENGLISH,
+        y = ~MATHS,
+        color = ~RACE)
+```
+
