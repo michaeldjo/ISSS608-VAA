@@ -1,0 +1,22 @@
+---
+title: "Take-home Exercise 3"
+subtitle: "Visual Analytics of Resale Prices of Singapore Public Housing Properties"
+author: "Michael Djohan"
+date: 05 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  warning: false
+format: html
+editor: visual
+---
+
+## **1. Overview**
+
+This exercise aims to uncover the salient patterns of the resale prices of public housing property by residential towns and estates in Singapore using appropriate analytical visualisation techniques. The visualization is designed using `ggplot2`, its extensions, and `tidyverse` packages.
+
+The original dataset was downloaded from [Data.gov.sg](https://data.gov.sg/) titled *Resale flat princes based on registration date from Jan-2017 onwards.*
+
+The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv*
+
+The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.

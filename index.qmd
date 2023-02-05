@@ -1,6 +1,7 @@
 ---
 title: "ISSS608 Visual Analytics & Application"
 author: Michael Djohan
+fontsize: smaller
 ---
 
 Welcome to **ISSS608 Visual Analytics and Application**.\
