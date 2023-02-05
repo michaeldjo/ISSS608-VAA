@@ -20,3 +20,40 @@ The original dataset was downloaded from [Data.gov.sg](https://data.gov.sg/) tit
 The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv*
 
 The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.
+
+
+
+```{r}
+#Load packages
+pacman::p_load(tidyverse)
+
+#Import data
+flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
+```
+
+
+```{r}
+#Data preparation
+
+#filter for 2022 and 3-ROOM, 4-ROOM, 5-ROOM
+#mutate remaining_lease to years
+flatpriceclean <- flatprice |> 
+  filter(flat_type %in% c('3 ROOM','4 ROOM','5 ROOM')) |> 
+  mutate(year = as.numeric(format(as.Date(paste(month, "-01", sep="")), "%Y")),
+         month = as.numeric(format(as.Date(paste(month, "-01", sep="")), "%m")),
+         .before = 1)|> 
+  filter(year == 2022) |> 
+  mutate(remaining_lease_years = as.numeric(str_extract(remaining_lease, "^[0-9]+")) + 
+                           ifelse(is.na(as.numeric(str_extract(remaining_lease, " [0-9]+"))), 0, as.numeric(str_extract(remaining_lease, " [0-9]+")))/12,
+         .after = remaining_lease)
+
+head(flatpriceclean)
+```
+```{r}
+#Check for missing values
+any(is.na(flatpriceclean))
+```
+```{r}
+#write_csv(flatpriceclean, "flatpriceclean.csv")
+```
+
