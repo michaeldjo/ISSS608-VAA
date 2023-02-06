@@ -58,7 +58,7 @@ any(is.na(flatpriceclean))
 
 ## **3. Visualization**
 
-### 3.1 Preliminary Visualization
+### 3.1 Exploratory Data Visualization
 
 The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very cluttered as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
 
@@ -130,7 +130,8 @@ plot_ly(data = flatpriceclean,
                                  y = 1,
                                  buttons = list(
                                    list(method = "update",
-                                        args = list(list(x = list(flatpriceclean$flat_type))),
+                                        args = list(list(x = list(flatpriceclean$flat_type)),
+                                                    list(xaxis = list(categoryorder = "category ascending"))),
                                         label = "Flat Type"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$flat_model)),
@@ -157,7 +158,30 @@ plot_ly(data = flatpriceclean,
 ```
 
 
-### 3.2 Statistical Visualization
+### 3.2 Confirmatory Data Analysis Visualization
+
+The first plot is to investigate other factors that might impact the resale price.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+ggbetweenstats(
+  data = flatpriceclean,
+  x = flat_type, 
+  y = resale_price_persqm, 
+  xlab = "Types of Flat (Rooms)",
+  ylab = "Resale Price per sqm (SGD)",
+  palette = "Paired",
+  title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different flat types",
+  type = "np", 
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns", 
+  mean.ci = TRUE, 
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) 
+```
 
 The second plot is to investigate other factors that might impact the resale price.
 
@@ -183,7 +207,7 @@ ggbetweenstats(
   ) 
 ```
 
-Secondly, check the flat_model variables.
+Thirdly, check the flat_model variables.
 Filtering for number of observations >= 50
 
 ```{r}
