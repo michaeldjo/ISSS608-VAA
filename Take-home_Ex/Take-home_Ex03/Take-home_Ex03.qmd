@@ -58,26 +58,6 @@ any(is.na(flatpriceclean))
 
 ## **3. Visualization**
 
-Animation does not make sense here since this is not data evolution through time
-
-```{r}
-#ggplot(flatpriceclean, aes(x = floor_area_sqm, y = resale_price, 
-#                       colour = flat_type)) +
-  
-#  geom_point(alpha = 0.7, 
-#             show.legend = FALSE) +
-  
-#  scale_color_manual(values = c("red","blue","green"),
-#                     label = flatpriceclean$flat_type) +
-  
-#  labs(title = 'Lease Commence Year: {frame_time}', 
-#       x = 'Floor Area (sqm)', 
-#       y = 'Resale Price (SGD)') +
-  
-#  transition_time(lease_commence_date) +       
-#  ease_aes('linear')    
-```
-
 ### 3.1 Preliminary Visualization
 
 The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very cluttered as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
@@ -182,13 +162,6 @@ plot_ly(data = flatpriceclean,
 
 The second plot is to investigate other factors that might impact the resale price.
 
-Firstly, check the storey_range variables
-
-```{r}
-#check number of observations per storey_range categories
-table(flatpriceclean$storey_range)
-```
-
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -211,27 +184,7 @@ ggbetweenstats(
   ) 
 ```
 
-Secondly, check the flat_model variables
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-#| fig-width: 10
-ggbetweenstats(
-  data = flatpriceclean,
-  x = flat_model, 
-  y = resale_price_persqm, 
-  xlab = "Flat Model",
-  ylab = "Resale Price per sqm (SGD)",
-  palette = "Set1",
-  type = "np", 
-  pairwise.comparisons = FALSE,
-  mean.ci = TRUE, 
-  p.adjust.method = "fdr", 
-  messages = FALSE 
-  ) 
-```
-
+Secondly, check the flat_model variables.
 Filtering for number of observations >= 50
 
 ```{r}
@@ -286,7 +239,7 @@ ggbetweenstats(
   ) 
 ```
 
-### 3.3 Final Visualization
+### 3.3 Visualization of Resale Price by Township
 
 ```{r}
 #| code-fold: true
@@ -336,7 +289,7 @@ plot_ly(data = flatpriceclean,
                           )
         ) |> 
   
-  layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
+  layout(title = "Resale Price per flat area increases with remaining lease, \n2022 transactions by township",
          xaxis = list(title = "Remaining Lease (Year)",
                       range = c(40, 100)),
          yaxis = list(title = "Resale Price per sqm (SGD)",
