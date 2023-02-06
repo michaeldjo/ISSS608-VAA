@@ -23,7 +23,7 @@ The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** pe
 
 ```{r}
 #Load packages
-pacman::p_load(plotly, tidyverse)
+pacman::p_load(plotly, ggstatsplot, tidyverse)
 
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
@@ -46,7 +46,7 @@ flatpriceclean <- flatprice |>
          lease_commence_date = as.integer(lease_commence_date),
          .after = remaining_lease) 
 
-head(flatpriceclean)
+flatpriceclean
 ```
 
 ```{r}
@@ -89,9 +89,11 @@ The first plot design consideration :
 -   Hover tip displaying the resale price, floor area, remaining lease, and flat type
 
 ```{r}
-d <- highlight_key(flatpriceclean)
-
-plot_ly(data = d,
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 9
+#| fig-width: 12.5
+plot_ly(data = flatpriceclean,
         x = ~remaining_lease_years,
         y = ~resale_price_persqm,
         hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
@@ -107,7 +109,117 @@ plot_ly(data = d,
                       line = list(width = 0.2, color = '#FFFFFF'))) |> 
   layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
          xaxis = list(title = "Remaining Lease (Year)"),
-         yaxis = list(title = "Resale Price per sqm (SGD)"))
+         yaxis = list(title = "Resale Price per sqm (SGD)"),
+         legend = list(orientation = 'h',
+                       xref = "paper",
+                       yref = "paper",
+                       xanchor = "center",
+                       yanchor ="top",
+                       x = 0.5,
+                       y = 1))
 
 
+```
+
+The second plot is to investigate other factors that might impact the resale price.
+
+Firstly, check the storey_range variables
+
+```{r}
+#check number of observations per storey_range categories
+table(flatpriceclean$storey_range)
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+ggbetweenstats(
+  data = flatpriceclean |> 
+    mutate(storey_range = ifelse(storey_range %in% c("40 TO 42", "43 TO 45", "46 TO 48", "49 TO 51"), "40+", storey_range)), 
+  x = storey_range, 
+  y = resale_price_persqm, 
+  xlab = "Number of Storeys",
+  ylab = "Resale Price per sqm (SGD)",
+  palette = "Paired",
+  title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different storeys",
+  type = "np", 
+  pairwise.comparisons = FALSE,
+  mean.ci = TRUE, 
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) 
+```
+
+Secondly, check the flat_model variables
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+ggbetweenstats(
+  data = flatpriceclean,
+  x = flat_model, 
+  y = resale_price_persqm, 
+  xlab = "Flat Model",
+  ylab = "Resale Price per sqm (SGD)",
+  palette = "Set1",
+  type = "np", 
+  pairwise.comparisons = FALSE,
+  mean.ci = TRUE, 
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) 
+```
+
+Filtering for number of observations >= 50
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+
+flatpriceclean$flat_model <- fct_reorder(flatpriceclean$flat_model, flatpriceclean$resale_price_persqm)
+
+ggbetweenstats(
+  data = flatpriceclean |> 
+    group_by(flat_model) |> 
+    filter(n() >= 50),
+  x = flat_model, 
+  y = resale_price_persqm, 
+  xlab = "Flat Model",
+  ylab = "Resale Price per sqm (SGD)",
+  palette = "Set1",
+  title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different models",
+  type = "np", 
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns",  
+  mean.ci = TRUE, 
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) 
+```
+
+Lastly, check the transaction month variables
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+ggbetweenstats(
+  data = flatpriceclean,
+  x = month, 
+  y = resale_price_persqm, 
+  xlab = "Month of Transaction",
+  ylab = "Resale Price per sqm (SGD)",
+  package = "dutchmasters", 
+  palette = "milkmaid", 
+  title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different \ntransaction months",
+  type = "np", 
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns",   
+  mean.ci = TRUE, 
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) 
 ```
