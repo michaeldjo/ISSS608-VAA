@@ -139,7 +139,8 @@ plot_ly(data = flatpriceclean,
         marker = list(symbol = "square-dot"),
         boxmean = "sd") |> 
   
-  layout(title = "Boxplot distribution resale price against other factors, 2022 transactions",
+  layout(title = "Boxplot distribution of resale price against other factors, 2022 transactions",
+         xaxis = list(title = ""),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
          updatemenus = list(list(type = 'dropdown',
                                  xref = "paper",
@@ -150,27 +151,23 @@ plot_ly(data = flatpriceclean,
                                  buttons = list(
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$flat_type)),
-                                                    list(xaxis = list(title = "Flat Type")),
                                                     list(color = list(flatpriceclean$flat_type))),
                                         label = "Flat Type"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$flat_model)),
-                                                    list(xaxis = list(title = "Flat Model")),
                                                     list(color = list(flatpriceclean$flat_model))),
                                         label = "Flat Model"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$storey_range)),
-                                                    list(xaxis = list(title = "No of Storeys")),
                                                     list(color = list(flatpriceclean$storey_range))),
                                         label = "No of Storeys"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$town)),
-                                                    list(xaxis = list(title = "Town")),
                                                     list(color = list(flatpriceclean$town))),
                                         label = "Town"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$month)),
-                                                    list(xaxis = list(title = "Transaction Month")),
+                                                    list(xaxis = list(tickmode = "array")),
                                                     list(color = list(flatpriceclean$month))),
                                         label = "Transaction Month")
                               
@@ -294,7 +291,6 @@ ggbetweenstats(
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| eval: false
 town_list <- list()
 for (i in 1:length(unique(flatpriceclean$town))) { 
   town_list[[i]] <- list(method = "restyle",
@@ -303,10 +299,12 @@ for (i in 1:length(unique(flatpriceclean$town))) {
                          label = unique(flatpriceclean$town)[i])
   }
 
-town_list[[length(town_list) + 1]] <- list(method = "restyle",
-                                           args = list("transforms[0].value",
-                                                       unique(flatpriceclean$town)),
-                                           label = "ALL")
+annot <- list(list(text = "Select Towns:",
+                   x = 1.41,
+                   y = 0.78,
+                   xref = 'paper',
+                   yref = 'paper',
+                   showarrow = FALSE))
 ```
 
 ```{r}
@@ -314,7 +312,6 @@ town_list[[length(town_list) + 1]] <- list(method = "restyle",
 #| code-summary: "Show the code"
 #| fig-height: 9
 #| fig-width: 12.5
-#| eval: false
 flatpriceorder <- flatpriceclean[order(flatpriceclean$flat_type), ]
 
 plot_ly(data = flatpriceclean,
@@ -344,17 +341,14 @@ plot_ly(data = flatpriceclean,
                       range = c(40, 100)),
          yaxis = list(title = "Resale Price per sqm (SGD)",
                       range = c(3000, 16000)),
-         legend = list(orientation = 'h',
-                       xref = "paper",
-                       yref = "paper",
-                       xanchor = "center",
-                       yanchor ="top",
-                       x = 0.5,
-                       y = 1),
          updatemenus = list(list(type = 'dropdown',
-                                 x = 1.6, y = 0.7,
+                                 xref = "paper",
+                                 yref = "paper",
+                                 x = 1.4, y = 0.7,
                                  buttons = town_list)
-                            )
+                            ),
+         
+         annotations = annot
          )
 
 ```
