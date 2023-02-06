@@ -21,6 +21,8 @@ The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-
 
 The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.
 
+## **2. Data Preparation**
+
 ```{r}
 #Load packages
 pacman::p_load(plotly, ggstatsplot, tidyverse)
@@ -54,9 +56,7 @@ flatpriceclean
 any(is.na(flatpriceclean))
 ```
 
-```{r}
-#write_csv(flatpriceclean, "flatpriceclean.csv")
-```
+## **3. Visualization**
 
 Animation does not make sense here since this is not data evolution through time
 
@@ -78,7 +78,9 @@ Animation does not make sense here since this is not data evolution through time
 #  ease_aes('linear')    
 ```
 
-The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very clutteres as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
+### 3.1 Preliminary Visualization
+
+The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very cluttered as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
 
 The first plot design consideration :
 
@@ -107,6 +109,7 @@ plot_ly(data = flatpriceclean,
         marker = list(opacity = 0.6,
                       sizemode = 'diameter',
                       line = list(width = 0.2, color = '#FFFFFF'))) |> 
+  
   layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
          xaxis = list(title = "Remaining Lease (Year)"),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
@@ -120,6 +123,65 @@ plot_ly(data = flatpriceclean,
 
 
 ```
+
+Using updatemenus to get a good first glance of all relationships
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 11
+#| fig-width: 12.5
+flatpriceclean$flat_model <- fct_reorder(flatpriceclean$flat_model, flatpriceclean$resale_price_persqm)
+
+plot_ly(data = flatpriceclean,
+        x = ~flat_type,
+        y = ~resale_price_persqm,
+        type = "box",
+        marker = list(symbol = "square-dot"),
+        boxmean = "sd") |> 
+  
+  layout(title = "Boxplot distribution resale price against other factors, 2022 transactions",
+         yaxis = list(title = "Resale Price per sqm (SGD)"),
+         updatemenus = list(list(type = 'dropdown',
+                                 xref = "paper",
+                                 yref = "paper",
+                                 xanchor = "left",
+                                 x = 0.04, 
+                                 y = 1,
+                                 buttons = list(
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$flat_type)),
+                                                    list(xaxis = list(title = "Flat Type")),
+                                                    list(color = list(flatpriceclean$flat_type))),
+                                        label = "Flat Type"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$flat_model)),
+                                                    list(xaxis = list(title = "Flat Model")),
+                                                    list(color = list(flatpriceclean$flat_model))),
+                                        label = "Flat Model"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$storey_range)),
+                                                    list(xaxis = list(title = "No of Storeys")),
+                                                    list(color = list(flatpriceclean$storey_range))),
+                                        label = "No of Storeys"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$town)),
+                                                    list(xaxis = list(title = "Town")),
+                                                    list(color = list(flatpriceclean$town))),
+                                        label = "Town"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$month)),
+                                                    list(xaxis = list(title = "Transaction Month")),
+                                                    list(color = list(flatpriceclean$month))),
+                                        label = "Transaction Month")
+                              
+                                   )
+                                 )
+                            )
+         )
+```
+
+
+### 3.2 Statistical Visualization
 
 The second plot is to investigate other factors that might impact the resale price.
 
@@ -144,7 +206,8 @@ ggbetweenstats(
   palette = "Paired",
   title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different storeys",
   type = "np", 
-  pairwise.comparisons = FALSE,
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns", 
   mean.ci = TRUE, 
   p.adjust.method = "fdr", 
   messages = FALSE 
@@ -200,6 +263,8 @@ ggbetweenstats(
   ) 
 ```
 
+The town variables are skipped as there are too many variables -> to be considered in the final visualization
+
 Lastly, check the transaction month variables
 
 ```{r}
@@ -223,3 +288,77 @@ ggbetweenstats(
   messages = FALSE 
   ) 
 ```
+
+### 3.3 Final Visualization
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| eval: false
+town_list <- list()
+for (i in 1:length(unique(flatpriceclean$town))) { 
+  town_list[[i]] <- list(method = "restyle",
+                         args = list("transforms[0].value",
+                                     unique(flatpriceclean$town)[i]),
+                         label = unique(flatpriceclean$town)[i])
+  }
+
+town_list[[length(town_list) + 1]] <- list(method = "restyle",
+                                           args = list("transforms[0].value",
+                                                       unique(flatpriceclean$town)),
+                                           label = "ALL")
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 9
+#| fig-width: 12.5
+#| eval: false
+flatpriceorder <- flatpriceclean[order(flatpriceclean$flat_type), ]
+
+plot_ly(data = flatpriceclean,
+        x = ~remaining_lease_years,
+        y = ~resale_price_persqm,
+        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
+                               "<br>Floor Area (sqm):", floor_area_sqm,
+                               "<br>Remaining Lease (Year):", remaining_lease_years,
+                               "<br>Town:", town),
+        type = 'scatter',
+        mode = 'markers',
+        size = ~floor_area_sqm,
+        sizes = c(5, 15),
+        color = ~factor(flat_type),
+        marker = list(opacity = 0.6,
+                      sizemode = 'diameter',
+                      line = list(width = 0.2, color = '#FFFFFF')),
+        transforms = list(list(type = 'filter',
+                               target = ~flatpriceorder$town,
+                               operation = '=',
+                               value = unique(flatpriceorder$town)[1])
+                          )
+        ) |> 
+  
+  layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
+         xaxis = list(title = "Remaining Lease (Year)",
+                      range = c(40, 100)),
+         yaxis = list(title = "Resale Price per sqm (SGD)",
+                      range = c(3000, 16000)),
+         legend = list(orientation = 'h',
+                       xref = "paper",
+                       yref = "paper",
+                       xanchor = "center",
+                       yanchor ="top",
+                       x = 0.5,
+                       y = 1),
+         updatemenus = list(list(type = 'dropdown',
+                                 x = 1.6, y = 0.7,
+                                 buttons = town_list)
+                            )
+         )
+
+```
+
+
+
+
