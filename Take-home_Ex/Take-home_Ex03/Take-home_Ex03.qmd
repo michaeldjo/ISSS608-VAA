@@ -25,7 +25,7 @@ The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** pe
 
 ```{r}
 #Load packages
-pacman::p_load(tidyverse)
+pacman::p_load(plotly, tidyverse)
 
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
@@ -39,13 +39,17 @@ flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-j
 #mutate remaining_lease to years
 flatpriceclean <- flatprice |> 
   filter(flat_type %in% c('3 ROOM','4 ROOM','5 ROOM')) |> 
-  mutate(year = as.numeric(format(as.Date(paste(month, "-01", sep="")), "%Y")),
-         month = as.numeric(format(as.Date(paste(month, "-01", sep="")), "%m")),
+  mutate(year = as.integer(format(as.Date(paste(month, "-01", sep="")), "%Y")),
+         month = as.integer(format(as.Date(paste(month, "-01", sep="")), "%m")),
          .before = 1)|> 
   filter(year == 2022) |> 
-  mutate(remaining_lease_years = as.numeric(str_extract(remaining_lease, "^[0-9]+")) + 
-                           ifelse(is.na(as.numeric(str_extract(remaining_lease, " [0-9]+"))), 0, as.numeric(str_extract(remaining_lease, " [0-9]+")))/12,
-         .after = remaining_lease)
+  mutate(remaining_lease_years = round((as.numeric(str_extract(remaining_lease, "^[0-9]+")) + 
+                           ifelse(is.na(as.numeric(str_extract(remaining_lease, " [0-9]+"))), 0, as.numeric(str_extract(remaining_lease, " [0-9]+")))/12), digits = 1),
+         resale_price_persqm = round(resale_price/floor_area_sqm, digits = 1),
+         lease_commence_date = as.integer(lease_commence_date),
+         .after = remaining_lease) |> 
+  mutate(flat_type_rooms = as.integer(str_extract(flat_type, "[0-9]")),
+         .after = flat_type)
 
 head(flatpriceclean)
 ```
@@ -56,4 +60,47 @@ any(is.na(flatpriceclean))
 ```{r}
 #write_csv(flatpriceclean, "flatpriceclean.csv")
 ```
+
+Animation does not make sense here since this is not data evolution through time
+```{r}
+#ggplot(flatpriceclean, aes(x = floor_area_sqm, y = resale_price, 
+#                       colour = flat_type)) +
+  
+#  geom_point(alpha = 0.7, 
+#             show.legend = FALSE) +
+  
+#  scale_color_manual(values = c("red","blue","green"),
+#                     label = flatpriceclean$flat_type) +
+  
+#  labs(title = 'Lease Commence Year: {frame_time}', 
+#       x = 'Floor Area (sqm)', 
+#       y = 'Resale Price (SGD)') +
+  
+#  transition_time(lease_commence_date) +       
+#  ease_aes('linear')    
+```
+Do scatterplot interactivity instead
+```{r}
+d <- highlight_key(flatpriceclean)
+
+plot_ly(data = d,
+        x = ~remaining_lease_years,
+        y = ~resale_price_persqm,
+        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
+                               "<br>Remaining Lease (Year):", remaining_lease_years,
+                               "<br>Flat Type:", flat_type),
+        type = 'scatter',
+        mode = 'markers',
+        color = ~flat_type,
+        marker = list(opacity = 0.5,
+                      sizemode = 'diameter',
+                      line = list(width = 0.5, color = '#FFFFFF'))) |> 
+  layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
+         xaxis = list(title = "Remaining Lease (Year)"),
+         yaxis = list(title = "Resale Price per sqm (SGD)"))
+
+
+```
+
+
 
