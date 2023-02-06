@@ -66,8 +66,6 @@ The first plot design consideration :
 
 -   Color legend for flat type (3 ROOM, 4 ROOM, 5 ROOM) in plotly allows users to filter accordingly
 
--   Bubble plot size is based on floor area
-
 -   Hover tip displaying the resale price, floor area, remaining lease, and flat type
 
 ```{r}
@@ -83,14 +81,12 @@ plot_ly(data = flatpriceclean,
                                "<br>Remaining Lease (Year):", remaining_lease_years),
         type = 'scatter',
         mode = 'markers',
-        size = ~floor_area_sqm,
-        sizes = c(5, 12.5),
         color = ~flat_type,
         marker = list(opacity = 0.6,
                       sizemode = 'diameter',
                       line = list(width = 0.2, color = '#FFFFFF'))) |> 
   
-  layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
+  layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions, 2022",
          xaxis = list(title = "Remaining Lease (Year)"),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
          legend = list(orientation = 'h',
@@ -99,7 +95,7 @@ plot_ly(data = flatpriceclean,
                        xanchor = "center",
                        yanchor ="top",
                        x = 0.5,
-                       y = 1))
+                       y = 0.95))
 
 
 ```
@@ -115,11 +111,13 @@ flatpriceclean$flat_model <- fct_reorder(flatpriceclean$flat_model, flatpricecle
 plot_ly(data = flatpriceclean,
         x = ~flat_type,
         y = ~resale_price_persqm,
-        type = "box",
-        marker = list(symbol = "square-dot"),
-        boxmean = "sd") |> 
+        type = "violin",
+        alpha = 0.3,
+        marker = list(opacity = 0.6),
+        box = list(visible = T),
+        meanline = list(visible = T)) |> 
   
-  layout(title = "Boxplot distribution of resale price against other factors, 2022 transactions",
+  layout(title = "Distribution of resale price by selected factors, \nResale transactions, 2022",
          xaxis = list(title = ""),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
          updatemenus = list(list(type = 'dropdown',
@@ -127,7 +125,7 @@ plot_ly(data = flatpriceclean,
                                  yref = "paper",
                                  xanchor = "left",
                                  x = 0.04, 
-                                 y = 1,
+                                 y = 0.95,
                                  buttons = list(
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$flat_type)),
@@ -140,7 +138,7 @@ plot_ly(data = flatpriceclean,
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$storey_range)),
                                                     list(xaxis = list(categoryorder = "category ascending"))),
-                                        label = "No of Storeys"),
+                                        label = "Storey Height"),
                                    list(method = "update",
                                         args = list(list(x = list(flatpriceclean$town)),
                                                     list(xaxis = list(categoryorder = "mean ascending"))),
@@ -194,7 +192,7 @@ ggbetweenstats(
     mutate(storey_range = ifelse(storey_range %in% c("40 TO 42", "43 TO 45", "46 TO 48", "49 TO 51"), "40+", storey_range)), 
   x = storey_range, 
   y = resale_price_persqm, 
-  xlab = "Number of Storeys",
+  xlab = "Storey Height",
   ylab = "Resale Price per sqm (SGD)",
   palette = "Paired",
   title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different storeys",
@@ -225,7 +223,7 @@ ggbetweenstats(
   y = resale_price_persqm, 
   xlab = "Flat Model",
   ylab = "Resale Price per sqm (SGD)",
-  palette = "Set1",
+  palette = "Paired",
   title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different models",
   type = "np", 
   pairwise.comparisons = TRUE,
@@ -250,8 +248,7 @@ ggbetweenstats(
   y = resale_price_persqm, 
   xlab = "Month of Transaction",
   ylab = "Resale Price per sqm (SGD)",
-  package = "dutchmasters", 
-  palette = "milkmaid", 
+  palette = "Paired", 
   title = "One-way ANOVA analysis reveals at least one significant difference in 2022 resale price across different \ntransaction months",
   type = "np", 
   pairwise.comparisons = TRUE,
@@ -312,7 +309,7 @@ plot_ly(data = flatpriceclean,
                           )
         ) |> 
   
-  layout(title = "Resale Price per flat area increases with remaining lease, \n2022 transactions by township",
+  layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions by towns, 2022",
          xaxis = list(title = "Remaining Lease (Year)",
                       range = c(40, 100)),
          yaxis = list(title = "Resale Price per sqm (SGD)",
