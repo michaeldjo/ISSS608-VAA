@@ -21,8 +21,6 @@ The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-
 
 The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.
 
-
-
 ```{r}
 #Load packages
 pacman::p_load(plotly, tidyverse)
@@ -30,7 +28,6 @@ pacman::p_load(plotly, tidyverse)
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
 ```
-
 
 ```{r}
 #Data preparation
@@ -47,21 +44,22 @@ flatpriceclean <- flatprice |>
                            ifelse(is.na(as.numeric(str_extract(remaining_lease, " [0-9]+"))), 0, as.numeric(str_extract(remaining_lease, " [0-9]+")))/12), digits = 1),
          resale_price_persqm = round(resale_price/floor_area_sqm, digits = 1),
          lease_commence_date = as.integer(lease_commence_date),
-         .after = remaining_lease) |> 
-  mutate(flat_type_rooms = as.integer(str_extract(flat_type, "[0-9]")),
-         .after = flat_type)
+         .after = remaining_lease) 
 
 head(flatpriceclean)
 ```
+
 ```{r}
 #Check for missing values
 any(is.na(flatpriceclean))
 ```
+
 ```{r}
 #write_csv(flatpriceclean, "flatpriceclean.csv")
 ```
 
 Animation does not make sense here since this is not data evolution through time
+
 ```{r}
 #ggplot(flatpriceclean, aes(x = floor_area_sqm, y = resale_price, 
 #                       colour = flat_type)) +
@@ -79,7 +77,17 @@ Animation does not make sense here since this is not data evolution through time
 #  transition_time(lease_commence_date) +       
 #  ease_aes('linear')    
 ```
-Do scatterplot interactivity instead
+
+The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very clutteres as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
+
+The first plot design consideration :
+
+-   Color legend for flat type (3 ROOM, 4 ROOM, 5 ROOM) in plotly allows users to filter accordingly
+
+-   Bubble plot size is based on floor area
+
+-   Hover tip displaying the resale price, floor area, remaining lease, and flat type
+
 ```{r}
 d <- highlight_key(flatpriceclean)
 
@@ -87,20 +95,19 @@ plot_ly(data = d,
         x = ~remaining_lease_years,
         y = ~resale_price_persqm,
         hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
-                               "<br>Remaining Lease (Year):", remaining_lease_years,
-                               "<br>Flat Type:", flat_type),
+                               "<br>Floor Area (sqm):", floor_area_sqm,
+                               "<br>Remaining Lease (Year):", remaining_lease_years),
         type = 'scatter',
         mode = 'markers',
+        size = ~floor_area_sqm,
+        sizes = c(5, 12.5),
         color = ~flat_type,
-        marker = list(opacity = 0.5,
+        marker = list(opacity = 0.6,
                       sizemode = 'diameter',
-                      line = list(width = 0.5, color = '#FFFFFF'))) |> 
+                      line = list(width = 0.2, color = '#FFFFFF'))) |> 
   layout(title = "Resale Price per flat area increases with remaining lease, 2022 transactions",
          xaxis = list(title = "Remaining Lease (Year)"),
          yaxis = list(title = "Resale Price per sqm (SGD)"))
 
 
 ```
-
-
-
