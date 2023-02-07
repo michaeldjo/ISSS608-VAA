@@ -35,6 +35,8 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `knitr`: Used for dynamic report generation
 
+-   `pacthwork`: Used to combine plots
+
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
     All packages can be found within CRAN.
@@ -43,7 +45,7 @@ Import data from csv using `readr::read_csv()` and store it in variable ***flatp
 
 ```{r}
 #Load packages
-pacman::p_load(plotly, ggstatsplot, knitr, tidyverse)
+pacman::p_load(plotly, ggstatsplot, knitr, patchwork, tidyverse)
 
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
@@ -116,7 +118,7 @@ kable(head(flatpriceclean), "simple")
 
 ### 3.1 Exploratory Data Visualisation
 
-The plots here are preliminary in nature but designed with interactivity to allow users to perform Exploratory Data Analysis (EDA) Visualisation to study the data.
+The plots here are preliminary in nature but designed with interactivity to allow users to perform Exploratory Data Analysis (EDA) Visualisation to study the data. Hence `plotly` is mainly used.
 
 #### 3.1.1. Interactive scatterplot
 
@@ -341,16 +343,120 @@ plot_ly(data = flatpriceclean,
 
 -   Preliminary EDA reveals minimal difference in [resale_price_persqm]{.underline} between transaction months.
 
-However, these observations need to be confirmed using appropriate hypothesis technique in the next section. Note that the number of observations per category also need to be examined.
+However, these observations need to be confirmed using appropriate hypothesis techniques. Since the focus of the study is on resale price by residential towns/estates, only this will be considered.
 
 ### 3.2 Confirmatory Data Analysis Visualization
 
-The first plot is to investigate other factors that might impact the resale price.
+The plots here are focused in visual statistical testing used in Confirmatory Data Analysis. Hence `ggstatsplot` is mainly used.
+
+[*Design Consideration*]{.underline}
+
+To ensure that best practices (APA standard) of statistical reporting is followed, `ggstatsplot` library is used in this section. Considerations :
+
+-   As revealed by EDA, all categorical variables are more than two. Hence `ggbetweenstats` will be used for one-way ANOVA testing.
+
+-   Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
+
+```{=html}
+<!-- -->
+```
+-   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against large variations in number of observations.
+
+[*Preparation of visualisation*]{.underline}
+
+`ggstatsplot` is used to prepare the plot. Steps taken are
+
+-   Order the towns by the mean of [resale_price_persqm]{.underline} in ascending order using `forcats::fct_reorder`. This will ensure the towns are ordered accordingly for easier observation.
+
+-   `ggstatsplot::ggbetweenstats()` is used to display the one-way ANOVA plot. Note that the dataset is grouped by town and filtered when count \>=850. This is achieved using `dplyr::group_by()` and `dplyr::filter()`
+
+-   As above design consideration, non-parametric test is considered hence `type = "np"`
+
+-   Comparisons are made pairwise between non-significant pairs as they are the points of interest. Note that the majority of the pairs comparison are significant as well, hence it will clutter the plots unnecessarily. The argument `pairwise.display = "ns"`
+
+-   Two plots are created and assigned to `p1` and `p2` respectively
+
+-   Two sets of color are manually provided using `scale_color_manual` of `ggplot2`. This is because the basic palette is not able to support large number of colors (26)
+
+-   `patchwork` is added to combine the two plots using operator `/`
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 12.5
+#| fig-height: 12.5
+
+#Order the town variables by mean of resale price
+flatpriceclean$town <- fct_reorder(flatpriceclean$town, flatpriceclean$resale_price_persqm)
+
+#set the color pallete
+col13_1 <- c("dodgerblue2", "#E31A1C", 
+  "green4",
+  "#6A3D9A", 
+  "#FF7F00", 
+  "gray30", "gold1",
+  "skyblue2", "#FB9A99", 
+  "palegreen2",
+  "#CAB2D6", 
+  "#FDBF6F", 
+  "gray80") 
+  
+col13_2 <- c("khaki2",
+  "maroon", "orchid1", "deeppink1", "blue1", "steelblue4",
+  "darkturquoise", "green1", "yellow4", "yellow3",
+  "darkorange4", "brown", "gray50")
+
+#Initiating the base plot
+p1 <- ggbetweenstats(
+  data = flatpriceclean|> 
+    group_by(town) |> 
+    filter(n() >= 850),
+  x = town, 
+  y = resale_price_persqm, 
+  xlab = "Towns",
+  ylab = "Resale Price per sqm (SGD)",
+  title = "One-way ANOVA reveals differences in 2022 resale price across different towns (>850 transactions)",
+  type = "np", 
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns",
+  mean.ci = TRUE,
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) +
+  scale_color_manual(values = col13_1)
+
+p2 <- ggbetweenstats(
+  data = flatpriceclean|> 
+    group_by(town) |> 
+    filter(n() < 850),
+  x = town, 
+  y = resale_price_persqm, 
+  xlab = "Towns",
+  ylab = "Resale Price per sqm (SGD)",
+  title = "One-way ANOVA reveals differences in 2022 resale price across different towns (>850 transactions)",
+  type = "np", 
+  pairwise.comparisons = TRUE,
+  pairwise.display = "ns",
+  mean.ci = TRUE,
+  p.adjust.method = "fdr", 
+  messages = FALSE 
+  ) +
+  scale_color_manual(values = col13_2)
+
+final_plot <- p1/p2
+final_plot
+  
+```
+
+[*Insights*]{.underline}
+
+-   When plotted by [town]{.underline}, preliminary EDA reveals differences in mean/median [resale_price_persqm]{.underline} for different town estates. At the lower end, we can find newly developed or further towns (i.e., Woodlands, Pasir Ris, Jurong West), while at the opposite end, we find more mature or centrally located estates (i.e., Central Area, Queenstown, Kallang/Whampoa). Note large variance are observed for the higher-end estates.
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-width: 10
+#| eval: false
 ggbetweenstats(
   data = flatpriceclean,
   x = flat_type, 
@@ -368,12 +474,11 @@ ggbetweenstats(
   ) 
 ```
 
-The second plot is to investigate other factors that might impact the resale price.
-
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-width: 10
+#| eval: false
 ggbetweenstats(
   data = flatpriceclean |> 
     mutate(storey_range = ifelse(storey_range %in% c("40 TO 42", "43 TO 45", "46 TO 48", "49 TO 51"), "40+", storey_range)), 
@@ -392,12 +497,11 @@ ggbetweenstats(
   ) 
 ```
 
-Thirdly, check the flat_model variables. Filtering for number of observations \>= 50
-
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-width: 10
+#| eval: false
 
 flatpriceclean$flat_model <- fct_reorder(flatpriceclean$flat_model, flatpriceclean$resale_price_persqm)
 
@@ -420,14 +524,11 @@ ggbetweenstats(
   ) 
 ```
 
-The town variables are skipped as there are too many variables -\> to be considered in the final visualization
-
-Lastly, check the transaction month variables
-
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-width: 10
+#| eval: false
 ggbetweenstats(
   data = flatpriceclean,
   x = month, 
