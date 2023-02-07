@@ -132,7 +132,7 @@ Scatterplots are generally used to discover relationship between two continuous 
 
 -   x-axis selection is other continuous variables, namely: [remaining_lease_years]{.underline}, [lease_commence_date]{.underline}, and [floor_area_sqm]{.underline}
 
--   As the plots are expected to be very scattered, opacity is introduced with white border
+-   As the plots are expected to be very cluttered, opacity is introduced with white border
 
 -   Tooltip indicating variables of interest : [remaining_lease_years]{.underline}, [floor_area_sqm]{.underline}, and [resale_price_persqm]{.underline}
 
@@ -353,14 +353,13 @@ The plots here are focused in visual statistical testing used in Confirmatory Da
 
 To ensure that best practices (APA standard) of statistical reporting is followed, `ggstatsplot` library is used in this section. Considerations :
 
--   As revealed by EDA, all categorical variables are more than two. Hence `ggbetweenstats` will be used for one-way ANOVA testing.
+-   As revealed by EDA, [town]{.underline} variables have 26 categories. Hence `ggbetweenstats` will be used for one-way ANOVA testing.
 
 -   Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
 
-```{=html}
 <!-- -->
-```
--   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against large variations in number of observations.
+
+-   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot (13 towns each) as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against large variations in number of observations.
 
 [*Preparation of visualisation*]{.underline}
 
@@ -379,6 +378,10 @@ To ensure that best practices (APA standard) of statistical reporting is followe
 -   Two sets of color are manually provided using `scale_color_manual` of `ggplot2`. This is because the basic palette is not able to support large number of colors (26)
 
 -   `patchwork` is added to combine the two plots using operator `/`
+
+-   `plot_annotation()` is used to configure the title, subtitle and caption of the combined visualisation
+
+Refer to code below for more details
 
 ```{r}
 #| code-fold: true
@@ -413,9 +416,8 @@ p1 <- ggbetweenstats(
     filter(n() >= 850),
   x = town, 
   y = resale_price_persqm, 
-  xlab = "Towns",
   ylab = "Resale Price per sqm (SGD)",
-  title = "One-way ANOVA reveals differences in 2022 resale price across different towns (>850 transactions)",
+  title = "Plot 1. One-way ANOVA (towns >= 850 transactions)",
   type = "np", 
   pairwise.comparisons = TRUE,
   pairwise.display = "ns",
@@ -423,7 +425,8 @@ p1 <- ggbetweenstats(
   p.adjust.method = "fdr", 
   messages = FALSE 
   ) +
-  scale_color_manual(values = col13_1)
+  scale_color_manual(values = col13_1) +
+  theme(axis.title.x = element_blank())
 
 p2 <- ggbetweenstats(
   data = flatpriceclean|> 
@@ -431,9 +434,9 @@ p2 <- ggbetweenstats(
     filter(n() < 850),
   x = town, 
   y = resale_price_persqm, 
-  xlab = "Towns",
+  xlab = "Town",
   ylab = "Resale Price per sqm (SGD)",
-  title = "One-way ANOVA reveals differences in 2022 resale price across different towns (>850 transactions)",
+  title = "Plot 2. One-way ANOVA (towns < 850 transactions)",
   type = "np", 
   pairwise.comparisons = TRUE,
   pairwise.display = "ns",
@@ -444,13 +447,28 @@ p2 <- ggbetweenstats(
   scale_color_manual(values = col13_2)
 
 final_plot <- p1/p2
-final_plot
+final_plot + plot_annotation(
+  title = 'One-way ANOVA reveals differences in 2022 resale price across different towns',
+  subtitle = 'Resale price per flat area by Town, 2022',
+  caption = 'Resale flat princes based on registration date from Jan-2017 onwards from data.gov.sg',
+  theme = theme(plot.title = element_text(face = "bold", size = 18))
+)
   
 ```
 
 [*Insights*]{.underline}
 
--   When plotted by [town]{.underline}, preliminary EDA reveals differences in mean/median [resale_price_persqm]{.underline} for different town estates. At the lower end, we can find newly developed or further towns (i.e., Woodlands, Pasir Ris, Jurong West), while at the opposite end, we find more mature or centrally located estates (i.e., Central Area, Queenstown, Kallang/Whampoa). Note large variance are observed for the higher-end estates.
+As noted above, the hypothesis testing is done using Kruskal-Wallis test with 95% confidence level for the individual plot. For each plot, they hypothesis is:
+
+-   H0 : There is no difference between median resale price per flat area across towns
+
+-   H1 : There is difference between median resale price per flat area across towns
+
+Since the p-value \< critical value of 0.05, there is statistical evidence to reject the null hypothesis. We can conclude that for each set of towns (grouped by number of transactions) that there is difference between median resale price per flat area across the towns.
+
+In both plots, it can be observed that there are few pairs of towns with p-value \> 0.05 such as Jurong West and Choa Chu Kang. This suggests that the differences between the medians of the pair are not statistically significant.
+
+Overall, the findings of the EDA is more or less consistent (refer to section 3.1.2 above).
 
 ```{r}
 #| code-fold: true
@@ -546,11 +564,31 @@ ggbetweenstats(
   ) 
 ```
 
-### 3.3 Visualization of Resale Price by Township
+### 3.3 Visualization of Resale Price vs Remaining Lease by Township
+
+Section 3.1 above allow users to perform EDA to explore the relationship between resale price with other variables. Section 3.2 confirms statistical evidence of difference of resale price by towns. It is hence interesting to combine these insights together in one interactive visualization.
+
+[*Design Consideration*]{.underline}
+
+One of the most interesting finding in EDA of two continuous variables is the relationship between [resale price per sqm]{.underline} and [remaining lease_years]{.underline}. This finding can be further dissected by applying [town]{.underline} filter, which was found to be statistically significant in Section 3.2. Considerations:
+
+-   Interactive bubble plots of [resale_price per sqm]{.underline} and [remaining_lease_years]{.underline}
+
+-   Dropdown menu to filter by [town]{.underline}. Note that introduction of this filter not only helps users to visualize the different aspects of the bubble plot per town, but also reduces cluttering by too many datapoints.
+
+-   The bubbles can be colored by [flat_type]{.underline} and its size corresponds to the [floor_area_sqm]{.underline}. The [flat_type]{.underline} is chosen for color filter as it has the least number of categories, avoiding cluttering the plot with too many colors. The size corresponds to the [floor_area_sqm]{.underline} to align with user's intuition that bigger bubble means bigger size. While the resale price is already normalized against this, users can also see different angle given with [remaining_lease_years]{.underline} in the x-axis
+
+-   To reduce cluttering further, opacity is introduced with white border
+
+-   Tooltip indicating other important variables : [resale_price_persqm]{.underline}, [floor_area_sqm]{.underline}, [remaining_lease_years]{.underline}, [flat_model]{.underline}, and [storey_range]{.underline}
+
+[*Preparation of visualisation*]{.underline}
+
+Firstly, each unique instance of town was defined using for-loop. This will create a list within list (`town_list`) containing the `method`, `args`, and `label` arguments of each town. This list will be used as an input to `buttons` argument of the `updatemenus`. The annotation variables (`annot`) for the dropdown menu was also defined.
+
+Refer to code below for more details
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
 town_list <- list()
 for (i in 1:length(unique(flatpriceclean$town))) { 
   town_list[[i]] <- list(method = "restyle",
@@ -559,13 +597,29 @@ for (i in 1:length(unique(flatpriceclean$town))) {
                          label = unique(flatpriceclean$town)[i])
   }
 
-annot <- list(list(text = "Select Towns:",
+annot <- list(list(text = "Select Town:",
                    x = 1.41,
                    y = 0.78,
                    xref = 'paper',
                    yref = 'paper',
                    showarrow = FALSE))
 ```
+
+`plot_ly()` is used to prepare the interactive bubble plot. Steps taken are
+
+-   ***flatpriceorder*** variable is created to ensure that there is no clash between the `color` and `transforms` argument in `plot_ly`.
+
+-   Initiating base scatterplot, indicated by `type = 'scatter'`. `marker` argument is used to introduce `opacity` and `line` (white plot border). Note that `color` and `size` arguments are specified to be `flat_type` and `floor_area_sqm` respectively.
+
+-   Tooltip customisation is created using `hovertemplate` argument
+
+-   `transform` argument is set to filter based on selected [town]{.underline} provided in the `updatemenus`
+
+-   `layout` argument is used to add plot title, x-axis title, and y-axis title. The range of the axis are also fixed to give users fixed reference frame.
+
+-   To create the dropdown menu to select [town]{.underline}, the `updatemenus` argument is used, passing `town_list` in the `buttons` argument. Note that `annot` is passed to `annotations` argument as well.
+
+Refer to code below for more details
 
 ```{r}
 #| code-fold: true
@@ -574,13 +628,10 @@ annot <- list(list(text = "Select Towns:",
 #| fig-width: 12.5
 flatpriceorder <- flatpriceclean[order(flatpriceclean$flat_type), ]
 
+#Initiating the base plot
 plot_ly(data = flatpriceclean,
         x = ~remaining_lease_years,
         y = ~resale_price_persqm,
-        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
-                               "<br>Floor Area (sqm):", floor_area_sqm,
-                               "<br>Remaining Lease (Year):", remaining_lease_years,
-                               "<br>Town:", town),
         type = 'scatter',
         mode = 'markers',
         size = ~floor_area_sqm,
@@ -589,26 +640,42 @@ plot_ly(data = flatpriceclean,
         marker = list(opacity = 0.6,
                       sizemode = 'diameter',
                       line = list(width = 0.2, color = '#FFFFFF')),
+        
+#Creating tooltip details
+        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
+                               "<br>Floor Area (sqm):", floor_area_sqm,
+                               "<br>Remaining Lease:", remaining_lease_years,
+                               "<br>Flat Model:", flat_model,
+                               "<br>Storey Height:", storey_range),
+
+#Transform plotly by filtering the selected town in updatemenus       
         transforms = list(list(type = 'filter',
                                target = ~flatpriceorder$town,
                                operation = '=',
                                value = unique(flatpriceorder$town)[1])
                           )
         ) |> 
+
   
+#Configuring the plot and axis title and range  
   layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions by towns, 2022",
          xaxis = list(title = "Remaining Lease (Year)",
                       range = c(40, 100)),
          yaxis = list(title = "Resale Price per sqm (SGD)",
                       range = c(3000, 16000)),
+         
+#Creating the dropdown box for users to filter using town
          updatemenus = list(list(type = 'dropdown',
                                  xref = "paper",
                                  yref = "paper",
                                  x = 1.4, y = 0.7,
                                  buttons = town_list)
                             ),
-         
          annotations = annot
          )
 
 ```
+
+[*Insights*]{.underline}
+
+As noted above, the hypothesis testing is done using Kruskal-Wallis test with 95% confidence level for the individual plot. For each plot, they hypothesis is:
