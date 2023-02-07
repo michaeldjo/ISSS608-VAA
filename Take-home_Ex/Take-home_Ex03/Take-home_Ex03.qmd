@@ -21,44 +21,210 @@ The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-
 
 The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.
 
+###### 
+
 ## **2. Data Preparation**
 
-```{r}
+### 2.1 Install R packages and import dataset
+
+The code chunk below uses `pacman::p_load()` to check if packages are installed. If they are, they will be launched into R. The packages installed are
+
+-   `plotly`: Used for creating interactive web-based graphs.
+
+-   `ggstatsplot`: Used for creating graphics with details from statistical tests.
+
+-   `knitr`: Used for dynamic report generation
+
+-   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
+
+    All packages can be found within CRAN.
+
+Import data from csv using `readr::read_csv()` and store it in variable ***flatprice***.
+
+``` {r}
 #Load packages
-pacman::p_load(plotly, ggstatsplot, tidyverse)
+pacman::p_load(plotly, ggstatsplot, knitr, tidyverse)
 
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
 ```
 
+### 2.2 Data wrangling
+
+Looking at the data below, we notice few problems
+
+-   **month** is in `<chr>` format ("yyyy-mm"), which is not very useful for filtering for 2022 period
+
+-   **lease_commence_date** is in `<dbl>` format. It needs to be converted to `<int>`
+
+-   **remaining_lease** is in `<chr>` format. It needs to be reformatted to `<dbl>` in years
+
+```{r}
+flatprice
+```
+
+`is.na()` function is also used to confirm that there are no missing values in the ***flatprice*** dataset.
+
+```{r}
+#Check for missing values
+any(is.na(flatprice))
+```
+
+The code chunk below performs the required data wrangling to clean ***flatprice*** dataset and store it in new variable ***flatpriceclean***.
+
+-   Filter **flat_type** for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
+-   Convert the **month** variable to date using `as.Date()`. Store the year and month to the respective new variables **year** and **month** using `dplyr:mutate()`. They can then be converted to integer using `as.integer()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
+-   Extract the year and month digits from **remaining_lease** variable using `str_extract()` function. Sum the year digit and (month digit/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called **remaining_lease_years** using `dplyr::mutate()`
+-   Create new variable called **resale_price_persqm** to divide the **resale_price** with **floor_area_sqm**. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
+-   Convert **lease_commence_date** to `<int>` using `as.integer()`
+
 ```{r}
 #Data preparation
-
-#filter for 2022 and 3-ROOM, 4-ROOM, 5-ROOM
-#mutate remaining_lease to years
+#store the new dataset in new variable flatpriceclean
 flatpriceclean <- flatprice |> 
+  
+#filter for 3-ROOM, 4-ROOM, 5-ROOM
   filter(flat_type %in% c('3 ROOM','4 ROOM','5 ROOM')) |> 
+  
+#reformat month and split it to month and year. Use year to filter for 2022
   mutate(year = as.integer(format(as.Date(paste(month, "-01", sep="")), "%Y")),
          month = as.integer(format(as.Date(paste(month, "-01", sep="")), "%m")),
          .before = 1)|> 
   filter(year == 2022) |> 
+
+#mutate remaining_lease to remaining_lease_years
   mutate(remaining_lease_years = round((as.numeric(str_extract(remaining_lease, "^[0-9]+")) + 
                            ifelse(is.na(as.numeric(str_extract(remaining_lease, " [0-9]+"))), 0, as.numeric(str_extract(remaining_lease, " [0-9]+")))/12), digits = 1),
+         
+#create new variable called resale_price_persqm
          resale_price_persqm = round(resale_price/floor_area_sqm, digits = 1),
+
+#convert lease_commence_date to integer
          lease_commence_date = as.integer(lease_commence_date),
          .after = remaining_lease) 
+```
 
-flatpriceclean
+The final dataset **flatpriceclean** is displayed below.
+
+```{r}
+kable(head(flatpriceclean), "simple")
+```
+
+###### 
+
+## **3. Visualisation**
+
+### 3.1 Exploratory Data Visualisation
+
+The plots here are preliminary in nature but designed with interactivity to allow users to perform Exploratory Data Analysis (EDA) Visualisation to study the data.
+
+#### 3.1.1. Interactive scatterplot
+
+[Design Consideration]{.underline}
+
+Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below allows users to select the x-axis and y-axis of the continuous variables they wish to study. Considerations :
+
+-   y-axis selection is **resale_price** and **resale_price_persqm**. This is aligned with the study purpose of discovering patterns of resale price. This allows users to also see the intent of normalising **resale_price** by **floor_area_sqm**
+
+-   x-axis selection is other continuous variables, namely: **remaining_lease_years**, **lease_commence_date**, and **floor_area_sqm**
+
+-   As the study also aims to focus on the flat type, the scatterplot is colored by **flat_type**
+
+-   As the plots are expected to be very scattered, opacity is introduced with white border
+
+[Preparation of visualisation]{.underline}
+
+`plot_ly` is used to prepare the interactive plot. Steps taken are
+
+-   Initiating base scatterplot, indicated by `type = 'scatter'`, colored by **flat_type**. `marker` argument is used to introduce `opacity` and `line` (white plot border)
+
+-   `layout` argument is used to add plot title, x-axis title, and y-axis title
+
+-   To create the dropdown menu for parameters of x-axis and y-axis, the `updatemenus` argument is used to create respective `buttons`
+
+Refer to code below for more details
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 11
+#| fig-width: 12.5
+
+#Initiating the base plot
+plot_ly(data = flatpriceclean,
+        x = ~remaining_lease_years,
+        y = ~resale_price_persqm,
+        type = 'scatter',
+        mode = 'markers',
+        color = ~flat_type,
+        marker = list(opacity = 0.6,
+                      sizemode = 'diameter',
+                      line = list(width = 0.2, color = 'white'))) |> 
+
+#Generating plot, x-axis, and y-axis title
+  layout(title = "Interactive scatterplot of resale price vs other factors\nResale transactions, 2022",
+         xaxis = list(title = "Remaining Lease (Year)"),
+         yaxis = list(title = "Resale Price per sqm (SGD)"),
+         
+#creating dropwdown menus to allow selection of parameters on x-axis and y-axis 
+         updatemenus = list(list(type = "dropdown",
+                                 direction = "up",
+                                 xref = "paper",
+                                 yref = "paper",
+                                 xanchor = "left",
+                                 yanchor = "top",
+                                 x = 1,
+                                 y = 0,
+                                 buttons = list(
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$remaining_lease_years)),
+                                                    list(xaxis = list(title = "Remaining Lease (Year)"))),
+                                        label = "Remaining Lease"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$lease_commence_date)),
+                                                    list(xaxis = list(title = "Year of Lease Commenced"))),
+                                        label = "Lease Commenced"),
+                                   list(method = "update",
+                                        args = list(list(x = list(flatpriceclean$floor_area_sqm)),
+                                                    list(xaxis = list(title = "Floor Area (sqm)"))),
+                                        label = "Floor Area")
+                                   )
+                                 ),
+                            
+                            list(type = "dropdown",
+                                 xref = "paper",
+                                 yref = "paper",
+                                 xanchor = "left",
+                                 yanchor = "top",
+                                 x = 0.04,
+                                 y = 0.95,
+                                 buttons = list(
+                                   list(method = "update",
+                                        args = list(list(y = list(flatpriceclean$resale_price_persqm)),
+                                                    list(yaxis = list(title = "Resale Price per sqm (SGD)"))),
+                                        label = "Resale Price/Area"),
+                                   list(method = "update",
+                                        args = list(list(y = list(flatpriceclean$resale_price)),
+                                                    list(yaxis = list(title = "Resale Price (SGD)"))),
+                                        label = "Resale Price")
+                                   )
+                                 )
+                            )
+         )
 ```
 
 ```{r}
-#Check for missing values
-any(is.na(flatpriceclean))
+ggplot(data = flatpriceclean)+
+
+  geom_point(aes(x = lease_commence_date,
+                 y = remaining_lease_years)) +
+  
+  labs(
+    x = "Year of Lease Commenced",
+    y = "Remaining Lease\n(Year)") +
+
+  theme(axis.title.y = element_text(angle = 0))
 ```
-
-## **3. Visualization**
-
-### 3.1 Exploratory Data Visualization
 
 The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very cluttered as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
 
@@ -73,41 +239,40 @@ The first plot design consideration :
 #| code-summary: "Show the code"
 #| fig-height: 9
 #| fig-width: 12.5
-plot_ly(data = flatpriceclean,
-        x = ~remaining_lease_years,
-        y = ~resale_price_persqm,
-        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
-                               "<br>Floor Area (sqm):", floor_area_sqm,
-                               "<br>Remaining Lease (Year):", remaining_lease_years),
-        type = 'scatter',
-        mode = 'markers',
-        color = ~flat_type,
-        marker = list(opacity = 0.6,
-                      sizemode = 'diameter',
-                      line = list(width = 0.2, color = '#FFFFFF'))) |> 
+#| eval: false
+#plot_ly(data = flatpriceclean,
+#        x = ~remaining_lease_years,
+#        y = ~resale_price_persqm,
+#        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
+#                               "<br>Floor Area (sqm):", floor_area_sqm,
+#                               "<br>Remaining Lease (Year):", remaining_lease_years),
+#        type = 'scatter',
+#        mode = 'markers',
+#        color = ~flat_type,
+#        marker = list(opacity = 0.6,
+#                      sizemode = 'diameter',
+#                      line = list(width = 0.2, color = '#FFFFFF'))) |> 
   
-  layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions, 2022",
-         xaxis = list(title = "Remaining Lease (Year)"),
-         yaxis = list(title = "Resale Price per sqm (SGD)"),
-         legend = list(orientation = 'h',
-                       xref = "paper",
-                       yref = "paper",
-                       xanchor = "center",
-                       yanchor ="top",
-                       x = 0.5,
-                       y = 0.95))
-
+#  layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions, 2022",
+#         xaxis = list(title = "Remaining Lease (Year)"),
+#         yaxis = list(title = "Resale Price per sqm (SGD)"),
+#         legend = list(orientation = 'h',
+#                       xref = "paper",
+#                       yref = "paper",
+#                       xanchor = "center",
+#                       yanchor ="top",
+#                       x = 0.5,
+#                       y = 0.95))
 
 ```
 
 Using updatemenus to get a good first glance of all relationships
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-height: 11
 #| fig-width: 12.5
-flatpriceclean$flat_model <- fct_reorder(flatpriceclean$flat_model, flatpriceclean$resale_price_persqm)
-
 plot_ly(data = flatpriceclean,
         x = ~flat_type,
         y = ~resale_price_persqm,
@@ -154,7 +319,6 @@ plot_ly(data = flatpriceclean,
                             )
          )
 ```
-
 
 ### 3.2 Confirmatory Data Analysis Visualization
 
@@ -205,8 +369,7 @@ ggbetweenstats(
   ) 
 ```
 
-Thirdly, check the flat_model variables.
-Filtering for number of observations >= 50
+Thirdly, check the flat_model variables. Filtering for number of observations \>= 50
 
 ```{r}
 #| code-fold: true
@@ -234,7 +397,7 @@ ggbetweenstats(
   ) 
 ```
 
-The town variables are skipped as there are too many variables -> to be considered in the final visualization
+The town variables are skipped as there are too many variables -\> to be considered in the final visualization
 
 Lastly, check the transaction month variables
 
@@ -325,7 +488,3 @@ plot_ly(data = flatpriceclean,
          )
 
 ```
-
-
-
-
