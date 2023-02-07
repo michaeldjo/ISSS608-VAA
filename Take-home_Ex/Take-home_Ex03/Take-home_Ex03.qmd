@@ -41,7 +41,7 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 Import data from csv using `readr::read_csv()` and store it in variable ***flatprice***.
 
-``` {r}
+```{r}
 #Load packages
 pacman::p_load(plotly, ggstatsplot, knitr, tidyverse)
 
@@ -128,8 +128,6 @@ Scatterplots are generally used to discover relationship between two continuous 
 
 -   x-axis selection is other continuous variables, namely: **remaining_lease_years**, **lease_commence_date**, and **floor_area_sqm**
 
--   As the study also aims to focus on the flat type, the scatterplot is colored by **flat_type**
-
 -   As the plots are expected to be very scattered, opacity is introduced with white border
 
 [Preparation of visualisation]{.underline}
@@ -156,7 +154,6 @@ plot_ly(data = flatpriceclean,
         y = ~resale_price_persqm,
         type = 'scatter',
         mode = 'markers',
-        color = ~flat_type,
         marker = list(opacity = 0.6,
                       sizemode = 'diameter',
                       line = list(width = 0.2, color = 'white'))) |> 
@@ -212,6 +209,10 @@ plot_ly(data = flatpriceclean,
                             )
          )
 ```
+
+[Insights]{.underline}
+
+Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below
 
 ```{r}
 ggplot(data = flatpriceclean)+
