@@ -256,6 +256,7 @@ As such, the visualization below allows users to select the x-axis of the discre
 -   x-axis title is omitted as it will be displayed by the selected dropdown menu
 -   Combining boxplots and violin plots to visualize the quartiles and kernel density of the distribution
 -   Tooltip to show mean, quartiles, and outliers
+-   Plot can be zoomed-in or out as it might be difficult to get details with large number of categories (i.e., town)
 -   Order the variables by ascending order (mean) if they are not lexicographically important (i.e., [flat_type]{.underline}, [storey_range]{.underline}, and [month]{.underline}
 
 [*Preparation of visualisation*]{.underline}
@@ -330,11 +331,17 @@ plot_ly(data = flatpriceclean,
 
 [*Insights*]{.underline}
 
--   The most obvious pattern is the direct positive correlation between [resale price]{.underline} and [floor area]{.underline}. Hence the decision to normalize the resale price is justified. From here onwards, we will focus more on [resale price per sqm]{.underline}.
+-   When plotted by [flat_type]{.underline}, preliminary EDA reveals minimal difference between the means/medians. This is expected since we are using [resale_price_persqm]{.underline}. Note that flats with more rooms tend to be bigger in area, hence when normalized by area, the difference in resale price among different types of flat is minimized. It is interesting to note that 5 ROOM flat type has the lowest mean overall.
 
--   Plotting [resale price per sqm]{.underline} vs [remaining lease]{.underline} reveals somewhat positive exponential correlation. There seems to sharper increase in gradient if the [remaining lease]{.underline} is beyond 80 years
+-   When plotted by [flat_model]{.underline}, preliminary EDA reveals higher mean/median [resale_price_persqm]{.underline} for models like DBSS, Terrace, Premium, S2 and S1. However, it is important to note that these types tend to be few in the market as well, which likely forms the more exclusive models. Note large variance are observed for improved and Model A types.
 
--   As expected, the same pattern is revealed when [resale price per sqm]{.underline} is plotted against the [year of lease commenced]{.underline}. In fact the [year of lease commenced]{.underline} and [remaining lease]{.underline} are directly correlated to each other as shown in the plot below. Hence it makes sense to use one of them in future analysis. In this case, we will only use [remaining lease]{.underline} as it is more intuitive.
+-   When plotted by [storey_range]{.underline}, preliminary EDA reveals higher mean/median [resale_price_persqm]{.underline} for higher storey. Note large variance are observed for 19 to 27th storey units.
+
+-   When plotted by [town]{.underline}, preliminary EDA reveals differences in mean/median [resale_price_persqm]{.underline} for different town estates. At the lower end, we can find newly developed or further towns (i.e., Woodlands, Pasir Ris, Jurong West), while at the opposite end, we find more mature or centrally located estates (i.e., Central Area, Queenstown, Kallang/Whampoa). Note large variance are observed for the higher-end estates.
+
+-   Preliminary EDA reveals minimal difference in [resale_price_persqm]{.underline} between transaction months.
+
+However, these observations need to be confirmed using appropriate hypothesis technique in the next section. Note that the number of observations per category also need to be examined.
 
 ### 3.2 Confirmatory Data Analysis Visualization
 
