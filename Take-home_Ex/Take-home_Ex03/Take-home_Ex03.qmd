@@ -19,7 +19,7 @@ The original dataset was downloaded from [Data.gov.sg](https://data.gov.sg/) tit
 
 The file downloaded was *resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv*
 
-The focus of the study is on **3-ROOM, 4-ROOM and 5-ROOM types** for **2022** period.
+The focus of the study is on [3-ROOM, 4-ROOM and 5-ROOM types]{.underline} for [2022]{.underline} period.
 
 ###### 
 
@@ -53,11 +53,11 @@ flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-j
 
 Looking at the data below, we notice few problems
 
--   **month** is in `<chr>` format ("yyyy-mm"), which is not very useful for filtering for 2022 period
+-   [month]{.underline} is in `<chr>` format ("yyyy-mm"), which is not very useful for filtering for 2022 period
 
--   **lease_commence_date** is in `<dbl>` format. It needs to be converted to `<int>`
+-   [lease_commence_date]{.underline} is in `<dbl>` format. It needs to be converted to `<int>`
 
--   **remaining_lease** is in `<chr>` format. It needs to be reformatted to `<dbl>` in years
+-   [remaining_lease]{.underline} is in `<chr>` format. It needs to be reformatted to `<dbl>` in years
 
 ```{r}
 flatprice
@@ -72,11 +72,11 @@ any(is.na(flatprice))
 
 The code chunk below performs the required data wrangling to clean ***flatprice*** dataset and store it in new variable ***flatpriceclean***.
 
--   Filter **flat_type** for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
--   Convert the **month** variable to date using `as.Date()`. Store the year and month to the respective new variables **year** and **month** using `dplyr:mutate()`. They can then be converted to integer using `as.integer()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
--   Extract the year and month digits from **remaining_lease** variable using `str_extract()` function. Sum the year digit and (month digit/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called **remaining_lease_years** using `dplyr::mutate()`
--   Create new variable called **resale_price_persqm** to divide the **resale_price** with **floor_area_sqm**. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
--   Convert **lease_commence_date** to `<int>` using `as.integer()`
+-   Filter [flat_type]{.underline} for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
+-   Convert the [month]{.underline} variable to date using `as.Date()`. Store the year and month to the respective new variables [year]{.underline} and [month]{.underline} using `dplyr:mutate()`. They can then be converted to integer using `as.integer()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
+-   Extract the year and month digits from [remaining_lease]{.underline} variable using `str_extract()` function. Sum the year digit and (month digit/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called [remaining_lease_years]{.underline} using `dplyr::mutate()`
+-   Create new variable called [resale_price_persqm]{.underline} to divide the [resale_price]{.underline} with [floor_area_sqm]{.underline}. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
+-   Convert [lease_commence_date]{.underline} to `<int>` using `as.integer()`
 
 ```{r}
 #Data preparation
@@ -104,7 +104,7 @@ flatpriceclean <- flatprice |>
          .after = remaining_lease) 
 ```
 
-The final dataset **flatpriceclean** is displayed below.
+The final dataset ***flatpriceclean*** is displayed below.
 
 ```{r}
 kable(head(flatpriceclean), "simple")
@@ -120,21 +120,25 @@ The plots here are preliminary in nature but designed with interactivity to allo
 
 #### 3.1.1. Interactive scatterplot
 
-[Design Consideration]{.underline}
+[*Design Consideration*]{.underline}
 
 Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below allows users to select the x-axis and y-axis of the continuous variables they wish to study. Considerations :
 
--   y-axis selection is **resale_price** and **resale_price_persqm**. This is aligned with the study purpose of discovering patterns of resale price. This allows users to also see the intent of normalising **resale_price** by **floor_area_sqm**
+-   y-axis selection is [resale_price]{.underline} and [resale_price_persqm]{.underline}. This is aligned with the study purpose of discovering patterns of resale price. This allows users to also see the intent of normalising [resale_price]{.underline} by [floor_area_sqm]{.underline}
 
--   x-axis selection is other continuous variables, namely: **remaining_lease_years**, **lease_commence_date**, and **floor_area_sqm**
+-   x-axis selection is other continuous variables, namely: [remaining_lease_years]{.underline}, [lease_commence_date]{.underline}, and [floor_area_sqm]{.underline}
 
 -   As the plots are expected to be very scattered, opacity is introduced with white border
 
-[Preparation of visualisation]{.underline}
+-   Tooltip indicating variables of interest : [remaining_lease_years]{.underline}, [floor_area_sqm]{.underline}, and [resale_price_persqm]{.underline}
+
+[*Preparation of visualisation*]{.underline}
 
 `plot_ly` is used to prepare the interactive plot. Steps taken are
 
--   Initiating base scatterplot, indicated by `type = 'scatter'`, colored by **flat_type**. `marker` argument is used to introduce `opacity` and `line` (white plot border)
+-   Initiating base scatterplot, indicated by `type = 'scatter'`. `marker` argument is used to introduce `opacity` and `line` (white plot border)
+
+-   Tooltip customisation is created using `hovertemplate` argument
 
 -   `layout` argument is used to add plot title, x-axis title, and y-axis title
 
@@ -152,6 +156,9 @@ Refer to code below for more details
 plot_ly(data = flatpriceclean,
         x = ~remaining_lease_years,
         y = ~resale_price_persqm,
+        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
+                               "<br>Floor Area (sqm):", floor_area_sqm,
+                               "<br>Remaining Lease (Year):", remaining_lease_years),
         type = 'scatter',
         mode = 'markers',
         marker = list(opacity = 0.6,
@@ -210,11 +217,17 @@ plot_ly(data = flatpriceclean,
          )
 ```
 
-[Insights]{.underline}
+[*Insights*]{.underline}
 
-Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below
+-   The most obvious pattern is the direct positive correlation between [resale price]{.underline} and [floor area]{.underline}. Hence the decision to normalize the resale price is justified. From here onwards, we will focus more on [resale price per sqm]{.underline}.
+
+-   Plotting [resale price per sqm]{.underline} vs [remaining lease]{.underline} reveals somewhat positive exponential correlation. There seems to sharper increase in gradient if the [remaining lease]{.underline} is beyond 80 years
+
+-   As expected, the same pattern is revealed when [resale price per sqm]{.underline} is plotted against the [year of lease commenced]{.underline}. In fact the [year of lease commenced]{.underline} and [remaining lease]{.underline} are directly correlated to each other as shown in the plot below. Hence it makes sense to use one of them in future analysis. In this case, we will only use [remaining lease]{.underline} as it is more intuitive.
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 ggplot(data = flatpriceclean)+
 
   geom_point(aes(x = lease_commence_date,
@@ -227,47 +240,11 @@ ggplot(data = flatpriceclean)+
   theme(axis.title.y = element_text(angle = 0))
 ```
 
-The first plot purpose is to provide preliminary insight on the resale price of property vs remaining lease. the plot looks very cluttered as the number of dataset is high, however, this is deemed to be sufficient for preliminary analysis. Note that the resale price is normalized with floor area, as absolute resale price tends to be more expensive for bigger area.
+#### 3.1.2. Interactive boxviolin plot
 
-The first plot design consideration :
+[*Design Consideration*]{.underline}
 
--   Color legend for flat type (3 ROOM, 4 ROOM, 5 ROOM) in plotly allows users to filter accordingly
-
--   Hover tip displaying the resale price, floor area, remaining lease, and flat type
-
-```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
-#| fig-height: 9
-#| fig-width: 12.5
-#| eval: false
-#plot_ly(data = flatpriceclean,
-#        x = ~remaining_lease_years,
-#        y = ~resale_price_persqm,
-#        hovertemplate = ~paste("<br>Resale Price per sqm:", resale_price_persqm,
-#                               "<br>Floor Area (sqm):", floor_area_sqm,
-#                               "<br>Remaining Lease (Year):", remaining_lease_years),
-#        type = 'scatter',
-#        mode = 'markers',
-#        color = ~flat_type,
-#        marker = list(opacity = 0.6,
-#                      sizemode = 'diameter',
-#                      line = list(width = 0.2, color = '#FFFFFF'))) |> 
-  
-#  layout(title = "Resale Price per flat area increases with remaining lease \nResale transactions, 2022",
-#         xaxis = list(title = "Remaining Lease (Year)"),
-#         yaxis = list(title = "Resale Price per sqm (SGD)"),
-#         legend = list(orientation = 'h',
-#                       xref = "paper",
-#                       yref = "paper",
-#                       xanchor = "center",
-#                       yanchor ="top",
-#                       x = 0.5,
-#                       y = 0.95))
-
-```
-
-Using updatemenus to get a good first glance of all relationships
+Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below allow
 
 ```{r}
 #| code-fold: true
