@@ -124,6 +124,8 @@ The plots here are preliminary in nature but designed with interactivity to allo
 
 Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below allows users to select the x-axis and y-axis of the continuous variables they wish to study. Considerations :
 
+-   Dropdown menu to select variables for y-axis and x-axis
+
 -   y-axis selection is [resale_price]{.underline} and [resale_price_persqm]{.underline}. This is aligned with the study purpose of discovering patterns of resale price. This allows users to also see the intent of normalising [resale_price]{.underline} by [floor_area_sqm]{.underline}
 
 -   x-axis selection is other continuous variables, namely: [remaining_lease_years]{.underline}, [lease_commence_date]{.underline}, and [floor_area_sqm]{.underline}
@@ -166,7 +168,7 @@ plot_ly(data = flatpriceclean,
                       line = list(width = 0.2, color = 'white'))) |> 
 
 #Generating plot, x-axis, and y-axis title
-  layout(title = "Interactive scatterplot of resale price vs other factors\nResale transactions, 2022",
+  layout(title = "Interactive scatterplot of resale price vs selected factors\nResale transactions, 2022",
          xaxis = list(title = "Remaining Lease (Year)"),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
          
@@ -244,25 +246,53 @@ ggplot(data = flatpriceclean)+
 
 [*Design Consideration*]{.underline}
 
-Scatterplots are generally used to discover relationship between two continuous variables. As such, the visualization below allow
+In contrast to scatterplots, boxplots are generally used to discover relationship between continuous variables and discrete variables. Violin plots can also be added to visualize the kernel density of the data.
+
+As such, the visualization below allows users to select the x-axis of the discrete variables they wish to study. Considerations :
+
+-   Dropdown menu to select variables for x-axis
+-   y-axis selected is [resale_price_persqm]{.underline}. This is aligned with the study purpose of discovering patterns of resale price
+-   x-axis selection is the discrete variables, namely: [flat_type]{.underline}, [flat_model]{.underline}, [storey_range]{.underline}, [town]{.underline}, and [month]{.underline}. Note that [month]{.underline} (transaction month) is treated as discrete variable as we want to find out any seasonal variations (statistically significant difference in mean/median) of price.
+-   x-axis title is omitted as it will be displayed by the selected dropdown menu
+-   Combining boxplots and violin plots to visualize the quartiles and kernel density of the distribution
+-   Tooltip to show mean, quartiles, and outliers
+-   Order the variables by ascending order (mean) if they are not lexicographically important (i.e., [flat_type]{.underline}, [storey_range]{.underline}, and [month]{.underline}
+
+[*Preparation of visualisation*]{.underline}
+
+`plot_ly` is used to prepare the interactive plot. Steps taken are
+
+-   Initiating base scatterplot, indicated by `type = 'violin'`. Note `box` `visible` argument is set to `T` to ensure the boxplot is visible. The same is applied to `meanline` `visible` to ensure meanline is visible.
+
+-   `layout` argument is used to add plot title, and y-axis title
+
+-   To create the dropdown menu for parameters of x-axis, the `updatemenus` argument is used to create respective `buttons`
+
+-   `categoryorder` is set for each button to determine the order of discrete variables. `category ascending` will ensure lexicographic order while `mean ascending` will ensure mean order.
+
+Refer to code below for more details
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-height: 11
 #| fig-width: 12.5
+
+#Initiating the base plot
 plot_ly(data = flatpriceclean,
         x = ~flat_type,
         y = ~resale_price_persqm,
         type = "violin",
-        alpha = 0.3,
         marker = list(opacity = 0.6),
         box = list(visible = T),
         meanline = list(visible = T)) |> 
   
-  layout(title = "Distribution of resale price by selected factors, \nResale transactions, 2022",
+#Generating plot and y-axis title  
+  layout(title = "Distribution of resale price by selected factors \nResale transactions, 2022",
          xaxis = list(title = ""),
          yaxis = list(title = "Resale Price per sqm (SGD)"),
+         
+#creating dropwdown menus to allow selection of parameters on x-axis 
          updatemenus = list(list(type = 'dropdown',
                                  xref = "paper",
                                  yref = "paper",
@@ -297,6 +327,14 @@ plot_ly(data = flatpriceclean,
                             )
          )
 ```
+
+[*Insights*]{.underline}
+
+-   The most obvious pattern is the direct positive correlation between [resale price]{.underline} and [floor area]{.underline}. Hence the decision to normalize the resale price is justified. From here onwards, we will focus more on [resale price per sqm]{.underline}.
+
+-   Plotting [resale price per sqm]{.underline} vs [remaining lease]{.underline} reveals somewhat positive exponential correlation. There seems to sharper increase in gradient if the [remaining lease]{.underline} is beyond 80 years
+
+-   As expected, the same pattern is revealed when [resale price per sqm]{.underline} is plotted against the [year of lease commenced]{.underline}. In fact the [year of lease commenced]{.underline} and [remaining lease]{.underline} are directly correlated to each other as shown in the plot below. Hence it makes sense to use one of them in future analysis. In this case, we will only use [remaining lease]{.underline} as it is more intuitive.
 
 ### 3.2 Confirmatory Data Analysis Visualization
 
