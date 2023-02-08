@@ -15,8 +15,10 @@ website:
             href: "Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html"
           - text: "Hands-on Exercise 4"
             href: "Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html" 
+          - text: "Ternary Plot"
+            href: "Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html"
           - text: "Hands-on Exercise 5"
-            href: "Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html" 
+            href: "Hands-on_Ex/Hands-on_Ex05.1/Hands-on_Ex05.1.html" 
       - text: "In-Class Exercise"
         menu: 
           - text: "In-class Exercise 3"
