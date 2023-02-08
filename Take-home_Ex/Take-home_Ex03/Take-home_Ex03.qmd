@@ -37,6 +37,10 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `pacthwork`: Used to combine plots
 
+-   `ggdist`: Used for visualising distribution and uncertainty
+
+-   `ggthemes`: Provide additional themes for `ggplot2`
+
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
     All packages can be found within CRAN.
@@ -45,7 +49,7 @@ Import data from csv using `readr::read_csv()` and store it in variable ***flatp
 
 ```{r}
 #Load packages
-pacman::p_load(plotly, ggstatsplot, knitr, patchwork, tidyverse)
+pacman::p_load(plotly, ggstatsplot, knitr, patchwork, ggdist, ggthemes, tidyverse)
 
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
@@ -353,7 +357,7 @@ However, these observations need to be confirmed using appropriate hypothesis te
 
 ###### 
 
-### 3.2 Confirmatory Data Analysis Visualization
+### 3.2 Confirmatory Data Analysis Visualisation
 
 The plots here are focused in visual statistical testing used in Confirmatory Data Analysis. Hence `ggstatsplot` is mainly used.
 
@@ -371,7 +375,7 @@ To ensure that best practices (APA standard) of statistical reporting is followe
 
 `ggstatsplot` is used to prepare the plot. Steps taken are
 
--   Order the towns by the mean of [resale_price_persqm]{.underline} in ascending order using `forcats::fct_reorder`. This will ensure the towns are ordered accordingly for easier observation.
+-   Order the towns by the median of [resale_price_persqm]{.underline} in ascending order using `forcats::fct_reorder`. This will ensure the towns are ordered accordingly for easier observation.
 
 -   `ggstatsplot::ggbetweenstats()` is used to display the one-way ANOVA plot. Note that the dataset is grouped by town and filtered when count \>=850. This is achieved using `dplyr::group_by()` and `dplyr::filter()`
 
@@ -395,8 +399,8 @@ Refer to code below for more details
 #| fig-width: 12.5
 #| fig-height: 12.5
 
-#Order the town variables by mean of resale price
-flatpriceclean$town <- fct_reorder(flatpriceclean$town, flatpriceclean$resale_price_persqm)
+#Order the town variables by median of resale price
+flatpriceclean$town <- fct_reorder(flatpriceclean$town, flatpriceclean$resale_price_persqm, median)
 
 #set the color pallete
 col13_1 <- c("dodgerblue2", "#E31A1C", 
@@ -440,7 +444,7 @@ p2 <- ggbetweenstats(
     filter(n() < 850),
   x = town, 
   y = resale_price_persqm, 
-  xlab = "Town",
+  xlab = "Planning Town",
   ylab = "Resale Price per sqm (SGD)",
   title = "Plot 2. One-way ANOVA (towns < 850 transactions)",
   type = "np", 
@@ -478,7 +482,50 @@ Overall, the findings of the EDA is more or less consistent (refer to section 3.
 
 ###### 
 
-### 3.3 Visualization of Resale Price vs Remaining Lease by Township
+### 3.3 Visualising the uncertainty of point estimates 
+
+It is tempting to interpret point estimate like median as precise representation of the true data value. However, it is worth noting that there are uncertainties surrounding the point estimates, hence the motivation to display the the target confidence levels (95% or 99%) that the true (unknown) estimate would lie within the interval, given the evidence provided by the observed data.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 7
+#| fig-width: 12.5
+
+ggplot(
+  data = flatpriceclean,
+  aes(x = town,
+      y = resale_price_persqm)) +
+  
+  stat_pointinterval(
+    aes(interval_color = stat(level)),
+    .width = c(0.95, 0.99),
+    .point = median,
+    .interval = qi,
+    point_color = "darkred",
+    show.legend = FALSE) +
+  
+  scale_color_manual(
+    values = c("blue2", "darkblue"),
+    aesthetics = "interval_color") +
+  
+  labs(title = 'Visualising uncertainty in median estimates of resale price by town',
+  subtitle = 'Confidence intervals (95% and 99%) of resale price per flat area by Town, 2022',
+  caption = 'Resale flat princes based on registration date from Jan-2017 onwards from data.gov.sg',
+  x = "Planning Town",
+  y = "Resale Price per sqm (SGD)") +
+  
+  theme_hc() +
+  
+  theme(plot.title = element_text(face = "bold", size = 18),
+        plot.subtitle = element_text(size = 14),
+        axis.text.x = element_text(angle = 30, hjust = 1))
+
+```
+
+###### 
+
+### 3.4 Visualisation of Resale Price vs Remaining Lease by Township
 
 Section 3.1 above allow users to perform EDA to explore the relationship between resale price with other variables. Section 3.2 confirms statistical evidence of difference of resale price by towns. It is hence interesting to combine these insights together in one interactive visualization.
 
@@ -511,7 +558,7 @@ for (i in 1:length(unique(flatpriceclean$town))) {
                          label = unique(flatpriceclean$town)[i])
   }
 
-annot <- list(list(text = "Select Town:",
+annot <- list(list(text = "Planning Town:",
                    x = 1.41,
                    y = 0.78,
                    xref = 'paper',
