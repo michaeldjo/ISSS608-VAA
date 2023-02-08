@@ -1,0 +1,85 @@
+---
+title: "Hands-on Exercise 5.1: Visual Multivariate Analysis "
+author: "Michael Djohan"
+date: 08 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  echo: true
+  eval: true
+  warning: false
+format: html
+editor: visual
+---
+
+### Install and launching R packages.
+
+The code chunk below uses p_load() of pacman package to check if packages are installed in the computer. If they are, then they will be launched into R. The R packages installed are:
+
+-   [**ggtern**](http://www.ggtern.com/), a ggplot extension specially designed to plot ternary diagrams. The package will be used to plot static ternary plots.
+-   [**Plotly R**](https://plot.ly/r/), an R package for creating interactive web-based graphs via plotly's JavaScript graphing library, plotly.js . The **plotly R** libary contains the *ggplotly* function, which will convert **ggplot2** figures into a Plotly object.
+
+```{r}
+pacman::p_load( corrplot, ggstatsplot, tidyverse)
+```
+
+## 1. Visualising Correlation Matrices
+
+### Importing the data
+
+```{r}
+wine <- read_csv("data/wine_quality.csv")
+wine
+```
+
+Column 1 to 11 are all numerical and continuous variables, while the last two are categorical
+
+### Building with pairs() method
+
+Syntax description of [*pairs*](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/pairs.html) function
+
+Plotting the column 1 to 11. Note this can be adjusted to selected columns
+
+```{r}
+pairs(wine[,1:11])
+```
+
+Sometimes we only want to show the upper or lower half of the correlation matrix as they are symmetric. Change the argument `upper.panel = NULL` to `lower.panel = NULL` to get the opposite impact.
+
+```{r}
+pairs(wine[,2:12], upper.panel = NULL)
+```
+
+Showing the correlation coefficient of each pair of variables using [*panel.cor*](https://www.rdocumentation.org/packages/xcms/versions/1.48.0/topics/panel.cor) function
+
+```{r}
+#|warning: false
+panel.cor <- function(x, y, digits = 2, prefix = "", cex.cor, ...) {
+  usr <- par("usr")
+  on.exit(par(usr))
+  par(usr = c(0,1,0,1))
+  r <- abs(cor(x, y, use = "complete.obs"))
+  txt <- format(c(r, 0.123456789), digits = digits)[1]
+  txt <- paste(prefix, txt, sep="")
+  if(missing(cex.cor)) cex.cor <- 0.8/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex.cor * (1 + r)/2)
+}
+
+pairs(wine[,2:12], upper.panel = panel.cor)
+```
+
+### Building with ggcormat() method
+
+Visualising correlation matrix by using [*ggcorrmat()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html) of [**ggstatsplot**](https://indrajeetpatil.github.io/ggstatsplot/) package provides a comprehensive and yet professional statistical report.
+
+```{r}
+ggstatsplot::ggcorrmat(
+  data = wine, 
+  cor.vars = 1:11,
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  title    = "Correlogram for wine dataset",
+  subtitle = "Four pairs are no significant at p < 0.05"
+)
+```
