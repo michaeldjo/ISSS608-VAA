@@ -321,3 +321,69 @@ heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
           dist_method = "euclidean",
           hclust_method = "ward.D")
 ```
+
+[Statistical approach]{.underline}
+
+In order to determine the best clustering method and number of cluster the *dend_expend()* and *find_k()* functions of **dendextend** package will be used.
+
+Use *dend_expend()* to determine the recommended clustering method with Euclidean distance
+
+```{r}
+wh_d <- dist(normalize(wh_matrix[, -c(1, 2, 4, 5)]), method = "euclidean")
+dend_expend(wh_d)[[3]]
+```
+
+The output above shows that average method should be used as it gives the high optimum value.
+
+Next, *find_k()* is used to determine the optimal number of cluster. Figure below shows k = 3 is optimal
+
+```{r}
+wh_clust <- hclust(wh_d, method = "average")
+num_k <- find_k(wh_clust)
+plot(num_k)
+```
+
+Using above results, plot using heatmaply()
+
+```{r}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          dist_method = "euclidean",
+          hclust_method = "average",
+          k_row = 3)
+```
+
+[Seriation]{.underline}
+
+**heatmaply** uses the seriation package to find an optimal ordering of rows and columns. Optimal means to optimize the Hamiltonian path length that is restricted by the dendrogram structure. This, in other words, means to rotate the branches so that the sum of distances between each adjacent leaf (label) will be minimized. This is related to a restricted version of the travelling salesman problem.
+
+Different algorithms : Optimal Leaf Ordering (OLO), Gruvaeus and Wainer (GW), or \"mean\" which gives the output we would get by default from heatmap functions in other packages such as `gplots::heatmap.2`. The option \"none\" gives us the dendrograms without any rotation that is based on the data matrix. Example:
+
+```{r}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          seriate = "OLO")
+```
+
+Putting all together
+
+```{r}
+#| fig-height: 20
+#| fig-width: 12.5
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          Colv=NA,
+          seriate = "none",
+          colors = Blues,
+          
+          #cluster k = 5
+          k_row = 5,
+          
+          #change the top margin to 60 and row margin to 200
+          margins = c(NA,200,60,NA),
+          
+          #change fontsize for row and column labels
+          fontsize_row = 4,
+          fontsize_col = 5,
+          main="World Happiness Score and Variables by Country, 2018 \nDataTransformation using Normalise Method",
+          xlab = "World Happiness Indicators",
+          ylab = "World Countries"
+          )
+```
