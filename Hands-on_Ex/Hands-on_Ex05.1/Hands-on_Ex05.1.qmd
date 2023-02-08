@@ -21,7 +21,7 @@ The code chunk below uses p_load() of pacman package to check if packages are in
 -   [**corrgram**](https://cran.r-project.org/web/packages/corrgram/) calculates correlation of variables and displays the results graphically. Included panel functions can display points, shading, ellipses, and correlation values with confidence intervals.
 
 ```{r}
-pacman::p_load( corrplot, ggstatsplot, tidyverse)
+pacman::p_load(corrplot, ggstatsplot, seriation, dendextend, heatmaply, tidyverse)
 ```
 
 ## 1. Visualising Correlation Matrices
@@ -214,4 +214,110 @@ corrplot(wine.cor,
          order="hclust",
          hclust.method = "ward.D",
          addrect = 3)
+```
+
+## 2. Heatmap for visualising and analysing multivariate data 
+
+Heatmaps are good for showing variance across multiple variables, revealing any patterns, displaying whether any variables are similar to each other, and for detecting if any correlations exist in-between them.
+
+### 2.1 Data import and preparation
+
+```{r}
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+```{r}
+row.names(wh) <- wh$Country
+```
+
+Transforming the data frame into a matrix to make heatmap
+
+```{r}
+wh1 <- select(wh, c(3, 7:12))
+wh_matrix <- data.matrix(wh)
+```
+
+### 2.2 Static heatmap
+
+Using [heatmap()](https://www.rdocumentation.org/packages/stats/versions/3.6.0/topics/heatmap) of R stats package. It draws a simple heatmap which is not very informative as the variables are not normalized (i.e., happiness score values are higher than other variables).
+
+```{r}
+wh_heatmap <- heatmap(wh_matrix,
+                      #the Rowv and Colv below are to switch off the option of plotting the row and column dendograms (cluster)
+                      Rowv=NA, Colv=NA)
+```
+
+Normalising using scale argument
+
+```{r}
+wh_heatmap <- heatmap(wh_matrix,
+                      scale="column",
+                      
+                      #define font size for y-axis and x-axis labels
+                      cexRow = 0.6, 
+                      cexCol = 0.8,
+                      
+                      #margins ensure entire x-axis labels are displayed completely
+                      margins = c(10, 4))
+```
+
+### 2.3 Interactive heatmap
+
+[**heatmaply**](http://talgalili.github.io/heatmaply/) is an R package for building interactive cluster heatmap that can be shared online as a stand-alone HTML file. It is designed and maintained by Tal Galili.
+
+Review the [Introduction to Heatmaply](https://cran.r-project.org/web/packages/heatmaply/vignettes/heatmaply.html) to have an overall understanding of the features and functions of Heatmaply package.
+
+[User manual](https://cran.r-project.org/web/packages/heatmaply/heatmaply.pdf)of the package
+
+Basic heatmap using heatmaply, excluding column 1,2,4,5
+
+```{r}
+heatmaply(wh_matrix[, -c(1,2,4,5)])
+```
+
+#### Scaling method
+
+-   When all variables are came from or assumed to come from some normal distribution, then scaling (i.e.: subtract the mean and divide by the standard deviation) would bring them all close to the standard normal distribution.
+
+-   In such a case, each value would reflect the distance from the mean in units of standard deviation.
+
+-   The *scale* argument in *heatmaply()* supports column and row scaling.
+
+```{r}
+heatmaply(wh_matrix[, -c(1, 2, 4, 5)],
+          scale = "column")
+```
+
+#### Normalising method
+
+-   When variables in the data comes from possibly different (and non-normal) distributions, the normalize function can be used to bring data to the 0 to 1 scale by subtracting the minimum and dividing by the maximum of all observations.
+
+-   This preserves the shape of each variable\'s distribution while making them easily comparable on the same \"scale\".
+
+```{r}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]))
+```
+
+#### Percentising method
+
+-   This is similar to ranking the variables, but instead of keeping the rank values, divide them by the maximal rank.
+
+-   This is done by using the ecdf of the variables on their own values, bringing each value to its empirical percentile.
+
+-   The benefit of the percentize function is that each value has a relatively clear interpretation, it is the percent of observations that got that value or below it.
+
+```{r}
+heatmaply(percentize(wh_matrix[, -c(1, 2, 4, 5)]))
+```
+
+#### Clustering
+
+[Manual approach]{.underline}
+
+In the code chunk below, the heatmap is plotted by using hierachical clustering algorithm with \"Euclidean distance\" and \"ward.D\" method.
+
+```{r}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          dist_method = "euclidean",
+          hclust_method = "ward.D")
 ```
