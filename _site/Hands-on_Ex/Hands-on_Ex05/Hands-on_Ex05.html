@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -164,7 +227,18 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#plotting-ternary-diagram-with-r" id="toc-plotting-ternary-diagram-with-r" class="nav-link active" data-scroll-target="#plotting-ternary-diagram-with-r">1. Plotting Ternary Diagram with R</a>
+  <ul class="collapse">
+  <li><a href="#install-and-launching-r-packages." id="toc-install-and-launching-r-packages." class="nav-link" data-scroll-target="#install-and-launching-r-packages.">Install and launching R packages.</a></li>
+  <li><a href="#importing-the-data" id="toc-importing-the-data" class="nav-link" data-scroll-target="#importing-the-data">Importing the data</a></li>
+  <li><a href="#preparing-the-data" id="toc-preparing-the-data" class="nav-link" data-scroll-target="#preparing-the-data">Preparing the data</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -204,8 +278,65 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<section id="plotting-ternary-diagram-with-r" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-ternary-diagram-with-r">1. Plotting Ternary Diagram with R</h2>
+<section id="install-and-launching-r-packages." class="level3">
+<h3 class="anchored" data-anchor-id="install-and-launching-r-packages.">Install and launching R packages.</h3>
+<p>The code chunk below uses p_load() of pacman package to check if packages are installed in the computer. If they are, then they will be launched into R. The R packages installed are:</p>
+<ul>
+<li><a href="http://www.ggtern.com/"><strong>ggtern</strong></a>, a ggplot extension specially designed to plot ternary diagrams. The package will be used to plot static ternary plots.</li>
+<li><a href="https://plot.ly/r/"><strong>Plotly R</strong></a>, an R package for creating interactive web-based graphs via plotly’s JavaScript graphing library, plotly.js . The <strong>plotly R</strong> libary contains the <em>ggplotly</em> function, which will convert <strong>ggplot2</strong> figures into a Plotly object.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(ggtern, plotly, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="importing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="importing-the-data">Importing the data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>pop_data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/respopagsex2000to2018_tidy.csv"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="preparing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="preparing-the-data">Preparing the data</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>agpop_mutated <span class="ot">&lt;-</span> pop_data <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">`</span><span class="at">Year</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">as.character</span>(Year))<span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(AG, Population) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">YOUNG =</span> <span class="fu">rowSums</span>(.[<span class="dv">4</span><span class="sc">:</span><span class="dv">8</span>]))<span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ACTIVE =</span> <span class="fu">rowSums</span>(.[<span class="dv">9</span><span class="sc">:</span><span class="dv">16</span>]))  <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">OLD =</span> <span class="fu">rowSums</span>(.[<span class="dv">17</span><span class="sc">:</span><span class="dv">21</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TOTAL =</span> <span class="fu">rowSums</span>(.[<span class="dv">22</span><span class="sc">:</span><span class="dv">24</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2018</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(TOTAL <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>agpop_mutated</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 234 × 25
+   PA        SZ    Year  AGE0-…¹ AGE05…² AGE10…³ AGE15…⁴ AGE20…⁵ AGE25…⁶ AGE30…⁷
+   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 Ang Mo K… Ang … 2018      180     270     320     300     260     300     270
+ 2 Ang Mo K… Chen… 2018     1060    1080    1080    1260    1400    1880    1940
+ 3 Ang Mo K… Chon… 2018      900     900    1030    1220    1380    1760    1830
+ 4 Ang Mo K… Kebu… 2018      720     850    1010    1120    1230    1460    1330
+ 5 Ang Mo K… Semb… 2018      220     310     380     500     550     500     300
+ 6 Ang Mo K… Shan… 2018      550     630     670     780     950    1080     990
+ 7 Ang Mo K… Tago… 2018      260     340     430     500     640     690     440
+ 8 Ang Mo K… Town… 2018      830     930     930     860    1020    1400    1350
+ 9 Ang Mo K… Yio … 2018      160     160     220     260     350     340     230
+10 Ang Mo K… Yio … 2018      810    1070    1300    1450    1500    1590    1390
+# … with 224 more rows, 15 more variables: `AGE35-39` &lt;dbl&gt;, `AGE40-44` &lt;dbl&gt;,
+#   `AGE45-49` &lt;dbl&gt;, `AGE50-54` &lt;dbl&gt;, `AGE55-59` &lt;dbl&gt;, `AGE60-64` &lt;dbl&gt;,
+#   `AGE65-69` &lt;dbl&gt;, `AGE70-74` &lt;dbl&gt;, `AGE75-79` &lt;dbl&gt;, `AGE80-84` &lt;dbl&gt;,
+#   AGE85over &lt;dbl&gt;, YOUNG &lt;dbl&gt;, ACTIVE &lt;dbl&gt;, OLD &lt;dbl&gt;, TOTAL &lt;dbl&gt;, and
+#   abbreviated variable names ¹​`AGE0-4`, ²​`AGE05-9`, ³​`AGE10-14`, ⁴​`AGE15-19`,
+#   ⁵​`AGE20-24`, ⁶​`AGE25-29`, ⁷​`AGE30-34`</code></pre>
+</div>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

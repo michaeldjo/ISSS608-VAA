@@ -59,7 +59,7 @@ Looking at the data below, we notice few problems
 
 -   [month]{.underline} is in `<chr>` format ("yyyy-mm"), which is not very useful for filtering for 2022 period
 
--   [lease_commence_date]{.underline} is in `<dbl>` format. It needs to be converted to `<int>`
+-   [lease_commence_date]{.underline} is in `<dbl>` format. It needs to be converted to `<chr>`
 
 -   [remaining_lease]{.underline} is in `<chr>` format. It needs to be reformatted to `<dbl>` in years
 
@@ -77,7 +77,7 @@ any(is.na(flatprice))
 The code chunk below performs the required data wrangling to clean ***flatprice*** dataset and store it in new variable ***flatpriceclean***.
 
 -   Filter [flat_type]{.underline} for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
--   Convert the [month]{.underline} variable to date using `as.Date()`. Store the year and month to the respective new variables [year]{.underline} and [month]{.underline} using `dplyr:mutate()`. They can then be converted to integer using `as.integer()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
+-   Convert the [month]{.underline} variable to date using `as.Date()`. Store the year and month to the respective new variables [year]{.underline} and [month]{.underline} using `dplyr:mutate()`. They can then be converted to string (discrete variables) using `as.character()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
 -   Extract the year and month digits from [remaining_lease]{.underline} variable using `str_extract()` function. Sum the year digit and (month digit/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called [remaining_lease_years]{.underline} using `dplyr::mutate()`
 -   Create new variable called [resale_price_persqm]{.underline} to divide the [resale_price]{.underline} with [floor_area_sqm]{.underline}. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
 -   Convert [lease_commence_date]{.underline} to `<int>` using `as.integer()`
@@ -91,8 +91,8 @@ flatpriceclean <- flatprice |>
   filter(flat_type %in% c('3 ROOM','4 ROOM','5 ROOM')) |> 
   
 #reformat month and split it to month and year. Use year to filter for 2022
-  mutate(year = as.integer(format(as.Date(paste(month, "-01", sep="")), "%Y")),
-         month = as.integer(format(as.Date(paste(month, "-01", sep="")), "%m")),
+  mutate(year = as.character(format(as.Date(paste(month, "-01", sep="")), "%Y")),
+         month = as.character(format(as.Date(paste(month, "-01", sep="")), "%m")),
          .before = 1)|> 
   filter(year == 2022) |> 
 
