@@ -457,6 +457,7 @@ funnel_plot(
 ### 5.3 `ggplot2` method
 
 Data preparation
+
 ```{r}
 df <- covid19 |> 
   mutate(rate = Death/Positive) |> 
@@ -465,11 +466,13 @@ df <- covid19 |>
 ```
 
 Next, the fit.mean is computed by using the code chunk below.
+
 ```{r}
 fit.mean <- weighted.mean(df$rate, 1/df$rate.se^2)
 ```
 
 Calculate the lower an upper limits for 95% and 99% CI
+
 ```{r}
 number.seq <- seq(1, max(df$Positive), 1)
 number.ll95 <- fit.mean - 1.96 * sqrt((fit.mean*(1-fit.mean)) / (number.seq)) 
@@ -480,6 +483,7 @@ dfCI <- data.frame(number.ll95, number.ul95, number.ll999, number.ul999, number.
 ```
 
 Plotting static funnel plot
+
 ```{r}
 p <- ggplot(df, aes(x = Positive, y = rate)) +
   geom_point(aes(label=`Sub-district`), 
@@ -525,7 +529,9 @@ p <- ggplot(df, aes(x = Positive, y = rate)) +
         legend.key.height = unit(0.3, "cm"))
 p
 ```
+
 Pass this to ggplotly
+
 ```{r}
 fp_ggplotly <- ggplotly(p,
   tooltip = c("label", 
@@ -533,4 +539,3 @@ fp_ggplotly <- ggplotly(p,
               "y"))
 fp_ggplotly
 ```
-
