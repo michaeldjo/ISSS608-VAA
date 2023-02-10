@@ -369,7 +369,7 @@ To ensure that best practices (APA standard) of statistical reporting is followe
 
 -   Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
 
--   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot (13 towns each) as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against large variations in number of observations.
+-   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot (13 towns each) as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against variations in number of observations.
 
 [*Preparation of visualisation*]{.underline}
 
@@ -482,9 +482,33 @@ Overall, the findings of the EDA is more or less consistent (refer to section 3.
 
 ###### 
 
-### 3.3 Visualising the uncertainty of point estimates 
+### 3.3 Visualising the uncertainty of point estimates
 
-It is tempting to interpret point estimate like median as precise representation of the true data value. However, it is worth noting that there are uncertainties surrounding the point estimates, hence the motivation to display the the target confidence levels (95% or 99%) that the true (unknown) estimate would lie within the interval, given the evidence provided by the observed data.
+It is tempting to interpret point estimate like median as precise representation of the true data value. However, it is worth noting that there are uncertainties surrounding the point estimates, hence the motivation to display the the target quantile confidence levels (95% or 99%) that the true (unknown) estimate would lie within the interval, given the evidence provided by the observed data.
+
+[*Design Consideration*]{.underline}
+
+`ggdist::stat_pointinterval()` is used to visualise the uncertainty. Considerations :
+
+-   The aim is to provide one-glance of levels of uncertainties of median estimate of resale price by town. Hence there is no need to clutter the plot with too much details (i.e., labels and annotations)
+
+-   Unlike one-way ANOVA test, as there is less detail required in visualising uncertainty, it is possible to come up with a single plot
+
+-   Median point estimates are used instead of mean to adhere with non-parametric testing used above. With this, user can still relate to the above one-way ANOVA analysis
+
+-   95% and 99% intervals are used as they are commonly associated with 5% and 1% error rate, which are commonly used in hypothesis testing
+
+[*Preparation of visualisation*]{.underline}
+
+`ggplot2` and `stat_pointinterval()` are used to prepare the plot. Steps taken are
+
+-   Use the base `ggplot()` to determine the data and x, y-variables
+
+-   Define confidence levels in `width` argument of `stat_pointinterval()`. Define the point estimate as `median` and interval as `qi` (quantile confidence intervals). The argument `point_color` also assigns color to the point.
+
+-   `scale_color_manual()` of `ggplot2` is used to assign colors for the interval lines.
+
+-   Setting the title, subtitle and caption using `lab()` and `theme()` of `ggplot2`
 
 ```{r}
 #| code-fold: true
@@ -492,11 +516,13 @@ It is tempting to interpret point estimate like median as precise representation
 #| fig-height: 7
 #| fig-width: 12.5
 
+#Base ggplot
 ggplot(
   data = flatpriceclean,
   aes(x = town,
       y = resale_price_persqm)) +
   
+#Using stat_pointinterval to plot the points and intervals
   stat_pointinterval(
     aes(interval_color = stat(level)),
     .width = c(0.95, 0.99),
@@ -504,11 +530,13 @@ ggplot(
     .interval = qi,
     point_color = "darkred",
     show.legend = FALSE) +
-  
+
+#Defining the color of the intervals 
   scale_color_manual(
     values = c("blue2", "darkblue"),
     aesthetics = "interval_color") +
   
+#Title, subtitle, and caption
   labs(title = 'Visualising uncertainty in median estimates of resale price by town',
   subtitle = 'Confidence intervals (95% and 99%) of resale price per flat area by Town, 2022',
   caption = 'Resale flat princes based on registration date from Jan-2017 onwards from data.gov.sg',
@@ -522,6 +550,10 @@ ggplot(
         axis.text.x = element_text(angle = 30, hjust = 1))
 
 ```
+
+[*Insights*]{.underline}
+
+As noted above, some towns like Central Area, Bukit Merah, and Bishan have higher uncertainties. This could be potentially due to large presence of outliers in those towns, more varied flat types or models or simply sampling variability problem. On the opposite spectrum, towns like Choa Chu Kang, Sembawang and Bukit Timah have lower uncertainties, which might indicate lower presence of outliers or more uniform flat types.
 
 ###### 
 
