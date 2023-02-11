@@ -8,7 +8,7 @@ website:
   site-url: "https://isss608-michaeldj.netlify.app/"
   
   sidebar: 
-    background: "black"
+    background: "#1C576E"
     logo: "images/visual-analytics-icon.png"
     pinned: true
     align: center
