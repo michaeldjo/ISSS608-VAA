@@ -17,5 +17,189 @@ editor: visual
 Packages will be installed and loaded.
 
 ```{r}
-pacman::p_load(corrplot, ggstatsplot, tidyverse)
+pacman::p_load(corrplot, ggstatsplot, heatmaply, GGally, parallelPlot, tidyverse)
+```
+
+### 2. Importing Data
+
+```{r}
+wine <- read_csv("data/wine_quality.csv")
+wine
+```
+
+```{r}
+pop_data <- read_csv("data/respopagsex2000to2018_tidy.csv") 
+```
+
+```{r}
+wh <- read_csv("data/WHData-2018.csv")
+```
+
+### 3. Data Preparation
+
+Data preparation for population data
+
+```{r}
+agpop_mutated <- pop_data %>%
+  mutate(`Year` = as.character(Year))%>%
+  spread(AG, Population) %>%
+  mutate(YOUNG = rowSums(.[4:8]))%>%
+  mutate(ACTIVE = rowSums(.[9:16]))  %>%
+  mutate(OLD = rowSums(.[17:21])) %>%
+  mutate(TOTAL = rowSums(.[22:24])) %>%
+  filter(Year == 2018)%>%
+  filter(TOTAL > 0)
+
+agpop_mutated
+```
+
+Data preparation for WHData. Transform the data into matrix. Note that `wh_matrix` is in matrix format.
+
+This is required to plot the heatmap
+
+```{r}
+#change the country name to row number
+row.names(wh) <- wh$Country
+
+#select the relevant columns to be selected in the matrix
+wh1 <- select(wh, c(3, 7:12))
+wh_matrix <- data.matrix(wh)
+```
+
+### 4. Correlation Matrix
+
+Creating matrix from column 1 to 11 from wine dataset. Note that we should only use numerical data in the correlation matrix and not categorical data.
+
+```{r}
+pairs(wine[,1:11])
+```
+
+Using [*ggcorrmat()*](https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html) to provide a comprehensive and yet professional statistical report.
+
+```{r}
+#|fig-width: 7
+#|fig-height: 7
+ggstatsplot::ggcorrmat(
+  data = wine, 
+  cor.vars = 1:11
+)
+```
+
+We can specify `ggcorrplot.args` as a list as below. Adding the title and subtitle as well
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+ggstatsplot::ggcorrmat(
+  data = wine, 
+  cor.vars = 1:11,
+                         #change the color of the outlines
+  ggcorrplot.args = list(outline.color = "red", 
+                         
+                         #order based on hierarchical clustering
+                         hc.order = TRUE,
+                         
+                         #change the cross smaller
+                         tl.cex = 10),
+  title    = "Correlogram for wine dataset",
+  subtitle = "Four pairs are no significant at p < 0.05"
+)
+```
+
+Creating facet correlogram between red and white wine (`grouping.var = type`)
+
+```{r}
+#| fig-height: 10
+#| fig-width: 12.5
+grouped_ggcorrmat(
+  data = wine,
+  cor.vars = 1:11,
+  grouping.var = type,        #to build facet plot
+  type = "robust",
+  p.adjust.method = "holm",
+  
+  #provides list of additional arguments
+  plotgrid.args = list(ncol = 2),       
+  ggcorrplot.args = list(outline.color = "black", 
+                         hc.order = TRUE,
+                         tl.cex = 10),
+  
+  #calling plot annotations arguments of patchwork
+  annotation.args = list(               
+    tag_levels = "a",
+    title = "Correlogram for wine dataset",
+    subtitle = "The measures are: alcohol, sulphates, fixed acidity, citric acid, chlorides, residual sugar, density, free sulfur dioxide and volatile acidity",
+    caption = "Dataset: UCI Machine Learning Repository"
+  )
+)
+```
+
+Using [*corrplot()*](https://www.rdocumentation.org/packages/corrplot/versions/0.2-0/topics/corrplot) is used to build ordered correlation matrix (by `hclust`)
+
+Note: we need to compute correlation matrix of the wine data frame first
+
+```{r}
+wine.cor <- cor(wine[, 1:11])
+```
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+#ordering using hierarchical clustering using ward
+corrplot(wine.cor, 
+         method = "ellipse", 
+         tl.pos = "lt",
+         tl.col = "black",
+         order="hclust",
+         hclust.method = "ward.D",
+         addrect = 3)
+```
+
+Mixing corrgram and numerical matrix together using `corrplot.mixed()`
+
+```{r}
+#| fig-height: 7
+#| fig-width: 7
+corrplot.mixed(wine.cor, 
+               lower = "ellipse", 
+               upper = "number",
+               tl.pos = "lt",   #placement of the axis label
+               diag = "l",      #specify glyph on the principal diagonal
+               tl.col = "black")
+```
+
+### 5. Heatmap
+
+This is mainly used for visualising hierarchical clustering.
+
+Basic interactive heatmap using [**heatmaply**](http://talgalili.github.io/heatmaply/) , excluding column 1,2,4,5
+
+```{r}
+heatmaply(wh_matrix[, -c(1,2,4,5)])
+```
+
+Data standardisation might be required by scaling (`scale` argument), normalising(`normalize()`), percentising(`percentize()`) to ensure the variable values are not so different. The clustering methods can also be customised
+
+```{r}
+heatmaply(normalize(wh_matrix[, -c(1, 2, 4, 5)]),
+          dist_method = "euclidean",
+          hclust_method = "ward.D")
+```
+
+### 6. Parallel Plot
+
+Parallel coordinates plot is a data visualisation specially designed for visualising and analysing multivariate, numerical data. It is ideal for comparing multiple variables together and seeing the relationships between them.
+
+```{r}
+wh_i <- wh |> 
+  select("Happiness score", c(7:12))
+```
+
+```{r}
+histo <- rep(TRUE, ncol(wh_i))
+
+parallelPlot(wh_i,
+             continuousCS = "YlOrRd",
+             rotateTitle = TRUE,
+             histoVisibility = histo)
 ```
