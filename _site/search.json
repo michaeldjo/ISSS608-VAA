@@ -4,7 +4,7 @@
     "href": "about.html",
     "title": "About this site",
     "section": "",
-    "text": "This website consists of a collection of works done for the visual analytics course I took during my MITB journey. I hope you enjoy reading them!"
+    "text": "This website consists of a collection of works done for the visual analytics course I took during my MITB journey. You can treat this as a portfolio of my work.\nThe visualisation work is done with Tableau, R packages and Shiny app.\nThere are four types of exercise:\n\nHands-on Exercise\nTrying out new visualisation skills and technique\nIn-Class Exercise\nRelevant notes from lecture by Prof. Kam Tin Seong\nTake-home Exercise\nApplication of skills learned in class in real-life problems"
   },
   {
     "objectID": "Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html",
@@ -86,9 +86,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "ISSS608 Visual Analytics & Application",
+    "title": "Visual Analytics & Application Learning Journey",
     "section": "",
-    "text": "Welcome to ISSS608 Visual Analytics and Application.\nThis website hosted my coursework prepared for this course."
+    "text": "“Numbers have an important story to tell. They rely on you to give them a clear and convincing voice”\n―Stephen Few\n\n\nWelcome to Visual Analytics & Application Learning Journey webpage.\nThis website hosted visual analytics journey while taking Visual Analytics Course (ISSS608) under Prof. Kam Tin Seong as part of Master of IT in Business (MITB) in Singapore Management University.\nThe exercises performed during my learning journey can be found in the navigation tab on the left.\nI hope you enjoy reading them!"
   },
   {
     "objectID": "Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html",

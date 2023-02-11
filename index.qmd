@@ -1,8 +1,18 @@
 ---
-title: "ISSS608 Visual Analytics & Application"
+title: "Visual Analytics & Application Learning Journey"
 author: Michael Djohan
 fontsize: smaller
 ---
 
-Welcome to **ISSS608 Visual Analytics and Application**.\
-This website hosted my coursework prepared for this course.
+*"Numbers have an important story to tell. They rely on you to give them a clear and convincing voice"*\
+―Stephen Few
+
+##### 
+
+Welcome to **Visual Analytics & Application Learning Journey webpage**.
+
+This website hosted visual analytics journey while taking Visual Analytics Course (ISSS608) under Prof. Kam Tin Seong as part of Master of IT in Business (MITB) in Singapore Management University.
+
+The exercises performed during my learning journey can be found in the navigation tab on the left.
+
+I hope you enjoy reading them!

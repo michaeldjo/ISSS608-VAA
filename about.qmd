@@ -1,6 +1,22 @@
 ---
 title: "About this site"
+fontsize: smaller
 ---
 
-This website consists of a collection of works done for the visual analytics course I took during my MITB journey. I hope you enjoy reading them!
+This website consists of a collection of works done for the visual analytics course I took during my MITB journey. You can treat this as a portfolio of my work.
 
+The visualisation work is done with Tableau, R packages and Shiny app.
+
+There are four types of exercise:
+
+1.  **Hands-on Exercise**
+
+    Trying out new visualisation skills and technique
+
+2.  **In-Class Exercise**
+
+    Relevant notes from lecture by Prof. Kam Tin Seong
+
+3.  **Take-home Exercise**
+
+    Application of skills learned in class in real-life problems
