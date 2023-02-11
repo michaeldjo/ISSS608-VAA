@@ -1,0 +1,21 @@
+---
+title: "In-class Exercise 5"
+author: "Michael Djohan"
+date: 11 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  echo: true
+  eval: true
+  warning: false
+format: html
+editor: visual
+---
+
+### 1. Install and loading R packages
+
+Packages will be installed and loaded.
+
+```{r}
+pacman::p_load(corrplot, ggstatsplot, tidyverse)
+```
