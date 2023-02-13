@@ -83,7 +83,7 @@ The code chunk below performs the required data wrangling to clean ***flatprice*
 
 -   Filter **flat_type** for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
 -   Convert the **month** variable to date using `as.Date()`. Store the year and month to the respective new variables **year** and **month** using `dplyr:mutate()`. They can then be converted to string (discrete variables) using `as.character()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
--   Extract the year and month digits from **remaining_lease** variable using `str_extract()` function. Sum the year digit and (month digit/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called **remaining_lease_years** using `dplyr::mutate()`
+-   Extract the year and month digits from **remaining_lease** variable using `str_extract()` function. Sum the year digits and (month digits/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called **remaining_lease_years** using `dplyr::mutate()`
 -   Create new variable called **resale_price_persqm** to divide the **resale_price** with **floor_area_sqm**. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
 -   Convert **lease_commence_date** to `<int>` using `as.integer()` as it reflects year of starting lease, which is in ordinal scale
 -   Use `dplyr::select()` to select only the relevant variables (**month, town, flat_type, storey_range, floor_area_sqm, flat_model, lease_commence_date**, **remaining_lease_years, resale_price_persqm, resale_price**)
@@ -236,13 +236,17 @@ plot_ly(data = flatpriceclean,
          )
 ```
 
+::: callout-tip
+Select the relevant x-variable and y-variable in the dropdown box in the graph above to study the different scatterplot of resale price by different cotninuous variables
+:::
+
 ##### Insights
 
 -   The most obvious pattern is the direct positive correlation between **resale price** and **floor area.** Hence the decision to normalize the resale price is justified. From here onwards, we will focus more on **resale price per sqm**.
 
 -   Plotting **resale price per sqm** vs **remaining lease** reveals somewhat positive exponential correlation. There seems to sharper increase in gradient if the **remaining lease** is beyond 80 years
 
--   As expected, the same pattern is revealed when **resale price per sqm** is plotted against the **year of lease commenced.** In fact the **year of lease commenced** and **remaining lease** are directly correlated to each other as shown in the plot below. Hence it makes sense to use one of them in future analysis. In this case, we will only use **remaining lease** as it is more intuitive.
+-   As expected, the same pattern is revealed when **resale price per sqm** is plotted against the **year of lease commenced.**
 
 ```{r}
 #| code-fold: true
@@ -260,6 +264,10 @@ ggplot(data = flatpriceclean)+
 
   theme(axis.title.y = element_text(angle = 0))
 ```
+
+::: callout-important
+**year of lease commenced** and **remaining lease** are directly correlated to each other as shown in above plot. Hence it makes sense to use one of them in future analysis. In this case, we will only use **remaining lease** as it is more intuitive.
+:::
 
 ###### 
 
@@ -355,6 +363,10 @@ plot_ly(data = flatpriceclean,
          )
 ```
 
+::: callout-tip
+Select the relevant x-variable (groups) in the dropdown box in the graph above to study the boxviolin plot of resale price per area by different groups
+:::
+
 ##### Insights
 
 Note that insights can be garnered by zooming in some plots with high number of categories
@@ -398,7 +410,9 @@ DT::datatable(normaltest, class= "compact")
 
 ```
 
+::: callout-important
 Based on the result above, the null hypothesis is rejected as some of the distributions are below 0.05 critical value. As such, we are not able to confirm normality assumption for distribution of **resale price per area** by **town**.
+:::
 
 ##### Design Consideration
 
@@ -408,9 +422,11 @@ To ensure that best practices (APA standard) of statistical reporting is followe
 
 -   Median will be used instead of mean as point estimates due to high presence of outliers and skewness of data.
 
--   Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
-
 -   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot (13 towns each) as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against variations in number of observations. Note that the y-axis range needs to be fixed for the two plots for easier comparison.
+
+::: callout-important
+Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
+:::
 
 ##### Preparation of visualisation
 
@@ -519,7 +535,9 @@ As noted above, the hypothesis testing is done using Kruskal-Wallis test with 95
 
 -   H1 : There is difference between median resale price per flat area across towns
 
-Since the p-value \< critical value of 0.05, there is statistical evidence to reject the null hypothesis. We can conclude that for each set of towns (grouped by number of transactions) that there is difference between median resale price per flat area across the towns.
+::: callout-important
+Since the p-value \< critical value of 0.05, there is statistical evidence to reject the null hypothesis. We can conclude that for each group of towns (grouped by number of transactions), there is difference between median resale price per flat area.
+:::
 
 In both plots, it can be observed that there are few pairs of towns with p-value \> 0.05 such as Jurong West and Choa Chu Kang. This suggests that the differences between the medians of the pair are not statistically significant.
 
@@ -537,13 +555,19 @@ It is tempting to interpret point estimate like median as precise representation
 
 `ggdist::stat_pointinterval()` is used to visualise the uncertainty. Considerations :
 
--   The aim is to provide one-glance of levels of uncertainties of median estimate of resale price by town. Hence there is no need to clutter the plot with too much details (i.e., labels and annotations) and it is possible to present this in a single plot
-
--   Median point estimates are used instead of mean to adhere with non-parametric testing used above. With this, user can still relate to the above one-way ANOVA analysis
+-   Median point estimates are used instead of mean due to high presence of outliers and skewness of data. With this, user can still relate to the above one-way ANOVA analysis
 
 -   With median used as point estimate, quantile interval is used instead of confidence interval
 
 -   95% and 99% intervals are used as they are commonly associated with 5% and 1% error rate, which are commonly used in hypothesis testing
+
+::: callout-tip
+The aim is to provide one-glance of levels of uncertainties of median estimate of resale price by town. Hence there is no need to clutter the plot with too much details (i.e., labels and annotations) and it is possible to present this in a single plot
+:::
+
+::: callout-warning
+It is important to use quantile interval for median point estimates instead of using typical confidence intervals. As with all nonparametric confidence intervals, the exact confidence level is not always attainable but the level which is exact to the interval constructed is displayed (Conover, 1999; Gardner and Altman, 1989).
+:::
 
 ##### Preparation of visualisation
 
@@ -715,6 +739,10 @@ plot_ly(data = flatpriceclean,
          )
 
 ```
+
+::: callout-tip
+Change the "**planning town**" dropdown box and discover interesting patterns between different towns
+:::
 
 ##### Insights
 
