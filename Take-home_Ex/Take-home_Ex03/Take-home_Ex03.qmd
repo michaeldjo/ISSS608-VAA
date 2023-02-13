@@ -377,6 +377,29 @@ However, these observations need to be confirmed using appropriate hypothesis te
 
 The plots here are focused in visual statistical testing used in Confirmatory Data Analysis. Hence `ggstatsplot` is mainly used.
 
+##### Normality Assumption
+
+Before performing the necessary hypothesis testing, we need to choosen between parametric and non-parametric test. As such `nortest::ad.test()` will be used to perform Anderson-Darling test with confidence level of 95% to test the null hypothesis that the **resale price per area** by **town** is normally distributed.
+
+`for-loop` is used to iterate through each unique **town** to create a list called `normaltestlist` containing a list of Anderson-Darling test results. A tibble called `normaltest` is then created containing the **town** variable and **p_value** result of the Anderson-Darling test. `DT::datatable()` is then used to create interactive data table.
+
+```{r}
+normaltestlist <- list()
+for (i in unique(flatpriceclean$town)){
+  subdf <- subset(x = flatpriceclean, subset=town==i)
+  normaltestlist[[i]] <- nortest::ad.test(subdf$resale_price_persqm)
+}
+
+normaltest <- tibble(town = unique(flatpriceclean$town),
+                        p_value = unlist(lapply(normaltestlist, `[[`, 2)))
+
+DT::datatable(normaltest, class= "compact")
+
+
+```
+
+Based on the result above, the null hypothesis is rejected as some of the distributions are below 0.05 critical value. As such, we are not able to confirm normality assumption for distribution of **resale price per area** by **town**.
+
 ##### Design Consideration
 
 To ensure that best practices (APA standard) of statistical reporting is followed, `ggstatsplot` library is used in this section. Considerations :
