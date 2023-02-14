@@ -82,10 +82,19 @@ any(is.na(flatprice))
 The code chunk below performs the required data wrangling to clean ***flatprice*** dataset and store it in new variable ***flatpriceclean***.
 
 -   Filter **flat_type** for 3 ROOM, 4 ROOM, and 5 ROOM as this is the scope of the study using `dplyr::filter()`
+
 -   Convert the **month** variable to date using `as.Date()`. Store the year and month to the respective new variables **year** and **month** using `dplyr:mutate()`. They can then be converted to string (discrete variables) using `as.character()`. Afterwards, we can filter the year variable to 2022 using `dplyr::filter()`, which is the scope of the study
+
 -   Extract the year and month digits from **remaining_lease** variable using `str_extract()` function. Sum the year digits and (month digits/12) to obtain the years of remaining lease and convert it to `<dbl>` format using `as.numeric()`. They are then rounded to 1 decimal place using `round()`. Assign new variable called **remaining_lease_years** using `dplyr::mutate()`
+
+::: callout-tip
+With `str_extract()` function, we can use regular expression like `"^[0-9]+"` to extract the year digits and `" [0-9]+"` to extract the month digits. Note the special character `'^'` indicates the beginning of string to extract year digits since the year digits is always at the beginning of the string. The blank space `' '` preceding the regular expression to extract month digits match the second digits of **remaining_lease**, which represent the month digits.
+:::
+
 -   Create new variable called **resale_price_persqm** to divide the **resale_price** with **floor_area_sqm**. This is performed to normalize the resale price to flat area. They are then rounded to 1 decimal place using `round().` The new variable is assigned using `dplyr::mutate`
+
 -   Convert **lease_commence_date** to `<int>` using `as.integer()` as it reflects year of starting lease, which is in ordinal scale
+
 -   Use `dplyr::select()` to select only the relevant variables (**month, town, flat_type, storey_range, floor_area_sqm, flat_model, lease_commence_date**, **remaining_lease_years, resale_price_persqm, resale_price**)
 
 ```{r}
