@@ -46,12 +46,14 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
     All packages can be found within CRAN.
 
-Import data from csv using `readr::read_csv()` and store it in variable ***flatprice***.
-
 ```{r}
 #Load packages
 pacman::p_load(plotly, ggstatsplot, knitr, patchwork, ggdist, ggthemes, tidyverse)
+```
 
+Import data from csv using `readr::read_csv()` and store it in variable ***flatprice***.
+
+```{r}
 #Import data
 flatprice <- read_csv("data/resale-flat-prices-based-on-registration-date-from-jan-2017-onwards.csv", show_col_types = FALSE)
 ```
@@ -128,7 +130,7 @@ flatpriceclean <- flatprice |>
   
 ```
 
-The final dataset ***flatpriceclean*** is displayed below.
+The final dataset ***flatpriceclean*** is displayed below using `knitr::kable()` function.
 
 ```{r}
 kable(head(flatpriceclean), "simple")
@@ -171,6 +173,10 @@ Scatterplots are generally used to discover relationship between two continuous 
 -   `layout` argument is used to add plot title, x-axis title, and y-axis title
 
 -   To create the dropdown menu for parameters of x-axis and y-axis, the `updatemenus` argument is used to create respective `buttons`
+
+::: callout-tip
+`updatemenus` argument takes a list of list of arguments detailing the `type`, `direction`, and `position` of the menus. Additionally, it has `buttons` argument that takes another list of list of arguments detailing the `method`, `args` (x-axis/y-axis variable), and `labels`. Note that `update` is chosen in `method` as we want to modify data and layout attributes. Refer to [here](https://plotly.com/r/dropdowns/) for additional information.
+:::
 
 Refer to code below for more details
 
@@ -275,7 +281,7 @@ ggplot(data = flatpriceclean)+
 ```
 
 ::: callout-important
-**year of lease commenced** and **remaining lease** are directly correlated to each other as shown in above plot. Hence it makes sense to use one of them in future analysis. In this case, we will only use **remaining lease** as it is more intuitive.
+Referring to the graph above, **year of lease commenced** and **remaining lease** are directly correlated to each other as shown in above plot. Hence it makes sense to use one of them in future analysis. In this case, we will only use **remaining lease** as it is more intuitive.
 :::
 
 ###### 
@@ -301,7 +307,7 @@ As such, the visualization below allows users to select the x-axis of the discre
 
 `plot_ly` is used to prepare the interactive plot. Steps taken are
 
--   Initiating base scatterplot, indicated by `type = 'violin'`. Note `box` `visible` argument is set to `T` to ensure the boxplot is visible. The same is applied to `meanline` `visible` to ensure meanline is visible
+-   Initiating base scatterplot, indicated by `type = 'violin'`. Note `box` `visible` argument is set to `T` to ensure the boxplot is visible. The same is applied to `meanline` `visible` to ensure meanline is visible in color `"rgb(231, 99, 250)"`
 
 -   Set the `opacity` of the dots to 0.5 and the `color` of the `meanline` to dark pink to improve visualisation
 
@@ -382,15 +388,15 @@ Note that insights can be garnered by zooming in some plots with high number of 
 
 -   When plotted by **flat_type**, preliminary EDA reveals minimal difference between the means/medians. This is expected since we are using **resale_price_persqm**. Note that flats with more rooms tend to be bigger in area, hence when normalized by area, the difference in resale price among different types of flat is minimized. It is interesting to note that 5 ROOM flat type has the lowest mean overall.
 
--   When plotted by **flat_model**, preliminary EDA reveals higher mean/median **resale_price_persqm** for models like DBSS, Terrace, Premium, S2 and S1. However, it is important to note that these types tend to be few in the market as well, which likely forms the more exclusive models. Note large variance are observed for improved and Model A types.
+-   When plotted by **flat_model**, preliminary EDA reveals higher mean/median **resale_price_persqm** for models like DBSS, Terrace, Premium, S2 and S1. However, it is important to note that these types tend to be few in the market as well. Note large variance are observed for improved and Model A types.
 
--   When plotted by **storey_range**, preliminary EDA reveals higher mean/median **resale_price_persqm** for higher storey. Note large variance are observed for 19 to 27th storey units.
+-   When plotted by **storey_range**, preliminary EDA reveals higher mean/median **resale_price_persqm** for higher storey. Note large outliers are observed for 19 to 27th storey units.
 
--   When plotted by **town**, preliminary EDA reveals differences in mean/median **resale_price_persqm** for different town estates. At the lower end, we can find newly developed or further towns (i.e., Woodlands, Pasir Ris, Jurong West), while at the opposite end, we find more mature or centrally located towns (i.e., Central Area, Queenstown, Kallang/Whampoa). Note that the data looks skewed right with most of the mean is higher than the median and high presence of outlier on the higher end.
+-   When plotted by **town**, preliminary EDA reveals differences in mean/median **resale_price_persqm** for different town estates. At the lower end, we can find newly developed or further towns (i.e., Woodlands, Pasir Ris, Jurong West), while at the opposite end, we find more mature or centrally located towns (i.e., Central Area, Queenstown, Kallang/Whampoa). Note that the data looks skewed right with most of the towns' means are higher than the medians and high presence of outlier on the higher end.
 
 -   Preliminary EDA reveals minimal difference in **resale_price_persqm** between transaction months.
 
-However, these observations need to be confirmed using appropriate hypothesis techniques. Since the focus of the study is on resale price by residential towns/estates, only this will be considered.
+However, these observations need to be confirmed using appropriate hypothesis techniques. Since the focus of the study is on resale price by residential towns, only this will be considered.
 
 ###### 
 
@@ -403,6 +409,8 @@ The plots here are focused in visual statistical testing used in Confirmatory Da
 Before performing the necessary hypothesis testing, we need to choosen between parametric and non-parametric test. As such `nortest::ad.test()` will be used to perform Anderson-Darling test with confidence level of 95% to test the null hypothesis that the **resale price per area** by **town** is normally distributed.
 
 `for-loop` is used to iterate through each unique **town** to create a list called `normaltestlist` containing a list of Anderson-Darling test results. A tibble called `normaltest` is then created containing the **town** variable and **p_value** result of the Anderson-Darling test. `DT::datatable()` is then used to create interactive data table.
+
+Refer to code below for more details
 
 ```{r}
 normaltestlist <- list()
@@ -425,17 +433,17 @@ Based on the result above, the null hypothesis is rejected as some of the distri
 
 ##### Design Consideration
 
+::: callout-important
+Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
+:::
+
 To ensure that best practices (APA standard) of statistical reporting is followed, `ggstatsplot` library is used in this section. Considerations :
 
 -   As revealed by EDA, **town** variables have 26 categories. Hence `ggbetweenstats` will be used for one-way ANOVA testing.
 
--   Median will be used instead of mean as point estimates due to high presence of outliers and skewness of data.
+-   Median is used instead of mean as point estimates due to high presence of outliers and skewness of data. This will also complement the non-parametric test as well.
 
 -   Given the large number of categories, two plots are considered, splitting the towns seeing \>= 850 transactions and those seeing \<850 transactions in 2022. This is mainly to ensure that the selected towns can fit in single plot (13 towns each) as having 26 towns in one single plot causes it to be too cluttered. This also helps to reduce bias against variations in number of observations. Note that the y-axis range needs to be fixed for the two plots for easier comparison.
-
-::: callout-important
-Since we are unable to confirm normality assumption, non-parametric test (Kruskal-Wallis) will be used for hypothesis testing. Note that the null hypothesis is no difference between median resale price per area by towns/estates.
-:::
 
 ##### Preparation of visualisation
 
@@ -447,7 +455,7 @@ Since we are unable to confirm normality assumption, non-parametric test (Kruska
 
 -   As above design consideration, non-parametric test is considered hence `type = "np"`
 
--   Comparisons are made pairwise between non-significant pairs as they are the points of interest. Note that the majority of the pairs comparison are significant as well, hence it will clutter the plots unnecessarily. The argument `pairwise.display = "ns"`
+-   Comparisons are made pairwise between non-significant pairs as they are the points of interest. Note that the majority of the pairs comparison are significant as well, hence it will clutter the plots unnecessarily if significant pairwise comparison is displayed. The argument `pairwise.display = "ns"`
 
 -   Two plots are created and assigned to `p1` and `p2` respectively
 
@@ -550,7 +558,7 @@ Since the p-value \< critical value of 0.05, there is statistical evidence to re
 
 In both plots, it can be observed that there are few pairs of towns with p-value \> 0.05 such as Jurong West and Choa Chu Kang. This suggests that the differences between the medians of the pair are not statistically significant.
 
-We can also observe that there is overall higher median and higher number of towns with signficiant outliers (i.e., Central Area, Queenstown, Toa Payoh, Bishan, Clementi) in the second plot (towns with \< 850 transactions).
+We can also observe that there is overall higher median and higher number of towns with significant outliers (i.e., Central Area, Queenstown, Toa Payoh, Bishan, Clementi) in the second plot (towns with \< 850 transactions).
 
 Overall, the findings of the EDA is more or less consistent (refer to section 3.1.2 above).
 
@@ -575,7 +583,7 @@ The aim is to provide one-glance of levels of uncertainties of median estimate o
 :::
 
 ::: callout-warning
-It is important to use quantile interval for median point estimates instead of using typical confidence intervals. As with all nonparametric confidence intervals, the exact confidence level is not always attainable but the level which is exact to the interval constructed is displayed (Conover, 1999; Gardner and Altman, 1989).
+It is important to use quantile interval for median point estimates instead of using typical confidence intervals. As with all nonparametric confidence intervals, the exact confidence level is not always attainable but the level which is exact to the interval constructed is displayed.
 :::
 
 ##### Preparation of visualisation
@@ -586,7 +594,7 @@ It is important to use quantile interval for median point estimates instead of u
 
 -   Define confidence levels in `width` argument of `stat_pointinterval()`. Define the `.point` estimate as `median` and `.interval` as `qi` (quantile intervals). The argument `point_color` also assigns color to the point.
 
--   `scale_color_manual()` of `ggplot2` is used to assign colors for the interval lines.
+-   `scale_color_manual()` of `ggplot2` is used to assign colors for the interval lines (95% and 99%). Note that the colors chosen are only slightly different, just enough to distinguish the closely related interval lines.
 
 -   Setting the title, subtitle and caption using `lab()` and `theme()` of `ggplot2`
 
@@ -633,7 +641,7 @@ ggplot(
 
 ##### Insights
 
-As noted above, some towns like Central Area, Bukit Merah, and Bishan have higher uncertainties. This could be potentially due to large presence of outliers in those towns, more varied flat types or models or simply sampling variability problem. On the opposite spectrum, towns like Choa Chu Kang, Sembawang and Bukit Timah have lower uncertainties, which might indicate lower presence of outliers or more uniform flat types.
+As noted above, some towns like Central Area, Bukit Merah, and Bishan have higher uncertainties. This could be potentially due to large presence of outliers in those towns, more varied flat types or models. On the opposite spectrum, towns like Choa Chu Kang, Sembawang and Bukit Timah have lower uncertainties, which might indicate lower presence of outliers or more uniform flat types.
 
 ###### 
 
@@ -643,11 +651,11 @@ Section 3.1 above allow users to perform EDA to explore the relationship between
 
 ##### Design Consideration
 
-One of the most interesting finding in EDA of two continuous variables is the relationship between **resale price per sqm** and **remaining lease_years**. Unfortunately, without applying any filters, there is very little insight can be garnered from this two-dimensional plot. Additional dimensions could be introduced by applying **town** filter, which was found to be statistically significant in Section 3.2. Considerations:
+One of the most interesting finding in EDA in Section 3.1.1 is the relationship between **resale price per sqm** and **remaining lease_years**. Unfortunately, without applying any filters, there is very little insight that can be garnered from this two-dimensional plot. Additional dimensions could be introduced by applying **town** filter, which was found to be statistically significant in Section 3.2. Considerations:
 
 -   Interactive bubble plots of **resale_price per sqm** and **remaining_lease_years**
 
--   Dropdown menu to filter by **town**. Note that introduction of this filter not only helps users to visualize the different aspects of the bubble plot per town, but also reduces cluttering by too many datapoints.
+-   Dropdown menu to filter by **town**. Note that introduction of this filter not only helps users to visualise the different aspects of the bubble plot per town, but also reduces cluttering by too many datapoints.
 
 -   The bubbles can be colored by **flat_type** and its size corresponds to the **floor_area_sqm**. The **flat_type** is chosen for color as it has the least number of categories, avoiding cluttering the plot with too many colors. The size corresponds to the **floor_area_sqm** to align with user's intuition that bigger bubble means bigger size. While the resale price is already normalized against this, users can also see different angle given with **remaining_lease_years** in the x-axis. Note that with `plot_ly`, the color legend can also be selected/deselected to apply additional filter
 
@@ -657,7 +665,7 @@ One of the most interesting finding in EDA of two continuous variables is the re
 
 ##### Preparation of visualisation
 
-Firstly, each unique instance of town was defined using for-loop. This will create a list within list (`town_list`) containing the `method`, `args`, and `label` arguments of each town. This list will be used as an input to `buttons` argument of the `updatemenus`. The annotation variables (`annot`) for the dropdown menu was also defined.
+Firstly, each unique instance of town was defined using `for-loop`. This will create a list within list (`town_list`) containing the `method`, `args`, and `label` arguments of each town. This list will be used as an input to `buttons` argument of the `updatemenus`. The annotation variables (`annot`) for the dropdown menu was also defined.
 
 Refer to code below for more details
 
@@ -678,6 +686,14 @@ annot <- list(list(text = "Planning Town:",
                    showarrow = FALSE))
 ```
 
+::: callout-tip
+It is useful to pre-define complicated list input to `buttons` argument of `updatemenus` outside the plot function. This will improve code readability drastically.
+:::
+
+::: callout-note
+Note that `restyle` is used in `method` argument as we want to modify data or data attributes and not the layout of the plot. Refer to [here](https://plotly.com/r/dropdowns/) for additional information.
+:::
+
 `plot_ly()` is used to prepare the interactive bubble plot. Steps taken are
 
 -   ***flatpriceorder*** variable is created to ensure that there is no clash between the `color` and `transforms` argument in `plot_ly`.
@@ -690,7 +706,7 @@ annot <- list(list(text = "Planning Town:",
 
 -   `layout` argument is used to add plot title, x-axis title, and y-axis title. The range of the axis are also fixed to give users fixed reference frame.
 
--   To create the dropdown menu to select **town**, the `updatemenus` argument is used, passing `town_list` in the `buttons` argument. Note that `annot` is passed to `annotations` argument as well.
+-   To create the dropdown menu to select **town**, the `updatemenus` argument is used, passing the newly created variable `town_list` (see above) in the `buttons` argument. Note that the newly created variable `annot` (see above) is passed to `annotations` argument as well.
 
 Refer to code below for more details
 
