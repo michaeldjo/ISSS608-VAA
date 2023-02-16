@@ -1,0 +1,13 @@
+---
+title: "Hands-on Exercise 6: Time-Series Visualisation"
+author: "Michael Djohan"
+date: 16 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  echo: true
+  eval: true
+  warning: false
+format: html
+editor: visual
+---
