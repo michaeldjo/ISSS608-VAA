@@ -1,0 +1,23 @@
+---
+title: "Take-home Exercise 4"
+subtitle: "Singapore bi-lateral trade performance in 2020 to 2022"
+author: "Michael Djohan"
+date: 19 February 2023
+date-modified: "`r Sys.Date()`"
+fontsize: smaller
+execute: 
+  warning: false
+format: html
+editor: visual
+toc-depth: 5
+---
+
+## **1. Overview**
+
+This exercise aims to uncover the impact of COVID-19, global economic and political dynamic in 2022 on Singapore bi-lateral trade using time-series visualisation. The visualization is designed using `ggplot2`, its extensions, and `tidyverse` packages.
+
+The original Merchandise Trade dataset was downloaded from [Department of Statistics](https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data) titled *Merchandise Trade by Region/Market*
+
+The file downloaded was *outputFile.xlsx*
+
+The study period is from for **January 2020 to December 2022** period.

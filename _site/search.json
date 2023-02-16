@@ -243,5 +243,12 @@
     "title": "Hands-on Exercise 6: Time-Series Visualisation",
     "section": "3. Plotting Cycle Plot",
     "text": "3. Plotting Cycle Plot\n\n3.1 Importing the data\nFor the purpose of this hands-on exercise, arrivals_by_air.xlsx will be used.\n\nair <- read_excel(\"data/arrivals_by_air.xlsx\")\n\n\n\n3.2 Data Wrangling\n\n3.2.1 Deriving month and year fields\nCreate two new fields called month and year from Month-Year field\n\nair$month <- factor(month(air$`Month-Year`), \n                    levels=1:12, \n                    labels=month.abb, \n                    ordered=TRUE) \nair$year <- year(ymd(air$`Month-Year`))\n\n\n\n3.2.2 Select the target country\n\nVietnam <- air |> \n  select(Vietnam,\n         month,\n         year) |> \n  filter(year >= 2010)\n\n\n\n3.2.3 Compute year average arrivals by month\n\nhline.data <- Vietnam |> \n  group_by(month) |> \n  summarise(avgvalue = mean(Vietnam))\n\n\n\n\n3.3 Building Cycle Plot\n\nggplot() +\n  geom_line(data = Vietnam,\n            aes(x = year,\n                y = Vietnam,\n                group = month),\n            color = \"black\") +\n  geom_hline(aes(yintercept=avgvalue),\n             data = hline.data,\n             linetype = 6,\n             color = \"red\",\n             size = 0.5) +\n  facet_grid(~month) +\n  labs(axis.text.x = element_blank(),\n       title = \"Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019\") +\n  xlab(\"\") +\n  ylab(\"No. of Visitors\")"
+  },
+  {
+    "objectID": "Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html",
+    "href": "Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html",
+    "title": "Take-home Exercise 4",
+    "section": "",
+    "text": "This exercise aims to uncover the impact of COVID-19, global economic and political dynamic in 2022 on Singapore bi-lateral trade using time-series visualisation. The visualization is designed using ggplot2, its extensions, and tidyverse packages.\nThe original Merchandise Trade dataset was downloaded from Department of Statistics titled Merchandise Trade by Region/Market\nThe file downloaded was outputFile.xlsx\nThe study period is from for January 2020 to December 2022 period."
   }
 ]

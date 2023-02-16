@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Michael Djohan">
+<meta name="dcterms.date" content="2023-02-19">
 
-<title>Visual Analytics - Michael Djohan - Visual Analytics &amp; Application Learning Journey</title>
+<title>Visual Analytics - Michael Djohan - Take-home Exercise 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,22 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./about.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -62,7 +63,7 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
@@ -71,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Visual Analytics &amp; Application Learning Journey</h1>
+      <h1 class="quarto-secondary-nav-title">Take-home Exercise 4</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -83,12 +84,12 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-center sidebar-header">
-      <a href="./index.html" class="sidebar-logo-link">
-      <img src="./images/icon.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../images/icon.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
       <div class="sidebar-tools-main">
     <a href="https://github.com/michaeldjo/ISSS608-VAA" title="" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
-    <a href="./www.linkedin.com/in/michaelkevindjohan" title="" class="sidebar-tool px-1"><i class="bi bi-linkedin"></i></a>
+    <a href="../../www.linkedin.com/in/michaelkevindjohan" title="" class="sidebar-tool px-1"><i class="bi bi-linkedin"></i></a>
 </div>
       </div>
       <div class="mt-2 flex-shrink-0 align-items-center">
@@ -100,20 +101,20 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">About this website</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">About this website</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="false">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Home</a>
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">Home</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./about.html" class="sidebar-item-text sidebar-link">About</a>
+  <a href="../../about.html" class="sidebar-item-text sidebar-link">About</a>
   </div>
 </li>
       </ul>
@@ -128,37 +129,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 1</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex01/Hands-on_Ex01.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 1</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 2</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex02/Hands-on_Ex02.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 2</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 3</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex03/Hands-on_Ex03.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 3</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 4</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 4</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html" class="sidebar-item-text sidebar-link">Ternary Plot</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html" class="sidebar-item-text sidebar-link">Ternary Plot</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex05.1/Hands-on_Ex05.1.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 5</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex05.1/Hands-on_Ex05.1.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 5</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 6</a>
+  <a href="../../Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 6</a>
   </div>
 </li>
       </ul>
@@ -173,47 +174,47 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./In-class_Ex/In-class_Ex03/In-class_Ex03.html" class="sidebar-item-text sidebar-link">In-class Exercise 3</a>
+  <a href="../../In-class_Ex/In-class_Ex03/In-class_Ex03.html" class="sidebar-item-text sidebar-link">In-class Exercise 3</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./In-class_Ex/In-class_Ex04/In-class_Ex04.html" class="sidebar-item-text sidebar-link">In-class Exercise 4</a>
+  <a href="../../In-class_Ex/In-class_Ex04/In-class_Ex04.html" class="sidebar-item-text sidebar-link">In-class Exercise 4</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./In-class_Ex/In-class_Ex05/In-class_Ex05.html" class="sidebar-item-text sidebar-link">In-class Exercise 5</a>
+  <a href="../../In-class_Ex/In-class_Ex05/In-class_Ex05.html" class="sidebar-item-text sidebar-link">In-class Exercise 5</a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">Take-home Exercise</a>
-          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Take-home Exercise</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" class="sidebar-item-text sidebar-link">Take-home Exercise 1</a>
+  <a href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" class="sidebar-item-text sidebar-link">Take-home Exercise 1</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Take-home_Ex/Take-home_Ex02/Take-home_Ex02.html" class="sidebar-item-text sidebar-link">Take-home Exercise 2</a>
+  <a href="../../Take-home_Ex/Take-home_Ex02/Take-home_Ex02.html" class="sidebar-item-text sidebar-link">Take-home Exercise 2</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" class="sidebar-item-text sidebar-link">Take-home Exercise 3</a>
+  <a href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" class="sidebar-item-text sidebar-link">Take-home Exercise 3</a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html" class="sidebar-item-text sidebar-link">Take-home Exercise 4</a>
+  <a href="../../Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html" class="sidebar-item-text sidebar-link active">Take-home Exercise 4</a>
   </div>
 </li>
       </ul>
@@ -223,14 +224,21 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. Overview</strong></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Visual Analytics &amp; Application Learning Journey</h1>
+<h1 class="title d-none d-lg-block">Take-home Exercise 4</h1>
+<p class="subtitle lead">Singapore bi-lateral trade performance in 2020 to 2022</p>
 </div>
 
 
@@ -244,21 +252,31 @@ ul.task-list li input[type="checkbox"] {
           </div>
   </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">February 19, 2023</p>
+    </div>
+  </div>
   
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">February 16, 2023</p>
+    </div>
+  </div>
     
   </div>
   
 
 </header>
 
-<p><em>“Numbers have an important story to tell. They rely on you to give them a clear and convincing voice”</em><br>
-―Stephen Few</p>
-<section id="section" class="level5">
-<h5 class="anchored" data-anchor-id="section"></h5>
-<p>Welcome to <strong>Visual Analytics &amp; Application Learning Journey webpage</strong>.</p>
-<p>This website hosted visual analytics journey while taking Visual Analytics Course (ISSS608) under Prof.&nbsp;Kam Tin Seong as part of Master of IT in Business (MITB) in Singapore Management University.</p>
-<p>The exercises performed during my learning journey can be found in the navigation tab on the left.</p>
-<p>I hope you enjoy reading them!</p>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview"><strong>1. Overview</strong></h2>
+<p>This exercise aims to uncover the impact of COVID-19, global economic and political dynamic in 2022 on Singapore bi-lateral trade using time-series visualisation. The visualization is designed using <code>ggplot2</code>, its extensions, and <code>tidyverse</code> packages.</p>
+<p>The original Merchandise Trade dataset was downloaded from <a href="https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data">Department of Statistics</a> titled <em>Merchandise Trade by Region/Market</em></p>
+<p>The file downloaded was <em>outputFile.xlsx</em></p>
+<p>The study period is from for <strong>January 2020 to December 2022</strong> period.</p>
 
 
 </section>
@@ -399,16 +417,16 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Take-home Exercise 3</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./about.html" class="pagination-link">
-        <span class="nav-page-text">About</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
