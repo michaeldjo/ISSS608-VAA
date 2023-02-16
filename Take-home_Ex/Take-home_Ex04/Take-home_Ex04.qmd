@@ -32,13 +32,15 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `knitr`: Used for dynamic report generation
 
+-   `lubridate`: Used to work with date and time
+
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
     All packages can be found within CRAN.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -118,13 +120,16 @@ sgimport_cln <- sgimport_ctry |>
                values_to = "Import_SGD"
                ) |> 
   
-  #Convert Month and Year to factors for ordering purposes
+  #Convert Month to factors and Years to integers for ordering purposes
   #Multiply values by 1000
   mutate(Month = factor(Month, levels = month.abb),
-         Year = factor(Year),
-         Import_SGD = Import_SGD*1000) 
+         Year = as.integer(Year),
+         Month_Year = make_date(Year, Month),
+         .before = 1) |> 
+  
+  mutate(Import_SGD = Import_SGD*1000) 
 
-kable(head(sgimport_cln))
+sgimport_cln
 ```
 
 ```{r}
@@ -140,13 +145,20 @@ sgexport_cln <- sgexport_ctry |>
   #Convert Month and Year to factors for ordering purposes
   #Multiply values by 1000
   mutate(Month = factor(Month, levels = month.abb),
-         Year = factor(Year),
-         Export_SGD = Export_SGD*1000) 
+         Year = as.integer(Year),
+         Month_Year = make_date(Year, Month),
+         .before = 1) |> 
+  
+  mutate(Export_SGD = Export_SGD*1000) 
 
-kable(head(sgexport_cln))
+sgexport_cln
 ```
 
 #### 2.2.3 Joining the two datasets and calculate trade balance
+
+Explain left join
+
+Add trade balance and trade values
 
 Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.
 
@@ -156,13 +168,26 @@ Additionally also exclude countries with which Singapore has no available export
 sgtrade_cln <- sgimport_cln |> 
   
   #join sgimport_cln with sgexport_cln
-  left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Year' = 'Year', 'Month' = 'Month')) |> 
+  left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Month_Year' = 'Month_Year', 'Month' = 'Month', 'Year' = 'Year')) |> 
   
   #Calculated trade balance
-  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD) |> 
+  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD,
+         Trade_Volumes_SGD = Export_SGD + Import_SGD) |> 
   
   #remove countries with non-available export data
   filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of"))
 
 kable(head(sgtrade_cln))
+```
+
+#### 2.2.4 Finding top countries by trade volume
+
+```{r}
+sgtrade_top_ctry <- sgtrade_cln |> 
+  group_by(Countries) |> 
+  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
+  ungroup() |> 
+  arrange(desc(Total_Trade_Volumes_SGD))
+
+kable(head(sgtrade_top_ctry))
 ```

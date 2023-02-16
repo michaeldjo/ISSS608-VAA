@@ -294,6 +294,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#cleaning-the-countries-data-for-sgimport-and-sgexport" id="toc-cleaning-the-countries-data-for-sgimport-and-sgexport" class="nav-link" data-scroll-target="#cleaning-the-countries-data-for-sgimport-and-sgexport">2.2.1 Cleaning the countries data for sgimport and sgexport</a></li>
   <li><a href="#pivot-and-transform-datasets-to-time-series" id="toc-pivot-and-transform-datasets-to-time-series" class="nav-link" data-scroll-target="#pivot-and-transform-datasets-to-time-series">2.2.2 Pivot and transform datasets to time-series</a></li>
   <li><a href="#joining-the-two-datasets-and-calculate-trade-balance" id="toc-joining-the-two-datasets-and-calculate-trade-balance" class="nav-link" data-scroll-target="#joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</a></li>
+  <li><a href="#finding-top-countries-by-trade-volume" id="toc-finding-top-countries-by-trade-volume" class="nav-link" data-scroll-target="#finding-top-countries-by-trade-volume">2.2.4 Finding top countries by trade volume</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -353,12 +354,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><p><code>readxl</code>: Used to reaad data from excel files</p></li>
 <li><p><code>knitr</code>: Used for dynamic report generation</p></li>
+<li><p><code>lubridate</code>: Used to work with date and time</p></li>
 <li><p><code>tidyverse</code>: A collection of core packages designed for data science, used extensively for data preparation and wrangling.</p>
 <p>All packages can be found within CRAN.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, knitr, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, knitr, lubridate, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Import data from csv using <code>readxl::read_excel()</code> and store it in variable <em><strong>sgimport</strong> and <strong>sgexport</strong></em>.</p>
 <p>Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is intentionally selected.</p>
@@ -1197,210 +1199,223 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Import_SGD"</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">|&gt;</span> </span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month and Year to factors for ordering purposes</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month to factors and Years to integers for ordering purposes</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Multiply values by 1000</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> month.abb),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">factor</span>(Year),</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Import_SGD =</span> Import_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgimport_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<table class="table table-sm table-striped">
-<thead>
-<tr class="header">
-<th style="text-align: left;">Countries</th>
-<th style="text-align: left;">Year</th>
-<th style="text-align: left;">Month</th>
-<th style="text-align: right;">Import_SGD</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Dec</td>
-<td style="text-align: right;">103655000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: right;">121773000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Oct</td>
-<td style="text-align: right;">88796000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: right;">215978000</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Aug</td>
-<td style="text-align: right;">132917000</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Jul</td>
-<td style="text-align: right;">224676000</td>
-</tr>
-</tbody>
-</table>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month_Year =</span> <span class="fu">make_date</span>(Year, Month),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Import_SGD =</span> Import_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>sgimport_cln</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,032 × 5
+   Month_Year Countries  Year Month Import_SGD
+   &lt;date&gt;     &lt;chr&gt;     &lt;int&gt; &lt;fct&gt;      &lt;dbl&gt;
+ 1 2022-12-01 Belgium    2022 Dec    103655000
+ 2 2022-11-01 Belgium    2022 Nov    121773000
+ 3 2022-10-01 Belgium    2022 Oct     88796000
+ 4 2022-09-01 Belgium    2022 Sep    215978000
+ 5 2022-08-01 Belgium    2022 Aug    132917000
+ 6 2022-07-01 Belgium    2022 Jul    224676000
+ 7 2022-06-01 Belgium    2022 Jun    114704000
+ 8 2022-05-01 Belgium    2022 May    116817000
+ 9 2022-04-01 Belgium    2022 Apr    146603000
+10 2022-03-01 Belgium    2022 Mar    319393000
+# … with 4,022 more rows</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sgexport_cln <span class="ot">&lt;-</span> sgexport_ctry <span class="sc">|&gt;</span> </span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#pivot_longer to get year and month timeseries</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>Countries,</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>),</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">" "</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Export_SGD"</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">|&gt;</span> </span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month and Year to factors for ordering purposes</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Multiply values by 1000</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> month.abb),</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">factor</span>(Year),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> Export_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgexport_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sgexport_cln <span class="ot">&lt;-</span> sgexport_ctry <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#pivot_longer to get year and month timeseries</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>Countries,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">" "</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Export_SGD"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">|&gt;</span> </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month and Year to factors for ordering purposes</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Multiply values by 1000</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> month.abb),</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">as.integer</span>(Year),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Month_Year =</span> <span class="fu">make_date</span>(Year, Month),</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">.before =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Export_SGD =</span> Export_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>sgexport_cln</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,024 × 5
+   Month_Year Countries  Year Month Export_SGD
+   &lt;date&gt;     &lt;chr&gt;     &lt;int&gt; &lt;fct&gt;      &lt;dbl&gt;
+ 1 2022-12-01 Belgium    2022 Dec    432376000
+ 2 2022-11-01 Belgium    2022 Nov    756814000
+ 3 2022-10-01 Belgium    2022 Oct    350565000
+ 4 2022-09-01 Belgium    2022 Sep    386724000
+ 5 2022-08-01 Belgium    2022 Aug    570824000
+ 6 2022-07-01 Belgium    2022 Jul    991586000
+ 7 2022-06-01 Belgium    2022 Jun    588520000
+ 8 2022-05-01 Belgium    2022 May    617646000
+ 9 2022-04-01 Belgium    2022 Apr    668060000
+10 2022-03-01 Belgium    2022 Mar   1446036000
+# … with 3,014 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="joining-the-two-datasets-and-calculate-trade-balance" class="level4">
+<h4 class="anchored" data-anchor-id="joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</h4>
+<p>Explain left join</p>
+<p>Add trade balance and trade values</p>
+<p>Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.</p>
+<p>“Germany, Democratic Republic Of” is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="ot">&lt;-</span> sgimport_cln <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#join sgimport_cln with sgexport_cln</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgexport_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>, <span class="st">'Month_Year'</span> <span class="ot">=</span> <span class="st">'Month_Year'</span>, <span class="st">'Month'</span> <span class="ot">=</span> <span class="st">'Month'</span>, <span class="st">'Year'</span> <span class="ot">=</span> <span class="st">'Year'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculated trade balance</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Trade_Balance_SGD =</span> Export_SGD <span class="sc">-</span> Import_SGD,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> Export_SGD <span class="sc">+</span> Import_SGD) <span class="sc">|&gt;</span> </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove countries with non-available export data</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Countries <span class="sc">%in%</span> <span class="fu">c</span>(import_vs_export<span class="sc">$</span>diff, <span class="st">"Germany, Democratic Republic Of"</span>))</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 6%">
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
 <thead>
 <tr class="header">
+<th style="text-align: left;">Month_Year</th>
 <th style="text-align: left;">Countries</th>
-<th style="text-align: left;">Year</th>
+<th style="text-align: right;">Year</th>
 <th style="text-align: left;">Month</th>
+<th style="text-align: right;">Import_SGD</th>
 <th style="text-align: right;">Export_SGD</th>
+<th style="text-align: right;">Trade_Balance_SGD</th>
+<th style="text-align: right;">Trade_Volumes_SGD</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">2022-12-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Dec</td>
+<td style="text-align: right;">103655000</td>
 <td style="text-align: right;">432376000</td>
+<td style="text-align: right;">328721000</td>
+<td style="text-align: right;">536031000</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">2022-11-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Nov</td>
+<td style="text-align: right;">121773000</td>
 <td style="text-align: right;">756814000</td>
+<td style="text-align: right;">635041000</td>
+<td style="text-align: right;">878587000</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">2022-10-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Oct</td>
+<td style="text-align: right;">88796000</td>
 <td style="text-align: right;">350565000</td>
+<td style="text-align: right;">261769000</td>
+<td style="text-align: right;">439361000</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">2022-09-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Sep</td>
+<td style="text-align: right;">215978000</td>
 <td style="text-align: right;">386724000</td>
+<td style="text-align: right;">170746000</td>
+<td style="text-align: right;">602702000</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">2022-08-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Aug</td>
+<td style="text-align: right;">132917000</td>
 <td style="text-align: right;">570824000</td>
+<td style="text-align: right;">437907000</td>
+<td style="text-align: right;">703741000</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">2022-07-01</td>
 <td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
+<td style="text-align: right;">2022</td>
 <td style="text-align: left;">Jul</td>
+<td style="text-align: right;">224676000</td>
 <td style="text-align: right;">991586000</td>
+<td style="text-align: right;">766910000</td>
+<td style="text-align: right;">1216262000</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </section>
-<section id="joining-the-two-datasets-and-calculate-trade-balance" class="level4">
-<h4 class="anchored" data-anchor-id="joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</h4>
-<p>Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.</p>
-<p>“Germany, Democratic Republic Of” is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.</p>
+<section id="finding-top-countries-by-trade-volume" class="level4">
+<h4 class="anchored" data-anchor-id="finding-top-countries-by-trade-volume">2.2.4 Finding top countries by trade volume</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="ot">&lt;-</span> sgimport_cln <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#join sgimport_cln with sgexport_cln</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgexport_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>, <span class="st">'Year'</span> <span class="ot">=</span> <span class="st">'Year'</span>, <span class="st">'Month'</span> <span class="ot">=</span> <span class="st">'Month'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculated trade balance</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Trade_Balance_SGD =</span> Export_SGD <span class="sc">-</span> Import_SGD) <span class="sc">|&gt;</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove countries with non-available export data</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Countries <span class="sc">%in%</span> <span class="fu">c</span>(import_vs_export<span class="sc">$</span>diff, <span class="st">"Germany, Democratic Republic Of"</span>))</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sgtrade_top_ctry <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Volumes_SGD =</span> <span class="fu">sum</span>(Trade_Volumes_SGD)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total_Trade_Volumes_SGD))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_top_ctry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Countries</th>
-<th style="text-align: left;">Year</th>
-<th style="text-align: left;">Month</th>
-<th style="text-align: right;">Import_SGD</th>
-<th style="text-align: right;">Export_SGD</th>
-<th style="text-align: right;">Trade_Balance_SGD</th>
+<th style="text-align: right;">Total_Trade_Volumes_SGD</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Dec</td>
-<td style="text-align: right;">103655000</td>
-<td style="text-align: right;">432376000</td>
-<td style="text-align: right;">328721000</td>
+<td style="text-align: left;">Mainland China</td>
+<td style="text-align: right;">475482628000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Nov</td>
-<td style="text-align: right;">121773000</td>
-<td style="text-align: right;">756814000</td>
-<td style="text-align: right;">635041000</td>
+<td style="text-align: left;">Malaysia</td>
+<td style="text-align: right;">385151258000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Oct</td>
-<td style="text-align: right;">88796000</td>
-<td style="text-align: right;">350565000</td>
-<td style="text-align: right;">261769000</td>
+<td style="text-align: left;">United States</td>
+<td style="text-align: right;">340907625000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Sep</td>
-<td style="text-align: right;">215978000</td>
-<td style="text-align: right;">386724000</td>
-<td style="text-align: right;">170746000</td>
+<td style="text-align: left;">Taiwan</td>
+<td style="text-align: right;">289258502000</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Aug</td>
-<td style="text-align: right;">132917000</td>
-<td style="text-align: right;">570824000</td>
-<td style="text-align: right;">437907000</td>
+<td style="text-align: left;">Hong Kong</td>
+<td style="text-align: right;">237874786000</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Belgium</td>
-<td style="text-align: left;">2022</td>
-<td style="text-align: left;">Jul</td>
-<td style="text-align: right;">224676000</td>
-<td style="text-align: right;">991586000</td>
-<td style="text-align: right;">766910000</td>
+<td style="text-align: left;">Indonesia</td>
+<td style="text-align: right;">184262941000</td>
 </tr>
 </tbody>
 </table>
