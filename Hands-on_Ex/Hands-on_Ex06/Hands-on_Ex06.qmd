@@ -189,3 +189,68 @@ ggplot(top4_attacks,
         legend.title = element_text(size = 8),
         legend.text = element_text(size = 6) )
 ```
+
+## 3. Plotting Cycle Plot
+
+### 3.1 Importing the data
+
+For the purpose of this hands-on exercise, *arrivals_by_air.xlsx* will be used.
+
+```{r}
+air <- read_excel("data/arrivals_by_air.xlsx")
+```
+
+### 3.2 Data Wrangling
+
+#### 3.2.1 Deriving month and year fields
+
+Create two new fields called *month* and *year* from *Month-Year* field
+
+```{r}
+air$month <- factor(month(air$`Month-Year`), 
+                    levels=1:12, 
+                    labels=month.abb, 
+                    ordered=TRUE) 
+air$year <- year(ymd(air$`Month-Year`))
+```
+
+#### 3.2.2 Select the target country
+
+```{r}
+Vietnam <- air |> 
+  select(Vietnam,
+         month,
+         year) |> 
+  filter(year >= 2010)
+```
+
+#### 3.2.3 Compute year average arrivals by month
+
+```{r}
+hline.data <- Vietnam |> 
+  group_by(month) |> 
+  summarise(avgvalue = mean(Vietnam))
+```
+
+### 3.3 Building Cycle Plot
+
+```{r}
+#| fig-height: 6
+#| fig-width: 12.5
+ggplot() +
+  geom_line(data = Vietnam,
+            aes(x = year,
+                y = Vietnam,
+                group = month),
+            color = "black") +
+  geom_hline(aes(yintercept=avgvalue),
+             data = hline.data,
+             linetype = 6,
+             color = "red",
+             size = 0.5) +
+  facet_grid(~month) +
+  labs(axis.text.x = element_blank(),
+       title = "Visitor arrivals from Vietnam by air, Jan 2010-Dec 2019") +
+  xlab("") +
+  ylab("No. of Visitors")
+```
