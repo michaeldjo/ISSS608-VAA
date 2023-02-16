@@ -21,3 +21,148 @@ The original Merchandise Trade dataset was downloaded from [Department of Statis
 The file downloaded was *outputFile.xlsx*
 
 The study period is from for **January 2020 to December 2022** period.
+
+## **2. Data Preparation**
+
+### 2.1 Install R packages and import dataset
+
+The code chunk below uses `pacman::p_load()` to check if packages are installed. If they are, they will be launched into R. The packages installed are
+
+-   `readxl`: Used to reaad data from excel files
+
+-   `knitr`: Used for dynamic report generation
+
+-   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
+
+    All packages can be found within CRAN.
+
+```{r}
+#Load packages
+pacman::p_load(readxl, knitr, tidyverse)
+```
+
+Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
+
+Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is intentionally selected.
+
+```{r}
+#Import data
+sgimport <- read_excel("data/outputFile.xlsx", sheet = "T1", range = "A10:AK129" )
+
+sgexport <- read_excel("data/outputFile.xlsx", sheet = "T2", range = "A10:AK101" )
+```
+
+###### 
+
+### 2.2 Data cleaning
+
+#### 2.2.1 Cleaning the countries data for sgimport and sgexport
+
+```{r}
+sgimport_ctry <- sgimport |> 
+  
+  #remove the first 7 rows, which are Total and non-countries
+  filter(!row_number() %in% c(1:7)) |> 
+  
+  #remove the '(Thousand Dollars)' string from column Data Series and call it Countries
+  mutate(Countries = str_remove(`Data Series`, 
+                                " \\(Thousand Dollars\\)"), 
+         .after = `Data Series`) |> 
+  
+  #remove 'Data Series' column
+  select(-`Data Series`) 
+
+kable(head(sgimport_ctry))
+```
+
+```{r}
+sgexport_ctry <- sgexport |> 
+  
+  #remove the first 7 rows, which are Total and non-countries
+  filter(!row_number() %in% c(1:7)) |> 
+  
+  #remove the '(Thousand Dollars)' string from column Data Series and call it Countries
+  mutate(Countries = str_remove(`Data Series`, 
+                                " \\(Thousand Dollars\\)"), 
+         .after = `Data Series`) |> 
+  
+  #remove 'Data Series' column
+  select(-`Data Series`) 
+
+kable(head(sgexport_ctry))
+```
+
+Identify differences between sgimport and sgexport as the number of rows are not the same
+
+112-84 = 28. The difference below is 28, indicating Singapore import from these countries but there is no export data to these countries
+
+```{r}
+import_vs_export <- setdiff(sgimport_ctry$Countries, sgexport_ctry$Countries) |> 
+  enframe(name = NULL, value = "diff") |> 
+  arrange(diff)
+
+import_vs_export  |> 
+  kable(caption = "Countries in sgimport that is not in sgexport",
+               row.names = TRUE)
+```
+
+#### 2.2.2 Pivot and transform datasets to time-series
+
+```{r}
+sgimport_cln <- sgimport_ctry |> 
+  
+  #pivot_longer to get year and month timeseries
+  pivot_longer(cols = !Countries,
+               names_to = c("Year", "Month"),
+               names_sep = " ",
+               values_to = "Import_SGD"
+               ) |> 
+  
+  #Convert Month and Year to factors for ordering purposes
+  #Multiply values by 1000
+  mutate(Month = factor(Month, levels = month.abb),
+         Year = factor(Year),
+         Import_SGD = Import_SGD*1000) 
+
+kable(head(sgimport_cln))
+```
+
+```{r}
+sgexport_cln <- sgexport_ctry |> 
+  
+  #pivot_longer to get year and month timeseries
+  pivot_longer(cols = !Countries,
+               names_to = c("Year", "Month"),
+               names_sep = " ",
+               values_to = "Export_SGD"
+               ) |> 
+  
+  #Convert Month and Year to factors for ordering purposes
+  #Multiply values by 1000
+  mutate(Month = factor(Month, levels = month.abb),
+         Year = factor(Year),
+         Export_SGD = Export_SGD*1000) 
+
+kable(head(sgexport_cln))
+```
+
+#### 2.2.3 Joining the two datasets and calculate trade balance
+
+Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.
+
+"Germany, Democratic Republic Of" is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.
+
+```{r}
+sgtrade_cln <- sgimport_cln |> 
+  
+  #join sgimport_cln with sgexport_cln
+  left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Year' = 'Year', 'Month' = 'Month')) |> 
+  
+  #Calculated trade balance
+  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD) |> 
+  
+  #remove countries with non-available export data
+  filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of"))
+
+kable(head(sgtrade_cln))
+```

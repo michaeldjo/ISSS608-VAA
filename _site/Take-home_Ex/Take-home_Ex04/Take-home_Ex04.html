@@ -22,6 +22,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -31,7 +94,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -191,12 +253,12 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Take-home Exercise</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">Take-home Exercise</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="false">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 ">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../Take-home_Ex/Take-home_Ex01/Take-home_Ex01.html" class="sidebar-item-text sidebar-link">Take-home Exercise 1</a>
@@ -212,11 +274,6 @@ ul.task-list li input[type="checkbox"] {
   <a href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" class="sidebar-item-text sidebar-link">Take-home Exercise 3</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html" class="sidebar-item-text sidebar-link active">Take-home Exercise 4</a>
-  </div>
-</li>
       </ul>
   </li>
     </ul>
@@ -229,6 +286,16 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. Overview</strong></a></li>
+  <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><strong>2. Data Preparation</strong></a>
+  <ul>
+  <li><a href="#install-r-packages-and-import-dataset" id="toc-install-r-packages-and-import-dataset" class="nav-link" data-scroll-target="#install-r-packages-and-import-dataset">2.1 Install R packages and import dataset</a></li>
+  <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">2.2 Data cleaning</a>
+  <ul>
+  <li><a href="#cleaning-the-countries-data-for-sgimport-and-sgexport" id="toc-cleaning-the-countries-data-for-sgimport-and-sgexport" class="nav-link" data-scroll-target="#cleaning-the-countries-data-for-sgimport-and-sgexport">2.2.1 Cleaning the countries data for sgimport and sgexport</a></li>
+  <li><a href="#pivot-and-transform-datasets-to-time-series" id="toc-pivot-and-transform-datasets-to-time-series" class="nav-link" data-scroll-target="#pivot-and-transform-datasets-to-time-series">2.2.2 Pivot and transform datasets to time-series</a></li>
+  <li><a href="#joining-the-two-datasets-and-calculate-trade-balance" id="toc-joining-the-two-datasets-and-calculate-trade-balance" class="nav-link" data-scroll-target="#joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -277,8 +344,1072 @@ ul.task-list li input[type="checkbox"] {
 <p>The original Merchandise Trade dataset was downloaded from <a href="https://www.singstat.gov.sg/find-data/search-by-theme/trade-and-investment/merchandise-trade/latest-data">Department of Statistics</a> titled <em>Merchandise Trade by Region/Market</em></p>
 <p>The file downloaded was <em>outputFile.xlsx</em></p>
 <p>The study period is from for <strong>January 2020 to December 2022</strong> period.</p>
+</section>
+<section id="data-preparation" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation"><strong>2. Data Preparation</strong></h2>
+<section id="install-r-packages-and-import-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="install-r-packages-and-import-dataset">2.1 Install R packages and import dataset</h3>
+<p>The code chunk below uses <code>pacman::p_load()</code> to check if packages are installed. If they are, they will be launched into R. The packages installed are</p>
+<ul>
+<li><p><code>readxl</code>: Used to reaad data from excel files</p></li>
+<li><p><code>knitr</code>: Used for dynamic report generation</p></li>
+<li><p><code>tidyverse</code>: A collection of core packages designed for data science, used extensively for data preparation and wrangling.</p>
+<p>All packages can be found within CRAN.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, knitr, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Import data from csv using <code>readxl::read_excel()</code> and store it in variable <em><strong>sgimport</strong> and <strong>sgexport</strong></em>.</p>
+<p>Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is intentionally selected.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Import data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sgimport <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/outputFile.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T1"</span>, <span class="at">range =</span> <span class="st">"A10:AK129"</span> )</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sgexport <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/outputFile.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T2"</span>, <span class="at">range =</span> <span class="st">"A10:AK101"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="section" class="level6">
+<h6 class="anchored" data-anchor-id="section"></h6>
+</section>
+</section>
+<section id="data-cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning">2.2 Data cleaning</h3>
+<section id="cleaning-the-countries-data-for-sgimport-and-sgexport" class="level4">
+<h4 class="anchored" data-anchor-id="cleaning-the-countries-data-for-sgimport-and-sgexport">2.2.1 Cleaning the countries data for sgimport and sgexport</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sgimport_ctry <span class="ot">&lt;-</span> sgimport <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove the first 7 rows, which are Total and non-countries</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove the '(Thousand Dollars)' string from column Data Series and call it Countries</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">str_remove</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">" </span><span class="sc">\\</span><span class="st">(Thousand Dollars</span><span class="sc">\\</span><span class="st">)"</span>), </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">.after =</span> <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove 'Data Series' column</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>) </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgimport_ctry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: right;">2022 Dec</th>
+<th style="text-align: right;">2022 Nov</th>
+<th style="text-align: right;">2022 Oct</th>
+<th style="text-align: right;">2022 Sep</th>
+<th style="text-align: right;">2022 Aug</th>
+<th style="text-align: right;">2022 Jul</th>
+<th style="text-align: right;">2022 Jun</th>
+<th style="text-align: right;">2022 May</th>
+<th style="text-align: right;">2022 Apr</th>
+<th style="text-align: right;">2022 Mar</th>
+<th style="text-align: right;">2022 Feb</th>
+<th style="text-align: right;">2022 Jan</th>
+<th style="text-align: right;">2021 Dec</th>
+<th style="text-align: right;">2021 Nov</th>
+<th style="text-align: right;">2021 Oct</th>
+<th style="text-align: right;">2021 Sep</th>
+<th style="text-align: right;">2021 Aug</th>
+<th style="text-align: right;">2021 Jul</th>
+<th style="text-align: right;">2021 Jun</th>
+<th style="text-align: right;">2021 May</th>
+<th style="text-align: right;">2021 Apr</th>
+<th style="text-align: right;">2021 Mar</th>
+<th style="text-align: right;">2021 Feb</th>
+<th style="text-align: right;">2021 Jan</th>
+<th style="text-align: right;">2020 Dec</th>
+<th style="text-align: right;">2020 Nov</th>
+<th style="text-align: right;">2020 Oct</th>
+<th style="text-align: right;">2020 Sep</th>
+<th style="text-align: right;">2020 Aug</th>
+<th style="text-align: right;">2020 Jul</th>
+<th style="text-align: right;">2020 Jun</th>
+<th style="text-align: right;">2020 May</th>
+<th style="text-align: right;">2020 Apr</th>
+<th style="text-align: right;">2020 Mar</th>
+<th style="text-align: right;">2020 Feb</th>
+<th style="text-align: right;">2020 Jan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: right;">103655</td>
+<td style="text-align: right;">121773</td>
+<td style="text-align: right;">88796</td>
+<td style="text-align: right;">215978</td>
+<td style="text-align: right;">132917</td>
+<td style="text-align: right;">224676</td>
+<td style="text-align: right;">114704</td>
+<td style="text-align: right;">116817</td>
+<td style="text-align: right;">146603</td>
+<td style="text-align: right;">319393</td>
+<td style="text-align: right;">247242</td>
+<td style="text-align: right;">170868</td>
+<td style="text-align: right;">129536</td>
+<td style="text-align: right;">131031</td>
+<td style="text-align: right;">250735</td>
+<td style="text-align: right;">155819</td>
+<td style="text-align: right;">98508</td>
+<td style="text-align: right;">183841</td>
+<td style="text-align: right;">117345</td>
+<td style="text-align: right;">151574</td>
+<td style="text-align: right;">174581</td>
+<td style="text-align: right;">128928</td>
+<td style="text-align: right;">191622</td>
+<td style="text-align: right;">119744</td>
+<td style="text-align: right;">133445</td>
+<td style="text-align: right;">209539</td>
+<td style="text-align: right;">83657</td>
+<td style="text-align: right;">80823</td>
+<td style="text-align: right;">99286</td>
+<td style="text-align: right;">102317</td>
+<td style="text-align: right;">73457</td>
+<td style="text-align: right;">77945</td>
+<td style="text-align: right;">126970</td>
+<td style="text-align: right;">136150</td>
+<td style="text-align: right;">176921</td>
+<td style="text-align: right;">124193</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Denmark</td>
+<td style="text-align: right;">67665</td>
+<td style="text-align: right;">67436</td>
+<td style="text-align: right;">63719</td>
+<td style="text-align: right;">61842</td>
+<td style="text-align: right;">126150</td>
+<td style="text-align: right;">55752</td>
+<td style="text-align: right;">50966</td>
+<td style="text-align: right;">51216</td>
+<td style="text-align: right;">55538</td>
+<td style="text-align: right;">76044</td>
+<td style="text-align: right;">40370</td>
+<td style="text-align: right;">142017</td>
+<td style="text-align: right;">52270</td>
+<td style="text-align: right;">91555</td>
+<td style="text-align: right;">54084</td>
+<td style="text-align: right;">151317</td>
+<td style="text-align: right;">61383</td>
+<td style="text-align: right;">56814</td>
+<td style="text-align: right;">146833</td>
+<td style="text-align: right;">55964</td>
+<td style="text-align: right;">44685</td>
+<td style="text-align: right;">117667</td>
+<td style="text-align: right;">73685</td>
+<td style="text-align: right;">105473</td>
+<td style="text-align: right;">143209</td>
+<td style="text-align: right;">45010</td>
+<td style="text-align: right;">43480</td>
+<td style="text-align: right;">70494</td>
+<td style="text-align: right;">44398</td>
+<td style="text-align: right;">95598</td>
+<td style="text-align: right;">41203</td>
+<td style="text-align: right;">65305</td>
+<td style="text-align: right;">62488</td>
+<td style="text-align: right;">54577</td>
+<td style="text-align: right;">124343</td>
+<td style="text-align: right;">84860</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">France</td>
+<td style="text-align: right;">1537347</td>
+<td style="text-align: right;">1563127</td>
+<td style="text-align: right;">1493161</td>
+<td style="text-align: right;">1660563</td>
+<td style="text-align: right;">1624646</td>
+<td style="text-align: right;">1555500</td>
+<td style="text-align: right;">1535920</td>
+<td style="text-align: right;">1365379</td>
+<td style="text-align: right;">1553618</td>
+<td style="text-align: right;">1289677</td>
+<td style="text-align: right;">1074703</td>
+<td style="text-align: right;">1426667</td>
+<td style="text-align: right;">1449230</td>
+<td style="text-align: right;">1259199</td>
+<td style="text-align: right;">1248425</td>
+<td style="text-align: right;">1432720</td>
+<td style="text-align: right;">1035905</td>
+<td style="text-align: right;">1279419</td>
+<td style="text-align: right;">1453443</td>
+<td style="text-align: right;">1239006</td>
+<td style="text-align: right;">1150424</td>
+<td style="text-align: right;">1906800</td>
+<td style="text-align: right;">987454</td>
+<td style="text-align: right;">1021290</td>
+<td style="text-align: right;">1141603</td>
+<td style="text-align: right;">1498854</td>
+<td style="text-align: right;">1922407</td>
+<td style="text-align: right;">1167166</td>
+<td style="text-align: right;">922015</td>
+<td style="text-align: right;">1088034</td>
+<td style="text-align: right;">895505</td>
+<td style="text-align: right;">690063</td>
+<td style="text-align: right;">912836</td>
+<td style="text-align: right;">1233320</td>
+<td style="text-align: right;">1123010</td>
+<td style="text-align: right;">1491370</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Germany, Federal Republic Of</td>
+<td style="text-align: right;">1129542</td>
+<td style="text-align: right;">1107630</td>
+<td style="text-align: right;">1122251</td>
+<td style="text-align: right;">1170472</td>
+<td style="text-align: right;">1135242</td>
+<td style="text-align: right;">1207446</td>
+<td style="text-align: right;">1108916</td>
+<td style="text-align: right;">1095451</td>
+<td style="text-align: right;">1282312</td>
+<td style="text-align: right;">1259702</td>
+<td style="text-align: right;">1074201</td>
+<td style="text-align: right;">1038822</td>
+<td style="text-align: right;">1329642</td>
+<td style="text-align: right;">1094892</td>
+<td style="text-align: right;">1103039</td>
+<td style="text-align: right;">1290457</td>
+<td style="text-align: right;">1147489</td>
+<td style="text-align: right;">1185938</td>
+<td style="text-align: right;">1142950</td>
+<td style="text-align: right;">1432486</td>
+<td style="text-align: right;">1102010</td>
+<td style="text-align: right;">1124788</td>
+<td style="text-align: right;">916711</td>
+<td style="text-align: right;">947476</td>
+<td style="text-align: right;">980296</td>
+<td style="text-align: right;">978208</td>
+<td style="text-align: right;">980882</td>
+<td style="text-align: right;">972416</td>
+<td style="text-align: right;">931876</td>
+<td style="text-align: right;">1061128</td>
+<td style="text-align: right;">978806</td>
+<td style="text-align: right;">892172</td>
+<td style="text-align: right;">1160767</td>
+<td style="text-align: right;">1115034</td>
+<td style="text-align: right;">1003380</td>
+<td style="text-align: right;">1127285</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Greece</td>
+<td style="text-align: right;">99085</td>
+<td style="text-align: right;">37937</td>
+<td style="text-align: right;">15850</td>
+<td style="text-align: right;">107888</td>
+<td style="text-align: right;">170197</td>
+<td style="text-align: right;">207744</td>
+<td style="text-align: right;">108596</td>
+<td style="text-align: right;">47795</td>
+<td style="text-align: right;">117955</td>
+<td style="text-align: right;">10073</td>
+<td style="text-align: right;">40633</td>
+<td style="text-align: right;">17780</td>
+<td style="text-align: right;">38816</td>
+<td style="text-align: right;">9041</td>
+<td style="text-align: right;">12105</td>
+<td style="text-align: right;">10967</td>
+<td style="text-align: right;">11000</td>
+<td style="text-align: right;">10522</td>
+<td style="text-align: right;">53544</td>
+<td style="text-align: right;">38630</td>
+<td style="text-align: right;">14707</td>
+<td style="text-align: right;">65136</td>
+<td style="text-align: right;">85500</td>
+<td style="text-align: right;">46808</td>
+<td style="text-align: right;">10429</td>
+<td style="text-align: right;">10423</td>
+<td style="text-align: right;">11378</td>
+<td style="text-align: right;">11241</td>
+<td style="text-align: right;">11809</td>
+<td style="text-align: right;">11655</td>
+<td style="text-align: right;">11839</td>
+<td style="text-align: right;">11181</td>
+<td style="text-align: right;">15506</td>
+<td style="text-align: right;">12418</td>
+<td style="text-align: right;">12065</td>
+<td style="text-align: right;">10275</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ireland</td>
+<td style="text-align: right;">106678</td>
+<td style="text-align: right;">118525</td>
+<td style="text-align: right;">157648</td>
+<td style="text-align: right;">118936</td>
+<td style="text-align: right;">193225</td>
+<td style="text-align: right;">107148</td>
+<td style="text-align: right;">154789</td>
+<td style="text-align: right;">114569</td>
+<td style="text-align: right;">86763</td>
+<td style="text-align: right;">127647</td>
+<td style="text-align: right;">110898</td>
+<td style="text-align: right;">82200</td>
+<td style="text-align: right;">96356</td>
+<td style="text-align: right;">95135</td>
+<td style="text-align: right;">110319</td>
+<td style="text-align: right;">272126</td>
+<td style="text-align: right;">280524</td>
+<td style="text-align: right;">287457</td>
+<td style="text-align: right;">323034</td>
+<td style="text-align: right;">232561</td>
+<td style="text-align: right;">297031</td>
+<td style="text-align: right;">393479</td>
+<td style="text-align: right;">170727</td>
+<td style="text-align: right;">73413</td>
+<td style="text-align: right;">250720</td>
+<td style="text-align: right;">252154</td>
+<td style="text-align: right;">187158</td>
+<td style="text-align: right;">112631</td>
+<td style="text-align: right;">94134</td>
+<td style="text-align: right;">104004</td>
+<td style="text-align: right;">111688</td>
+<td style="text-align: right;">93891</td>
+<td style="text-align: right;">116897</td>
+<td style="text-align: right;">100595</td>
+<td style="text-align: right;">106456</td>
+<td style="text-align: right;">87483</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>sgexport_ctry <span class="ot">&lt;-</span> sgexport <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove the first 7 rows, which are Total and non-countries</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">row_number</span>() <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove the '(Thousand Dollars)' string from column Data Series and call it Countries</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">str_remove</span>(<span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>, </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                                <span class="st">" </span><span class="sc">\\</span><span class="st">(Thousand Dollars</span><span class="sc">\\</span><span class="st">)"</span>), </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">.after =</span> <span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove 'Data Series' column</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="st">`</span><span class="at">Data Series</span><span class="st">`</span>) </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgexport_ctry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+<col style="width: 2%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: right;">2022 Dec</th>
+<th style="text-align: right;">2022 Nov</th>
+<th style="text-align: right;">2022 Oct</th>
+<th style="text-align: right;">2022 Sep</th>
+<th style="text-align: right;">2022 Aug</th>
+<th style="text-align: right;">2022 Jul</th>
+<th style="text-align: right;">2022 Jun</th>
+<th style="text-align: right;">2022 May</th>
+<th style="text-align: right;">2022 Apr</th>
+<th style="text-align: right;">2022 Mar</th>
+<th style="text-align: right;">2022 Feb</th>
+<th style="text-align: right;">2022 Jan</th>
+<th style="text-align: right;">2021 Dec</th>
+<th style="text-align: right;">2021 Nov</th>
+<th style="text-align: right;">2021 Oct</th>
+<th style="text-align: right;">2021 Sep</th>
+<th style="text-align: right;">2021 Aug</th>
+<th style="text-align: right;">2021 Jul</th>
+<th style="text-align: right;">2021 Jun</th>
+<th style="text-align: right;">2021 May</th>
+<th style="text-align: right;">2021 Apr</th>
+<th style="text-align: right;">2021 Mar</th>
+<th style="text-align: right;">2021 Feb</th>
+<th style="text-align: right;">2021 Jan</th>
+<th style="text-align: right;">2020 Dec</th>
+<th style="text-align: right;">2020 Nov</th>
+<th style="text-align: right;">2020 Oct</th>
+<th style="text-align: right;">2020 Sep</th>
+<th style="text-align: right;">2020 Aug</th>
+<th style="text-align: right;">2020 Jul</th>
+<th style="text-align: right;">2020 Jun</th>
+<th style="text-align: right;">2020 May</th>
+<th style="text-align: right;">2020 Apr</th>
+<th style="text-align: right;">2020 Mar</th>
+<th style="text-align: right;">2020 Feb</th>
+<th style="text-align: right;">2020 Jan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: right;">432376</td>
+<td style="text-align: right;">756814</td>
+<td style="text-align: right;">350565</td>
+<td style="text-align: right;">386724</td>
+<td style="text-align: right;">570824</td>
+<td style="text-align: right;">991586</td>
+<td style="text-align: right;">588520</td>
+<td style="text-align: right;">617646</td>
+<td style="text-align: right;">668060</td>
+<td style="text-align: right;">1446036</td>
+<td style="text-align: right;">1007201</td>
+<td style="text-align: right;">702940</td>
+<td style="text-align: right;">457888</td>
+<td style="text-align: right;">463968</td>
+<td style="text-align: right;">823155</td>
+<td style="text-align: right;">450170</td>
+<td style="text-align: right;">334717</td>
+<td style="text-align: right;">760892</td>
+<td style="text-align: right;">585846</td>
+<td style="text-align: right;">773462</td>
+<td style="text-align: right;">590664</td>
+<td style="text-align: right;">1094463</td>
+<td style="text-align: right;">447254</td>
+<td style="text-align: right;">470384</td>
+<td style="text-align: right;">228581</td>
+<td style="text-align: right;">411750</td>
+<td style="text-align: right;">714179</td>
+<td style="text-align: right;">443025</td>
+<td style="text-align: right;">339644</td>
+<td style="text-align: right;">254329</td>
+<td style="text-align: right;">386915</td>
+<td style="text-align: right;">925654</td>
+<td style="text-align: right;">1176482</td>
+<td style="text-align: right;">550919</td>
+<td style="text-align: right;">624401</td>
+<td style="text-align: right;">618487</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Denmark</td>
+<td style="text-align: right;">31084</td>
+<td style="text-align: right;">29250</td>
+<td style="text-align: right;">67327</td>
+<td style="text-align: right;">44793</td>
+<td style="text-align: right;">42761</td>
+<td style="text-align: right;">48586</td>
+<td style="text-align: right;">34269</td>
+<td style="text-align: right;">37237</td>
+<td style="text-align: right;">34748</td>
+<td style="text-align: right;">34340</td>
+<td style="text-align: right;">26675</td>
+<td style="text-align: right;">32037</td>
+<td style="text-align: right;">28435</td>
+<td style="text-align: right;">24507</td>
+<td style="text-align: right;">22478</td>
+<td style="text-align: right;">30258</td>
+<td style="text-align: right;">27120</td>
+<td style="text-align: right;">179500</td>
+<td style="text-align: right;">27831</td>
+<td style="text-align: right;">15815</td>
+<td style="text-align: right;">22270</td>
+<td style="text-align: right;">24819</td>
+<td style="text-align: right;">23271</td>
+<td style="text-align: right;">24573</td>
+<td style="text-align: right;">12355</td>
+<td style="text-align: right;">14607</td>
+<td style="text-align: right;">18695</td>
+<td style="text-align: right;">14031</td>
+<td style="text-align: right;">15904</td>
+<td style="text-align: right;">13914</td>
+<td style="text-align: right;">13574</td>
+<td style="text-align: right;">9833</td>
+<td style="text-align: right;">18305</td>
+<td style="text-align: right;">15795</td>
+<td style="text-align: right;">33476</td>
+<td style="text-align: right;">18442</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">France</td>
+<td style="text-align: right;">402218</td>
+<td style="text-align: right;">324451</td>
+<td style="text-align: right;">529962</td>
+<td style="text-align: right;">358786</td>
+<td style="text-align: right;">454328</td>
+<td style="text-align: right;">459094</td>
+<td style="text-align: right;">424547</td>
+<td style="text-align: right;">466344</td>
+<td style="text-align: right;">489309</td>
+<td style="text-align: right;">457987</td>
+<td style="text-align: right;">382847</td>
+<td style="text-align: right;">446179</td>
+<td style="text-align: right;">441787</td>
+<td style="text-align: right;">417352</td>
+<td style="text-align: right;">445179</td>
+<td style="text-align: right;">391514</td>
+<td style="text-align: right;">310002</td>
+<td style="text-align: right;">411915</td>
+<td style="text-align: right;">356333</td>
+<td style="text-align: right;">346259</td>
+<td style="text-align: right;">398291</td>
+<td style="text-align: right;">433983</td>
+<td style="text-align: right;">367562</td>
+<td style="text-align: right;">816892</td>
+<td style="text-align: right;">406905</td>
+<td style="text-align: right;">373405</td>
+<td style="text-align: right;">494312</td>
+<td style="text-align: right;">1198893</td>
+<td style="text-align: right;">748248</td>
+<td style="text-align: right;">330195</td>
+<td style="text-align: right;">327298</td>
+<td style="text-align: right;">275463</td>
+<td style="text-align: right;">329421</td>
+<td style="text-align: right;">371118</td>
+<td style="text-align: right;">379019</td>
+<td style="text-align: right;">344766</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Germany, Federal Republic Of</td>
+<td style="text-align: right;">809343</td>
+<td style="text-align: right;">927112</td>
+<td style="text-align: right;">1035273</td>
+<td style="text-align: right;">912066</td>
+<td style="text-align: right;">1291942</td>
+<td style="text-align: right;">1279156</td>
+<td style="text-align: right;">921251</td>
+<td style="text-align: right;">780294</td>
+<td style="text-align: right;">809678</td>
+<td style="text-align: right;">894561</td>
+<td style="text-align: right;">722681</td>
+<td style="text-align: right;">784687</td>
+<td style="text-align: right;">917779</td>
+<td style="text-align: right;">777783</td>
+<td style="text-align: right;">915452</td>
+<td style="text-align: right;">800215</td>
+<td style="text-align: right;">798061</td>
+<td style="text-align: right;">754099</td>
+<td style="text-align: right;">916201</td>
+<td style="text-align: right;">709010</td>
+<td style="text-align: right;">771493</td>
+<td style="text-align: right;">874965</td>
+<td style="text-align: right;">651058</td>
+<td style="text-align: right;">652128</td>
+<td style="text-align: right;">674442</td>
+<td style="text-align: right;">629029</td>
+<td style="text-align: right;">635751</td>
+<td style="text-align: right;">652239</td>
+<td style="text-align: right;">616109</td>
+<td style="text-align: right;">636085</td>
+<td style="text-align: right;">616840</td>
+<td style="text-align: right;">578206</td>
+<td style="text-align: right;">617032</td>
+<td style="text-align: right;">610897</td>
+<td style="text-align: right;">731916</td>
+<td style="text-align: right;">664818</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Greece</td>
+<td style="text-align: right;">131220</td>
+<td style="text-align: right;">126740</td>
+<td style="text-align: right;">121392</td>
+<td style="text-align: right;">150911</td>
+<td style="text-align: right;">191678</td>
+<td style="text-align: right;">166037</td>
+<td style="text-align: right;">164807</td>
+<td style="text-align: right;">133089</td>
+<td style="text-align: right;">123358</td>
+<td style="text-align: right;">100539</td>
+<td style="text-align: right;">137793</td>
+<td style="text-align: right;">98550</td>
+<td style="text-align: right;">110887</td>
+<td style="text-align: right;">162931</td>
+<td style="text-align: right;">91021</td>
+<td style="text-align: right;">104392</td>
+<td style="text-align: right;">92453</td>
+<td style="text-align: right;">93224</td>
+<td style="text-align: right;">89729</td>
+<td style="text-align: right;">82596</td>
+<td style="text-align: right;">127066</td>
+<td style="text-align: right;">93626</td>
+<td style="text-align: right;">121376</td>
+<td style="text-align: right;">81434</td>
+<td style="text-align: right;">106578</td>
+<td style="text-align: right;">86709</td>
+<td style="text-align: right;">77179</td>
+<td style="text-align: right;">80952</td>
+<td style="text-align: right;">79911</td>
+<td style="text-align: right;">83073</td>
+<td style="text-align: right;">83698</td>
+<td style="text-align: right;">94435</td>
+<td style="text-align: right;">90018</td>
+<td style="text-align: right;">122867</td>
+<td style="text-align: right;">164151</td>
+<td style="text-align: right;">111978</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ireland</td>
+<td style="text-align: right;">177243</td>
+<td style="text-align: right;">33157</td>
+<td style="text-align: right;">117698</td>
+<td style="text-align: right;">61522</td>
+<td style="text-align: right;">68379</td>
+<td style="text-align: right;">109400</td>
+<td style="text-align: right;">134281</td>
+<td style="text-align: right;">179510</td>
+<td style="text-align: right;">77319</td>
+<td style="text-align: right;">47636</td>
+<td style="text-align: right;">19881</td>
+<td style="text-align: right;">32085</td>
+<td style="text-align: right;">22400</td>
+<td style="text-align: right;">55726</td>
+<td style="text-align: right;">34508</td>
+<td style="text-align: right;">32235</td>
+<td style="text-align: right;">26744</td>
+<td style="text-align: right;">25801</td>
+<td style="text-align: right;">268595</td>
+<td style="text-align: right;">108373</td>
+<td style="text-align: right;">35605</td>
+<td style="text-align: right;">31978</td>
+<td style="text-align: right;">107426</td>
+<td style="text-align: right;">11134</td>
+<td style="text-align: right;">39043</td>
+<td style="text-align: right;">12943</td>
+<td style="text-align: right;">156489</td>
+<td style="text-align: right;">23969</td>
+<td style="text-align: right;">28713</td>
+<td style="text-align: right;">26511</td>
+<td style="text-align: right;">52091</td>
+<td style="text-align: right;">48372</td>
+<td style="text-align: right;">81404</td>
+<td style="text-align: right;">65351</td>
+<td style="text-align: right;">167639</td>
+<td style="text-align: right;">52272</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Identify differences between sgimport and sgexport as the number of rows are not the same</p>
+<p>112-84 = 28. The difference below is 28, indicating Singapore import from these countries but there is no export data to these countries</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>import_vs_export <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(sgimport_ctry<span class="sc">$</span>Countries, sgexport_ctry<span class="sc">$</span>Countries) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">enframe</span>(<span class="at">name =</span> <span class="cn">NULL</span>, <span class="at">value =</span> <span class="st">"diff"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(diff)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>import_vs_export  <span class="sc">|&gt;</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Countries in sgimport that is not in sgexport"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">row.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<caption>Countries in sgimport that is not in sgexport</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">diff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Anguilla</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Bahamas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Bermuda</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Cocos (Keeling) Islands</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Commonwealth Of Independent States</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Cook Islands</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">French Guiana</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">French Southern Territories</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">Grenada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">Guatemala</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">11</td>
+<td style="text-align: left;">Honduras</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Jamaica</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">13</td>
+<td style="text-align: left;">Kiribati</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">Liechtenstein</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">Micronesia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Nauru</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">Netherlands Antilles</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Niue</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">Norfolk Island</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">Norway</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">Other Countries In America</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">22</td>
+<td style="text-align: left;">Palau</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">23</td>
+<td style="text-align: left;">Panama</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">24</td>
+<td style="text-align: left;">South Sudan</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">25</td>
+<td style="text-align: left;">St Vincent &amp; The Grenadines</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">26</td>
+<td style="text-align: left;">Trinidad &amp; Tobago</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">27</td>
+<td style="text-align: left;">Tuvalu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">28</td>
+<td style="text-align: left;">Wallis &amp; Fatuna Islands</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="pivot-and-transform-datasets-to-time-series" class="level4">
+<h4 class="anchored" data-anchor-id="pivot-and-transform-datasets-to-time-series">2.2.2 Pivot and transform datasets to time-series</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sgimport_cln <span class="ot">&lt;-</span> sgimport_ctry <span class="sc">|&gt;</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#pivot_longer to get year and month timeseries</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>Countries,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">" "</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Import_SGD"</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">|&gt;</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month and Year to factors for ordering purposes</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Multiply values by 1000</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> month.abb),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">factor</span>(Year),</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Import_SGD =</span> Import_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgimport_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: right;">Import_SGD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Dec</td>
+<td style="text-align: right;">103655000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Nov</td>
+<td style="text-align: right;">121773000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Oct</td>
+<td style="text-align: right;">88796000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Sep</td>
+<td style="text-align: right;">215978000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Aug</td>
+<td style="text-align: right;">132917000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Jul</td>
+<td style="text-align: right;">224676000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>sgexport_cln <span class="ot">&lt;-</span> sgexport_ctry <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#pivot_longer to get year and month timeseries</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">!</span>Countries,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Month"</span>),</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_sep =</span> <span class="st">" "</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Export_SGD"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>               ) <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Convert Month and Year to factors for ordering purposes</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Multiply values by 1000</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Month =</span> <span class="fu">factor</span>(Month, <span class="at">levels =</span> month.abb),</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> <span class="fu">factor</span>(Year),</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> Export_SGD<span class="sc">*</span><span class="dv">1000</span>) </span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgexport_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: right;">Export_SGD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Dec</td>
+<td style="text-align: right;">432376000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Nov</td>
+<td style="text-align: right;">756814000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Oct</td>
+<td style="text-align: right;">350565000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Sep</td>
+<td style="text-align: right;">386724000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Aug</td>
+<td style="text-align: right;">570824000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Jul</td>
+<td style="text-align: right;">991586000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="joining-the-two-datasets-and-calculate-trade-balance" class="level4">
+<h4 class="anchored" data-anchor-id="joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</h4>
+<p>Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.</p>
+<p>“Germany, Democratic Republic Of” is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="ot">&lt;-</span> sgimport_cln <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#join sgimport_cln with sgexport_cln</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sgexport_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>, <span class="st">'Year'</span> <span class="ot">=</span> <span class="st">'Year'</span>, <span class="st">'Month'</span> <span class="ot">=</span> <span class="st">'Month'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Calculated trade balance</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Trade_Balance_SGD =</span> Export_SGD <span class="sc">-</span> Import_SGD) <span class="sc">|&gt;</span> </span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove countries with non-available export data</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Countries <span class="sc">%in%</span> <span class="fu">c</span>(import_vs_export<span class="sc">$</span>diff, <span class="st">"Germany, Democratic Republic Of"</span>))</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Countries</th>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Month</th>
+<th style="text-align: right;">Import_SGD</th>
+<th style="text-align: right;">Export_SGD</th>
+<th style="text-align: right;">Trade_Balance_SGD</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Dec</td>
+<td style="text-align: right;">103655000</td>
+<td style="text-align: right;">432376000</td>
+<td style="text-align: right;">328721000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Nov</td>
+<td style="text-align: right;">121773000</td>
+<td style="text-align: right;">756814000</td>
+<td style="text-align: right;">635041000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Oct</td>
+<td style="text-align: right;">88796000</td>
+<td style="text-align: right;">350565000</td>
+<td style="text-align: right;">261769000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Sep</td>
+<td style="text-align: right;">215978000</td>
+<td style="text-align: right;">386724000</td>
+<td style="text-align: right;">170746000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Aug</td>
+<td style="text-align: right;">132917000</td>
+<td style="text-align: right;">570824000</td>
+<td style="text-align: right;">437907000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;">Jul</td>
+<td style="text-align: right;">224676000</td>
+<td style="text-align: right;">991586000</td>
+<td style="text-align: right;">766910000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -415,15 +1546,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="../../Take-home_Ex/Take-home_Ex03/Take-home_Ex03.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Take-home Exercise 3</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-  </div>
-</nav>
 </div> <!-- /content -->
 
 
