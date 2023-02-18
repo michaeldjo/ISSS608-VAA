@@ -33,13 +33,17 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `lubridate`: Used to work with date and time
 
+-   `ggHoriPlot`: 
+
+-   `ggthemes`: 
+
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
     All packages can be found within CRAN.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -56,6 +60,8 @@ sgexport <- read_excel("data/outputFile.xlsx", sheet = "T2", range = "A10:AK101"
 ###### 
 
 ### 2.2 Data cleaning
+
+Scope of the study is to understand bi-lateral trade of Singapore with countries / trade partners around the world. Hence, we will not include regions (i.e., Asia, Africa) or collection of countries (i.e., European Union or Other Countries In Oceania.
 
 #### 2.2.1 Cleaning the countries data for sgimport and sgexport
 
@@ -163,6 +169,8 @@ Additionally also exclude countries with which Singapore has no available export
 
 "Germany, Democratic Republic Of" is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.
 
+"Other Countries In Oceania" is also removed as it is a collection of countries
+
 ```{r}
 sgtrade_cln <- sgimport_cln |> 
   
@@ -174,35 +182,141 @@ sgtrade_cln <- sgimport_cln |>
          Trade_Volumes_SGD = Export_SGD + Import_SGD) |> 
   
   #remove countries with non-available export data
-  filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of"))
+  filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of", "Other Countries In Oceania"))
 
 kable(head(sgtrade_cln))
 ```
 
 #### 2.2.4 Finding top countries by trade volume
 
+Calculate trade volume and percentage of trades by countries. Intent is to limit the scope of the studies to the countries that contributed to at least 0.05% of Singapore Trade Volumes
+
 ```{r}
 sgtrade_top_ctry <- sgtrade_cln |> 
   group_by(Countries) |> 
   summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
+  mutate(Pct_Total_Trade_Volumes = round(Total_Trade_Volumes_SGD*100/sum(Total_Trade_Volumes_SGD), digits = 2)) |> 
   ungroup() |> 
-  arrange(desc(Total_Trade_Volumes_SGD))
+  arrange(desc(Pct_Total_Trade_Volumes))
 
 kable(head(sgtrade_top_ctry))
 ```
 
+Filtering the ***sgtrade_cln*** data
+
+```{r}
+top0.05 <- sgtrade_top_ctry |> 
+  filter(Pct_Total_Trade_Volumes > 0.05)
+
+sgtrade_cln <- sgtrade_cln |> 
+  filter(Countries %in% top0.05$Countries) |> 
+  left_join(top0.05, by = c('Countries' = 'Countries'))
+
+
+sgtrade_cln |> 
+  distinct(Countries)
+```
+
+
+
 #### 2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022
 
 ```{r}
-sgtrade_top_rate_ctry <- sgtrade_cln |> 
-  group_by(Countries, Year) |>
-  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
-  ungroup() |> 
-  filter(Year %in% c(2020,2022)) |> 
-  pivot_wider(names_from = Year,
-              values_from = Total_Trade_Volumes_SGD) 
-  #mutate(Diff_Trade_Volumes_SGD_2020_2022 = abs(sgtrade_cln$2022 - #sgtrade_cln$2020))
-  
+#sgtrade_top_rate_ctry <- sgtrade_cln |> 
+#  group_by(Countries, Year) |>
+#  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
+#  ungroup() |> 
+#  filter(Year %in% c(2020,2022)) |> 
+#  pivot_wider(names_from = Year,
+#              names_prefix = "Trade_Volumes_SGD",
+#              values_from = Total_Trade_Volumes_SGD) |> 
+#  mutate(Diff_Trade_Volumes_SGD_2020_2022 = Trade_Volumes_SGD2022 - #Trade_Volumes_SGD2020,
+#         Abs_Diff_Trade_Volumes_SGD_2020_2022 = abs(Diff_Trade_Volumes_SGD_2020_2022))|> 
+#  arrange(desc(Abs_Diff_Trade_Volumes_SGD_2020_2022))
+
+#kable(head(sgtrade_top_rate_ctry))
 ```
 
-#### 
+
+## **3. Visualisation**
+
+### 3.1 Exploratory Data Visualisation using horizon graph
+
+Provide overview of the trade balance of all the countries. 
+Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus 
+
+```{r}
+cutpoints <- sgtrade_cln  |>  
+  mutate(
+    outlier = between(
+      Trade_Balance_SGD, 
+      quantile(Trade_Balance_SGD, 0.25, na.rm=T)-
+        1.5*IQR(Trade_Balance_SGD, na.rm=T),
+      quantile(Trade_Balance_SGD, 0.75, na.rm=T)+
+        1.5*IQR(Trade_Balance_SGD, na.rm=T))) %>% 
+  filter(outlier)
+
+sca <- seq(range(cutpoints$Trade_Balance_SGD)[1], 
+           range(cutpoints$Trade_Balance_SGD)[2], 
+           length.out = 9)[-4]
+
+round(sca, 2) # The horizon scale cutpoints
+```
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
+
+sgtrade_cln |> ggplot() +
+  geom_horizon(aes(Month_Year,
+                   Trade_Balance_SGD,
+                   fill = ..Cutpoints..),
+               origin = 0, horizonscale = sca,
+               show.legend = FALSE) +
+  scale_fill_hcl(palette = 'RdBu') +
+  facet_grid(Countries~.) +
+  theme_few() +
+  theme(
+    panel.spacing.y=unit(0, "lines"),
+    strip.text.y = element_text(size = 7, angle = 0, hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+    ) +
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "6 month",
+               date_labels = "%b\n%Y") +
+  xlab('Time') 
+  
+```
+Observation
+Select countries to choose
+
+Major partners (Top 5)
+- China (trend reversal)
+- Malaysia (all the way deficit)
+- USA (positive to negative)
+
+Other Regional Partners (Interesting patterns)
+- Korea (positive to negative)
+- Japan (positive to negative)
+- India (dip around Jul)
+- Philippines (gain strongly towards end 2022)
+- New Zealand/Bangladesh (gain strongly towards end 2022)
+- Cambodia (negative to positive)
+
+Other Major European Partners
+- Germany 
+- France
+- UK
+
+Others are due to
+- mid-range
+- one intensity
+
+
+
+

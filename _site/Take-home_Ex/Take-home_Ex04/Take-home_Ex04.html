@@ -296,8 +296,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#joining-the-two-datasets-and-calculate-trade-balance" id="toc-joining-the-two-datasets-and-calculate-trade-balance" class="nav-link" data-scroll-target="#joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</a></li>
   <li><a href="#finding-top-countries-by-trade-volume" id="toc-finding-top-countries-by-trade-volume" class="nav-link" data-scroll-target="#finding-top-countries-by-trade-volume">2.2.4 Finding top countries by trade volume</a></li>
   <li><a href="#finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" id="toc-finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" class="nav-link" data-scroll-target="#finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022">2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022</a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
   </ul></li>
+  </ul></li>
+  <li><a href="#visualisation" id="toc-visualisation" class="nav-link" data-scroll-target="#visualisation"><strong>3. Visualisation</strong></a>
+  <ul>
+  <li><a href="#exploratory-data-visualisation-using-horizon-graph" id="toc-exploratory-data-visualisation-using-horizon-graph" class="nav-link" data-scroll-target="#exploratory-data-visualisation-using-horizon-graph">3.1 Exploratory Data Visualisation using horizon graph</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -357,12 +360,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>readxl</code>: Used to reaad data from excel files</p></li>
 <li><p><code>knitr</code>: Used for dynamic report generation</p></li>
 <li><p><code>lubridate</code>: Used to work with date and time</p></li>
+<li><p><code>ggHoriPlot</code>:</p></li>
+<li><p><code>ggthemes</code>:</p></li>
 <li><p><code>tidyverse</code>: A collection of core packages designed for data science, used extensively for data preparation and wrangling.</p>
 <p>All packages can be found within CRAN.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Load packages</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, knitr, lubridate, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(readxl, knitr, lubridate, ggHoriPlot, ggthemes, tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Import data from csv using <code>readxl::read_excel()</code> and store it in variable <em><strong>sgimport</strong> and <strong>sgexport</strong></em>.</p>
 <p>Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is intentionally selected.</p>
@@ -378,6 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="data-cleaning" class="level3">
 <h3 class="anchored" data-anchor-id="data-cleaning">2.2 Data cleaning</h3>
+<p>Scope of the study is to understand bi-lateral trade of Singapore with countries / trade partners around the world. Hence, we will not include regions (i.e., Asia, Africa) or collection of countries (i.e., European Union or Other Countries In Oceania.</p>
 <section id="cleaning-the-countries-data-for-sgimport-and-sgexport" class="level4">
 <h4 class="anchored" data-anchor-id="cleaning-the-countries-data-for-sgimport-and-sgexport">2.2.1 Cleaning the countries data for sgimport and sgexport</h4>
 <div class="cell">
@@ -1272,6 +1278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Add trade balance and trade values</p>
 <p>Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.</p>
 <p>“Germany, Democratic Republic Of” is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.</p>
+<p>“Other&nbsp;Countries&nbsp;In&nbsp;Oceania” is also removed as it is a collection of countries</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="ot">&lt;-</span> sgimport_cln <span class="sc">|&gt;</span> </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -1283,7 +1290,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> Export_SGD <span class="sc">+</span> Import_SGD) <span class="sc">|&gt;</span> </span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#remove countries with non-available export data</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Countries <span class="sc">%in%</span> <span class="fu">c</span>(import_vs_export<span class="sc">$</span>diff, <span class="st">"Germany, Democratic Republic Of"</span>))</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Countries <span class="sc">%in%</span> <span class="fu">c</span>(import_vs_export<span class="sc">$</span>diff, <span class="st">"Germany, Democratic Republic Of"</span>, <span class="st">"Other Countries In Oceania"</span>))</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_cln))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -1378,70 +1385,174 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="finding-top-countries-by-trade-volume" class="level4">
 <h4 class="anchored" data-anchor-id="finding-top-countries-by-trade-volume">2.2.4 Finding top countries by trade volume</h4>
+<p>Calculate trade volume and percentage of trades by countries. Intent is to limit the scope of the studies to the countries that contributed to at least 0.05% of Singapore Trade Volumes</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sgtrade_top_ctry <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries) <span class="sc">|&gt;</span> </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Volumes_SGD =</span> <span class="fu">sum</span>(Trade_Volumes_SGD)) <span class="sc">|&gt;</span> </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total_Trade_Volumes_SGD))</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_top_ctry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Pct_Total_Trade_Volumes =</span> <span class="fu">round</span>(Total_Trade_Volumes_SGD<span class="sc">*</span><span class="dv">100</span><span class="sc">/</span><span class="fu">sum</span>(Total_Trade_Volumes_SGD), <span class="at">digits =</span> <span class="dv">2</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Pct_Total_Trade_Volumes))</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">head</span>(sgtrade_top_ctry))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Countries</th>
 <th style="text-align: right;">Total_Trade_Volumes_SGD</th>
+<th style="text-align: right;">Pct_Total_Trade_Volumes</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Mainland China</td>
 <td style="text-align: right;">475482628000</td>
+<td style="text-align: right;">14.13</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Malaysia</td>
 <td style="text-align: right;">385151258000</td>
+<td style="text-align: right;">11.44</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">United States</td>
 <td style="text-align: right;">340907625000</td>
+<td style="text-align: right;">10.13</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Taiwan</td>
 <td style="text-align: right;">289258502000</td>
+<td style="text-align: right;">8.59</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Hong Kong</td>
 <td style="text-align: right;">237874786000</td>
+<td style="text-align: right;">7.07</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Indonesia</td>
 <td style="text-align: right;">184262941000</td>
+<td style="text-align: right;">5.47</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<p>Filtering the <strong><em>sgtrade_cln</em></strong> data</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>top0<span class="fl">.05</span> <span class="ot">&lt;-</span> sgtrade_top_ctry <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Pct_Total_Trade_Volumes <span class="sc">&gt;</span> <span class="fl">0.05</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> top0<span class="fl">.05</span><span class="sc">$</span>Countries) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(top0<span class="fl">.05</span>, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 52 × 1
+   Countries                   
+   &lt;chr&gt;                       
+ 1 Belgium                     
+ 2 Denmark                     
+ 3 France                      
+ 4 Germany, Federal Republic Of
+ 5 Greece                      
+ 6 Ireland                     
+ 7 Italy                       
+ 8 Netherlands                 
+ 9 United Kingdom              
+10 Portugal                    
+# … with 42 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" class="level4">
 <h4 class="anchored" data-anchor-id="finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022">2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sgtrade_top_rate_ctry <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries, Year) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Volumes_SGD =</span> <span class="fu">sum</span>(Trade_Volumes_SGD)) <span class="sc">|&gt;</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">2022</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Trade_Volumes_SGD) </span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#mutate(Diff_Trade_Volumes_SGD_2020_2022 = abs(sgtrade_cln$2022 - #sgtrade_cln$2020))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#sgtrade_top_rate_ctry &lt;- sgtrade_cln |&gt; </span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  group_by(Countries, Year) |&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |&gt; </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  ungroup() |&gt; </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  filter(Year %in% c(2020,2022)) |&gt; </span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  pivot_wider(names_from = Year,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#              names_prefix = "Trade_Volumes_SGD",</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#              values_from = Total_Trade_Volumes_SGD) |&gt; </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  mutate(Diff_Trade_Volumes_SGD_2020_2022 = Trade_Volumes_SGD2022 - #Trade_Volumes_SGD2020,</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#         Abs_Diff_Trade_Volumes_SGD_2020_2022 = abs(Diff_Trade_Volumes_SGD_2020_2022))|&gt; </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  arrange(desc(Abs_Diff_Trade_Volumes_SGD_2020_2022))</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#kable(head(sgtrade_top_rate_ctry))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="section-1" class="level4">
-<h4 class="anchored" data-anchor-id="section-1"></h4>
-
-
 </section>
+</section>
+<section id="visualisation" class="level2">
+<h2 class="anchored" data-anchor-id="visualisation"><strong>3. Visualisation</strong></h2>
+<section id="exploratory-data-visualisation-using-horizon-graph" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-visualisation-using-horizon-graph">3.1 Exploratory Data Visualisation using horizon graph</h3>
+<p>Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cutpoints <span class="ot">&lt;-</span> sgtrade_cln  <span class="sc">|&gt;</span>  </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">outlier =</span> <span class="fu">between</span>(</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>      Trade_Balance_SGD, </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">quantile</span>(Trade_Balance_SGD, <span class="fl">0.25</span>, <span class="at">na.rm=</span>T)<span class="sc">-</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(Trade_Balance_SGD, <span class="at">na.rm=</span>T),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">quantile</span>(Trade_Balance_SGD, <span class="fl">0.75</span>, <span class="at">na.rm=</span>T)<span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(Trade_Balance_SGD, <span class="at">na.rm=</span>T))) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(outlier)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>sca <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">range</span>(cutpoints<span class="sc">$</span>Trade_Balance_SGD)[<span class="dv">1</span>], </span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>           <span class="fu">range</span>(cutpoints<span class="sc">$</span>Trade_Balance_SGD)[<span class="dv">2</span>], </span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">length.out =</span> <span class="dv">9</span>)[<span class="sc">-</span><span class="dv">4</span>]</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(sca, <span class="dv">2</span>) <span class="co"># The horizon scale cutpoints</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -726681000 -547843250 -369005500  -11330000  167507750  346345500  525183250
+[8]  704021000</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sgtrade_cln<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(sgtrade_cln<span class="sc">$</span>Countries, sgtrade_cln<span class="sc">$</span>Pct_Total_Trade_Volumes, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sgtrade_cln <span class="sc">|&gt;</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_horizon</span>(<span class="fu">aes</span>(Month_Year,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>                   Trade_Balance_SGD,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">fill =</span> ..Cutpoints..),</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">origin =</span> <span class="dv">0</span>, <span class="at">horizonscale =</span> sca,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>               <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_hcl</span>(<span class="at">palette =</span> <span class="st">'RdBu'</span>) <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(Countries<span class="sc">~</span>.) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_few</span>() <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y=</span><span class="fu">unit</span>(<span class="dv">0</span>, <span class="st">"lines"</span>),</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">7</span>, <span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.border =</span> <span class="fu">element_blank</span>()</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"6 month"</span>,</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%b</span><span class="sc">\n</span><span class="st">%Y"</span>) <span class="sc">+</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Time'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Take-home_Ex04_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>Observation Select countries to choose</p>
+<p>Major partners (Top 5) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative)</p>
+<p>Other Regional Partners (Interesting patterns) - Korea (positive to negative) - Japan (positive to negative) - India (dip around Jul) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)</p>
+<p>Other Major European Partners - Germany - France - UK</p>
+<p>Others are due to - mid-range - one intensity</p>
+
+
 </section>
 </section>
 
