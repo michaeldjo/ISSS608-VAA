@@ -306,14 +306,14 @@ ggplot() +
               y = Values,
               label = Type,
               color = Type),
-          method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8)) +
+          method = list(dl.trans(x = x + 0.2), "last.points", cex = 1)) +
   
   geom_dl(data = totalsgtrade_long,
           aes(x = Month_Year,
               y = Values,
               label = Type,
               color = Type),
-          method = list(dl.trans(x = x - 0.2), "first.points", cex = 0.8)) +
+          method = list(dl.trans(x = x - 0.2), "first.points", cex = 1)) +
   
   geom_hline(aes(yintercept = avg_total_2020$export), 
              col="darkblue", 
@@ -362,16 +362,34 @@ ggplot() +
         panel.grid.major.y = element_line(color = "grey90", linetype = "solid")) +
   
   annotate(geom = "label",
-           x = as.Date("2020-03-01"),
-           y = 50000000000,
+           x = as.Date("2020-02-01"),
+           y = 45000000000,
+           label = "Covid19 restriction kicks in\n in Singapore",
+           hjust = "left",
+           color = "black"
+           ) +
+  
+  annotate(geom = "segment",
+           x = as.Date("2020-05-01"), 
+           y = 44000000000, 
+           xend = as.Date("2020-03-15"),  
+           yend = 41500000000,  
+           color = "grey40",
+           arrow = arrow(type = "closed",
+                         length = unit(0.15, "inches"))
+           ) +
+  
+  annotate(geom = "label",
+           x = as.Date("2020-07-01"),
+           y = 55000000000,
            label = "Trade rebounds\npost-Covid19 relaxation",
            hjust = "left",
            color = "black"
            ) +
   
   annotate(geom = "segment",
-           x = as.Date("2020-10-05"), 
-           y = 50000000000, 
+           x = as.Date("2020-10-01"), 
+           y = 54000000000, 
            xend = as.Date("2021-02-01"),  
            yend = 45000000000,  
            color = "grey40",
@@ -496,3 +514,7 @@ Other Regional Partners (Interesting patterns) - Korea (positive to negative) - 
 Other Major European Partners - Germany - France - UK
 
 Others are due to - mid-range - one intensity
+
+### 3.2 Bi-lateral Trade of Singapore against selected partners
+
+#### 3.2.1 Singapore Trade Balance
