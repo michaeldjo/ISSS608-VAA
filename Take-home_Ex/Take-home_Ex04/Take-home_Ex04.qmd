@@ -172,6 +172,14 @@ sgexport_cln
 
 #### 2.2.3 Joining the two datasets and calculate trade balance
 
+Creating normalising function
+
+```{r}
+normalit<-function(m){
+   (m - min(m))/(max(m)-min(m))
+ }
+```
+
 Explain left join
 
 Add trade balance and trade values
@@ -193,9 +201,11 @@ sgtrade_cln <- sgimport_cln |>
          Trade_Volumes_SGD = Export_SGD + Import_SGD) |> 
   
   #remove countries with non-available export data
-  filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of", "Other Countries In Oceania"))
+  filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of", "Other Countries In Oceania")) |> 
+  
+  mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) 
 
-kable(head(sgtrade_cln))
+sgtrade_cln
 ```
 
 #### 2.2.4 Finding top countries by trade volume
@@ -223,7 +233,6 @@ sgtrade_cln <- sgtrade_cln |>
   filter(Countries %in% top0.05$Countries) |> 
   left_join(top0.05, by = c('Countries' = 'Countries'))
 
-
 sgtrade_cln |> 
   distinct(Countries)
 ```
@@ -248,7 +257,7 @@ sgtrade_cln |>
 
 ## **3. Visualisation**
 
-### 3.1 Exploratory Data Visualisation 
+### 3.1 Exploratory Data Visualisation
 
 #### 3.1.1 Overall Singapore Trade Balance
 
@@ -421,18 +430,24 @@ Provide overview of the trade balance of all the countries. Trellis Line Chart i
 cutpoints <- sgtrade_cln  |>  
   mutate(
     outlier = between(
-      Trade_Balance_SGD, 
-      quantile(Trade_Balance_SGD, 0.25, na.rm=T)-
-        1.5*IQR(Trade_Balance_SGD, na.rm=T),
-      quantile(Trade_Balance_SGD, 0.75, na.rm=T)+
-        1.5*IQR(Trade_Balance_SGD, na.rm=T))) %>% 
+      Normalised_Trade_Balance, 
+      quantile(Normalised_Trade_Balance, 0.25, na.rm=T)-
+        1.5*IQR(Normalised_Trade_Balance, na.rm=T),
+      quantile(Normalised_Trade_Balance, 0.75, na.rm=T)+
+        1.5*IQR(Normalised_Trade_Balance, na.rm=T))) %>% 
   filter(outlier)
 
-sca <- seq(range(cutpoints$Trade_Balance_SGD)[1], 
-           range(cutpoints$Trade_Balance_SGD)[2], 
+#origin point - when trade balance is 0
+ori <- (0 - min(sgtrade_cln$Trade_Balance_SGD))/(max(sgtrade_cln$Trade_Balance_SGD)-min(sgtrade_cln$Trade_Balance_SGD))
+
+#scales for horizon plot
+sca <- seq(range(cutpoints$Normalised_Trade_Balance)[1], 
+           range(cutpoints$Normalised_Trade_Balance)[2], 
            length.out = 9)[-4]
 
-round(sca, 2) # The horizon scale cutpoints
+round(ori, 5) # The origin of horizon plot
+
+round(sca, 5) # The horizon scale cutpoints
 ```
 
 ```{r, Horizon Plot}
@@ -444,9 +459,9 @@ sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Tota
 
 sgtrade_cln |> ggplot() +
   geom_horizon(aes(x = Month_Year,
-                   y = Trade_Balance_SGD,
+                   y = Normalised_Trade_Balance,
                    fill = ..Cutpoints..),
-               origin = 0, horizonscale = sca,
+               origin = ori, horizonscale = sca,
                show.legend = FALSE) +
   scale_fill_hcl(palette = 'RdBu') +
   facet_grid(Countries~.) +
