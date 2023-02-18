@@ -33,9 +33,13 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `lubridate`: Used to work with date and time
 
--   `ggHoriPlot`: 
+-   `ggHoriPlot`:
 
--   `ggthemes`: 
+-   `ggthemes`:
+
+-   `plotly`: Used for creating interactive web-based graphs.
+
+-   `ggbraid`: Used
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
@@ -43,7 +47,12 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, tidyverse)
+```
+
+```{r}
+remotes::install_github("nsgrantham/ggbraid")
+library(ggbraid)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -217,8 +226,6 @@ sgtrade_cln |>
   distinct(Countries)
 ```
 
-
-
 #### 2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022
 
 ```{r}
@@ -237,13 +244,126 @@ sgtrade_cln |>
 #kable(head(sgtrade_top_rate_ctry))
 ```
 
-
 ## **3. Visualisation**
 
-### 3.1 Exploratory Data Visualisation using horizon graph
+### 3.1 Exploratory Data Visualisation 
 
-Provide overview of the trade balance of all the countries. 
-Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus 
+#### 3.1.1 Overall Singapore Trade Balance
+
+```{r, Overall Singapore Trade Balance}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 8
+#| fig-width: 10
+totalsgtrade <- sgtrade_cln |> 
+  group_by(Month_Year) |> 
+  summarise(Import = sum(Import_SGD),
+            Export = sum(Export_SGD))
+
+totalsgtrade_long <- totalsgtrade |> 
+  pivot_longer(cols = !Month_Year,
+               names_to = "Type",
+               values_to = "Values")
+  
+ggplot() +
+  geom_line(data = totalsgtrade_long,
+            aes(x = Month_Year,
+                y = Values,
+                color = Type),
+            size = 1.2) +
+  
+  geom_braid(data = totalsgtrade,
+             aes(x = Month_Year,
+                 ymin = Import,
+                 ymax = Export,
+                 fill = Import < Export),
+             alpha = 0.6) +
+  
+  guides(linetype = "none", fill = "none") +
+  
+  scale_color_manual(values = c("darkblue", "darkred"),
+                     labels = c("Export", "Import"),
+                     name = NULL) +
+  
+  scale_fill_manual(values = c("pink", "skyblue")) +
+  
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "6 month",
+               date_labels = "%b %Y") +
+  
+  scale_y_continuous("Trade Values",
+                     labels = function(x){paste0('$', abs(x/1000000000),'B')}) +
+  
+  cowplot::theme_cowplot() +
+  
+  theme(axis.title.x = element_blank(),
+        legend.position = 'top',
+        legend.justification = 'center') +
+  
+  annotate(geom = "label",
+           x = as.Date("2020-03-01"),
+           y = 50000000000,
+           label = "Trade rebounds\npost-Covid19 relaxation",
+           hjust = "left",
+           color = "black"
+           ) +
+  
+  annotate(geom = "segment",
+           x = as.Date("2020-10-05"), 
+           y = 50000000000, 
+           xend = as.Date("2021-02-01"),  
+           yend = 45000000000,  
+           color = "grey40",
+           arrow = arrow(type = "closed",
+                         length = unit(0.15, "inches"))
+           ) +
+  
+  annotate(geom = "label",
+           x = as.Date("2022-01-01"),
+           y = 38000000000,
+           label = "Start of Russia-Ukraine War",
+           hjust = "left",
+           color = "black"
+           ) +
+  
+  annotate(geom = "segment",
+           x = as.Date("2022-04-01"), 
+           y = 38500000000, 
+           xend = as.Date("2022-02-01"),  
+           yend = 43000000000,  
+           color = "grey40",
+           arrow = arrow(type = "closed",
+                         length = unit(0.15, "inches"))
+           ) +
+  
+  annotate(geom = "label",
+           x = as.Date("2022-05-01"),
+           y = 45000000000,
+           label = "Recession headwinds\nresults in trade slumps",
+           hjust = "left",
+           color = "black"
+           ) +
+  
+  annotate(geom = "segment",
+           x = as.Date("2022-09-01"), 
+           y = 46000000000, 
+           xend = as.Date("2022-07-01"),  
+           yend = 58000000000,  
+           color = "grey40",
+           arrow = arrow(type = "closed",
+                         length = unit(0.15, "inches"))
+           ) +
+  
+  
+  labs(title = "Since early 2021, Singapore's merchandise trade was recovering from Covid-19\nbut slowed down in mid-2022",
+         subtitle = "Total Merchandise Export and Import Trade Value of Singapore (in SGD), 2020-2022",
+         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
+
+```
+
+#### 3.1.2 Horizon Plots
+
+Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
 
 ```{r}
 cutpoints <- sgtrade_cln  |>  
@@ -262,61 +382,50 @@ sca <- seq(range(cutpoints$Trade_Balance_SGD)[1],
 
 round(sca, 2) # The horizon scale cutpoints
 ```
-```{r}
+
+```{r, Horizon Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| fig-height: 10
-#| fig-width: 8
+#| fig-height: 12
+#| fig-width: 10
 sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
 
 sgtrade_cln |> ggplot() +
-  geom_horizon(aes(Month_Year,
-                   Trade_Balance_SGD,
+  geom_horizon(aes(x = Month_Year,
+                   y = Trade_Balance_SGD,
                    fill = ..Cutpoints..),
                origin = 0, horizonscale = sca,
                show.legend = FALSE) +
   scale_fill_hcl(palette = 'RdBu') +
   facet_grid(Countries~.) +
   theme_few() +
+  
   theme(
     panel.spacing.y=unit(0, "lines"),
+    axis.title.x = element_blank(),
     strip.text.y = element_text(size = 7, angle = 0, hjust = 0),
     axis.text.y = element_blank(),
     axis.title.y = element_blank(),
     axis.ticks.y = element_blank(),
     panel.border = element_blank()
     ) +
+  
   scale_x_date(expand=c(0,0), 
                date_breaks = "6 month",
                date_labels = "%b\n%Y") +
-  xlab('Time') 
+  
+  labs(title = "Singapore Trade Surplus are slowly decreasing against major partners, except with\nIndonesia, Hong Kong, and Thailand",
+         subtitle = "Singapore Trade Balance against trading partners, 2020 to 2022",
+         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
   
 ```
-Observation
-Select countries to choose
 
-Major partners (Top 5)
-- China (trend reversal)
-- Malaysia (all the way deficit)
-- USA (positive to negative)
+Observation Select countries to choose
 
-Other Regional Partners (Interesting patterns)
-- Korea (positive to negative)
-- Japan (positive to negative)
-- India (dip around Jul)
-- Philippines (gain strongly towards end 2022)
-- New Zealand/Bangladesh (gain strongly towards end 2022)
-- Cambodia (negative to positive)
+Major partners (Top 5) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative)
 
-Other Major European Partners
-- Germany 
-- France
-- UK
+Other Regional Partners (Interesting patterns) - Korea (positive to negative) - Japan (positive to negative) - India (dip around Jul) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
 
-Others are due to
-- mid-range
-- one intensity
+Other Major European Partners - Germany - France - UK
 
-
-
-
+Others are due to - mid-range - one intensity
