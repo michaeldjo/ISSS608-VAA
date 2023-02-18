@@ -39,6 +39,8 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `plotly`: Used for creating interactive web-based graphs.
 
+-   `directlabels`:
+
 -   `ggbraid`: Used
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
@@ -47,7 +49,7 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, directlabels, tidyverse)
 ```
 
 ```{r}
@@ -255,22 +257,31 @@ sgtrade_cln |>
 #| code-summary: "Show the code"
 #| fig-height: 8
 #| fig-width: 10
+
 totalsgtrade <- sgtrade_cln |> 
-  group_by(Month_Year) |> 
+  group_by(Month_Year, Year) |> 
   summarise(Import = sum(Import_SGD),
             Export = sum(Export_SGD))
 
 totalsgtrade_long <- totalsgtrade |> 
-  pivot_longer(cols = !Month_Year,
+  pivot_longer(cols = !c(Month_Year, Year),
                names_to = "Type",
                values_to = "Values")
+
+avg_total_2020 <- totalsgtrade |> 
+  filter(Year == 2020) |> 
+  group_by (Year) |> 
+  summarise(import = mean(Import),
+            export = mean(Export))
+
   
 ggplot() +
   geom_line(data = totalsgtrade_long,
             aes(x = Month_Year,
                 y = Values,
+                group = Type,
                 color = Type),
-            size = 1.2) +
+            linewidth = 1.2) +
   
   geom_braid(data = totalsgtrade,
              aes(x = Month_Year,
@@ -281,13 +292,53 @@ ggplot() +
   
   guides(linetype = "none", fill = "none") +
   
+  geom_dl(data = totalsgtrade_long,
+          aes(x = Month_Year,
+              y = Values,
+              label = Type,
+              color = Type),
+          method = list(dl.trans(x = x + 0.2), "last.points", cex = 0.8)) +
+  
+  geom_dl(data = totalsgtrade_long,
+          aes(x = Month_Year,
+              y = Values,
+              label = Type,
+              color = Type),
+          method = list(dl.trans(x = x - 0.2), "first.points", cex = 0.8)) +
+  
+  geom_hline(aes(yintercept = avg_total_2020$export), 
+             col="darkblue", 
+             linewidth=0.8,
+             linetype = "dashed") +
+  
+  annotate(geom = "text", 
+           x=as.Date("2022-12-01"), 
+           y=42000000000, 
+           label="Avg 2020 Export", 
+           size=4, 
+           color="darkblue") +
+  
+  annotate(geom = "text", 
+           x=as.Date("2022-12-01"), 
+           y=37500000000, 
+           label="Avg 2020 Import", 
+           size=4, 
+           color="darkred") +
+  
+  geom_hline(aes(yintercept = avg_total_2020$import), 
+             col="darkred", 
+             linewidth=0.8,
+             linetype = "dashed") +
+  
   scale_color_manual(values = c("darkblue", "darkred"),
                      labels = c("Export", "Import"),
-                     name = NULL) +
+                     name = NULL,
+                     guide = "none") +
   
   scale_fill_manual(values = c("pink", "skyblue")) +
   
-  scale_x_date(expand=c(0,0), 
+  scale_x_date(expand = c(0,0),
+               limits = c(as.Date("2020-01-01"),as.Date("2023-03-01")),
                date_breaks = "6 month",
                date_labels = "%b %Y") +
   
@@ -298,7 +349,8 @@ ggplot() +
   
   theme(axis.title.x = element_blank(),
         legend.position = 'top',
-        legend.justification = 'center') +
+        legend.justification = 'center',
+        panel.grid.major.y = element_line(color = "grey90", linetype = "solid")) +
   
   annotate(geom = "label",
            x = as.Date("2020-03-01"),
@@ -399,7 +451,7 @@ sgtrade_cln |> ggplot() +
   scale_fill_hcl(palette = 'RdBu') +
   facet_grid(Countries~.) +
   theme_few() +
-  
+
   theme(
     panel.spacing.y=unit(0, "lines"),
     axis.title.x = element_blank(),
@@ -424,7 +476,7 @@ Observation Select countries to choose
 
 Major partners (Top 5) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative)
 
-Other Regional Partners (Interesting patterns) - Korea (positive to negative) - Japan (positive to negative) - India (dip around Jul) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
+Other Regional Partners (Interesting patterns) - Korea (positive to negative) - Japan (positive to negative) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive) - UAE
 
 Other Major European Partners - Germany - France - UK
 
