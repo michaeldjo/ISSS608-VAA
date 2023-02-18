@@ -3,7 +3,6 @@ title: "Take-home Exercise 1"
 subtitle: "Creating age-sex pyramid on Singapore population (June 2022) using Trellis display in Tableau, followed by discussion of the patterns revealed."
 author: "Michael Djohan"
 date: 22 Jan 2023
-fontsize: smaller
 tbl-colwidths: [5,30,65]
 ---
 
@@ -19,141 +18,155 @@ This section details the step-by-step procedure to create age-sex pyramid on Sin
 
 ### 2.1 Loading and cleaning data
 
-|     | Step                                                                                                                               | Screenshot                       |
-|-----|------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| 1   | Load *respopagesextod2022.csv* file in Tableau Desktop                                                                             | ![](images/Step_1.jpg)           |
-| 2   | Click on the drop-down button on field "AG", choose Create Calculation Field                                                       | ![](images/ag_calc_field.png)    |
-| 3   | Name the new field "Age Group" and key in the formula as per screenshot. This will create new field to replace the "\_" with space | ![](images/image-100734441.png)  |
-| 4   | Rename field "PA" to "Planning Area"                                                                                               | ![](images/image-1367676538.png) |
++----------+------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+|          | Step                                                                                                                               | Screenshot                       |
++==========+====================================================================================================================================+==================================+
+| 1        | Load *respopagesextod2022.csv* file in Tableau Desktop                                                                             | ![](images/Step_1.jpg)           |
++----------+------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 2        | Click on the drop-down button on field "AG", choose Create Calculation Field                                                       | ![](images/ag_calc_field.png)    |
++----------+------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 3        | Name the new field "Age Group" and key in the formula as per screenshot. This will create new field to replace the "\_" with space | ![](images/image-100734441.png)  |
++----------+------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 4        | Rename field "PA" to "Planning Area"                                                                                               | ![](images/image-1367676538.png) |
++----------+------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
 
 ### 2.2 Creating calculated fields to make trellis chart
 
-|     | Step                                                                                                                                                                                     | Screenshot                                    |
-|-----|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
-| 1   | Create new worksheet and name it "*Singapore Population Pyramid Trellis Chart (2022)*"                                                                                                   | ![](images/image-303185035.png){width="1923"} |
-| 2   | Click on the drop-down button beside the Search are on the side bar, choose Create Calculation Field.                                                                                    | ![](images/data_calc_field.png){width="469"}  |
-| 3   | Name the new field "Columns" and key in the formula as per screenshot. This is required to create the Trellis Chart arrangements                                                         | ![](images/image-1660151362.png)              |
-| 4   | Right Click on newly created field "Columns" and click "Convert to Discrete"                                                                                                             | ![](images/columns_discrete.png)              |
-| 5   | Right Click on "Columns" field and choose Duplicate this time. Rename the duplicated field "Rows" and key in the formula as per screenshot. Convert the "Rows" field to discrete as well | ![](images/image-676769713.png)               |
-| 6   | Right Click on the "Sex" field, choose Create -\> Calculation Field                                                                                                                      | ![](images/sex_calc_field.png)                |
-| 7   | Name the new field it "Male Population" and key in the formula as per screenshot                                                                                                         | ![](images/image-841634800.png)               |
-| 8   | Right Click on newly created field "Male Population" and choose Duplicate. Rename the duplicated field "Female Population" and key in the formula as per screenshot                      | ![](images/image-1763399141.png)              |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+|          | Step                                                                                                                                                                                     | Screenshot                                    |
++==========+==========================================================================================================================================================================================+===============================================+
+| 1        | Create new worksheet and name it "*Singapore Population Pyramid Trellis Chart (2022)*"                                                                                                   | ![](images/image-303185035.png){width="1923"} |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 2        | Click on the drop-down button beside the Search are on the side bar, choose Create Calculation Field.                                                                                    | ![](images/data_calc_field.png){width="469"}  |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 3        | Name the new field "Columns" and key in the formula as per screenshot. This is required to create the Trellis Chart arrangements                                                         | ![](images/image-1660151362.png)              |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 4        | Right Click on newly created field "Columns" and click "Convert to Discrete"                                                                                                             | ![](images/columns_discrete.png)              |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 5        | Right Click on "Columns" field and choose Duplicate this time. Rename the duplicated field "Rows" and key in the formula as per screenshot. Convert the "Rows" field to discrete as well | ![](images/image-676769713.png)               |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 6        | Right Click on the "Sex" field, choose Create -\> Calculation Field                                                                                                                      | ![](images/sex_calc_field.png)                |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 7        | Name the new field it "Male Population" and key in the formula as per screenshot                                                                                                         | ![](images/image-841634800.png)               |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
+| 8        | Right Click on newly created field "Male Population" and choose Duplicate. Rename the duplicated field "Female Population" and key in the formula as per screenshot                      | ![](images/image-1763399141.png)              |
++----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------------------+
 
 ### 2.3 Creating trellis chart
 
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-|    | Step                                                                                                                                              | Screenshot                           |
-+====+===================================================================================================================================================+======================================+
-| 1  | Drag "Columns", "Male Population", and "Female Population" to Columns.                                                                            | ![](images/image-145915814.png)      |
-|    |                                                                                                                                                   |                                      |
-|    | Drag "Rows" and "Age Group" to Rows                                                                                                               |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 2  | Drag "Planning Area" to Detail                                                                                                                    | ![](images/planning_area_detail.png) |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 3  | Right click on "Male Population" axis and choose Edit Axis                                                                                        | ![](images/edit_male_axis.png)       |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 4  | Click on Reversed. This will reverse the "Male Population" axis to be in the middle (same as Female Population axis)                              | ![](images/edit_male_axis_rev.png)   |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 5  | Right click on "Male Population" axis and choose Sort descending. This will ensure the top Age Group is "90 and over" as per Age-Sex pyramid      | ![](images/age_group_order.png)      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 6  | Right-click on "Columns" and choose Edit Table Calculation                                                                                        | ![](images/columns_calc.png)         |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 7  | In the Table Calculation pop-up, choose Specific Dimension and check both "Planning Area" and "Age Group". Drag "Planning Area" above "Age Group" | ![](images/columns_spc_dim.png)      |
-|    |                                                                                                                                                   |                                      |
-|    | Choose "Planning Area" on At the level option.                                                                                                    |                                      |
-|    |                                                                                                                                                   |                                      |
-|    | Repeat step 6 and 7 for "Rows"                                                                                                                    |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 8  | Drag "Planning Area" to filter and click OK                                                                                                       | ![](images/pa_filter.png)            |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 9  | Right-click on "Planning Area" on Filter tab and choose Show Filter.                                                                              | ![](images/filter_show.png)          |
-|    |                                                                                                                                                   |                                      |
-|    | This will add the filter feature in the Worksheet                                                                                                 |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 10 | Navigate to Sum(Female Population) (red box) and click on the icon beside "Planning Area" and choose Label                                        | ![](images/label.png)                |
-|    |                                                                                                                                                   |                                      |
-|    | This will add "Planning Area" as label on the right-side of the age-sex pyramid                                                                   |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 11 | Choose 9 Planning Areas randomly from the filter and choose Entire View from the Toolbar                                                          | ![](images/filter_entire_chart.png)  |
-|    |                                                                                                                                                   |                                      |
-|    | This will show 9 chosen PAs and fit the entire view                                                                                               |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 12 | Right-click on the "Columns" axis and uncheck Show Header to hide the "Columns" header                                                            | ![](images/hide_columns.png)         |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 13 | Right-click on the "Rows" axis and uncheck Show Header to hide the "Rows" header                                                                  | ![](images/hide_rows.png)            |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 14 | Drag "Male Population" to SUM(Male Population) Color                                                                                              | ![](images/color.png)                |
-|    |                                                                                                                                                   |                                      |
-|    | Drag "Female Population" to SUM(Female Population) Color                                                                                          |                                      |
-|    |                                                                                                                                                   |                                      |
-|    | This will group the Sex by color in the dashboard                                                                                                 |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 15 | Right-click on the "Age Group" axis and choose Format                                                                                             | ![](images/format_age_group.png)     |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 16 | Choose Right alignment and reduce Font to 7. This will improve the readability of the Age Group axis labels                                       | ![](images/format_age_group1.png)    |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
-| 17 | Choose the same axis range for both Male and Female Population to ensure balanced view                                                            | ![](images/axis_range.png)           |
-|    |                                                                                                                                                   |                                      |
-|    | In this case, artificially fix this at 0 to 20,000                                                                                                |                                      |
-+----+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+|          | Step                                                                                                                                              | Screenshot                           |
++==========+===================================================================================================================================================+======================================+
+| 1        | Drag "Columns", "Male Population", and "Female Population" to Columns.                                                                            | ![](images/image-145915814.png)      |
+|          |                                                                                                                                                   |                                      |
+|          | Drag "Rows" and "Age Group" to Rows                                                                                                               |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 2        | Drag "Planning Area" to Detail                                                                                                                    | ![](images/planning_area_detail.png) |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 3        | Right click on "Male Population" axis and choose Edit Axis                                                                                        | ![](images/edit_male_axis.png)       |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 4        | Click on Reversed. This will reverse the "Male Population" axis to be in the middle (same as Female Population axis)                              | ![](images/edit_male_axis_rev.png)   |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 5        | Right click on "Male Population" axis and choose Sort descending. This will ensure the top Age Group is "90 and over" as per Age-Sex pyramid      | ![](images/age_group_order.png)      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 6        | Right-click on "Columns" and choose Edit Table Calculation                                                                                        | ![](images/columns_calc.png)         |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 7        | In the Table Calculation pop-up, choose Specific Dimension and check both "Planning Area" and "Age Group". Drag "Planning Area" above "Age Group" | ![](images/columns_spc_dim.png)      |
+|          |                                                                                                                                                   |                                      |
+|          | Choose "Planning Area" on At the level option.                                                                                                    |                                      |
+|          |                                                                                                                                                   |                                      |
+|          | Repeat step 6 and 7 for "Rows"                                                                                                                    |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 8        | Drag "Planning Area" to filter and click OK                                                                                                       | ![](images/pa_filter.png)            |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 9        | Right-click on "Planning Area" on Filter tab and choose Show Filter.                                                                              | ![](images/filter_show.png)          |
+|          |                                                                                                                                                   |                                      |
+|          | This will add the filter feature in the Worksheet                                                                                                 |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 10       | Navigate to Sum(Female Population) (red box) and click on the icon beside "Planning Area" and choose Label                                        | ![](images/label.png)                |
+|          |                                                                                                                                                   |                                      |
+|          | This will add "Planning Area" as label on the right-side of the age-sex pyramid                                                                   |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 11       | Choose 9 Planning Areas randomly from the filter and choose Entire View from the Toolbar                                                          | ![](images/filter_entire_chart.png)  |
+|          |                                                                                                                                                   |                                      |
+|          | This will show 9 chosen PAs and fit the entire view                                                                                               |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 12       | Right-click on the "Columns" axis and uncheck Show Header to hide the "Columns" header                                                            | ![](images/hide_columns.png)         |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 13       | Right-click on the "Rows" axis and uncheck Show Header to hide the "Rows" header                                                                  | ![](images/hide_rows.png)            |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 14       | Drag "Male Population" to SUM(Male Population) Color                                                                                              | ![](images/color.png)                |
+|          |                                                                                                                                                   |                                      |
+|          | Drag "Female Population" to SUM(Female Population) Color                                                                                          |                                      |
+|          |                                                                                                                                                   |                                      |
+|          | This will group the Sex by color in the dashboard                                                                                                 |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 15       | Right-click on the "Age Group" axis and choose Format                                                                                             | ![](images/format_age_group.png)     |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 16       | Choose Right alignment and reduce Font to 7. This will improve the readability of the Age Group axis labels                                       | ![](images/format_age_group1.png)    |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
+| 17       | Choose the same axis range for both Male and Female Population to ensure balanced view                                                            | ![](images/axis_range.png)           |
+|          |                                                                                                                                                   |                                      |
+|          | In this case, artificially fix this at 0 to 20,000                                                                                                |                                      |
++----------+---------------------------------------------------------------------------------------------------------------------------------------------------+--------------------------------------+
 
 ### 2.4 Creating dynamic labels
 
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-|   | Step                                                                                                                                                                                                                  | Screenshot                       |
-+===+=======================================================================================================================================================================================================================+==================================+
-| 1 | Create new calculation field called "Max Population" and key in the formula as per screenshot                                                                                                                         | ![](images/max_pop.png)          |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | This calculates the max population of female for each pane, which will be used to determine label position                                                                                                            |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 2 | Create new calculation field called "Label Position" and key in the formula as per screenshot                                                                                                                         | ![](images/label_position.png)   |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | This ensures the label position is at the first index (top)                                                                                                                                                           |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 3 | Drag "Label Position" to Columns, to the right of "SUM(Female Population)" and change the style as Line to display the point (red-circled) indicating the future label position                                       | ![](images/label_posit_drag.png) |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 4 | Drag "Planning Area" to Label of "Label Position" tab to display the "Planning Area" as label (red-boxes)                                                                                                             | ![](images/label_text.png)       |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | Click on Size to reduce the point size to minimum. Click on Color to make it transparent (green-boxes). This will remove the point from display                                                                       |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 5 | There will be sign showing "\>162 nulls" values related to "Label Position". This is because of the If-Then statement, which returns *null* to other indexes other than 1. Hide this warning as this is not relevant. | ![](images/hide_indicator.png)   |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 6 | Right Click on "Label Position", uncheck Show Header and choose Dual Axis                                                                                                                                             | ![](images/dual_axis.png)        |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 7 | Drag "Male Population" to to Label of "SUM(Male Population)" tab to display the population values as label on the charts                                                                                              | ![](images/value_label.png)      |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | Do the same for "Female Population"                                                                                                                                                                                   |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 8 | Click on the Label of "SUM(Male Population)" tab and format it to "Min/Max" and "Pane" to only highlight the min and max values per pane                                                                              | ![](images/value_label1.png)     |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | Do the same for "Female Population"                                                                                                                                                                                   |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
-| 9 | To display values for special highlighted bar, right-click on individual bar, select Mark Label and tick Always Show                                                                                                  | ![](images/value_label2.png)     |
-|   |                                                                                                                                                                                                                       |                                  |
-|   | This will highlight relevant individual bars (refer to Section 3)                                                                                                                                                     |                                  |
-+---+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+|        | Step                                                                                                                                                                                                                  | Screenshot                       |
++========+=======================================================================================================================================================================================================================+==================================+
+| 1      | Create new calculation field called "Max Population" and key in the formula as per screenshot                                                                                                                         | ![](images/max_pop.png)          |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | This calculates the max population of female for each pane, which will be used to determine label position                                                                                                            |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 2      | Create new calculation field called "Label Position" and key in the formula as per screenshot                                                                                                                         | ![](images/label_position.png)   |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | This ensures the label position is at the first index (top)                                                                                                                                                           |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 3      | Drag "Label Position" to Columns, to the right of "SUM(Female Population)" and change the style as Line to display the point (red-circled) indicating the future label position                                       | ![](images/label_posit_drag.png) |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 4      | Drag "Planning Area" to Label of "Label Position" tab to display the "Planning Area" as label (red-boxes)                                                                                                             | ![](images/label_text.png)       |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | Click on Size to reduce the point size to minimum. Click on Color to make it transparent (green-boxes). This will remove the point from display                                                                       |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 5      | There will be sign showing "\>162 nulls" values related to "Label Position". This is because of the If-Then statement, which returns *null* to other indexes other than 1. Hide this warning as this is not relevant. | ![](images/hide_indicator.png)   |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 6      | Right Click on "Label Position", uncheck Show Header and choose Dual Axis                                                                                                                                             | ![](images/dual_axis.png)        |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 7      | Drag "Male Population" to to Label of "SUM(Male Population)" tab to display the population values as label on the charts                                                                                              | ![](images/value_label.png)      |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | Do the same for "Female Population"                                                                                                                                                                                   |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 8      | Click on the Label of "SUM(Male Population)" tab and format it to "Min/Max" and "Pane" to only highlight the min and max values per pane                                                                              | ![](images/value_label1.png)     |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | Do the same for "Female Population"                                                                                                                                                                                   |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
+| 9      | To display values for special highlighted bar, right-click on individual bar, select Mark Label and tick Always Show                                                                                                  | ![](images/value_label2.png)     |
+|        |                                                                                                                                                                                                                       |                                  |
+|        | This will highlight relevant individual bars (refer to Section 3)                                                                                                                                                     |                                  |
++--------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------------------+
 
 ### 2.5 Final touch-up to improve aesthetics and clarity
 
-+---+--------------------------------------------------------------------------------------------------+------------------------------+
-|   | Step                                                                                             | Screenshot                   |
-+===+==================================================================================================+==============================+
-| 1 | Double-click on the title to add the title                                                       | ![](images/change_title.png) |
-|   |                                                                                                  |                              |
-|   | Subtitle can be easily added by adding a new line with different font size                       |                              |
-|   |                                                                                                  |                              |
-|   | This will help users to understand the content and details of the dashboard                      |                              |
-+---+--------------------------------------------------------------------------------------------------+------------------------------+
-| 2 | Click on Worksheet and click on Show Caption to show and edit the caption                        | ![](images/caption.png)      |
-+---+--------------------------------------------------------------------------------------------------+------------------------------+
-| 3 | Double-click on the caption box (red-box) and edit the caption                                   | ![](images/caption1.png)     |
-|   |                                                                                                  |                              |
-|   | In this case, we will add the source of the data. Format the text as shown on the right          |                              |
-+---+--------------------------------------------------------------------------------------------------+------------------------------+
-| 4 | We will remove the x-axis title as there is already label to indicate Male and Female Population | ![](images/remove_axis.png)  |
-|   |                                                                                                  |                              |
-|   | To do this, double-click on the axis title and delete the Axis Title (red-box)                   |                              |
-+---+--------------------------------------------------------------------------------------------------+------------------------------+
++-----------+--------------------------------------------------------------------------------------------------+------------------------------+
+|           | Step                                                                                             | Screenshot                   |
++===========+==================================================================================================+==============================+
+| 1         | Double-click on the title to add the title                                                       | ![](images/change_title.png) |
+|           |                                                                                                  |                              |
+|           | Subtitle can be easily added by adding a new line with different font size                       |                              |
+|           |                                                                                                  |                              |
+|           | This will help users to understand the content and details of the dashboard                      |                              |
++-----------+--------------------------------------------------------------------------------------------------+------------------------------+
+| 2         | Click on Worksheet and click on Show Caption to show and edit the caption                        | ![](images/caption.png)      |
++-----------+--------------------------------------------------------------------------------------------------+------------------------------+
+| 3         | Double-click on the caption box (red-box) and edit the caption                                   | ![](images/caption1.png)     |
+|           |                                                                                                  |                              |
+|           | In this case, we will add the source of the data. Format the text as shown on the right          |                              |
++-----------+--------------------------------------------------------------------------------------------------+------------------------------+
+| 4         | We will remove the x-axis title as there is already label to indicate Male and Female Population | ![](images/remove_axis.png)  |
+|           |                                                                                                  |                              |
+|           | To do this, double-click on the axis title and delete the Axis Title (red-box)                   |                              |
++-----------+--------------------------------------------------------------------------------------------------+------------------------------+
 
 ### 2.6 Final Dashboard
 

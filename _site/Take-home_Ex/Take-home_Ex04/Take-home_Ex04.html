@@ -295,6 +295,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pivot-and-transform-datasets-to-time-series" id="toc-pivot-and-transform-datasets-to-time-series" class="nav-link" data-scroll-target="#pivot-and-transform-datasets-to-time-series">2.2.2 Pivot and transform datasets to time-series</a></li>
   <li><a href="#joining-the-two-datasets-and-calculate-trade-balance" id="toc-joining-the-two-datasets-and-calculate-trade-balance" class="nav-link" data-scroll-target="#joining-the-two-datasets-and-calculate-trade-balance">2.2.3 Joining the two datasets and calculate trade balance</a></li>
   <li><a href="#finding-top-countries-by-trade-volume" id="toc-finding-top-countries-by-trade-volume" class="nav-link" data-scroll-target="#finding-top-countries-by-trade-volume">2.2.4 Finding top countries by trade volume</a></li>
+  <li><a href="#finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" id="toc-finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" class="nav-link" data-scroll-target="#finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022">2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -330,7 +332,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 16, 2023</p>
+      <p class="date-modified">February 18, 2023</p>
     </div>
   </div>
     
@@ -1421,6 +1423,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
+</section>
+<section id="finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022" class="level4">
+<h4 class="anchored" data-anchor-id="finding-top-countries-by-rate-of-change-of-trade-volume-from-2020-to-2022">2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sgtrade_top_rate_ctry <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries, Year) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Volumes_SGD =</span> <span class="fu">sum</span>(Trade_Volumes_SGD)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">2020</span>,<span class="dv">2022</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Year,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Trade_Volumes_SGD) </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="co">#mutate(Diff_Trade_Volumes_SGD_2020_2022 = abs(sgtrade_cln$2022 - #sgtrade_cln$2020))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-1" class="level4">
+<h4 class="anchored" data-anchor-id="section-1"></h4>
 
 
 </section>

@@ -4,7 +4,6 @@ subtitle: "Visual Analytics of Resale Prices of Singapore Public Housing Propert
 author: "Michael Djohan"
 date: 05 February 2023
 date-modified: "`r Sys.Date()`"
-fontsize: smaller
 execute: 
   warning: false
 format: html

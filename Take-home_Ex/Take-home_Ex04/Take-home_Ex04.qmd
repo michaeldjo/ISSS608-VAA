@@ -4,7 +4,6 @@ subtitle: "Singapore bi-lateral trade performance in 2020 to 2022"
 author: "Michael Djohan"
 date: 19 February 2023
 date-modified: "`r Sys.Date()`"
-fontsize: smaller
 execute: 
   warning: false
 format: html
@@ -191,3 +190,19 @@ sgtrade_top_ctry <- sgtrade_cln |>
 
 kable(head(sgtrade_top_ctry))
 ```
+
+#### 2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022
+
+```{r}
+sgtrade_top_rate_ctry <- sgtrade_cln |> 
+  group_by(Countries, Year) |>
+  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
+  ungroup() |> 
+  filter(Year %in% c(2020,2022)) |> 
+  pivot_wider(names_from = Year,
+              values_from = Total_Trade_Volumes_SGD) 
+  #mutate(Diff_Trade_Volumes_SGD_2020_2022 = abs(sgtrade_cln$2022 - #sgtrade_cln$2020))
+  
+```
+
+####  
