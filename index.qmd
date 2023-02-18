@@ -1,7 +1,6 @@
 ---
 title: "Visual Analytics & Application Learning Journey"
 author: Michael Djohan
-fontsize: smaller
 ---
 
 *"Numbers have an important story to tell. They rely on you to give them a clear and convincing voice"*\
