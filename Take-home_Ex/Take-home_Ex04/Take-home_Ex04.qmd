@@ -414,7 +414,7 @@ sgtrade_cln |> ggplot() +
                date_breaks = "6 month",
                date_labels = "%b\n%Y") +
   
-  labs(title = "Singapore Trade Surplus are slowly decreasing against major partners, except with\nIndonesia, Hong Kong, and Thailand",
+  labs(title = "Singapore's trade surplus is decreasing against major partners, except with\nIndonesia, Hong Kong, and Thailand",
          subtitle = "Singapore Trade Balance against trading partners, 2020 to 2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
   
