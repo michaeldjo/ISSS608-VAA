@@ -3,7 +3,6 @@ title: "Hands-on Exercise 5: Ternary Plot"
 author: "Michael Djohan"
 date: 08 February 2023
 date-modified: "`r Sys.Date()`"
-fontsize: smaller
 execute: 
   echo: true
   eval: true
