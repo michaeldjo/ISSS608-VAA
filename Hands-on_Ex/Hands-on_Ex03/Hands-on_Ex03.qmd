@@ -3,7 +3,6 @@ title: "Hands-on Exercise 3: Programming Interactive Data Visualisation with R"
 author: "Michael Djohan"
 date: 26 January 2023
 date-modified: "`r Sys.Date()`"
-fontsize: smaller
 execute: 
   echo: true
   eval: true
