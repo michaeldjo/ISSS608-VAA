@@ -1101,7 +1101,7 @@ pa <- ggplot(data = sgtrade_cln_ani,
   ease_aes('linear') 
 
 animate(pa, 
-        duration = 18,#12 months/Year x 3 years x 0.5 sec/months = 18 seconds
+        duration = 25, #12 months/Year x 3 years x 0.7 sec/months = 18 seconds
         height = 800, 
         width = 800,
         fps = 30) 
