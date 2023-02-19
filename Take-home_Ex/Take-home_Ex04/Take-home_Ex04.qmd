@@ -48,13 +48,12 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
     All packages can be found within CRAN.
 
 ```{r}
-#Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, directlabels, tidyverse)
+#remotes::install_github("nsgrantham/ggbraid")
 ```
 
 ```{r}
-remotes::install_github("nsgrantham/ggbraid")
-library(ggbraid)
+#Load packages
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, directlabels, ggbraid, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -203,10 +202,25 @@ sgtrade_cln <- sgimport_cln |>
   #remove countries with non-available export data
   filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of", "Other Countries In Oceania")) |> 
   
+  mutate(Countries = case_when(Countries == "Germany, Federal Republic Of" ~ "Germany",
+                               Countries == "Vietnam, Socialist Republic Of" ~ "Vietnam",
+                               Countries == "Republic Of Korea" ~ "South Korea",
+                               TRUE ~ Countries)) |> 
+  
   mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) 
 
 sgtrade_cln
 ```
+Calculating Rate of Change
+
+```{r}
+sgtrade_cln <- sgtrade_cln |> 
+  arrange(Countries, Month_Year) |> 
+  group_by(Countries) |> 
+  mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
+  ungroup()
+```
+
 
 #### 2.2.4 Finding top countries by trade volume
 
@@ -223,7 +237,7 @@ sgtrade_top_ctry <- sgtrade_cln |>
 kable(head(sgtrade_top_ctry))
 ```
 
-Filtering the ***sgtrade_cln*** data
+Filtering the ***sgtrade_cln*** data to remove bottom 0.05%
 
 ```{r}
 top0.05 <- sgtrade_top_ctry |> 
@@ -327,17 +341,17 @@ ggplot() +
            size=4, 
            color="darkblue") +
   
+    geom_hline(aes(yintercept = avg_total_2020$import), 
+             col="darkred", 
+             linewidth=0.8,
+             linetype = "dashed") +
+  
   annotate(geom = "text", 
            x=as.Date("2022-12-01"), 
            y=37500000000, 
            label="Avg 2020 Import", 
            size=4, 
            color="darkred") +
-  
-  geom_hline(aes(yintercept = avg_total_2020$import), 
-             col="darkred", 
-             linewidth=0.8,
-             linetype = "dashed") +
   
   scale_color_manual(values = c("darkblue", "darkred"),
                      labels = c("Export", "Import"),
@@ -442,9 +456,12 @@ ggplot() +
 
 #### 3.1.2 Horizon Plots
 
+##### 3.1.2.1 Based on Normalised_Trade_Balance
 Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
 cutpoints <- sgtrade_cln  |>  
   mutate(
     outlier = between(
@@ -468,7 +485,7 @@ round(ori, 5) # The origin of horizon plot
 round(sca, 5) # The horizon scale cutpoints
 ```
 
-```{r, Horizon Plot}
+```{r, Horizon Plot Trade Balance}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-height: 12
@@ -481,10 +498,12 @@ sgtrade_cln |> ggplot() +
                    fill = ..Cutpoints..),
                origin = ori, horizonscale = sca,
                show.legend = FALSE) +
+  
   scale_fill_hcl(palette = 'RdBu') +
+  
   facet_grid(Countries~.) +
+  
   theme_few() +
-
   theme(
     panel.spacing.y=unit(0, "lines"),
     axis.title.x = element_blank(),
@@ -499,22 +518,189 @@ sgtrade_cln |> ggplot() +
                date_breaks = "6 month",
                date_labels = "%b\n%Y") +
   
-  labs(title = "Singapore's trade surplus is decreasing against major partners, except with\nIndonesia, Hong Kong, and Thailand",
-         subtitle = "Singapore Trade Balance against trading partners, 2020 to 2022",
+  labs(title = "Singapore's trade surplus is decreasing against major partners post Covid-19 recovery, except with\nHong Kong, Indonesia and Thailand",
+         subtitle = "Singapore's trade balance against trading partners arranged by trade volumes, 2020 to 2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
   
 ```
 
 Observation Select countries to choose
 
-Major partners (Top 5) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative)
+Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)
 
-Other Regional Partners (Interesting patterns) - Korea (positive to negative) - Japan (positive to negative) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive) - UAE
+Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive) 
 
-Other Major European Partners - Germany - France - UK
+Other Major European Partners (Russia War) - Germany - France - UK
+
+Other partners - Brazil, Mexico, Brunei, Ireland, Israel
+
 
 Others are due to - mid-range - one intensity
+
+##### 3.1.2.2 Based on Rate of Change of Trade Balance
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+cutpoints_roc <- sgtrade_cln  |>  
+  mutate(
+    outlier = between(
+      Pct_Trade_Balance_Change, 
+      quantile(Pct_Trade_Balance_Change, 0.25, na.rm=T)-
+        1.5*IQR(Pct_Trade_Balance_Change, na.rm=T),
+      quantile(Pct_Trade_Balance_Change, 0.75, na.rm=T)+
+        1.5*IQR(Pct_Trade_Balance_Change, na.rm=T))) %>% 
+  filter(outlier)
+
+#origin point - when trade balance is 0
+ori_roc <- sum(range(cutpoints_roc$Pct_Trade_Balance_Change))/2
+
+#scales for horizon plot
+sca_roc <- seq(range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[1], 
+           range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[2], 
+           length.out = 9)[-4]
+
+round(ori_roc, 5) # The origin of horizon plot
+
+round(sca_roc, 5) # The horizon scale cutpoints
+```
+```{r, Horizon Plot Trade Balance Change}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 12
+#| fig-width: 10
+sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
+
+sgtrade_cln |> 
+  na.omit() |> 
+  ggplot() +
+  geom_horizon(aes(x = Month_Year,
+                   y = Pct_Trade_Balance_Change,
+                   fill = ..Cutpoints..),
+               origin = ori_roc, horizonscale = sca_roc,
+               show.legend = FALSE) +
+  
+  scale_fill_hcl(palette = 'RdBu') +
+  
+  facet_grid(Countries~.) +
+  
+  theme_few() +
+  theme(
+    panel.spacing.y=unit(0, "lines"),
+    axis.title.x = element_blank(),
+    strip.text.y = element_text(size = 7, angle = 0, hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank()
+    ) +
+  
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "6 month",
+               date_labels = "%b\n%Y") +
+  
+  labs(title = "Volatile changes in Singapore's trade balance against major partners, except with\nTaiwan, Hong Kong, and Indonesia",
+         subtitle = "Singapore's trade balance change (MoM%) against trading partners arranged by trade volumes, 2020 to 2022",
+         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
+```  
+Observation Select countries to choose
+
+Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) => 4
+
+Other Regional Partners (Interesting patterns)  -Australia (2021 reversal) - India (nothing interesting) - Philippines (high volatility) - New Zealand/Bangladesh (nothing interesting) - Cambodia (negative to positive) => 3 
+
+Other Major European Partners (Russia War) - Germany - France - UK => 3
+
+Other partners - Volatility is further observed with smaller trading partners
+- Brazil, Mexico (high volatility towards end 2022), Brunei, Ireland, Israel => 5
+
+Others are low intensity or too small in terms of volume
+
 
 ### 3.2 Bi-lateral Trade of Singapore against selected partners
 
 #### 3.2.1 Singapore Trade Balance
+
+```{r, Singapore Trade Balance Plot}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 8
+#| fig-width: 10
+
+#selected_countries = c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "Philippines", "Cambodia", "Germany", "France", "United Kingdom", "Brazil", "Mexico", "Brunei Darussalam", "Ireland", "Israel" )
+
+selected_countries = c("Mainland China", "Malaysia", "United States", "South Korea")
+
+sgtrade_cln_long <- sgtrade_cln |> 
+  select(Month_Year, Countries, Year, Import_SGD, Export_SGD) |> 
+  pivot_longer(cols = c(Import_SGD, Export_SGD),
+               names_to = "Type",
+               values_to = "Values")
+
+avg_total_ctry_2020 <- sgtrade_cln |> 
+  filter(Year == 2020) |> 
+  group_by (Year, Countries) |> 
+  summarise(import = mean(Import_SGD),
+            export = mean(Export_SGD))
+
+ggplot() +
+  
+  geom_line(data = sgtrade_cln_long |> 
+              filter(Countries %in% selected_countries),
+            aes(x = Month_Year,
+                y = Values,
+                color = Type),
+            linewidth = 1.2) +
+  
+  geom_braid(data = sgtrade_cln |> 
+              filter(Countries %in% selected_countries),
+             aes(x = Month_Year,
+                 ymin = Import_SGD,
+                 ymax = Export_SGD,
+                 fill = Import_SGD < Export_SGD),
+             alpha = 0.6) +
+  
+  guides(linetype = "none", fill = "none") +
+  
+    geom_hline(data = avg_total_ctry_2020|> 
+              filter(Countries %in% selected_countries),
+             aes(yintercept = export), 
+             col = "darkblue",
+             linewidth=0.8,
+             linetype = "dashed") +
+  
+  geom_hline(data = avg_total_ctry_2020|> 
+               filter(Countries %in% selected_countries),
+             aes(yintercept = import), 
+             col = "darkred",
+             linewidth=0.8,
+             linetype = "dashed") +
+  
+  scale_color_manual(values = c("darkblue", "darkred"),
+                     labels = c("Export", "Import"),
+                     name = NULL) +
+  
+  scale_fill_manual(values = c("pink", "skyblue")) +
+  
+  scale_x_date(expand = c(0,0),
+               limits = c(as.Date("2020-01-01"),as.Date("2022-12-31")),
+               date_breaks = "1 year",
+               date_labels = "%Y") +
+  
+  scale_y_continuous("Trade Values",
+                     labels = function(x){paste0('$', abs(x/1000000000),'B')}) +
+    
+  facet_wrap(~Countries) +
+  
+  cowplot::theme_cowplot() +
+  
+  theme(axis.title.x = element_blank(),
+        legend.position = 'top',
+        legend.justification = 'center',
+        panel.grid.major.y = element_line(color = "grey90", linetype = "solid"),
+        panel.border = element_rect(color = "grey60", linetype = "solid", linewidth = 0.5),
+        panel.spacing.x = unit(0,"line"),
+        panel.spacing.y = unit(0,"line")) 
+```
+
+
