@@ -45,6 +45,8 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `ggbraid`: Used
 
+-   `CGPfunctions`: Used
+
 -   `ggtext`: Used
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
@@ -57,7 +59,7 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, patchwork, plotly, directlabels, ggbraid, ggtext, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, patchwork, plotly, directlabels, ggbraid, CGPfunctions, ggtext, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -199,7 +201,7 @@ sgtrade_cln <- sgimport_cln |>
   #join sgimport_cln with sgexport_cln
   left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Month_Year' = 'Month_Year', 'Month' = 'Month', 'Year' = 'Year')) |> 
   
-  #Calculated trade balance
+  #Calculate trade balance
   mutate(Trade_Balance_SGD = Export_SGD - Import_SGD,
          Trade_Volumes_SGD = Export_SGD + Import_SGD) |> 
   
@@ -216,7 +218,7 @@ sgtrade_cln <- sgimport_cln |>
 sgtrade_cln
 ```
 
-Calculating Rate of Change
+Calculating Change in Trade Balance (%)
 
 ```{r}
 sgtrade_cln <- sgtrade_cln |> 
@@ -224,6 +226,8 @@ sgtrade_cln <- sgtrade_cln |>
   group_by(Countries) |> 
   mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
   ungroup()
+
+sgtrade_cln
 ```
 
 #### 2.2.4 Finding top countries by trade volume
@@ -484,10 +488,6 @@ ori <- (0 - min(sgtrade_cln$Trade_Balance_SGD))/(max(sgtrade_cln$Trade_Balance_S
 sca <- seq(range(cutpoints$Normalised_Trade_Balance)[1], 
            range(cutpoints$Normalised_Trade_Balance)[2], 
            length.out = 9)[-4]
-
-round(ori, 5) # The origin of horizon plot
-
-round(sca, 5) # The horizon scale cutpoints
 ```
 
 ```{r, Horizon Plot Trade Balance}
@@ -500,7 +500,7 @@ sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Tota
 sgtrade_cln |> ggplot() +
   geom_horizon(aes(x = Month_Year,
                    y = Normalised_Trade_Balance,
-                   fill = ..Cutpoints..),
+                   fill = after_stat(Cutpoints)),
                origin = ori, horizonscale = sca,
                show.legend = FALSE) +
   
@@ -563,10 +563,6 @@ ori_roc <- sum(range(cutpoints_roc$Pct_Trade_Balance_Change))/2
 sca_roc <- seq(range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[1], 
            range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[2], 
            length.out = 9)[-4]
-
-round(ori_roc, 5) # The origin of horizon plot
-
-round(sca_roc, 5) # The horizon scale cutpoints
 ```
 
 ```{r, Horizon Plot Trade Balance Change}
@@ -581,7 +577,7 @@ sgtrade_cln |>
   ggplot() +
   geom_horizon(aes(x = Month_Year,
                    y = Pct_Trade_Balance_Change,
-                   fill = ..Cutpoints..),
+                   fill = after_stat(Cutpoints)),
                origin = ori_roc, horizonscale = sca_roc,
                show.legend = FALSE) +
   
@@ -720,6 +716,7 @@ ggplot(data = sgtrade_cln_long |>
 ```
 
 Plotting the graph
+
 ```{r, Singapore Trade Balance Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -824,4 +821,193 @@ final_plot + plot_annotation(
 
 ```
 
-#### 3.2.2 Y-on-Y Change from 2020 to 2022
+#### 3.2.2 Year-over-Year changes between 2020 and 2022
+
+Choose Q3 as Q3 2020 is during the major lockdowns around the world and it is just prior to recession in 2022. Providing a bit of stability in the data
+
+Modifying the data
+
+```{r}
+sgtrade_cln_qtr <- sgtrade_cln |> 
+  mutate(Quarter = factor(paste0("Q", quarter(Month_Year), " ", year(Month_Year))), .after = Month) |> 
+  filter(Quarter %in% c("Q3 2020", "Q3 2022")) |> 
+  group_by(Countries, Quarter) |> 
+  summarise(Total_Trade_Balance_BSGD = round(sum(Trade_Balance_SGD)/1000000000, 2),
+            Total_Trade_Volumes_BSGD = round(sum(Trade_Volumes_SGD)/1000000000, 2),
+            Total_Import_BSGD = round(sum(Import_SGD)/1000000000, 2),
+            Total_Export_BSGD = round(sum(Export_SGD)/1000000000, 2))
+
+sgtrade_cln_qtr
+```
+
+Creating function to plot Trade Balances
+
+::: panel-tabset
+##### Trade Volume
+
+```{r, Function Trade Volume Slope Graph}
+plot_slopegraph_tradevol <- function(selected_countries) {
+  
+  custom_colors_tradevol <- sgtrade_cln_qtr |> 
+    pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Trade_Volumes_BSGD) |> 
+    mutate(diff_Total_Trade_Volumes = `Q3 2022` - `Q3 2020`) |> 
+    mutate(col_Total_Trade_Volumes = case_when(
+      diff_Total_Trade_Volumes > 5 ~"darkblue",
+      diff_Total_Trade_Volumes <= -3 ~"darkred",
+      TRUE ~ "grey"
+    )) |> 
+    select(Countries, col_Total_Trade_Volumes) |> 
+    deframe()
+  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Trade_Volumes_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Trade Volumes (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_tradevol,
+                  LineThickness = 0.7)
+}
+```
+
+##### Import
+
+```{r, Function Import Slope Graph}
+plot_slopegraph_import <- function(selected_countries) {
+  
+  custom_colors_import <- sgtrade_cln_qtr |> 
+    pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Import_BSGD) |> 
+    mutate(diff_Total_Import = `Q3 2022` - `Q3 2020`) |> 
+    mutate(col_Total_Import = case_when(
+      diff_Total_Import > 1 ~"darkred",
+      diff_Total_Import <= -1 ~"darkblue",
+      TRUE ~ "grey"
+    )) |> 
+    select(Countries, col_Total_Import) |> 
+    deframe()
+  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Import_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Import (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_import,
+                  LineThickness = 0.7)
+}
+```
+
+##### Export
+
+```{r, Function Export Slope Graph}
+plot_slopegraph_export <- function(selected_countries) {
+  
+  custom_colors_export <- sgtrade_cln_qtr |> 
+    pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Export_BSGD) |> 
+    mutate(diff_Total_Export = `Q3 2022` - `Q3 2020`) |> 
+    mutate(col_Total_Export = case_when(
+      diff_Total_Export > 1 ~"darkblue",
+      diff_Total_Export <= -1 ~"darkred",
+      TRUE ~ "grey"
+    )) |> 
+    select(Countries, col_Total_Export) |> 
+    deframe()
+  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Export_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Export (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_export,
+                  LineThickness = 0.7)
+}
+```
+
+##### Trade Balance
+
+```{r, Function Trade Balance Slope Graph}
+plot_slopegraph_tradebal <- function(selected_countries) {
+  
+  custom_colors_tradebal <- sgtrade_cln_qtr |> 
+    pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Trade_Balance_BSGD) |> 
+    mutate(diff_Total_Trade_Balance = `Q3 2022` - `Q3 2020`) |> 
+    mutate(col_Total_Trade_Balance = case_when(
+      diff_Total_Trade_Balance > 0.5 ~"darkblue",
+      diff_Total_Trade_Balance <= -0.5 ~"darkred",
+      TRUE ~ "grey"
+    )) |> 
+    select(Countries, col_Total_Trade_Balance) |> 
+    deframe()
+  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Trade_Balance_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Trade Balance (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_tradebal,
+                  LineThickness = 0.7)
+}
+```
+
+:::
+
+::: panel-tabset
+##### Trade Volume
+
+```{r, Trade Volume Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+plot_slopegraph_tradevol(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+```
+
+##### Import
+
+```{r, Import Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+plot_slopegraph_import(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+```
+
+##### Export
+
+```{r, Export Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+plot_slopegraph_export(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+```
+
+##### Trade Balance
+
+```{r, Trade Balance Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+plot_slopegraph_tradebal(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+```
+
+:::
