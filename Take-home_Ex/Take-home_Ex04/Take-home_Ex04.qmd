@@ -33,13 +33,13 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `lubridate`: Used to work with date and time
 
+-   `ggrepel`:
+
 -   `ggHoriPlot`:
 
 -   `ggthemes`:
 
 -   `patchwork`:
-
--   `plotly`: Used for creating interactive web-based graphs.
 
 -   `directlabels`:
 
@@ -48,6 +48,10 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 -   `CGPfunctions`: Used
 
 -   `ggtext`: Used
+
+-   `gganimate`: Used
+
+-   `ggifski`: Used
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
@@ -59,7 +63,7 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, patchwork, plotly, directlabels, ggbraid, CGPfunctions, ggtext, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggrepel, ggHoriPlot, ggthemes, patchwork, directlabels, ggbraid, CGPfunctions, ggtext, gganimate, gifski, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -72,6 +76,14 @@ sgimport <- read_excel("data/outputFile.xlsx", sheet = "T1", range = "A10:AK129"
 
 sgexport <- read_excel("data/outputFile.xlsx", sheet = "T2", range = "A10:AK101" )
 ```
+
+```{r}
+regions <- read_csv("data/world-regions-according-to-the-world-bank.csv") |> 
+  rename(Countries = Entity,
+         Region = World_RegionbyWorld_Bank) |> 
+  select(Countries, Region)
+```
+
 
 ###### 
 
@@ -870,7 +882,9 @@ plot_slopegraph_tradevol <- function(selected_countries) {
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_tradevol,
-                  LineThickness = 0.7)
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
 }
 ```
 
@@ -901,7 +915,9 @@ plot_slopegraph_import <- function(selected_countries) {
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_import,
-                  LineThickness = 0.7)
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
 }
 ```
 
@@ -932,7 +948,9 @@ plot_slopegraph_export <- function(selected_countries) {
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_export,
-                  LineThickness = 0.7)
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
 }
 ```
 
@@ -963,7 +981,9 @@ plot_slopegraph_tradebal <- function(selected_countries) {
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_tradebal,
-                  LineThickness = 0.7)
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
 }
 ```
 
@@ -1011,3 +1031,75 @@ plot_slopegraph_tradebal(c("Mainland China", "Malaysia", "United States", "South
 ```
 
 :::
+
+
+
+### 3.3 Changes in Import and Export over time
+
+#### 3.3.1 Data Preparation
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+regions_cln <- regions |> 
+    mutate(Countries = case_when(Countries == "Brunei" ~ "Brunei Darussalam",
+                                 Countries == "Czechia" ~ "Czech Republic",
+                                 Countries == "China" ~ "Mainland China",
+                                 TRUE~Countries))
+
+sgtrade_cln_ani <- sgtrade_cln |> 
+  select(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) |> 
+  
+  mutate(Import_SGD = round(Import_SGD/1000000000, 1),
+         Export_SGD = round(Export_SGD/1000000000, 1),
+         Trade_Volumes_SGD = round(Trade_Volumes_SGD/1000000000, 1)) |> 
+  
+  left_join(regions_cln, by = c('Countries' = 'Countries'))
+
+sgtrade_cln_ani
+```
+#### 3.3.2 Building the plot
+
+```{r, Changes in Import and Export over time}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 10
+ggplot(data = sgtrade_cln_ani,
+       aes(x = Import_SGD,
+           y = Export_SGD,
+           color = Region,
+           size = Trade_Volumes_SGD)) +
+  
+  geom_point(alpha = 0.7,
+             show.legend = T) +
+  
+  geom_abline(intercept = 0, 
+              slope = 1,
+              linewidth = 0.7,
+              alpha = 0.7,
+              linetype = "dashed",
+              col = "grey40") +
+  
+  geom_text_repel(aes(label = Countries,
+                      group = Countries),
+                  show.legend = FALSE,
+                  size = 3) +
+  
+  scale_size(range = c(2,16)) +
+  
+  scale_x_log10() +
+  scale_y_log10() +
+  
+  labs(title = 'Export vs Import Trade Values over time',
+       subtitle = "Period: {format(frame_time, '%b %Y')}",
+       x = 'Import (Billion SGD)', 
+       y = 'Export (Billion SGD)') +
+  
+  transition_time(Month_Year) + 
+  
+  ease_aes('linear') +
+  
+  theme(legend.position = 'bottom')
+
+```
+
