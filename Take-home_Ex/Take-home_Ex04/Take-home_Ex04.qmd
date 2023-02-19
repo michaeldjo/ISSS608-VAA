@@ -647,7 +647,8 @@ avg_total_ctry_2020 <- sgtrade_cln |>
   mutate(Year_date = as.Date(paste(Year, "-01-01", sep = ""))) |> 
   rowwise() |> mutate(min_import_export = min(import, export))
 
-ggplot() +
+ggplot(data = sgtrade_cln_long |> 
+         filter(Countries %in% selected_countries)) +
   
   geom_line(data = sgtrade_cln_long |> 
               filter(Countries %in% selected_countries),
@@ -718,18 +719,82 @@ ggplot() +
 }
 ```
 
+Plotting the graph
 ```{r, Singapore Trade Balance Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-height: 12
 #| fig-width: 10
 
+#Specifying the annotation
+p1_text <- data.frame(label = c("Zero Covid Policy\nWar in Ukraine", "", "War in Ukraine", "Covid recovery"),  
+                         Countries = c("Mainland China", "Malaysia", "United States", "South Korea"),
+                         x = c(as.Date("2021-01-01"), 0, as.Date("2021-01-01"), as.Date("2020-10-01")),
+                         y = c(1500000000, 0, 1500000000, 7500000000))
+
+arrowp1<- data.frame(Countries = c("Mainland China", "Malaysia", "United States", "South Korea"),
+                      x = c(as.Date("2021-01-01"), 0, as.Date("2021-01-01"), as.Date("2020-10-01")),
+                      y = c(2700000000, 0, 2100000000, 7000000000),
+                      xend = c(as.Date("2022-02-01"), 0, as.Date("2022-02-01"), as.Date("2021-04-01")),
+                      yend = c(4500000000, 0, 4100000000, 2500000000))
+
+p1_text$Countries <- factor(c("Mainland China", "Malaysia", "United States", "South Korea"))
+
+arrowp1$Countries <- factor(c("Mainland China", "Malaysia", "United States", "South Korea"))
+
+p2_text <- data.frame(label = c("Start of\nrecession", "", "Start of\nrecession", ""),  
+                         Countries = c("Australia", "India", "Philippines", "Cambodia"),
+                         x = c(as.Date("2020-08-01"), 0, as.Date("2020-08-01"), 0),
+                         y = c(2000000000, 0, 2000000000, 0))
+
+arrowp2<- data.frame(Countries = c("Australia", "India", "Philippines", "Cambodia"),
+                      x = c(as.Date("2021-02-01"), 0, as.Date("2021-02-01"), 0),
+                      y = c(2000000000, 0, 2000000000, 0),
+                      xend = c(as.Date("2022-07-01"), 0, as.Date("2022-07-01"), 0),
+                      yend = c(2000000000, 0, 1400000000, 0))
+
+p2_text$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
+
+arrowp2$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
+
+p4_text <- data.frame(label = c("", "Enhanced\nPartnership", "", ""),  
+                         Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
+                         x = c(as.Date("1970-01-01"), as.Date("2020-10-01"), 0, 0),
+                         y = c(0, 600000000, 0, 0))
+
+arrowp4<- data.frame(Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
+                      x = c(as.Date("1970-01-01"), as.Date("2021-05-01"), 0, 0),
+                      y = c(0, 600000000, 0, 0),
+                      xend = c(as.Date("1970-01-01"), as.Date("2022-03-01"), 0, 0),
+                      yend = c(0, 300000000, 0, 0))
+
+p4_text$Countries <- factor(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+
+arrowp4$Countries <- factor(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+
+#Plotting the graph
 p1a <- plot_braid_ctry(c("Mainland China", "Malaysia", "United States", "South Korea"), showlegend = FALSE)
-p1 <- p1a + labs(subtitle = "Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;<br>recession shrinks trade further in mid-2022") +
+p1 <- p1a + 
+  geom_label(data = p1_text,
+            aes(x = x,
+                y = y,
+                label = label)) +
+  geom_segment(data = arrowp1, 
+               aes(x = x, xend = xend, y = y, yend = yend), 
+               colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
+  labs(subtitle = "Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;<br>recession shrinks trade further in mid-2022") +
   theme(plot.subtitle = element_markdown())
 
 p2a <- plot_braid_ctry(c("Australia", "India", "Philippines", "Cambodia"), showlegend = FALSE)
-p2 <- p2a + labs(subtitle = "but exports recover with ***other regional partners***, although it also slows down with recession") +
+p2 <- p2a + 
+  geom_label(data = p2_text,
+            aes(x = x,
+                y = y,
+                label = label)) +
+  geom_segment(data = arrowp2, 
+               aes(x = x, xend = xend, y = y, yend = yend), 
+               colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
+  labs(subtitle = "Exports recover with ***other regional partners***; recession impact is visible, execpt with India") +
   theme(plot.subtitle = element_markdown())
 
 p3a <- plot_braid_ctry(c("Germany", "France", "Switzerland", "United Kingdom"), showlegend = FALSE)
@@ -737,8 +802,17 @@ p3 <- p3a + labs(subtitle = "Imports rise and volatility worsens amid Covid-19 r
   theme(plot.subtitle = element_markdown())
 
 p4a <- plot_braid_ctry(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"), showlegend = FALSE)
-p4 <- p4a + labs(subtitle = "Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand") +
+p4 <- p4a + 
+  geom_label(data = p4_text,
+             aes(x = x,
+                 y = y,
+                 label = label)) +
+  geom_segment(data = arrowp4, 
+               aes(x = x, xend = xend, y = y, yend = yend), 
+               colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
+  labs(subtitle = "Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand") +
   theme(plot.subtitle = element_markdown())
+
 
 final_plot <- p1 / p2 / p3 / p4
 
@@ -750,4 +824,4 @@ final_plot + plot_annotation(
 
 ```
 
-***tomato***
+#### 3.2.2 Y-on-Y Change from 2020 to 2022
