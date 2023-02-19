@@ -1079,12 +1079,12 @@ pa <- ggplot(data = sgtrade_cln_ani,
               linetype = "dashed",
               col = "grey40") +
   
-  geom_label_repel(aes(label = Countries,
+  geom_label(aes(label = Countries,
                       group = Countries),
                   show.legend = FALSE,
                   size = 3) +
   
-  scale_size(range = c(2,35)) +
+  scale_size(range = c(5,45)) +
   
   scale_x_log10() +
   scale_y_log10() +
@@ -1102,6 +1102,8 @@ pa <- ggplot(data = sgtrade_cln_ani,
 
 animate(pa, 
         duration = 18,#12 months/Year x 3 years x 0.5 sec/months = 18 seconds
-        height = 800, width = 800) 
+        height = 800, 
+        width = 800,
+        fps = 30) 
 ```
 
