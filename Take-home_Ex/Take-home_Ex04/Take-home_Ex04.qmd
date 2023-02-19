@@ -878,7 +878,7 @@ plot_slopegraph_tradevol <- function(selected_countries) {
                   Times = Quarter,
                   Measurement = Total_Trade_Volumes_BSGD,
                   Grouping = Countries,
-                  Title = "Y-o-Y Change in Trade Volumes (Billion SGD)",
+                  Title = "Y-o-Y Change in Singapore Merchandise Trade Volumes (Billion SGD)",
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_tradevol,
@@ -911,7 +911,7 @@ plot_slopegraph_import <- function(selected_countries) {
                   Times = Quarter,
                   Measurement = Total_Import_BSGD,
                   Grouping = Countries,
-                  Title = "Y-o-Y Change in Import (Billion SGD)",
+                  Title = "Y-o-Y Change in Singapore Merchandise Import Values (Billion SGD)",
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_import,
@@ -944,7 +944,7 @@ plot_slopegraph_export <- function(selected_countries) {
                   Times = Quarter,
                   Measurement = Total_Export_BSGD,
                   Grouping = Countries,
-                  Title = "Y-o-Y Change in Export (Billion SGD)",
+                  Title = "Y-o-Y Change in Singapore Merchandise Export Values (Billion SGD)",
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_export,
@@ -977,7 +977,7 @@ plot_slopegraph_tradebal <- function(selected_countries) {
                   Times = Quarter,
                   Measurement = Total_Trade_Balance_BSGD,
                   Grouping = Countries,
-                  Title = "Y-o-Y Change in Trade Balance (Billion SGD)",
+                  Title = "Y-o-Y Change in Singapore Merchandise Trade Balance (Billion SGD)",
                   SubTitle = "Q3 2020 to Q3 2022",
                   Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
                   LineColor = custom_colors_tradebal,
@@ -1062,16 +1062,15 @@ sgtrade_cln_ani
 ```{r, Changes in Import and Export over time}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| fig-height: 10
-#| fig-width: 10
-ggplot(data = sgtrade_cln_ani,
+
+pa <- ggplot(data = sgtrade_cln_ani,
        aes(x = Import_SGD,
            y = Export_SGD,
-           color = Region,
-           size = Trade_Volumes_SGD)) +
+           color = Region)) +
   
-  geom_point(alpha = 0.7,
-             show.legend = T) +
+  geom_point(aes(size = Trade_Volumes_SGD),
+             alpha = 0.7,
+             show.legend = F) +
   
   geom_abline(intercept = 0, 
               slope = 1,
@@ -1080,26 +1079,29 @@ ggplot(data = sgtrade_cln_ani,
               linetype = "dashed",
               col = "grey40") +
   
-  geom_text_repel(aes(label = Countries,
+  geom_label_repel(aes(label = Countries,
                       group = Countries),
                   show.legend = FALSE,
                   size = 3) +
   
-  scale_size(range = c(2,16)) +
+  scale_size(range = c(2,35)) +
   
   scale_x_log10() +
   scale_y_log10() +
   
-  labs(title = 'Export vs Import Trade Values over time',
+  labs(title = 'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022',
        subtitle = "Period: {format(frame_time, '%b %Y')}",
        x = 'Import (Billion SGD)', 
        y = 'Export (Billion SGD)') +
   
+  theme(plot.title = element_text(size = 18, face = "bold")) +
+  
   transition_time(Month_Year) + 
   
-  ease_aes('linear') +
-  
-  theme(legend.position = 'bottom')
+  ease_aes('linear') 
 
+animate(pa, 
+        duration = 18,#12 months/Year x 3 years x 0.5 sec/months = 18 seconds
+        height = 800, width = 800) 
 ```
 
