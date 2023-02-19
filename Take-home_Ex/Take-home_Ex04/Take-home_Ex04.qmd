@@ -37,11 +37,15 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 -   `ggthemes`:
 
+-   `patchwork`:
+
 -   `plotly`: Used for creating interactive web-based graphs.
 
 -   `directlabels`:
 
 -   `ggbraid`: Used
+
+-   `ggtext`: Used
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
@@ -53,7 +57,7 @@ The code chunk below uses `pacman::p_load()` to check if packages are installed.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, plotly, directlabels, ggbraid, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, patchwork, plotly, directlabels, ggbraid, ggtext, tidyverse)
 ```
 
 Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
@@ -211,6 +215,7 @@ sgtrade_cln <- sgimport_cln |>
 
 sgtrade_cln
 ```
+
 Calculating Rate of Change
 
 ```{r}
@@ -220,7 +225,6 @@ sgtrade_cln <- sgtrade_cln |>
   mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
   ungroup()
 ```
-
 
 #### 2.2.4 Finding top countries by trade volume
 
@@ -457,6 +461,7 @@ ggplot() +
 #### 3.1.2 Horizon Plots
 
 ##### 3.1.2.1 Based on Normalised_Trade_Balance
+
 Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
 
 ```{r}
@@ -528,12 +533,11 @@ Observation Select countries to choose
 
 Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)
 
-Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive) 
+Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
 
 Other Major European Partners (Russia War) - Germany - France - UK
 
 Other partners - Brazil, Mexico, Brunei, Ireland, Israel
-
 
 Others are due to - mid-range - one intensity
 
@@ -564,6 +568,7 @@ round(ori_roc, 5) # The origin of horizon plot
 
 round(sca_roc, 5) # The horizon scale cutpoints
 ```
+
 ```{r, Horizon Plot Trade Balance Change}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -602,34 +607,31 @@ sgtrade_cln |>
   labs(title = "Volatile changes in Singapore's trade balance against major partners, except with\nTaiwan, Hong Kong, and Indonesia",
          subtitle = "Singapore's trade balance change (MoM%) against trading partners arranged by trade volumes, 2020 to 2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
-```  
+```
+
 Observation Select countries to choose
 
-Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) => 4
+Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) =\> 4
 
-Other Regional Partners (Interesting patterns)  -Australia (2021 reversal) - India (nothing interesting) - Philippines (high volatility) - New Zealand/Bangladesh (nothing interesting) - Cambodia (negative to positive) => 3 
+Other Regional Partners (Interesting patterns) -Australia (2021 reversal) - India (nothing interesting) - Philippines (high volatility) - New Zealand/Bangladesh (nothing interesting) - Cambodia (negative to positive) =\> 3
 
-Other Major European Partners (Russia War) - Germany - France - UK => 3
+Other Major European Partners (Russia War) - Germany - France - UK =\> 3
 
-Other partners - Volatility is further observed with smaller trading partners
-- Brazil, Mexico (high volatility towards end 2022), Brunei, Ireland, Israel => 5
+Other partners - Volatility is further observed with smaller trading partners - Brazil, Mexico (high volatility towards end 2022), Brunei, Ireland, Israel =\> 5
 
 Others are low intensity or too small in terms of volume
-
 
 ### 3.2 Bi-lateral Trade of Singapore against selected partners
 
 #### 3.2.1 Singapore Trade Balance
 
-```{r, Singapore Trade Balance Plot}
+```{r, Function Singapore Trade Balance Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| fig-height: 8
-#| fig-width: 10
 
 #selected_countries = c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "Philippines", "Cambodia", "Germany", "France", "United Kingdom", "Brazil", "Mexico", "Brunei Darussalam", "Ireland", "Israel" )
 
-selected_countries = c("Mainland China", "Malaysia", "United States", "South Korea")
+plot_braid_ctry <- function(selected_countries, showlegend) {
 
 sgtrade_cln_long <- sgtrade_cln |> 
   select(Month_Year, Countries, Year, Import_SGD, Export_SGD) |> 
@@ -641,7 +643,9 @@ avg_total_ctry_2020 <- sgtrade_cln |>
   filter(Year == 2020) |> 
   group_by (Year, Countries) |> 
   summarise(import = mean(Import_SGD),
-            export = mean(Export_SGD))
+            export = mean(Export_SGD)) |> 
+  mutate(Year_date = as.Date(paste(Year, "-01-01", sep = ""))) |> 
+  rowwise() |> mutate(min_import_export = min(import, export))
 
 ggplot() +
   
@@ -650,7 +654,8 @@ ggplot() +
             aes(x = Month_Year,
                 y = Values,
                 color = Type),
-            linewidth = 1.2) +
+            linewidth = 1.2,
+            show.legend = showlegend) +
   
   geom_braid(data = sgtrade_cln |> 
               filter(Countries %in% selected_countries),
@@ -662,7 +667,7 @@ ggplot() +
   
   guides(linetype = "none", fill = "none") +
   
-    geom_hline(data = avg_total_ctry_2020|> 
+  geom_hline(data = avg_total_ctry_2020|> 
               filter(Countries %in% selected_countries),
              aes(yintercept = export), 
              col = "darkblue",
@@ -675,6 +680,14 @@ ggplot() +
              col = "darkred",
              linewidth=0.8,
              linetype = "dashed") +
+  
+  geom_text(data = avg_total_ctry_2020|> 
+               filter(Countries %in% selected_countries),
+            aes(x = Year_date,
+                y = min_import_export - 0.25*min_import_export,
+                label = "Avg 2020"),
+            size = 3.5,
+            nudge_x = +920) +
   
   scale_color_manual(values = c("darkblue", "darkred"),
                      labels = c("Export", "Import"),
@@ -690,7 +703,7 @@ ggplot() +
   scale_y_continuous("Trade Values",
                      labels = function(x){paste0('$', abs(x/1000000000),'B')}) +
     
-  facet_wrap(~Countries) +
+  facet_grid(.~Countries) +
   
   cowplot::theme_cowplot() +
   
@@ -701,6 +714,40 @@ ggplot() +
         panel.border = element_rect(color = "grey60", linetype = "solid", linewidth = 0.5),
         panel.spacing.x = unit(0,"line"),
         panel.spacing.y = unit(0,"line")) 
+
+}
 ```
 
+```{r, Singapore Trade Balance Plot}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 12
+#| fig-width: 10
 
+p1a <- plot_braid_ctry(c("Mainland China", "Malaysia", "United States", "South Korea"), showlegend = FALSE)
+p1 <- p1a + labs(subtitle = "Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;<br>recession shrinks trade further in mid-2022") +
+  theme(plot.subtitle = element_markdown())
+
+p2a <- plot_braid_ctry(c("Australia", "India", "Philippines", "Cambodia"), showlegend = FALSE)
+p2 <- p2a + labs(subtitle = "but exports recover with ***other regional partners***, although it also slows down with recession") +
+  theme(plot.subtitle = element_markdown())
+
+p3a <- plot_braid_ctry(c("Germany", "France", "Switzerland", "United Kingdom"), showlegend = FALSE)
+p3 <- p3a + labs(subtitle = "Imports rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish") +
+  theme(plot.subtitle = element_markdown())
+
+p4a <- plot_braid_ctry(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"), showlegend = FALSE)
+p4 <- p4a + labs(subtitle = "Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand") +
+  theme(plot.subtitle = element_markdown())
+
+final_plot <- p1 / p2 / p3 / p4
+
+final_plot + plot_annotation(
+  title = "Merchandise <span style = 'color:darkblue'>Export</span> and <span style = 'color:darkred'>Import</span> Trade Values of Singapore (in SGD)<br>by selected trading partners, 2020-2022",
+  caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+  theme = theme(plot.title = element_markdown(face = "bold", size = 18))
+)
+
+```
+
+***tomato***
