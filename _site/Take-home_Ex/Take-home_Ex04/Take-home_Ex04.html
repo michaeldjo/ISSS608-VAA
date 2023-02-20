@@ -303,11 +303,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#exploratory-data-visualisation" id="toc-exploratory-data-visualisation" class="nav-link" data-scroll-target="#exploratory-data-visualisation">3.1 Exploratory Data Visualisation</a>
   <ul>
   <li><a href="#overall-singapore-trade-balance" id="toc-overall-singapore-trade-balance" class="nav-link" data-scroll-target="#overall-singapore-trade-balance">3.1.1 Overall Singapore Trade Balance</a></li>
-  <li><a href="#horizon-plots" id="toc-horizon-plots" class="nav-link" data-scroll-target="#horizon-plots">3.1.2 Horizon Plots</a>
-  <ul class="collapse">
-  <li><a href="#based-on-normalised_trade_balance" id="toc-based-on-normalised_trade_balance" class="nav-link" data-scroll-target="#based-on-normalised_trade_balance">3.1.2.1 Based on Normalised_Trade_Balance</a></li>
-  <li><a href="#based-on-rate-of-change-of-trade-balance" id="toc-based-on-rate-of-change-of-trade-balance" class="nav-link" data-scroll-target="#based-on-rate-of-change-of-trade-balance">3.1.2.2 Based on Rate of Change of Trade Balance</a></li>
-  </ul></li>
+  <li><a href="#horizon-plots" id="toc-horizon-plots" class="nav-link" data-scroll-target="#horizon-plots">3.1.2 Horizon Plots</a></li>
   </ul></li>
   <li><a href="#bi-lateral-trade-of-singapore-against-selected-partners" id="toc-bi-lateral-trade-of-singapore-against-selected-partners" class="nav-link" data-scroll-target="#bi-lateral-trade-of-singapore-against-selected-partners">3.2 Bi-lateral Trade of Singapore against selected partners</a>
   <ul>
@@ -1663,9 +1659,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="horizon-plots" class="level4">
 <h4 class="anchored" data-anchor-id="horizon-plots">3.1.2 Horizon Plots</h4>
-<section id="based-on-normalised_trade_balance" class="level5">
-<h5 class="anchored" data-anchor-id="based-on-normalised_trade_balance">3.1.2.1 Based on Normalised_Trade_Balance</h5>
 <p>Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Normalised Trade Balance</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Rate of Change of Trade Balance</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1728,15 +1726,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="Take-home_Ex04_files/figure-html/Horizon Plot Trade Balance-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-<p>Observation Select countries to choose</p>
-<p>Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)</p>
-<p>Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)</p>
-<p>Other Major European Partners (Russia War) - Germany - France - UK</p>
-<p>Other partners - Brazil, Mexico, Brunei, Ireland, Israel</p>
-<p>Others are due to - mid-range - one intensity</p>
-</section>
-<section id="based-on-rate-of-change-of-trade-balance" class="level5">
-<h5 class="anchored" data-anchor-id="based-on-rate-of-change-of-trade-balance">3.1.2.2 Based on Rate of Change of Trade Balance</h5>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1801,6 +1792,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="Take-home_Ex04_files/figure-html/Horizon Plot Trade Balance Change-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
+</div>
+</div>
+</div>
+<p>Observation Select countries to choose</p>
+<p>Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)</p>
+<p>Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)</p>
+<p>Other Major European Partners (Russia War) - Germany - France - UK</p>
+<p>Other partners - Brazil, Mexico, Brunei, Ireland, Israel</p>
+<p>Others are due to - mid-range - one intensity</p>
 <p>Observation Select countries to choose</p>
 <p>Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) =&gt; 4</p>
 <p>Other Regional Partners (Interesting patterns) -Australia (2021 reversal) - India (nothing interesting) - Philippines (high volatility) - New Zealand/Bangladesh (nothing interesting) - Cambodia (negative to positive) =&gt; 3</p>
@@ -1809,15 +1809,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Others are low intensity or too small in terms of volume</p>
 </section>
 </section>
-</section>
 <section id="bi-lateral-trade-of-singapore-against-selected-partners" class="level3">
 <h3 class="anchored" data-anchor-id="bi-lateral-trade-of-singapore-against-selected-partners">3.2 Bi-lateral Trade of Singapore against selected partners</h3>
 <section id="singapore-trade-balance-performance" class="level4">
 <h4 class="anchored" data-anchor-id="singapore-trade-balance-performance">3.2.1 Singapore Trade Balance Performance</h4>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Overall Singapore</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Selected Countries</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Overall Singapore</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Selected Countries</a></li></ul>
 <div class="tab-content">
-<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1857,7 +1856,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -2028,110 +2027,121 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>arrowp1<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p2</span></span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>p2_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">""</span>, <span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Reversal in</span><span class="sc">\n</span><span class="st">Balance"</span>),  </span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>p2_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Covid Waves"</span>, <span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Reversal in</span><span class="sc">\n</span><span class="st">Balance"</span>),  </span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">0</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>))</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>))</span>
 <span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
-<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
-<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">0</span>, <span class="dv">2000000000</span>, <span class="dv">1600000000</span>),</span>
-<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
-<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">0</span>, <span class="dv">1400000000</span>, <span class="dv">200000000</span>))</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">1850000000</span>, <span class="dv">2000000000</span>, <span class="dv">1700000000</span>),</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-04-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">600000000</span>, <span class="dv">1400000000</span>, <span class="dv">200000000</span>))</span>
 <span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>p2_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p3</span></span>
-<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>p3_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">""</span>),  </span>
-<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
-<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-9-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1850000000</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-06-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1100000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>p2_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
 <span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
-<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-3-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">1300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>p3_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p3</span></span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>p3_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Exports"</span>),  </span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-9-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-6-01"</span>)),</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>))</span>
 <span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
-<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p4</span></span>
-<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>p4_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"Enhanced</span><span class="sc">\n</span><span class="st">Partnership"</span>, <span class="st">""</span>, <span class="st">""</span>),  </span>
-<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
-<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">600000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-3-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>)),</span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>),</span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">1300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1200000000</span>))</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a>p3_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
 <span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
-<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">600000000</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-03-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>p4_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p4</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>p4_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Reduced Trade</span><span class="sc">\n</span><span class="st">Deficit"</span>, <span class="st">"Enhanced</span><span class="sc">\n</span><span class="st">Partnership"</span>, <span class="st">""</span>, <span class="st">""</span>),  </span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
 <span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
-<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the graph</span></span>
-<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>p1a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p1a <span class="sc">+</span> </span>
-<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p1_text,</span>
-<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp1, </span>
-<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;&lt;br&gt;recession shrinks trade further in mid-2022"</span>) <span class="sc">+</span></span>
-<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a>p2a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p2a <span class="sc">+</span> </span>
-<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p2_text,</span>
-<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2, </span>
-<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Exports recover with ***other regional partners***; recession impact is visible, execpt with India"</span>) <span class="sc">+</span></span>
-<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>p3a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p3a <span class="sc">+</span> </span>
-<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p3_text,</span>
-<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp3, </span>
-<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Imports rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish"</span>) <span class="sc">+</span></span>
-<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a>p4a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p4a <span class="sc">+</span> </span>
-<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p4_text,</span>
-<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y,</span>
-<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp4, </span>
-<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand"</span>) <span class="sc">+</span></span>
-<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p2 <span class="sc">/</span> p3 <span class="sc">/</span> p4</span>
-<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>final_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(</span>
-<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Merchandise &lt;span style = 'color:#0072B2'&gt;Export&lt;/span&gt; and &lt;span style = 'color:#D55E00'&gt;Import&lt;/span&gt; Trade Values of Singapore (in SGD)&lt;br&gt;by selected trading partners, 2020-2022"</span>,</span>
-<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">18</span>))</span>
-<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-9-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-03-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">250000000</span>, <span class="dv">300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>p4_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the graph</span></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>p1a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p1a <span class="sc">+</span> </span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p1_text,</span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp1, </span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;&lt;br&gt;recession shrinks trade further in mid-2022"</span>) <span class="sc">+</span></span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>p2a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p2a <span class="sc">+</span> </span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p2_text,</span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2, </span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2a, </span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Exports bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022"</span>) <span class="sc">+</span></span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>p3a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p3a <span class="sc">+</span> </span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p3_text,</span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp3, </span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Imports rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish"</span>) <span class="sc">+</span></span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a>p4a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>), <span class="at">showlegend =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p4a <span class="sc">+</span> </span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p4_text,</span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y,</span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp4, </span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand"</span>) <span class="sc">+</span></span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p2 <span class="sc">/</span> p3 <span class="sc">/</span> p4</span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a>final_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(</span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Merchandise &lt;span style = 'color:#0072B2'&gt;Export&lt;/span&gt; and &lt;span style = 'color:#D55E00'&gt;Import&lt;/span&gt; Trade Values of Singapore (in SGD)&lt;br&gt;by selected trading partners, 2020-2022"</span>,</span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">18</span>))</span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Singapore Trade Balance Plot-1.png" class="img-fluid" width="960"></p>
@@ -2174,9 +2184,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Creating function to plot Trade Balances</p>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">Trade Volume</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Import</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false">Export</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false">Trade Balance</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Trade Volume</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Import</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Export</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Trade Balance</a></li></ul>
 <div class="tab-content">
-<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>plot_slopegraph_tradevol <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -2208,7 +2218,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>plot_slopegraph_import <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -2240,7 +2250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>plot_slopegraph_export <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -2272,7 +2282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>plot_slopegraph_tradebal <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  </span>
@@ -2307,9 +2317,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">Trade Volume</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Import</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false">Export</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false">Trade Balance</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Trade Volume</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Import</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false">Export</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false">Trade Balance</a></li></ul>
 <div class="tab-content">
-<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -2320,7 +2330,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -2331,7 +2341,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -2342,7 +2352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
 <div class="cell">
 <details>
 <summary>Show the code</summary>

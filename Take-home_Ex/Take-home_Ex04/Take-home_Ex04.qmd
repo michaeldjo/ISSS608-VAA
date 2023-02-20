@@ -476,9 +476,11 @@ ggplot() +
 
 #### 3.1.2 Horizon Plots
 
-##### 3.1.2.1 Based on Normalised_Trade_Balance
-
 Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
+
+::: panel-tabset
+
+##### Normalised Trade Balance
 
 ```{r}
 #| code-fold: true
@@ -542,19 +544,7 @@ sgtrade_cln |> ggplot() +
   
 ```
 
-Observation Select countries to choose
-
-Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)
-
-Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
-
-Other Major European Partners (Russia War) - Germany - France - UK
-
-Other partners - Brazil, Mexico, Brunei, Ireland, Israel
-
-Others are due to - mid-range - one intensity
-
-##### 3.1.2.2 Based on Rate of Change of Trade Balance
+##### Rate of Change of Trade Balance
 
 ```{r}
 #| code-fold: true
@@ -618,6 +608,20 @@ sgtrade_cln |>
          subtitle = "Singapore's trade balance change (MoM%) against trading partners arranged by trade volumes, 2020 to 2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
 ```
+:::
+
+Observation Select countries to choose
+
+Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)
+
+Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
+
+Other Major European Partners (Russia War) - Germany - France - UK
+
+Other partners - Brazil, Mexico, Brunei, Ireland, Israel
+
+Others are due to - mid-range - one intensity
+
 
 Observation Select countries to choose
 
@@ -854,48 +858,56 @@ p1_text$Countries <- factor(c("Mainland China", "Malaysia", "United States", "So
 arrowp1$Countries <- factor(c("Mainland China", "Malaysia", "United States", "South Korea"))
 
 #Specifying the annotation for p2
-p2_text <- data.frame(label = c("Start of\nrecession", "", "Start of\nrecession", "Reversal in\nBalance"),  
+p2_text <- data.frame(label = c("Start of\nrecession", "Covid Waves", "Start of\nrecession", "Reversal in\nBalance"),  
                          Countries = c("Australia", "India", "Philippines", "Cambodia"),
-                         x = c(as.Date("2020-08-01"), 0, as.Date("2020-08-01"), as.Date("2020-09-01")),
-                         y = c(2000000000, 0, 2000000000, 2000000000))
+                         x = c(as.Date("2020-08-01"), as.Date("2020-10-01"), as.Date("2020-08-01"), as.Date("2020-09-01")),
+                         y = c(2000000000, 2000000000, 2000000000, 2000000000))
 
 arrowp2<- data.frame(Countries = c("Australia", "India", "Philippines", "Cambodia"),
-                      x = c(as.Date("2021-02-01"), 0, as.Date("2021-02-01"), as.Date("2020-09-01")),
-                      y = c(2000000000, 0, 2000000000, 1600000000),
-                      xend = c(as.Date("2022-07-01"), 0, as.Date("2022-07-01"), as.Date("2020-10-01")),
-                      yend = c(2000000000, 0, 1400000000, 200000000))
+                      x = c(as.Date("2021-02-01"), as.Date("2020-10-01"), as.Date("2021-02-01"), as.Date("2020-09-01")),
+                      y = c(2000000000, 1850000000, 2000000000, 1700000000),
+                      xend = c(as.Date("2022-07-01"), as.Date("2020-04-01"), as.Date("2022-07-01"), as.Date("2020-10-01")),
+                      yend = c(2000000000, 600000000, 1400000000, 200000000))
+
+arrowp2a<- data.frame(Countries = c("Australia", "India", "Philippines", "Cambodia"),
+                      x = c(as.Date("1970-01-01"), as.Date("2020-10-01"), 0, 0),
+                      y = c(0, 1850000000, 0, 0),
+                      xend = c(as.Date("1970-01-01"), as.Date("2021-06-01"), 0, 0),
+                      yend = c(0, 1100000000, 0, 0))
 
 p2_text$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
 
 arrowp2$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
 
+arrowp2a$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
+
 #Specifying the annotation for p3
-p3_text <- data.frame(label = c("Start of\nrecession", "", "", ""),  
+p3_text <- data.frame(label = c("Start of\nrecession", "", "", "Surge in\nExports"),  
                          Countries = c("Germany", "France", "Switzerland", "United Kingdom"),
-                         x = c(as.Date("2020-9-01"), 0, 0, 0),
-                         y = c(1700000000, 0, 0, 0))
+                         x = c(as.Date("2020-9-01"), 0, 0, as.Date("2022-6-01")),
+                         y = c(1700000000, 0, 0, 1700000000))
 
 arrowp3<- data.frame(Countries = c("Germany", "France", "Switzerland", "United Kingdom"),
-                      x = c(as.Date("2021-3-01"), 0, 0, 0),
-                      y = c(1700000000, 0, 0, 0),
-                      xend = c(as.Date("2022-08-01"), 0, 0, 0),
-                      yend = c(1300000000, 0, 0, 0))
+                      x = c(as.Date("2021-3-01"), 0, 0, as.Date("2022-01-01")),
+                      y = c(1700000000, 0, 0, 1700000000),
+                      xend = c(as.Date("2022-08-01"), 0, 0, as.Date("2020-09-01")),
+                      yend = c(1300000000, 0, 0, 1200000000))
 
 p3_text$Countries <- factor(c("Germany", "France", "Switzerland", "United Kingdom"))
 
 arrowp3$Countries <- factor(c("Germany", "France", "Switzerland", "United Kingdom"))
 
 #Specifying the annotation for p4
-p4_text <- data.frame(label = c("", "Enhanced\nPartnership", "", ""),  
+p4_text <- data.frame(label = c("Reduced Trade\nDeficit", "Enhanced\nPartnership", "", ""),  
                          Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
-                         x = c(as.Date("1970-01-01"), as.Date("2020-10-01"), 0, 0),
-                         y = c(0, 600000000, 0, 0))
+                         x = c(as.Date("2020-12-01"), as.Date("2020-10-01"), 0, 0),
+                         y = c(600000000, 600000000, 0, 0))
 
 arrowp4<- data.frame(Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
-                      x = c(as.Date("1970-01-01"), as.Date("2021-05-01"), 0, 0),
-                      y = c(0, 600000000, 0, 0),
-                      xend = c(as.Date("1970-01-01"), as.Date("2022-03-01"), 0, 0),
-                      yend = c(0, 300000000, 0, 0))
+                      x = c(as.Date("2021-9-01"), as.Date("2021-05-01"), 0, 0),
+                      y = c(600000000, 600000000, 0, 0),
+                      xend = c(as.Date("2022-02-01"), as.Date("2022-03-01"), 0, 0),
+                      yend = c(250000000, 300000000, 0, 0))
 
 p4_text$Countries <- factor(c("Mexico", "New Zealand", "Brunei Darussalam", "Canada"))
 
@@ -923,7 +935,10 @@ p2 <- p2a +
   geom_segment(data = arrowp2, 
                aes(x = x, xend = xend, y = y, yend = yend), 
                colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
-  labs(subtitle = "Exports recover with ***other regional partners***; recession impact is visible, execpt with India") +
+  geom_segment(data = arrowp2a, 
+               aes(x = x, xend = xend, y = y, yend = yend), 
+               colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
+  labs(subtitle = "Exports bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022") +
   theme(plot.subtitle = element_markdown())
 
 p3a <- plot_braid_ctry(c("Germany", "France", "Switzerland", "United Kingdom"), showlegend = FALSE)
