@@ -975,24 +975,24 @@ Other countries are not selected because of two possible conditions : 1) their t
 
 In the previous section, 16 Singapore's trading partners have been identified to be further examined. This section aims to dissect the general overview further to see whether the patterns identified above can be explained by individual country.
 
-#### 3.2.1 Singapore Trade Balance in monthly level
+#### 3.2.1 Singapore Trade Performance in monthly level
 
 Having a line plot depicting Singapore trade activities are useful, but it might not be obvious enough to spot patterns at the monthly level. As such, calendar heatmap will be used.
 
 ##### 3.2.2.1 Design Consideration
 
--   Two heatmaps will be generated, one for the entire Singapore trade balance and one faceted by each country (16 countries)
+-   Three heatmaps will be generated: two for the entire Singapore's trade volume and trade balance and one depicting trade balance faceted by each country (16 countries). It does not make sense to depict trade volume by country as the major partners will dominate the map.
 
 -   Grid design with months in x-axis and year in y-axis. They have to be ordered with the earliest year (2020) being on top
 
 -   No text will be displayed as the calendar map is to show pattern instead of showing absolute values
 
--   As Singapore overall trade balance is mostly positive, a imbalanced color scale needs to be used to ensure the neutral color remains at zero
+-   For Plot 2 and 3: As Singapore overall trade balance is mostly positive, a imbalanced color scale needs to be used to ensure the neutral color remains at zero.
 
 ::: callout-tip
 Some details in the plot can help to enhance the visual aesthetics, such as:
 
--   Using diverging colorblind friendly palette
+-   Using colorblind friendly palette - sequential for Plot1 and diverging for Plo2 and 3
 
 -   Display the values in Billions SGD rather than the raw values
 
@@ -1005,7 +1005,7 @@ Some details in the plot can help to enhance the visual aesthetics, such as:
 
 Two tibbles are created for the following purpose:
 
--   ***totalsgtrade_calmap*** will be used to plot the first map displaying the entire Singapore trade balance. Hence, we can utilise ***totalsgtrade*** (refer to @sec-3.1.1.2 ) which already contains the total Singapore import and export values, irrespective of countries. However, the **Month** and **Trade_Balance** variables need to be regenerated
+-   ***totalsgtrade_calmap*** will be used to plot the first map displaying the entire Singapore trade balance. Hence, we can utilise ***totalsgtrade*** (refer to @sec-3.1.1.2 ) which already contains the total Singapore import and export values, irrespective of countries. However, the **Month**, **Trade_Balance**, and **Trade Volumes** variables need to be regenerated
 -   ***sgtrade_calmap*** will be used to plot the second map which is faceted by selected countries. The countries will need to be ordered based on total trade volumes using `forcats::fct_reorder()`
 -   Create variable called ***selected_countries*** to contain string of the 16 countries
 
@@ -1020,7 +1020,8 @@ It is important to divide the newly calculated Trade Balance by 1B to display th
 #Creating new tibbles to be used for geom_tile
 totalsgtrade_calmap <- totalsgtrade |> 
   mutate(Month = factor(format(Month_Year,"%b")), .after = Year) |> 
-  mutate(Trade_Balance = (Export - Import)/1000000000)
+  mutate(Trade_Balance = (Export - Import)/1000000000,
+         Trade_Volumes = (Export + Import)/1000000000)
 
 sgtrade_calmap <- sgtrade_cln |> 
   mutate(Trade_Balance = Trade_Balance_SGD/1000000000)
@@ -1036,13 +1037,15 @@ selected_countries = c("Mainland China", "Malaysia", "United States", "South Kor
 
 Steps used to create the two plots:
 
--   Base plot is created using `ggplot2::geom_tile()`, specifying the `fill` argument by **Trade_Balance** and `color` (tile border) argument as white. For the second plot, the data is further filtered by ***selected_countries***
+-   Base plot is created using `ggplot2::geom_tile()`, specifying the `fill` argument by **Trade_Volumes** (Plot 1) or **Trade_Balance** (Plot 2 and 3) and `color` (tile border) argument as white. For the second plot, the data is further filtered by ***selected_countries***
 
     ::: callout-tip
     The **Year** variable is converted to factor to be manually ordered to ensure that it appears in ascending order from the top to bottom
     :::
 
--   Setting imbalanced color scale using `scale_fill_gradientn()`, specifying that midpoint is 0. The color chosen is colorblind-friendly diverging palette
+-   For Plot1: `scale_fill_gradient()` is used to specify high and low within sequential color scheme.
+
+-   For Plot2 and 3: Setting imbalanced color scale using `scale_fill_gradientn()`, specifying that midpoint is 0. The color chosen is colorblind-friendly diverging palette
 
 -   `coord_equal()` is used to ensure equal scales for both x and y coordinates. This will create square grids
 
@@ -1059,9 +1062,51 @@ Steps used to create the two plots:
     :::
 
 ::: panel-tabset
-##### Overall Singapore
+##### Overall Singapore Trade Volume
 
-```{r, Calendar Heatmap Total}
+```{r, Calendar Heatmap Volume Total}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-width: 10
+#| fig-height: 3.5
+
+#Plotting the base plot
+ggplot(totalsgtrade_calmap |> 
+         mutate(Year = factor(Year, levels =c(2022,2021,2020))), 
+       aes(x = Month, 
+           y = Year, 
+           fill = Trade_Volumes)) + 
+  
+  geom_tile(color = "white") + 
+
+#Setting the colors for the main plot
+  scale_fill_gradient(name = "Trade Volume (Billions SGD)",
+                    low = "#D0E6F3", 
+                    high = "#0072B2") +
+
+#Ensure equal scales for both coordinates  
+  coord_equal() +
+  
+#Setting the theme to remove the x and y axis
+  theme_tufte(base_family = "Helvetica") +
+  
+  theme(axis.ticks = element_blank(),
+      legend.title = element_text(size = 8),
+      legend.text = element_text(size = 6),
+      plot.title = element_text(face = "bold")) +
+  
+#Adding title, subtitle, and captions
+  labs(x = NULL, 
+     y = NULL, 
+     title = "Singapore's trade volume rebounds amid Covid recovery from March 2021, peaking in July 2022;\nslight slowdown observed from Oct 2022",
+     subtitle = "Singapore Trade Volume by calendar months, 2020-2022",
+     caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
+
+```
+
+##### Overall Singapore Trade Balance
+
+```{r, Calendar Heatmap Balance Total}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-width: 10
@@ -1155,11 +1200,12 @@ ggplot(sgtrade_calmap |>
 
 ###### [Overall Singapore Calendar Heatmap]{.underline}
 
+-   Trade volumes continue to recover from March 2021 onward post Covid-restriction throughout 2020. The volumes reached peak in March and July 2022. However, slight slowdown is observed from October 2022 following the onset of recession.
 -   Similar insight can be garnered from @sec-3.1.1.3 with Singapore maintaining trade surplus throughout duration, except for brief period in May 2022
 -   In 2020: Trade surplus gains momentum from early 2020, peaking in Aug before dropping further towards end of the year. Singapore still maintains healthy trade balance despite Covid-19
 -   In 2021: Trade surplus is clearly stronger than 2020, peaking in both Mar and Aug with Covid-19 recovery underway
 -   In 2022: Trade surplus is clearly thinning from Mar 2022 onward, with peak in Feb (prior to Russia-Ukraine War) and Sep 2022 (onset of recession), which are lower than previous 2 years
--   No other clear seasonality observed and without trade volume as reference, it is hard to gauge the intensity of trade activities
+-   No other clear seasonality observed
 
 ###### [Selected Countries Calendar Heatmap]{.underline}
 
