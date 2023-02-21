@@ -306,6 +306,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#design-consideration" id="toc-design-consideration" class="nav-link" data-scroll-target="#design-consideration">3.1.1.1 Design Consideration</a></li>
   <li><a href="#preparation-of-visualisation" id="toc-preparation-of-visualisation" class="nav-link" data-scroll-target="#preparation-of-visualisation">3.1.1.2 Preparation of visualisation</a></li>
+  <li><a href="#insights" id="toc-insights" class="nav-link" data-scroll-target="#insights">3.1.1.3 Insights</a></li>
   </ul></li>
   <li><a href="#horizon-plots" id="toc-horizon-plots" class="nav-link" data-scroll-target="#horizon-plots">3.1.2 Horizon Plots</a></li>
   </ul></li>
@@ -1325,6 +1326,7 @@ Tip
 <li><p>Display the values in Billions SGD rather than the raw values</p></li>
 <li><p>Using arrows to aid annotations</p></li>
 <li><p>Clear intent in title, highlighting the story</p></li>
+<li><p>Label the lines instead of using legend</p></li>
 </ul>
 </div>
 </div>
@@ -1364,11 +1366,46 @@ This is created by grouping <strong><em>sgtrade_cln</em></strong> data by <stron
 </section>
 <section id="plotting-the-main-graph" class="level6">
 <h6 class="anchored" data-anchor-id="plotting-the-main-graph"><u>Plotting the main graph</u></h6>
-<p>Three tibbles are created</p>
+<p>Steps used to create the plots:</p>
+<ul>
+<li><p>Base plot is created using ggplot2::geom_line and ggbraid::geom_braid</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that <strong><em>totalsgtrade_long</em></strong> is used in <code>geom_line</code> to allow grouping the <strong>Type</strong> (Import or Export) by color and <strong><em>totalsgtrade</em></strong> is used in <code>geom_braid</code>. The <code>fill</code> argument of <code>geom_braid</code> is specified as <code>Import&lt;Export</code> as Trade Surplus happens when Import &lt; Export, and <code>alpha</code> specified as 0.5 to provide a degree of opacity.</p>
+</div>
+</div></li>
+<li><p>Remove the legend using <code>ggplot2::guides()</code> and add the labels at the end of each line using <code>directlabels:geom_dl()</code>. Note the <code>method</code> argument specifies gap between the label and the line</p></li>
+<li><p>Plotting the reference line using <code>ggplot2::geom_hline</code>. The <code>linetype</code> argument is specified as <code>"dashed"</code> to create dashed reference line. Add text on each reference line to indicate “Average 2020” using <code>ggplot2::annotate()</code></p></li>
+<li><p>Set the colors of the line and ribbons using <code>scale_color_manual()</code> and <code>scale_color_fill()</code></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The color choice is based on this <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40">article</a></p>
+</div>
+</div></li>
+<li><p>As the x-axis is datetime, <code>scale_x_date()</code> needs to be used, indicating the <code>limits</code> of plots, <code>date_breaks</code>, and <code>date_labels</code> format. It is good to set the limit on the first time frame (January 2020) to remove gap on the left-hand side of the graph, hence <code>expand</code> argument is specified as c(0,0)</p></li>
+<li><p>In order to convert the y-axis in terms of Billions SGD, we need to specify it in the <code>labels</code> argument of <code>scale_y_continuous</code></p></li>
+<li><p>Set the theme and add titles, subtitles, and captions using <code>theme()</code> and <code>labs()</code> functions</p></li>
+</ul>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the main plot</span></span>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>br_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> totalsgtrade_long,</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Month_Year,</span>
@@ -1415,7 +1452,7 @@ This is created by grouping <strong><em>sgtrade_cln</em></strong> data by <stron
 <span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>           <span class="at">size=</span><span class="dv">4</span>, </span>
 <span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>           <span class="at">color=</span><span class="st">"#0072B2"</span>) <span class="sc">+</span></span>
 <span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> avg_total_2020<span class="sc">$</span>import), </span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> avg_total_2020<span class="sc">$</span>import), </span>
 <span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>             <span class="at">col=</span><span class="st">"#D55E00"</span>, </span>
 <span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth=</span><span class="fl">0.8</span>,</span>
 <span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
@@ -1455,9 +1492,27 @@ This is created by grouping <strong><em>sgtrade_cln</em></strong> data by <stron
 <span id="cb18-85"><a href="#cb18-85" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions   </span></span>
 <span id="cb18-86"><a href="#cb18-86" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Since early 2021, Singapore's trade activities were recovering from Covid-19</span><span class="sc">\n</span><span class="st">but slowed down in mid-2022"</span>,</span>
 <span id="cb18-87"><a href="#cb18-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"Total Merchandise Export and Import Trade Value of Singapore (in SGD), 2020-2022"</span>,</span>
-<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-88"><a href="#cb18-88" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>)</span>
+<span id="cb18-89"><a href="#cb18-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-90"><a href="#cb18-90" aria-hidden="true" tabindex="-1"></a>br_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output-display">
+<p><img src="Take-home_Ex04_files/figure-html/Overall Singapore Trade Balance-1.png" class="img-fluid" width="960"></p>
 </div>
+</div>
+</section>
+</section>
+<section id="insights" class="level5">
+<h5 class="anchored" data-anchor-id="insights">3.1.1.3 Insights</h5>
+<ul>
+<li><p>Overall, Singapore maintains trade surplus throughout the duration, except for brief period in May 2022</p></li>
+<li><p>In March 2020, both Singapore import and export fell further, coinciding with announcement of further Covid-19 restrictions (i.e., circuit breaker)</p></li>
+<li><p>With gradual reopening of economy (i.e., Phase 3 reopening) in Dec 2020 to February 2021, trade seems to rebound back above the 2020 average. Throughout 2021, both import and export continues to rise</p></li>
+<li><p>Sudden dip observed around February 2022, coinciding with the start of Russia-Ukraine War</p></li>
+<li><p>Trade surplus seems to be thinning in 2022, but activities remain high, reaching its peak in August/September 2022</p></li>
+<li><p>Gradual decline of trade happens after the 3-year peak marking recession headwinds post Q3 2022</p></li>
+</ul>
+<p>With such insights observed above, it makes sense to include them in the plot as well. Hence <code>annotate()</code> functions are used to add the text label and arrows. Refer to code below for more details.</p>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -1499,7 +1554,7 @@ This is created by grouping <strong><em>sgtrade_cln</em></strong> data by <stron
 <span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">+</span></span>
 <span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"label"</span>,</span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>),</span>
+<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2021-12-01"</span>),</span>
 <span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">38000000000</span>,</span>
 <span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Start of Russia-Ukraine War"</span>,</span>
 <span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="st">"left"</span>,</span>
@@ -1517,28 +1572,45 @@ This is created by grouping <strong><em>sgtrade_cln</em></strong> data by <stron
 <span id="cb19-54"><a href="#cb19-54" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">+</span></span>
 <span id="cb19-55"><a href="#cb19-55" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb19-56"><a href="#cb19-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"label"</span>,</span>
-<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2022-05-01"</span>),</span>
-<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">45000000000</span>,</span>
-<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Recession headwinds</span><span class="sc">\n</span><span class="st">results in trade slumps"</span>,</span>
+<span id="cb19-57"><a href="#cb19-57" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2021-08-01"</span>),</span>
+<span id="cb19-58"><a href="#cb19-58" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">58000000000</span>,</span>
+<span id="cb19-59"><a href="#cb19-59" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"3-Year High</span><span class="sc">\n</span><span class="st">Trade Activities"</span>,</span>
 <span id="cb19-60"><a href="#cb19-60" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="st">"left"</span>,</span>
 <span id="cb19-61"><a href="#cb19-61" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"black"</span></span>
 <span id="cb19-62"><a href="#cb19-62" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">+</span></span>
 <span id="cb19-63"><a href="#cb19-63" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb19-64"><a href="#cb19-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"segment"</span>,</span>
-<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-01"</span>), </span>
-<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">46000000000</span>, </span>
-<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>           <span class="at">xend =</span> <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>),  </span>
-<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>           <span class="at">yend =</span> <span class="dv">58000000000</span>,  </span>
+<span id="cb19-65"><a href="#cb19-65" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2021-12-25"</span>), </span>
+<span id="cb19-66"><a href="#cb19-66" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">58000000000</span>, </span>
+<span id="cb19-67"><a href="#cb19-67" aria-hidden="true" tabindex="-1"></a>           <span class="at">xend =</span> <span class="fu">as.Date</span>(<span class="st">"2022-06-01"</span>),  </span>
+<span id="cb19-68"><a href="#cb19-68" aria-hidden="true" tabindex="-1"></a>           <span class="at">yend =</span> <span class="dv">60000000000</span>,  </span>
 <span id="cb19-69"><a href="#cb19-69" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"grey40"</span>,</span>
 <span id="cb19-70"><a href="#cb19-70" aria-hidden="true" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,</span>
 <span id="cb19-71"><a href="#cb19-71" aria-hidden="true" tabindex="-1"></a>                         <span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"inches"</span>))</span>
-<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>           ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-72"><a href="#cb19-72" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">+</span></span>
+<span id="cb19-73"><a href="#cb19-73" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-74"><a href="#cb19-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"label"</span>,</span>
+<span id="cb19-75"><a href="#cb19-75" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2022-05-01"</span>),</span>
+<span id="cb19-76"><a href="#cb19-76" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">45000000000</span>,</span>
+<span id="cb19-77"><a href="#cb19-77" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"Recession headwinds</span><span class="sc">\n</span><span class="st">results in trade slumps"</span>,</span>
+<span id="cb19-78"><a href="#cb19-78" aria-hidden="true" tabindex="-1"></a>           <span class="at">hjust =</span> <span class="st">"left"</span>,</span>
+<span id="cb19-79"><a href="#cb19-79" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb19-80"><a href="#cb19-80" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">+</span></span>
+<span id="cb19-81"><a href="#cb19-81" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb19-82"><a href="#cb19-82" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="at">geom =</span> <span class="st">"segment"</span>,</span>
+<span id="cb19-83"><a href="#cb19-83" aria-hidden="true" tabindex="-1"></a>           <span class="at">x =</span> <span class="fu">as.Date</span>(<span class="st">"2022-09-01"</span>), </span>
+<span id="cb19-84"><a href="#cb19-84" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="dv">46000000000</span>, </span>
+<span id="cb19-85"><a href="#cb19-85" aria-hidden="true" tabindex="-1"></a>           <span class="at">xend =</span> <span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>),  </span>
+<span id="cb19-86"><a href="#cb19-86" aria-hidden="true" tabindex="-1"></a>           <span class="at">yend =</span> <span class="dv">56000000000</span>,  </span>
+<span id="cb19-87"><a href="#cb19-87" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> <span class="st">"grey40"</span>,</span>
+<span id="cb19-88"><a href="#cb19-88" aria-hidden="true" tabindex="-1"></a>           <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,</span>
+<span id="cb19-89"><a href="#cb19-89" aria-hidden="true" tabindex="-1"></a>                         <span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.15</span>, <span class="st">"inches"</span>))</span>
+<span id="cb19-90"><a href="#cb19-90" aria-hidden="true" tabindex="-1"></a>           ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Overall Singapore Trade Balance Annotations-1.png" class="img-fluid" width="960"></p>
 </div>
 </div>
-</section>
 </section>
 </section>
 <section id="horizon-plots" class="level4">

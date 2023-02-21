@@ -374,6 +374,8 @@ Some details in the plot can help to enhance the visual aesthetics, such as:
 -   Using arrows to aid annotations
 
 -   Clear intent in title, highlighting the story
+
+-   Label the lines instead of using legend
 :::
 
 ##### 3.1.1.2 Preparation of visualisation
@@ -382,7 +384,7 @@ Some details in the plot can help to enhance the visual aesthetics, such as:
 
 Three tibbles are created for the following purpose:
 
--   ***totalsgtrade*** contains the total import and export values by time, irrespective of countries. \
+-   ***totalsgtrade*** contains the total import and export values by time, irrespective of countries.\
     This is created by grouping ***sgtrade_cln*** data by **Month_Year** and **Year** variables and calculate the total Singapore Import and Export values, irrespective of countries. `dplyr::group_by()` and `dplyr::summarise()` functions are used.
 
 -   ***totalsgtrade_long*** collapses the **Import** and **Export** columns to new variable **Type**. This is used for geom_line to allow plotting different lines and grouped them by color. `tidyr::pivot_longer()` is used to do this.
@@ -413,13 +415,37 @@ avg_total_2020 <- totalsgtrade |>
 
 ###### [Plotting the main graph]{.underline}
 
-Three tibbles are created
+Steps used to create the plots:
+
+-   Base plot is created using ggplot2::geom_line and ggbraid::geom_braid
+
+    ::: callout-note
+    Note that ***totalsgtrade_long*** is used in `geom_line` to allow grouping the **Type** (Import or Export) by color and ***totalsgtrade*** is used in `geom_braid`. The `fill` argument of `geom_braid` is specified as `Import<Export` as Trade Surplus happens when Import \< Export, and `alpha` specified as 0.5 to provide a degree of opacity.
+    :::
+
+-   Remove the legend using `ggplot2::guides()` and add the labels at the end of each line using `directlabels:geom_dl()`. Note the `method` argument specifies gap between the label and the line
+
+-   Plotting the reference line using `ggplot2::geom_hline`. The `linetype` argument is specified as `"dashed"` to create dashed reference line. Add text on each reference line to indicate "Average 2020" using `ggplot2::annotate()`
+
+-   Set the colors of the line and ribbons using `scale_color_manual()` and `scale_color_fill()`
+
+    ::: callout-tip
+    The color choice is based on this [article](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
+    :::
+
+-   As the x-axis is datetime, `scale_x_date()` needs to be used, indicating the `limits` of plots, `date_breaks`, and `date_labels` format. It is good to set the limit on the first time frame (January 2020) to remove gap on the left-hand side of the graph, hence `expand` argument is specified as c(0,0)
+
+-   In order to convert the y-axis in terms of Billions SGD, we need to specify it in the `labels` argument of `scale_y_continuous`
+
+-   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions
 
 ```{r, Overall Singapore Trade Balance}
 #| code-fold: true
 #| code-summary: "Show the code"
+#| fig-height: 8
+#| fig-width: 10
 
-#Plotting the main plot
+#Plotting the base plot
 br_plot <- ggplot() +
   geom_line(data = totalsgtrade_long,
             aes(x = Month_Year,
@@ -466,7 +492,7 @@ br_plot <- ggplot() +
            size=4, 
            color="#0072B2") +
   
-    geom_hline(aes(yintercept = avg_total_2020$import), 
+  geom_hline(aes(yintercept = avg_total_2020$import), 
              col="#D55E00", 
              linewidth=0.8,
              linetype = "dashed") +
@@ -507,7 +533,25 @@ br_plot <- ggplot() +
   labs(title = "Since early 2021, Singapore's trade activities were recovering from Covid-19\nbut slowed down in mid-2022",
          subtitle = "Total Merchandise Export and Import Trade Value of Singapore (in SGD), 2020-2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore")
+
+br_plot
 ```
+
+##### 3.1.1.3 Insights
+
+-   Overall, Singapore maintains trade surplus throughout the duration, except for brief period in May 2022
+
+-   In March 2020, both Singapore import and export fell further, coinciding with announcement of further Covid-19 restrictions (i.e., circuit breaker)
+
+-   With gradual reopening of economy (i.e., Phase 3 reopening) in Dec 2020 to February 2021, trade seems to rebound back above the 2020 average. Throughout 2021, both import and export continues to rise
+
+-   Sudden dip observed around February 2022, coinciding with the start of Russia-Ukraine War
+
+-   Trade surplus seems to be thinning in 2022, but activities remain high, reaching its peak in August/September 2022
+
+-   Gradual decline of trade happens after the 3-year peak marking recession headwinds post Q3 2022
+
+With such insights observed above, it makes sense to include them in the plot as well. Hence `annotate()` functions are used to add the text label and arrows. Refer to code below for more details.
 
 ```{r, Overall Singapore Trade Balance Annotations}
 #| code-fold: true
@@ -553,7 +597,7 @@ br_plot + annotate(geom = "label",
            ) +
   
   annotate(geom = "label",
-           x = as.Date("2022-01-01"),
+           x = as.Date("2021-12-01"),
            y = 38000000000,
            label = "Start of Russia-Ukraine War",
            hjust = "left",
@@ -571,6 +615,24 @@ br_plot + annotate(geom = "label",
            ) +
   
   annotate(geom = "label",
+           x = as.Date("2021-08-01"),
+           y = 58000000000,
+           label = "3-Year High\nTrade Activities",
+           hjust = "left",
+           color = "black"
+           ) +
+  
+  annotate(geom = "segment",
+           x = as.Date("2021-12-25"), 
+           y = 58000000000, 
+           xend = as.Date("2022-06-01"),  
+           yend = 60000000000,  
+           color = "grey40",
+           arrow = arrow(type = "closed",
+                         length = unit(0.15, "inches"))
+           ) +
+  
+  annotate(geom = "label",
            x = as.Date("2022-05-01"),
            y = 45000000000,
            label = "Recession headwinds\nresults in trade slumps",
@@ -581,8 +643,8 @@ br_plot + annotate(geom = "label",
   annotate(geom = "segment",
            x = as.Date("2022-09-01"), 
            y = 46000000000, 
-           xend = as.Date("2022-07-01"),  
-           yend = 58000000000,  
+           xend = as.Date("2022-08-01"),  
+           yend = 56000000000,  
            color = "grey40",
            arrow = arrow(type = "closed",
                          length = unit(0.15, "inches"))
