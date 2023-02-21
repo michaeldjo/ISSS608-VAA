@@ -348,14 +348,52 @@ n_distinct(sgtrade_cln$Countries)
 
 ### 3.1 Exploratory Data Visualisation
 
+The plots in this section offer a high-level overview of Singapore's bilateral merchandise trade performance amid Covid-19 recovery, with the aim of identifying general trends through exploratory analysis. Rather than providing detailed analyses for each country, the focus is on identifying broad patterns and relationships. This approach enables the identification of countries of interest, providing context for more focused analyses in the following section.
+
 #### 3.1.1 Overall Singapore Trade Balance
 
-```{r, Overall Singapore Trade Balance}
+To gain an understanding of import and export trends in Singapore, we will begin with a simple time-series chart covering the period from January 2020 to December 2022.
+
+##### 3.1.1.1 Design Consideration
+
+Instead of using simple line charts, braided ribbon chart is used with the following considerations:
+
+-   Braided ribbon charts helps to visualise the areas between import and export values, highlighting Singapore trade balance
+
+-   Reference line will be provided, representing the average import and export values in 2020, which was a year marked by worldwide lockdowns and reduced economic activity due to the Covid-19 pandemic. This time period has been chosen as a relevant benchmark for understanding the impact of the pandemic on import and export trends.
+
+-   Annotations explaining the events around the world
+
+::: callout-tip
+Some details in the plot can help to enhance the visual aesthetics, such as:
+
+-   Useing diverging colorblind friendly palette
+
+-   Display the values in Billions SGD rather than the raw values
+
+-   Using arrows to aid annotations
+
+-   Clear intent in title, highlighting the story
+:::
+
+##### 3.1.1.2 Preparation of visualisation
+
+###### [Data Preparation]{.underline}
+
+Three tibbles are created for the following purpose:
+
+-   ***totalsgtrade*** contains the total import and export values by time, irrespective of countries. \
+    This is created by grouping ***sgtrade_cln*** data by **Month_Year** and **Year** variables and calculate the total Singapore Import and Export values, irrespective of countries. `dplyr::group_by()` and `dplyr::summarise()` functions are used.
+
+-   ***totalsgtrade_long*** collapses the **Import** and **Export** columns to new variable **Type**. This is used for geom_line to allow plotting different lines and grouped them by color. `tidyr::pivot_longer()` is used to do this.
+
+-   ***avg_total_2020*** creates 1x3 tibble containing the overall average 2020 Singapore import and export values to draw the reference lines. Firstly ***totalsgtrade*** is filtered for `Year == 2020`. It is then grouped and summarised by mean of **Import** and **Export**.
+
+```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| fig-height: 8
-#| fig-width: 10
 
+#Creating new tibbles to be used for geom_line and geom_braid respectively
 totalsgtrade <- sgtrade_cln |> 
   group_by(Month_Year, Year) |> 
   summarise(Import = sum(Import_SGD),
@@ -371,9 +409,18 @@ avg_total_2020 <- totalsgtrade |>
   group_by (Year) |> 
   summarise(import = mean(Import),
             export = mean(Export))
+```
 
-  
-ggplot() +
+###### [Plotting the main graph]{.underline}
+
+Three tibbles are created
+
+```{r, Overall Singapore Trade Balance}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+#Plotting the main plot
+br_plot <- ggplot() +
   geom_line(data = totalsgtrade_long,
             aes(x = Month_Year,
                 y = Values,
@@ -387,9 +434,11 @@ ggplot() +
                  ymax = Export,
                  fill = Import < Export),
              alpha = 0.5) +
-  
+
+#Remove the legend 
   guides(linetype = "none", fill = "none") +
   
+#Adding the 'Import' and 'Export' labels at the end of the line charts
   geom_dl(data = totalsgtrade_long,
           aes(x = Month_Year,
               y = Values,
@@ -404,6 +453,7 @@ ggplot() +
               color = Type),
           method = list(dl.trans(x = x - 0.2), "first.points", cex = 1)) +
   
+#Plotting the reference lines with annotations
   geom_hline(aes(yintercept = avg_total_2020$export), 
              col="#0072B2", 
              linewidth=0.8,
@@ -427,7 +477,8 @@ ggplot() +
            label="Avg 2020 Import", 
            size=4, 
            color="#D55E00") +
-  
+
+#Setting the colors for the main plot  
   scale_color_manual(values = c("#0072B2", "#D55E00"),
                      labels = c("Export", "Import"),
                      name = NULL,
@@ -435,6 +486,7 @@ ggplot() +
   
   scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
   
+#Adjusting the scale
   scale_x_date(expand = c(0,0),
                limits = c(as.Date("2020-01-01"),as.Date("2023-03-01")),
                date_breaks = "6 month",
@@ -443,6 +495,7 @@ ggplot() +
   scale_y_continuous("Trade Values",
                      labels = function(x){paste0('$', abs(x/1000000000),'B')}) +
   
+#Setting the theme
   cowplot::theme_cowplot() +
   
   theme(axis.title.x = element_blank(),
@@ -450,7 +503,20 @@ ggplot() +
         legend.justification = 'center',
         panel.grid.major.y = element_line(color = "grey90", linetype = "solid")) +
   
-  annotate(geom = "label",
+#Adding title, subtitle, and captions   
+  labs(title = "Since early 2021, Singapore's trade activities were recovering from Covid-19\nbut slowed down in mid-2022",
+         subtitle = "Total Merchandise Export and Import Trade Value of Singapore (in SGD), 2020-2022",
+         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore")
+```
+
+```{r, Overall Singapore Trade Balance Annotations}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 8
+#| fig-width: 10
+
+#Add relevant annotations   
+br_plot + annotate(geom = "label",
            x = as.Date("2020-02-01"),
            y = 45000000000,
            label = "Covid19 restriction kicks in\n in Singapore",
@@ -520,12 +586,7 @@ ggplot() +
            color = "grey40",
            arrow = arrow(type = "closed",
                          length = unit(0.15, "inches"))
-           ) +
-  
-  
-  labs(title = "Since early 2021, Singapore's merchandise trade was recovering from Covid-19\nbut slowed down in mid-2022",
-         subtitle = "Total Merchandise Export and Import Trade Value of Singapore (in SGD), 2020-2022",
-         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
+           ) 
 
 ```
 
@@ -707,6 +768,8 @@ Other Major European Partners (Russia War) - Germany - France - UK =\> 3
 Other partners - Volatility is further observed with smaller trading partners - Brazil, Mexico (high volatility towards end 2022), Brunei, Ireland, Israel =\> 5
 
 Others are low intensity or too small in terms of volume
+
+###### 
 
 ### 3.2 Bi-lateral Trade of Singapore against selected partners
 
@@ -1247,6 +1310,8 @@ plot_slopegraph_export(c("Mainland China", "Malaysia", "United States", "South K
 plot_slopegraph_tradebal(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
 ```
 :::
+
+###### 
 
 ### 3.3 Changes in Import and Export over time
 
