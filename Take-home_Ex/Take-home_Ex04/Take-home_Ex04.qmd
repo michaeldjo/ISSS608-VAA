@@ -350,7 +350,7 @@ n_distinct(sgtrade_cln$Countries)
 
 The plots in this section offer a high-level overview of Singapore's bilateral merchandise trade performance amid Covid-19 recovery, with the aim of identifying general trends through exploratory analysis. Rather than providing detailed analyses for each country, the focus is on identifying broad patterns and relationships. This approach enables the identification of countries of interest, providing context for more focused analyses in the following section.
 
-#### 3.1.1 Overall Singapore Trade Balance
+#### 3.1.1 Overall Singapore Trade Balance Performance
 
 To gain an understanding of import and export trends in Singapore, we will begin with a simple time-series chart covering the period from January 2020 to December 2022.
 
@@ -367,7 +367,7 @@ Instead of using simple line charts, braided ribbon chart is used with the follo
 ::: callout-tip
 Some details in the plot can help to enhance the visual aesthetics, such as:
 
--   Useing diverging colorblind friendly palette
+-   Using diverging colorblind friendly palette
 
 -   Display the values in Billions SGD rather than the raw values
 
@@ -380,7 +380,7 @@ Some details in the plot can help to enhance the visual aesthetics, such as:
 
 ##### 3.1.1.2 Preparation of visualisation
 
-###### [Data Preparation]{.underline}
+###### [Data preparation]{.underline}
 
 Three tibbles are created for the following purpose:
 
@@ -417,7 +417,7 @@ avg_total_2020 <- totalsgtrade |>
 
 Steps used to create the plots:
 
--   Base plot is created using ggplot2::geom_line and ggbraid::geom_braid
+-   Base plot is created using `ggplot2::geom_line` and `ggbraid::geom_braid`
 
     ::: callout-note
     Note that ***totalsgtrade_long*** is used in `geom_line` to allow grouping the **Type** (Import or Export) by color and ***totalsgtrade*** is used in `geom_braid`. The `fill` argument of `geom_braid` is specified as `Import<Export` as Trade Surplus happens when Import \< Export, and `alpha` specified as 0.5 to provide a degree of opacity.
@@ -430,7 +430,7 @@ Steps used to create the plots:
 -   Set the colors of the line and ribbons using `scale_color_manual()` and `scale_color_fill()`
 
     ::: callout-tip
-    The color choice is based on this [article](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
+    The color choice for colorblind-friendly is based on this [article](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
     :::
 
 -   As the x-axis is datetime, `scale_x_date()` needs to be used, indicating the `limits` of plots, `date_breaks`, and `date_labels` format. It is good to set the limit on the first time frame (January 2020) to remove gap on the left-hand side of the graph, hence `expand` argument is specified as c(0,0)
@@ -551,7 +551,7 @@ br_plot
 
 -   Gradual decline of trade happens after the 3-year peak marking recession headwinds post Q3 2022
 
-With such insights observed above, it makes sense to include them in the plot as well. Hence `annotate()` functions are used to add the text label and arrows. Refer to code below for more details.
+With interesting insights observed above, it makes sense to include them in the plot as well. Hence `annotate()` functions are used to add the text label and arrows. Refer to code below for more details.
 
 ```{r, Overall Singapore Trade Balance Annotations}
 #| code-fold: true
@@ -652,9 +652,45 @@ br_plot + annotate(geom = "label",
 
 ```
 
-#### 3.1.2 Horizon Plots
+#### 3.1.2 Singapore Trade Balance by Countries
 
-Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
+After data wrangling, the main tibble ***sgtrade_cln*** still contains data for 52 countries, making it challenging to identify which ones show interesting trends. A horizon graph provides a solution by allowing for the visualization of massive time-series data, providing an overview of the Singapore trade balance for all countries. This is a better alternative than using a trellis line graph which requires the same scale for all countries and may skew user perspective.
+
+`ggHoriPlot::geom_horizon()` is used to create the horizon graph.
+
+##### 3.1.2.1 Design Consideration
+
+The dataset poses a challenge due to the large disparity in trading volume between the largest (Mainland China) and smallest (Cyprus) trading partners. Such imbalanced data can draw focus away from smaller partners, which may offer valuable insights. To strike a balance between the scale of importance (i.e., volume) and patterns, we need to be mindful of these differences. Considerations:
+
+-   There are two options to reduce data imbalance to be considered in this plot :
+
+    -   Plotting by normalised trade balance
+
+    -   Plotting by rate of change of trade balance
+
+-   Remove outliers when setting the cutpoints to avoid distorting the horizon graph
+
+    ::: callout-tip
+    Setting the right cutpoints for horizon graph is important. Hence careful considerations need to be taken with outliers. As such, cutpoints should be set on outlier-free data. This can be done by removing values below the 0.25 quantile - 1.5 times the interquartile range and above the 0.75 quantile + 1.5 times the interquartile range.
+
+    Refer to this [article](https://rivasiker.github.io/ggHoriPlot/articles/ggHoriPlot.html) for more details on handling outliers from horizon graph
+    :::
+
+-   Legends should be removed as the intent of the graph is to detect patterns, hence absolute values are not critical
+
+-   Other improvements to enhance visual aesthetics like - having clear title, choosing diverging colorblind-friendly pallete
+
+##### 3.1.2.2 Preparation of visualisation
+
+###### [Creating normalisation function]{.underline}
+
+Min-max normalisation is used to convert the data to 0 to 1 scale by applying the following formula
+
+$$
+(m - min(m)) / (max(m)-min(m))
+$$
+
+As such, simple function called `normalit` can be created below
 
 ```{r}
 #Creating the normalising function
@@ -663,26 +699,51 @@ normalit<-function(m){
  }
 ```
 
-Calculating Change in Trade Balance (%)
+###### [Data preparation]{.underline}
 
-```{r}
-sgtrade_cln_norm <- sgtrade_cln |> 
-  mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) |> 
-  arrange(Countries, Month_Year) |> 
-  group_by(Countries) |> 
-  mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
-  ungroup()
+A new tibble called ***sgtrade_cln_hor*** is created with two new variables:
 
-sgtrade_cln
-```
+-   **Normalised_Trade_Balance** is created by applying `normalit` function to **Trade_Balance_SGD**
 
-::: panel-tabset
-##### Normalised Trade Balance
+-   **Pct_Trade_Balance_Change** represents the rate of change (%), is created by calculating the difference between adjacent time-series data for each country. `arrange()` function is first used to order the tibble based on **Countries** and **Month_Year**. The tibble is then grouped by **Countries** before the new variable is calculated using `mutate()`
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-cutpoints <- sgtrade_cln_norm  |>  
+sgtrade_cln_hor <- sgtrade_cln |> 
+  
+  #Calculating the normalised trade balance
+  mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) |> 
+  
+  #Calculating the Rate of Change
+  arrange(Countries, Month_Year) |> 
+  group_by(Countries) |> 
+  mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
+  ungroup()
+```
+
+###### [Setting the cutpoints]{.underline}
+
+`ggHoriPlot::geom_horizon()` requires two important arguments: `origin` and `horizonscale`.
+
+The code chunks below remove the outliers (defined above) from the ***sgtrade_cln_hor*** and store them in new tibble ***cutpoints*** or ***curpoints_roc*** for normalised plot and rate of change plot respectively.
+
+Origin point (***ori*** and ***ori_roc***) is defined as :
+
+-   For normalised plot, it is defined when absolute trade balance is zero
+
+-   For rate of change plot, it is defined when the rate of change of trade balance is zero
+
+The scales (***sca*** and ***sca_roc***) are then defined by dividing range of variables to 8 segments. This is done by using `seq()` function, specifying `length.out` argument to be 9; removing the 5th element (`[-5]`) (to be replaced by origin point).
+
+Refer to code chunk below for normalised plot
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+#Removing the outliers from cutpoints
+cutpoints <- sgtrade_cln_hor  |>  
   mutate(
     outlier = between(
       Normalised_Trade_Balance, 
@@ -692,61 +753,23 @@ cutpoints <- sgtrade_cln_norm  |>
         1.5*IQR(Normalised_Trade_Balance, na.rm=T))) %>% 
   filter(outlier)
 
-#origin point - when trade balance is 0
-ori <- (0 - min(sgtrade_cln_norm$Trade_Balance_SGD))/(max(sgtrade_cln_norm$Trade_Balance_SGD)-min(sgtrade_cln_norm$Trade_Balance_SGD))
+#Calculating origin point - when trade balance is 0
+ori <- (0 - min(sgtrade_cln_hor$Trade_Balance_SGD))/(max(sgtrade_cln_hor$Trade_Balance_SGD)-min(sgtrade_cln_hor$Trade_Balance_SGD))
 
-#scales for horizon plot
+#Setting the scales for horizon graph
 sca <- seq(range(cutpoints$Normalised_Trade_Balance)[1], 
            range(cutpoints$Normalised_Trade_Balance)[2], 
-           length.out = 9)[-4]
+           length.out = 9)[-5]
 ```
 
-```{r, Horizon Plot Trade Balance}
-#| code-fold: true
-#| code-summary: "Show the code"
-#| fig-height: 12
-#| fig-width: 10
-sgtrade_cln_norm$Countries <- fct_reorder(sgtrade_cln_norm$Countries, sgtrade_cln_norm$Pct_Total_Trade_Volumes, .desc = TRUE)
-
-sgtrade_cln_norm |> ggplot() +
-  geom_horizon(aes(x = Month_Year,
-                   y = Normalised_Trade_Balance,
-                   fill = after_stat(Cutpoints)),
-               origin = ori, horizonscale = sca,
-               show.legend = FALSE) +
-  
-  scale_fill_hcl(palette = 'RdBu') +
-  
-  facet_grid(Countries~.) +
-  
-  theme_few() +
-  theme(
-    panel.spacing.y=unit(0, "lines"),
-    axis.title.x = element_blank(),
-    strip.text.y = element_text(size = 7, angle = 0, hjust = 0),
-    axis.text.y = element_blank(),
-    axis.title.y = element_blank(),
-    axis.ticks.y = element_blank(),
-    panel.border = element_blank(),
-    plot.title = element_text(face = "bold")
-    ) +
-  
-  scale_x_date(expand=c(0,0), 
-               date_breaks = "6 month",
-               date_labels = "%b\n%Y") +
-  
-  labs(title = "Singapore's trade surplus is decreasing against major partners post Covid-19 recovery, except with\nHong Kong, Indonesia and Thailand",
-         subtitle = "Singapore's trade balance against trading partners arranged by trade volumes, 2020 to 2022",
-         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
-  
-```
-
-##### Rate of Change of Trade Balance
+Refer to code chunk below for rate of change plot
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-cutpoints_roc <- sgtrade_cln_norm  |>  
+
+#Removing the outliers from cutpoints
+cutpoints_roc <- sgtrade_cln_hor  |>  
   mutate(
     outlier = between(
       Pct_Trade_Balance_Change, 
@@ -756,23 +779,95 @@ cutpoints_roc <- sgtrade_cln_norm  |>
         1.5*IQR(Pct_Trade_Balance_Change, na.rm=T))) %>% 
   filter(outlier)
 
-#origin point - when trade balance is 0
-ori_roc <- sum(range(cutpoints_roc$Pct_Trade_Balance_Change))/2
+#Calculating origin point 
+ori_roc <- 0
 
-#scales for horizon plot
+#Setting the scales for horizon graph
 sca_roc <- seq(range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[1], 
            range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[2], 
-           length.out = 9)[-4]
+           length.out = 9)[-5]
 ```
+
+###### [Plotting the main graph]{.underline}
+
+Steps used to create the two plots:
+
+-   Convert the **Countries** variable to factor, ordered by trade volumes in descending order using `forcats::fct_reorder()`
+
+-   Base plot is created using `ggHoriPlot::geom_horizon()`, specifying the `origin` and `horizonscale` arguments as defined above. The `show.legend` is also specified as `FALSE`
+
+-   Setting the colorblind-friendly diverging palette using `scale_fill_hcl()`
+
+-   Facet the plots by rows using `facet_grid()`
+
+-   As the x-axis is datetime, `scale_x_date()` needs to be used, indicating the `date_breaks` and `date_labels` format.
+
+-   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions
+
+::: panel-tabset
+##### Normalised Trade Balance
+
+```{r, Horizon Plot Trade Balance}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 12
+#| fig-width: 10
+
+#Converting countries to factor, ordered by trade volumes in descending order
+sgtrade_cln_hor$Countries <- fct_reorder(sgtrade_cln_hor$Countries, sgtrade_cln_hor$Total_Trade_Volumes_SGD, .desc = TRUE)
+
+#Plotting the base plot
+sgtrade_cln_hor |> ggplot() +
+  geom_horizon(aes(x = Month_Year,
+                   y = Normalised_Trade_Balance,
+                   fill = after_stat(Cutpoints)),
+               origin = ori, horizonscale = sca,
+               show.legend = FALSE) +
+  
+#Setting the color palette
+  scale_fill_hcl(palette = 'RdBu') +
+  
+#Facetted based on Countries
+  facet_grid(Countries~.) +
+
+#Adjusting the scale
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "6 month",
+               date_labels = "%b\n%Y") +
+  
+#Setting the theme
+  theme_few() +
+  theme(
+    panel.spacing.y=unit(0, "lines"),
+    axis.title.x = element_blank(),
+    strip.text.y = element_text(size = 7, angle = 0, hjust = 0),
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.border = element_blank(),
+    plot.title = element_text(face = "bold")
+    ) +
+
+#Adding title, subtitle, and captions   
+  labs(title = "Singapore's trade surplus is decreasing against major partners post Covid-19 recovery, except with\nHong Kong, Indonesia and Thailand",
+         subtitle = "Singapore's trade balance against trading partners arranged by trade volumes, 2020 to 2022",
+         caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
+  
+```
+
+##### Rate of Change of Trade Balance
 
 ```{r, Horizon Plot Trade Balance Change}
 #| code-fold: true
 #| code-summary: "Show the code"
 #| fig-height: 12
 #| fig-width: 10
-sgtrade_cln_norm$Countries <- fct_reorder(sgtrade_cln_norm$Countries, sgtrade_cln_norm$Pct_Total_Trade_Volumes, .desc = TRUE)
 
-sgtrade_cln_norm |> 
+#Converting countries to factor, ordered by trade volumes in descending order
+sgtrade_cln_hor$Countries <- fct_reorder(sgtrade_cln_hor$Countries, sgtrade_cln_hor$Total_Trade_Volumes_SGD, .desc = TRUE)
+
+#Plotting the base plot
+sgtrade_cln_hor |> 
   na.omit() |> 
   ggplot() +
   geom_horizon(aes(x = Month_Year,
@@ -781,10 +876,18 @@ sgtrade_cln_norm |>
                origin = ori_roc, horizonscale = sca_roc,
                show.legend = FALSE) +
   
+#Setting the color palette
   scale_fill_hcl(palette = 'RdBu') +
   
+#Facetted based on Countries
   facet_grid(Countries~.) +
   
+#Adjusting the scale
+  scale_x_date(expand=c(0,0), 
+               date_breaks = "6 month",
+               date_labels = "%b\n%Y") +
+  
+#Setting the theme
   theme_few() +
   theme(
     panel.spacing.y=unit(0, "lines"),
@@ -797,39 +900,70 @@ sgtrade_cln_norm |>
     plot.title = element_text(face = "bold")
     ) +
   
-  scale_x_date(expand=c(0,0), 
-               date_breaks = "6 month",
-               date_labels = "%b\n%Y") +
-  
+#Adding title, subtitle, and captions   
   labs(title = "Volatile changes in Singapore's trade balance against major partners, except with\nTaiwan, Hong Kong, and Indonesia",
          subtitle = "Singapore's trade balance change (MoM%) against trading partners arranged by trade volumes, 2020 to 2022",
          caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore") 
 ```
 :::
 
-Observation Select countries to choose
+##### 3.1.2.3 Insights
 
-Major partners (Top 10) - China (trend reversal) - Malaysia (all the way deficit) - USA (positive to negative) - Korea (positive to negative) - Japan (positive to negative)
+###### [Normalised Trade Balance Plot]{.underline}
 
-Other Regional Partners (Interesting patterns) -Australia (activities in 2021) - India (dip around covid years) - Philippines (gain strongly towards end 2022) - New Zealand/Bangladesh (gain strongly towards end 2022) - Cambodia (negative to positive)
+-   Despite normalization, smaller partners can still be overshadowed by larger ones. To balance the scale of importance and patterns, the plot can guide the filtering out of certain trading partners. Based on the graph, we should not consider trading partners with lower trading volumes than Sri Lanka.
 
-Other Major European Partners (Russia War) - Germany - France - UK
+###### [Rate of Change of Trade Balance Plot]{.underline}
 
-Other partners - Brazil, Mexico, Brunei, Ireland, Israel
+-   This plot provides a more balanced visualization between smaller and larger trading partners. However, it's important to note that smaller trading partners exhibit higher intensity, which is expected as small changes in trading balance are overexaggerated due to their smaller volume
 
-Others are due to - mid-range - one intensity
+Singapore's trading partners are diverse and can be broadly categorized into Major Partners, Other Regional Partners, European Partners, and Other Minor Partners. For this analysis, 16 countries were selected around the categories based on the following interesting observations:
 
-Observation Select countries to choose
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Category                | Country                    | Normalised Plot                                                       | Rate of Change Plot                                                                  |
++=========================+============================+=======================================================================+======================================================================================+
+| Major Partners          | Mainland China             | Prominent swing from surplus to deficit in Q2 2022                    | High volatility before mid-2021 and after 2022                                       |
+|                         |                            |                                                                       |                                                                                      |
+|                         | (Largest partner)          |                                                                       |                                                                                      |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Major Partners          | Malaysia                   | Constant trade deficit but starts to reduce in Q2 2022                | Similar observation                                                                  |
+|                         |                            |                                                                       |                                                                                      |
+|                         | (Largest ASEAN partner)    |                                                                       |                                                                                      |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Major Partners          | United States              | Swing from surplus to deficit from Q2 2021                            | High volatility throughout with dominant negative rate of change in Q2 2021 and 2022 |
+|                         |                            |                                                                       |                                                                                      |
+|                         | (Largest Western partner)  |                                                                       |                                                                                      |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Major Partners          | South Korea                | Large trade deficit starts in Q3 2021                                 | Prominent negative change preceding the deficit in Q2 2021                           |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Regional Partners | Australia                  | Strong trade surplus recovery from Q2 2021                            | Strongly turns positive preceding the trade surplus few months before                |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Regional Partners | India                      | Two major dips in early 2020 and mid 2021                             | Stronger trade balance recovery post 2020 dip vs 2021                                |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Regional Partners | Philippines                | Prominent trade surplus from Q3 2022                                  | High volatility prior to Q3 2022                                                     |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Regional Partners | Cambodia                   | Large three export gains in Q1, Q3 2021, and Q2 2022                  | Similar observation with negative change prior to that                               |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| European Partners       | Germany                    | Reducing trade deficit from Q3 2022                                   | Same observation with prominent single positive change in Q2 2021                    |
+|                         |                            |                                                                       |                                                                                      |
+|                         | (Largest European partner) |                                                                       |                                                                                      |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| European Partners       | France                     | Turns dominant deficit since Q1 2021                                  | ...but preceded by largely positive change                                           |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| European Partners       | Switzerland                | Turns dominant deficit since Q2 2021                                  | ...but there are spikes of positive change, indicating volatility in trade balance   |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| European Partners       | United Kingdom             | Slight trade surplus in Q2 2020 aside from deficit in other period    | ...followed by dominant negative change                                              |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Minor Partners    | Mexico                     | Maintaining very close trade balance                                  | ... but marked by high volatility post Q2 2021                                       |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Minor Partners    | New Zealand                | Prominent trade surplus since Q2 2022                                 | Same observation                                                                     |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Minor Partners    | Canada                     | Small deficit peak in Q3 2022                                         | Same observation in Q3 2022 with opposite impact in Q3 2020                          |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
+| Other Minor Partners    | Brunei Darussalam          | Turns slight negative post Q2 2021 with small deficit peak in Q2 2022 | High volatility from end 2020 to mid 2021                                            |
++-------------------------+----------------------------+-----------------------------------------------------------------------+--------------------------------------------------------------------------------------+
 
-Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) =\> 4
-
-Other Regional Partners (Interesting patterns) -Australia (2021 reversal) - India (nothing interesting) - Philippines (high volatility) - New Zealand/Bangladesh (nothing interesting) - Cambodia (negative to positive) =\> 3
-
-Other Major European Partners (Russia War) - Germany - France - UK =\> 3
-
-Other partners - Volatility is further observed with smaller trading partners - Brazil, Mexico (high volatility towards end 2022), Brunei, Ireland, Israel =\> 5
-
-Others are low intensity or too small in terms of volume
+: Table 1: List of Selected Countries
 
 ###### 
 
@@ -892,7 +1026,7 @@ selected_countries = c("Mainland China", "Malaysia", "United States", "South Kor
 sgtrade_calmap <- sgtrade_cln |> 
   mutate(Trade_Balance = Trade_Balance_SGD/1000000000)
 
-sgtrade_calmap$Countries <- fct_reorder(sgtrade_calmap$Countries, sgtrade_calmap$Pct_Total_Trade_Volumes, .desc = TRUE)
+sgtrade_calmap$Countries <- fct_reorder(sgtrade_calmap$Countries, sgtrade_calmap$Total_Trade_Volumes_SGD, .desc = TRUE)
 
 ggplot(sgtrade_calmap |> 
          mutate(Year = factor(Year, levels =c(2022,2021,2020))) |> 
@@ -935,7 +1069,7 @@ theme(axis.ticks = element_blank(),
 
 plot_braid_ctry <- function(selected_countries, showlegend) {
 
-sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
+sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Total_Trade_Volumes_SGD, .desc = TRUE)
 
 #
 sgtrade_cln_long <- sgtrade_cln |> 
