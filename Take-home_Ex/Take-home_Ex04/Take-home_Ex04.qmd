@@ -6,7 +6,9 @@ date: 19 February 2023
 date-modified: "`r Sys.Date()`"
 execute: 
   warning: false
-format: html
+format:
+  html:
+    code-overflow: wrap
 editor: visual
 toc-depth: 5
 ---
@@ -27,50 +29,48 @@ The study period is from for **January 2020 to December 2022** period.
 
 The code chunk below uses `pacman::p_load()` to check if packages are installed. If they are, they will be launched into R. The packages installed are
 
--   `readxl`: Used to reaad data from excel files
+-   `readxl`: Used to read data from excel files
 
 -   `knitr`: Used for dynamic report generation
 
 -   `lubridate`: Used to work with date and time
 
--   `ggrepel`:
+-   `ggHoriPlot`: Used to creating horizon plot
 
--   `ggHoriPlot`:
+-   `ggthemes`: Provide additional themes for `ggplot2`
 
--   `ggthemes`:
+-   `patchwork`: Used to combine plots
 
--   `patchwork`:
+-   `directlabels`: Add labels directly to plots
 
--   `directlabels`:
+-   `ggbraid`: Used to create braided ribbons plot. `remotes::install_github("nsgrantham/ggbraid")` is used to install the package.
 
--   `ggbraid`: Used
+-   `CGPfunctions`: Contains `newggslopegraph` to plot slope graph
 
--   `CGPfunctions`: Used
+-   `ggtext`: Used to improve text rendering support for `ggplot2`
 
--   `ggtext`: Used
+-   `gganimate`: Used to create animated plot
 
--   `gganimate`: Used
+-   `ggifski`: Makes smooth GIF animations for rendering of `gganimate`
 
--   `ggifski`: Used
-
--   `scales`: Used
+-   `scales`: Used to rescale and modify labels display
 
 -   `tidyverse`: A collection of core packages designed for data science, used extensively for data preparation and wrangling.
 
-    All packages can be found within CRAN.
-
-```{r}
-#remotes::install_github("nsgrantham/ggbraid")
-```
+    All packages can be found within CRAN, except for `ggbraid`.
 
 ```{r}
 #Load packages
-pacman::p_load(readxl, knitr, lubridate, ggrepel, ggHoriPlot, ggthemes, patchwork, directlabels, ggbraid, CGPfunctions, ggtext, gganimate, gifski, scales, tidyverse)
+pacman::p_load(readxl, knitr, lubridate, ggHoriPlot, ggthemes, patchwork, directlabels, ggbraid, CGPfunctions, ggtext, gganimate, gifski, scales, tidyverse)
 ```
 
-Import data from csv using `readxl::read_excel()` and store it in variable ***sgimport** and **sgexport***.
+Import data from excel file using `readxl::read_excel()` and store it in tibble ***sgimport** and **sgexport***.
 
-Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is intentionally selected.
+Note that by choosing the specific range, the period of interest (January 2020 to December 2022) is manually selected.
+
+::: callout-warning
+Upon inspection of the excel file, it is noted that ***sgexport*** rows are smaller than ***sgimport***, extending to row 101 instead of 129.
+:::
 
 ```{r}
 #Import data
@@ -79,21 +79,59 @@ sgimport <- read_excel("data/outputFile.xlsx", sheet = "T1", range = "A10:AK129"
 sgexport <- read_excel("data/outputFile.xlsx", sheet = "T2", range = "A10:AK101" )
 ```
 
+Additional data is downloaded from [World Bank](https://data.worldbank.org/country) dataset which lists countries by world regions.
+
+Import data from excel file using `readr::read_csv()` and store it in tibble ***regions***.
+
+This Entity and World_RegionbyWorld_Bank variable is renamed to Countries and Region for easier interpretation and future joins with other tibble.
+
 ```{r}
-regions <- read_csv("data/world-regions-according-to-the-world-bank.csv") |> 
+regions <- read_csv("data/world-regions-according-to-the-world-bank.csv", show_col_types = FALSE) |> 
+  
   rename(Countries = Entity,
          Region = World_RegionbyWorld_Bank) |> 
   select(Countries, Region)
 ```
 
-
 ###### 
 
 ### 2.2 Data cleaning
 
-Scope of the study is to understand bi-lateral trade of Singapore with countries / trade partners around the world. Hence, we will not include regions (i.e., Asia, Africa) or collection of countries (i.e., European Union or Other Countries In Oceania.
+Scope of the study is to understand bi-lateral trade of Singapore with countries / trade partners around the world. Hence, we will not include regions (i.e., Asia, Africa) or collection of countries (i.e., European Union or Other Countries In Oceania).
 
-#### 2.2.1 Cleaning the countries data for sgimport and sgexport
+#### 2.2.1 Cleaning the countries data for ***sgimport*** and ***sgexport***
+
+Looking at the ***sgimport*** tibble below, we notice few problems
+
+-   The layout of the tibble is not apt for time series. Ideally the time period needs to be in rows with the countries in column
+
+-   The column names are in string format and needs to be converted to datetime format
+
+-   **Data Series** contain not only countries/trade partners, but also regions or collection of countries
+
+-   The countries name contain string suffix '(Thousand Dollars)' and the values are in ('000) format
+
+::: callout-note
+Similar issue is also observed with ***sgexport***
+:::
+
+```{r}
+kable(head(sgimport))
+```
+
+Before doing any pivoting, each individual tibble needs to be tidied up to avoid further complications. The code chunks below perform the required data wrangling to
+
+-   Remove the regions or collection of countries in **Data Series** variable by filtering the first 7 rows out. This is done using `dplyr::filter()`
+
+-   Remove the string '(Thousand Dollars)' from each of the countries' name in . This is done using `str_remove()` function in combination with regular expression `" \\(Thousand Dollars\\)"`. Assign this to new variable **Countries** using `dplyr::mutate()`
+
+    ::: callout-important
+    In the next section, we will multiply the values by 1000 to compensate for the loss of string suffix '(Thousand Dollars)'
+    :::
+
+-   Remove the old **Data Series** column
+
+The modified tibbles are stored in new tibbles ***sgimport_ctry*** and ***sgexport_ctry*** respectively
 
 ```{r}
 sgimport_ctry <- sgimport |> 
@@ -108,8 +146,6 @@ sgimport_ctry <- sgimport |>
   
   #remove 'Data Series' column
   select(-`Data Series`) 
-
-kable(head(sgimport_ctry))
 ```
 
 ```{r}
@@ -125,25 +161,25 @@ sgexport_ctry <- sgexport |>
   
   #remove 'Data Series' column
   select(-`Data Series`) 
-
-kable(head(sgexport_ctry))
 ```
 
-Identify differences between sgimport and sgexport as the number of rows are not the same
+#### 2.2.2 Pivot and transform tibbles to time-series layout
 
-112-84 = 28. The difference below is 28, indicating Singapore import from these countries but there is no export data to these countries
+Transforming ***sgimport_ctry*** and ***sgexport_ctry*** to time-series layout requires the help of `tidyr::pivot_longer()`, splitting the column string (i.e., '2022 Dec') to **Year** and **Month** variables respectively. To do this, we will use the `names_sep` argument. The values are assigned to new variable **Import_SGD** and **Export_SGD** respectively.
 
-```{r}
-import_vs_export <- setdiff(sgimport_ctry$Countries, sgexport_ctry$Countries) |> 
-  enframe(name = NULL, value = "diff") |> 
-  arrange(diff)
+Additionally, `dplyr::mutate()` will be used to
 
-import_vs_export  |> 
-  kable(caption = "Countries in sgimport that is not in sgexport",
-               row.names = TRUE)
-```
+-   Convert **Month** to factors, levelled based on the abbreviation (i.e., 'Jan'). This will allow easy ordering during plotting
 
-#### 2.2.2 Pivot and transform datasets to time-series
+-   Convert **Year** to integer for the same purpose as month
+
+-   Create new variable **Month_Year** which is in datetime format to allow time-series plotting. This is done using `lubridate::make_date()` function
+
+-   Multiply the **Import_SGD** and **Export_SGD** values by 1000 to compensate for the loss of string suffix '(Thousand Dollars)'
+
+The modified tibbles are stored in new tibbles ***sgimport_cln*** and ***sgexport_cln*** respectively
+
+See the resulting tibble below; only ***sgimport_cln*** is shown for illustrative purpose as similar treatment is done on ***sgexport_cln***.
 
 ```{r}
 sgimport_cln <- sgimport_ctry |> 
@@ -156,12 +192,12 @@ sgimport_cln <- sgimport_ctry |>
                ) |> 
   
   #Convert Month to factors and Years to integers for ordering purposes
-  #Multiply values by 1000
   mutate(Month = factor(Month, levels = month.abb),
          Year = as.integer(Year),
          Month_Year = make_date(Year, Month),
          .before = 1) |> 
   
+  #Multiply values by 1000
   mutate(Import_SGD = Import_SGD*1000) 
 
 sgimport_cln
@@ -185,29 +221,49 @@ sgexport_cln <- sgexport_ctry |>
          .before = 1) |> 
   
   mutate(Export_SGD = Export_SGD*1000) 
-
-sgexport_cln
 ```
 
-#### 2.2.3 Joining the two datasets and calculate trade balance
+#### 2.2.3 Finding the discrepancies between ***sgimport_cln*** and ***sgexport_cln***
 
-Creating normalising function
+Before joining the two tibbles: ***sgimport_cln*** and ***sgexport_cln***, it is important to recognise that their number of rows are not the same. To detect the difference, a tibble called ***import_vs_export*** is created below to list the countries which appear in ***sgimport_cln*** but not in ***sgexport_cln***.
 
 ```{r}
-normalit<-function(m){
-   (m - min(m))/(max(m)-min(m))
- }
+import_vs_export <- setdiff(sgimport_ctry$Countries, sgexport_ctry$Countries) |> 
+  enframe(name = NULL, value = "diff") |> 
+  arrange(diff)
+
+import_vs_export  |> 
+  kable(caption = "Countries in sgimport_cln that is not in sgexport_cln",
+               row.names = TRUE)
 ```
 
-Explain left join
+Referring to above list, there are 28 countries with available import data, but has no export data.
 
-Add trade balance and trade values
+::: callout-warning
+We cannot assume that the exports are zero, just because there is no available data.
+:::
 
-Additionally also exclude countries with which Singapore has no available export data. We cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances.
+#### 2.2.4 Joining the two tibbles and calculate trade balance and volume
 
-"Germany, Democratic Republic Of" is the official name of East Germany, a state that no longer exists since German reunification in 1990. As such, the import and export values are zeroes. This country is in dataset as the dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onwards, we will remove this country as well.
+`dplyr::left_join()` function is used to join ***sgimport_cln*** and ***sgexport_cln***. This is especially useful to avoid since ***sgimport_cln*** has more rows than ***sgexport_cln***.
 
-"Other Countries In Oceania" is also removed as it is a collection of countries
+::: callout-tip
+`left_join()` **takes all the values from the first tibble, and looks for matches in the second tibble**. If it finds a match, it adds the data from the second table; if not, it adds missing values.
+:::
+
+Countries with missing values in **Export_SGD** variable created by left_join() function will be excluded from analysis. As highlighted above, we cannot assume that the exports are zero, just because there is no available data. This is to avoid incomplete data when analysing trade balances. To remove this, ***import_vs_export*** tibble created above will be used to filter out the countries using `dplyr::filter()`.
+
+Beside the countries in ***import_vs_export***, it is noted that the import and export values of "Germany, Democratic Republic Of" are zeroes. This is referring to East Germany, a state that no longer exists since German reunification in 1990. This country is in the tibble as the original dataset tracks Singapore import/export data from 1976. Given the scope of the study from January 2020 onward, we will filter out this country as well using `dplyr::filter()`.
+
+Note that "Other Countries In Oceania" is also removed as it is a collection of countries.
+
+Additional data cleaning required :
+
+-   Shortening the names of some countries like "Germany, Federal Republic Of", "Vietnam, Socialist Republic Of", and "Republic Of Korea". `dplyr::mutate()` is used in conjunction with `case_when()`
+
+-   Create new variable **Trade_Balance_SGD** subtracts **Import_SGD** from **Export_SGD** to indicate whether there is trade surplus or deficit from Singapore point-of-view
+
+-   Create new variable **Trade_Volume_SGD** sums **Export_SGD** with **Import_SGD** as indication of total trade activities
 
 ```{r}
 sgtrade_cln <- sgimport_cln |> 
@@ -215,11 +271,7 @@ sgtrade_cln <- sgimport_cln |>
   #join sgimport_cln with sgexport_cln
   left_join(sgexport_cln, by = c('Countries' = 'Countries', 'Month_Year' = 'Month_Year', 'Month' = 'Month', 'Year' = 'Year')) |> 
   
-  #Calculate trade balance
-  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD,
-         Trade_Volumes_SGD = Export_SGD + Import_SGD) |> 
-  
-  #remove countries with non-available export data
+    #remove countries with non-available export data
   filter(!Countries %in% c(import_vs_export$diff, "Germany, Democratic Republic Of", "Other Countries In Oceania")) |> 
   
   mutate(Countries = case_when(Countries == "Germany, Federal Republic Of" ~ "Germany",
@@ -227,66 +279,69 @@ sgtrade_cln <- sgimport_cln |>
                                Countries == "Republic Of Korea" ~ "South Korea",
                                TRUE ~ Countries)) |> 
   
-  mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) 
+  #Calculate trade balance
+  mutate(Trade_Balance_SGD = Export_SGD - Import_SGD,
+         Trade_Volumes_SGD = Export_SGD + Import_SGD) 
+
+kable(head(sgtrade_cln))
 ```
 
-Calculating Change in Trade Balance (%)
+#### 2.2.5 Finding top countries by trade volume
+
+Not all countries trade equally with Singapore. Despite performing the extensive data cleaning in the previous sections, there are still 82 countries in the tibble.
 
 ```{r}
-sgtrade_cln <- sgtrade_cln |> 
-  arrange(Countries, Month_Year) |> 
-  group_by(Countries) |> 
-  mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
-  ungroup()
-
-sgtrade_cln
+n_distinct(sgtrade_cln$Countries)
 ```
 
-#### 2.2.4 Finding top countries by trade volume
+In order to limit the scope of the study further, it is desired to calculate the each country trade volume and percentage of total trade volume. This will provide basis to filter out countries that contributed less than 0.05% of total trade volumes to Singapore.
 
-Calculate trade volume and percentage of trades by countries. Intent is to limit the scope of the studies to the countries that contributed to at least 0.05% of Singapore Trade Volumes
+The code chunk below performs:
+
+-   Group ***sgtrade_cln*** by **Countries** and calculate each country's **Total_Trade_Volumes_SGD** using `dplyr::summarise()` function
+
+-   Calculate **Pct_Total_Trade_Volumes** by dividing each country's **Total_Trade_Volumes_SGD** with the sum(**Total_Trade_Volumes_SGD**) using `dplyr::mutate()` function
+
+-   Arrange the countries by **Pct_Total_Trade_Volumes** in descending order and showcase the data
 
 ```{r}
 sgtrade_top_ctry <- sgtrade_cln |> 
+  
+  #Group by Countries and calculated Total Trade Volumes of Singapore
   group_by(Countries) |> 
   summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
+  
+  #Calculate the percentage of trade volume each country contributes to Singapore Total
   mutate(Pct_Total_Trade_Volumes = round(Total_Trade_Volumes_SGD*100/sum(Total_Trade_Volumes_SGD), digits = 1)) |> 
   ungroup() |> 
+  
+  #Arrange the countries based on the percentage
   arrange(desc(Pct_Total_Trade_Volumes))
 
 kable(head(sgtrade_top_ctry))
 ```
 
-Filtering the ***sgtrade_cln*** data to remove bottom 0.05%
+Next, we will filter out countries that contribute less that 0.05% of Singapore total trade using dplyr::filter() function from ***sgtrade_cln***.
+
+::: callout-tip
+The newly created variables : **Total_Trade_Volumes_SGD** and **Pct_Total_Trade_Volumes** might be useful for future plots, hence `dplyr::left_join()` function is again used.
+:::
+
+By doing this, the number of countries are reduced to 52
 
 ```{r}
+#Filter out the Countries with Pct_Total_Trade_Volumes < 0.05%
 top0.05 <- sgtrade_top_ctry |> 
   filter(Pct_Total_Trade_Volumes > 0.05)
 
 sgtrade_cln <- sgtrade_cln |> 
   filter(Countries %in% top0.05$Countries) |> 
+  
+#include the Total_Trade_Volumes_SGD and Pct_Total_Trade_Volumes in sgtrade_cln
   left_join(top0.05, by = c('Countries' = 'Countries'))
 
-sgtrade_cln |> 
-  distinct(Countries)
-```
-
-#### 2.2.5 Finding top countries by rate of change of trade volume from 2020 to 2022
-
-```{r}
-#sgtrade_top_rate_ctry <- sgtrade_cln |> 
-#  group_by(Countries, Year) |>
-#  summarise(Total_Trade_Volumes_SGD = sum(Trade_Volumes_SGD)) |> 
-#  ungroup() |> 
-#  filter(Year %in% c(2020,2022)) |> 
-#  pivot_wider(names_from = Year,
-#              names_prefix = "Trade_Volumes_SGD",
-#              values_from = Total_Trade_Volumes_SGD) |> 
-#  mutate(Diff_Trade_Volumes_SGD_2020_2022 = Trade_Volumes_SGD2022 - #Trade_Volumes_SGD2020,
-#         Abs_Diff_Trade_Volumes_SGD_2020_2022 = abs(Diff_Trade_Volumes_SGD_2020_2022))|> 
-#  arrange(desc(Abs_Diff_Trade_Volumes_SGD_2020_2022))
-
-#kable(head(sgtrade_top_rate_ctry))
+#finding out the number of distinct countries left
+n_distinct(sgtrade_cln$Countries)
 ```
 
 ## **3. Visualisation**
@@ -478,14 +533,33 @@ ggplot() +
 
 Provide overview of the trade balance of all the countries. Trellis Line Chart is not a good idea as the scale of trade balances can be very different as we are looking at 52 countries ranging from major trade partners like China to smaller ones like Cyprus
 
-::: panel-tabset
+```{r}
+#Creating the normalising function
+normalit<-function(m){
+   (m - min(m))/(max(m)-min(m))
+ }
+```
 
+Calculating Change in Trade Balance (%)
+
+```{r}
+sgtrade_cln_norm <- sgtrade_cln |> 
+  mutate(Normalised_Trade_Balance = normalit(Trade_Balance_SGD)) |> 
+  arrange(Countries, Month_Year) |> 
+  group_by(Countries) |> 
+  mutate(Pct_Trade_Balance_Change = round((Trade_Balance_SGD - lag(Trade_Balance_SGD))*100/lag(Trade_Balance_SGD), 2)) |> 
+  ungroup()
+
+sgtrade_cln
+```
+
+::: panel-tabset
 ##### Normalised Trade Balance
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-cutpoints <- sgtrade_cln  |>  
+cutpoints <- sgtrade_cln_norm  |>  
   mutate(
     outlier = between(
       Normalised_Trade_Balance, 
@@ -496,7 +570,7 @@ cutpoints <- sgtrade_cln  |>
   filter(outlier)
 
 #origin point - when trade balance is 0
-ori <- (0 - min(sgtrade_cln$Trade_Balance_SGD))/(max(sgtrade_cln$Trade_Balance_SGD)-min(sgtrade_cln$Trade_Balance_SGD))
+ori <- (0 - min(sgtrade_cln_norm$Trade_Balance_SGD))/(max(sgtrade_cln_norm$Trade_Balance_SGD)-min(sgtrade_cln_norm$Trade_Balance_SGD))
 
 #scales for horizon plot
 sca <- seq(range(cutpoints$Normalised_Trade_Balance)[1], 
@@ -509,9 +583,9 @@ sca <- seq(range(cutpoints$Normalised_Trade_Balance)[1],
 #| code-summary: "Show the code"
 #| fig-height: 12
 #| fig-width: 10
-sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
+sgtrade_cln_norm$Countries <- fct_reorder(sgtrade_cln_norm$Countries, sgtrade_cln_norm$Pct_Total_Trade_Volumes, .desc = TRUE)
 
-sgtrade_cln |> ggplot() +
+sgtrade_cln_norm |> ggplot() +
   geom_horizon(aes(x = Month_Year,
                    y = Normalised_Trade_Balance,
                    fill = after_stat(Cutpoints)),
@@ -549,7 +623,7 @@ sgtrade_cln |> ggplot() +
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-cutpoints_roc <- sgtrade_cln  |>  
+cutpoints_roc <- sgtrade_cln_norm  |>  
   mutate(
     outlier = between(
       Pct_Trade_Balance_Change, 
@@ -573,9 +647,9 @@ sca_roc <- seq(range(cutpoints_roc$Pct_Trade_Balance_Change, na.rm=T)[1],
 #| code-summary: "Show the code"
 #| fig-height: 12
 #| fig-width: 10
-sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
+sgtrade_cln_norm$Countries <- fct_reorder(sgtrade_cln_norm$Countries, sgtrade_cln_norm$Pct_Total_Trade_Volumes, .desc = TRUE)
 
-sgtrade_cln |> 
+sgtrade_cln_norm |> 
   na.omit() |> 
   ggplot() +
   geom_horizon(aes(x = Month_Year,
@@ -622,7 +696,6 @@ Other partners - Brazil, Mexico, Brunei, Ireland, Israel
 
 Others are due to - mid-range - one intensity
 
-
 Observation Select countries to choose
 
 Major partners (Top 10) - China (trend reversal) - Malaysia (Volatile in 2022) - USA (high volatility) - Korea (high volatility from 2020 to 2021) - Japan (same as Korea as removed) =\> 4
@@ -640,8 +713,8 @@ Others are low intensity or too small in terms of volume
 #### 3.2.1 Singapore Trade Balance Performance
 
 ::: panel-tabset
-
 ##### Overall Singapore
+
 ```{r, Calendar Heatmap Total}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -681,8 +754,8 @@ theme(axis.ticks = element_blank(),
 
 ```
 
-
 ##### Selected Countries
+
 ```{r, Calendar Heatmap by Countries}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -693,6 +766,8 @@ selected_countries = c("Mainland China", "Malaysia", "United States", "South Kor
 
 sgtrade_calmap <- sgtrade_cln |> 
   mutate(Trade_Balance = Trade_Balance_SGD/1000000000)
+
+sgtrade_calmap$Countries <- fct_reorder(sgtrade_calmap$Countries, sgtrade_calmap$Pct_Total_Trade_Volumes, .desc = TRUE)
 
 ggplot(sgtrade_calmap |> 
          mutate(Year = factor(Year, levels =c(2022,2021,2020))) |> 
@@ -725,17 +800,17 @@ theme(axis.ticks = element_blank(),
       plot.title = element_markdown(face = "bold"))
 
 ```
-
 :::
 
 #### 3.2.2 Singapore Trade Export and Import
-
 
 ```{r, Function Singapore Trade Balance Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
 
 plot_braid_ctry <- function(selected_countries, showlegend) {
+
+sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Pct_Total_Trade_Volumes, .desc = TRUE)
 
 #
 sgtrade_cln_long <- sgtrade_cln |> 
@@ -1129,7 +1204,6 @@ plot_slopegraph_tradebal <- function(selected_countries) {
                   WiderLabels = TRUE)
 }
 ```
-
 :::
 
 ::: panel-tabset
@@ -1172,14 +1246,12 @@ plot_slopegraph_export(c("Mainland China", "Malaysia", "United States", "South K
 #| fig-width: 8
 plot_slopegraph_tradebal(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
 ```
-
 :::
-
-
 
 ### 3.3 Changes in Import and Export over time
 
 #### 3.3.1 Data Preparation
+
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
@@ -1200,6 +1272,7 @@ sgtrade_cln_ani <- sgtrade_cln |>
 
 sgtrade_cln_ani
 ```
+
 #### 3.3.2 Building the plot
 
 ```{r, Changes in Import and Export over time}
@@ -1250,4 +1323,3 @@ animate(pa,
         width = 800,
         fps = 30) 
 ```
-
