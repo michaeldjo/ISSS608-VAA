@@ -974,7 +974,7 @@ Other countries are not selected because of two possible conditions : 1) their t
 
 ###### 
 
-### 3.2 Bi-lateral Trade of Singapore against selected partners
+### 3.2 Bi-lateral Trade of Singapore with selected partners
 
 In the previous section, 16 Singapore's trading partners have been identified to be further examined. This section aims to dissect the general overview further to see whether the patterns identified above can be explained by individual country.
 
@@ -982,7 +982,7 @@ In the previous section, 16 Singapore's trading partners have been identified to
 
 Having a line plot depicting Singapore trade activities are useful, but it might not be obvious enough to spot patterns at the monthly level. As such, calendar heatmap will be used.
 
-##### 3.2.2.1 Design Consideration
+##### 3.2.1.1 Design Consideration
 
 -   Three heatmaps will be generated: two for the entire Singapore's trade volume and trade balance and one depicting trade balance faceted by each country (16 countries). It does not make sense to depict trade volume by country as the major partners will dominate the map.
 
@@ -995,22 +995,24 @@ Having a line plot depicting Singapore trade activities are useful, but it might
 ::: callout-tip
 Some details in the plot can help to enhance the visual aesthetics, such as:
 
--   Using colorblind friendly palette - sequential for Plot1 and diverging for Plo2 and 3
+-   Using colorblind friendly palette - sequential for Plot1 and diverging for Plot2 and 3
 
 -   Display the values in Billions SGD rather than the raw values
 
 -   Clear intent in title, highlighting the story with colored text for highlight
 :::
 
-##### 3.2.2.2 Preparation of visualisation
+##### 3.2.1.2 Preparation of visualisation
 
 ###### [Data preparation]{.underline}
 
 Two tibbles are created for the following purpose:
 
 -   ***totalsgtrade_calmap*** will be used to plot the first map displaying the entire Singapore trade balance. Hence, we can utilise ***totalsgtrade*** (refer to @sec-3.1.1.2 ) which already contains the total Singapore import and export values, irrespective of countries. However, the **Month**, **Trade_Balance**, and **Trade Volumes** variables need to be regenerated
+
 -   ***sgtrade_calmap*** will be used to plot the second map which is faceted by selected countries. The countries will need to be ordered based on total trade volumes using `forcats::fct_reorder()`
--   Create variable called ***selected_countries*** to contain string of the 16 countries
+
+Create variable called ***selected_countries*** to contain string of the 16 countries
 
 ::: callout-important
 It is important to divide the newly calculated Trade Balance by 1B to display the values in Billions SGD
@@ -1199,12 +1201,14 @@ ggplot(sgtrade_calmap |>
 ```
 :::
 
-##### 3.2.2.3 Insight
+##### 3.2.1.3 Insight
 
 ###### [Overall Singapore Calendar Heatmap]{.underline}
 
 -   [Trade Volumes]{.underline}: Continue to recover from March 2021 onward post Covid-restriction throughout 2020. The volumes reached peak in March and July 2022. However, slight slowdown is observed from October 2022 following the onset of recession
+
 -   [Trade Balance]{.underline}: Similar insight can be garnered from @sec-3.1.1.3 with Singapore maintaining trade surplus throughout the duration, except for brief period in May 2022. Clear peaks in trade surplus were observed in August 2021, as well as in March and August 2022
+
 -   No other clear seasonality observed
 
 ###### [Selected Countries Calendar Heatmap]{.underline}
@@ -1212,8 +1216,11 @@ ggplot(sgtrade_calmap |>
 There are a lot of insights to be garnered from here, but only few will be highlighted
 
 -   [Major Partners]{.underline}: Trade surplus turning deficit for all major partners, especially with Mainland China, United States, and South Korea from end 2021 to 2022, explaining the thinning overall trade surplus
+
 -   [Other regional partners]{.underline}: Singapore seems to be maintaining thin surplus with Philippines, which evidently improving from Aug 2022 onward. It is interesting to see the three peaks of trade surplus with Cambodia happening in Mar and Dec 2021, and Jul 2022
+
 -   [European partners]{.underline}: Singapore maintains slight trade deficit with Germany and United Kingdom which seems to be reducing towards end 2022. However the same is not true with France and Switzerland, with worsening trade deficit in 2022
+
 -   [Other minor partners]{.underline}: The calendar heatmap still favors bigger trading partners as smaller partners are overshadowed by the rest.
 
 #### 3.2.2 Singapore Trade Performance with Selected Countries
@@ -1562,11 +1569,45 @@ final_plot + plot_annotation(
 
 #### 3.2.3 Year-over-Year changes between 2020 and 2022
 
-Choose Q3 as Q3 2020 is during the major lockdowns around the world and it is just prior to recession in 2022. Providing a bit of stability in the data
+So far, we have examined Singapore trade performance with the selected partners from monthly basis (calendar heatmap) and from overall timeline (trellis braided ribbon chart). However, an additional perspective is Year-over-Year (Y-o-Y) comparison, which shows how trade performance has changed for the same period in different years. We are interested to examine how Singapore's trade performance with selected countries has evolved from 2020 to 2022.
 
-Modifying the data
+##### 3.2.3.1 Design Consideration
+
+-   Slopegraph is the perfect visualisation method for this purpose as it helps to compare the change from different points in time. The steeper the slope, the bigger the change; and, if one thing is going up more dramatically than its neighbors, a slopegraph will make that easier to see than a traditional line graph would
+
+-   The parameters to compare would be trade volume, trade balance, imports and exports
+
+    ::: callout-note
+    Normalised parameter will not make sense here as the data label is important for slopegraph for users to visualise actual change. Hence it is expected that this graph might overemphasize large trading partners.
+    :::
+
+-   We will compare Q3 2020 with Q3 2022 based on the previous section's analysis. This period in 2020 marked the settling of major lockdowns around the world, while in 2022, it is just before the recession, providing stability in the data
+
+-   The lines will be color-coded to highlight significant changes in [**exports**]{style="color:#0072B2"} and [**imports**]{style="color:#D55E00"} or [**increase**]{style="color:#332288"} and [**decrease**]{style="color:#CC6677"} in trade volume
+
+::: callout-tip
+Some details in the plot can help to enhance the visual aesthetics, such as:
+
+-   Using colorblind friendly palette
+
+-   Display the values in Billions SGD rather than the raw values
+
+-   Clear intent in title, highlighting the story with colored text for highlight
+:::
+
+##### 3.2.3.2 Preparation of visualisation
+
+###### [Data preparation]{.underline}
+
+A new tibble called ***sgtrade_cln_qtr*** is created by deriving **Quarter** variable from **Month_Year** and convert it to factor. This is achieved using Base R `paste0()` and `factor()` functions and `lubridate::quarter()` function. The tibble is then filtered only for period of interest which is Q3 2020 and Q3 2022 using `dplyr::filter()`. The tibble is then further grouped by **Countries** and **Quarter** to summarise the trade balance, volumes, import and exports.
+
+New variable called ***selected_countries*** is also created to contain string of the 16 countries
 
 ```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+#Creating new tibble to group time to quarter and summarise the data in quarter
 sgtrade_cln_qtr <- sgtrade_cln |> 
   mutate(Quarter = factor(paste0("Q", quarter(Month_Year), " ", year(Month_Year))), .after = Month) |> 
   filter(Quarter %in% c("Q3 2020", "Q3 2022")) |> 
@@ -1576,144 +1617,25 @@ sgtrade_cln_qtr <- sgtrade_cln |>
             Total_Import_BSGD = round(sum(Import_SGD)/1000000000, 2),
             Total_Export_BSGD = round(sum(Export_SGD)/1000000000, 2))
 
-sgtrade_cln_qtr
+#Select the chosen 16 countries
+selected_countries = c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam")
 ```
 
-Creating function to plot Trade Balances
+###### [Plotting the main graph]{.underline}
 
-::: panel-tabset
-##### Trade Volume
+Steps used to create the four plots:
 
-```{r, Function Trade Volume Slope Graph}
-plot_slopegraph_tradevol <- function(selected_countries) {
-  
-  custom_colors_tradevol <- sgtrade_cln_qtr |> 
-    pivot_wider(id_cols = Countries,
-                names_from = Quarter,
-                values_from = Total_Trade_Volumes_BSGD) |> 
-    mutate(diff_Total_Trade_Volumes = `Q3 2022` - `Q3 2020`) |> 
-    mutate(col_Total_Trade_Volumes = case_when(
-      diff_Total_Trade_Volumes > 5 ~"#0072B2",
-      diff_Total_Trade_Volumes <= -3 ~"#D55E00",
-      TRUE ~ "grey"
-    )) |> 
-    select(Countries, col_Total_Trade_Volumes) |> 
-    deframe()
-  
-  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
-                    filter(Countries %in% selected_countries),
-                  Times = Quarter,
-                  Measurement = Total_Trade_Volumes_BSGD,
-                  Grouping = Countries,
-                  Title = "Y-o-Y Change in Singapore Merchandise Trade Volumes (Billion SGD)",
-                  SubTitle = "Q3 2020 to Q3 2022",
-                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
-                  LineColor = custom_colors_tradevol,
-                  LineThickness = 0.7,
-                  ThemeChoice = "gdocs",
-                  WiderLabels = TRUE)
-}
-```
+-   A new tibble to specify the color coding of lines is created. Firstly, ***sgtrade_cln_qtr*** needs to be reformat using `tidyr::pivot_wider()` to move the two periods (Q3 2020 and Q3 2022) to column. `dplyr::mutate()` is then used to calculate the difference between the two periods and `case_when()` is used to assign color to each difference depending on the significance level manually specified
 
-##### Import
+    ::: callout-tip
+    The new tibble is then converted to vector using `tibble::deframe()`, using **Country** column as name and the **color** column as value. This allows it to be used as input to `LineColor` argument in `CGPfunctions::newggslopegraph()`
+    :::
 
-```{r, Function Import Slope Graph}
-plot_slopegraph_import <- function(selected_countries) {
-  
-  custom_colors_import <- sgtrade_cln_qtr |> 
-    pivot_wider(id_cols = Countries,
-                names_from = Quarter,
-                values_from = Total_Import_BSGD) |> 
-    mutate(diff_Total_Import = `Q3 2022` - `Q3 2020`) |> 
-    mutate(col_Total_Import = case_when(
-      diff_Total_Import > 1 ~"#D55E00",
-      diff_Total_Import <= -1 ~"#0072B2",
-      TRUE ~ "grey"
-    )) |> 
-    select(Countries, col_Total_Import) |> 
-    deframe()
-  
-  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
-                    filter(Countries %in% selected_countries),
-                  Times = Quarter,
-                  Measurement = Total_Import_BSGD,
-                  Grouping = Countries,
-                  Title = "Y-o-Y Change in Singapore Merchandise Import Values (Billion SGD)",
-                  SubTitle = "Q3 2020 to Q3 2022",
-                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
-                  LineColor = custom_colors_import,
-                  LineThickness = 0.7,
-                  ThemeChoice = "gdocs",
-                  WiderLabels = TRUE)
-}
-```
+-   The base plot is created using `CGPfunctions::newggslopegraph()` to create Tufte style slopegraph. The `dataframe` used is ***sgtrade_cln_qtr*** filtered by ***selected_countries***, `Times` is specified as **Quarter**, and `Grouping` as **Countries**. The Title, Subtitle, and Caption are also specified accordingly
 
-##### Export
-
-```{r, Function Export Slope Graph}
-plot_slopegraph_export <- function(selected_countries) {
-  
-  custom_colors_export <- sgtrade_cln_qtr |> 
-    pivot_wider(id_cols = Countries,
-                names_from = Quarter,
-                values_from = Total_Export_BSGD) |> 
-    mutate(diff_Total_Export = `Q3 2022` - `Q3 2020`) |> 
-    mutate(col_Total_Export = case_when(
-      diff_Total_Export > 1 ~"#0072B2",
-      diff_Total_Export <= -1 ~"#D55E00",
-      TRUE ~ "grey"
-    )) |> 
-    select(Countries, col_Total_Export) |> 
-    deframe()
-  
-  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
-                    filter(Countries %in% selected_countries),
-                  Times = Quarter,
-                  Measurement = Total_Export_BSGD,
-                  Grouping = Countries,
-                  Title = "Y-o-Y Change in Singapore Merchandise Export Values (Billion SGD)",
-                  SubTitle = "Q3 2020 to Q3 2022",
-                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
-                  LineColor = custom_colors_export,
-                  LineThickness = 0.7,
-                  ThemeChoice = "gdocs",
-                  WiderLabels = TRUE)
-}
-```
-
-##### Trade Balance
-
-```{r, Function Trade Balance Slope Graph}
-plot_slopegraph_tradebal <- function(selected_countries) {
-  
-  custom_colors_tradebal <- sgtrade_cln_qtr |> 
-    pivot_wider(id_cols = Countries,
-                names_from = Quarter,
-                values_from = Total_Trade_Balance_BSGD) |> 
-    mutate(diff_Total_Trade_Balance = `Q3 2022` - `Q3 2020`) |> 
-    mutate(col_Total_Trade_Balance = case_when(
-      diff_Total_Trade_Balance > 0.5 ~"#0072B2",
-      diff_Total_Trade_Balance <= -0.5 ~"#D55E00",
-      TRUE ~ "grey"
-    )) |> 
-    select(Countries, col_Total_Trade_Balance) |> 
-    deframe()
-  
-  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
-                    filter(Countries %in% selected_countries),
-                  Times = Quarter,
-                  Measurement = Total_Trade_Balance_BSGD,
-                  Grouping = Countries,
-                  Title = "Y-o-Y Change in Singapore Merchandise Trade Balance (Billion SGD)",
-                  SubTitle = "Q3 2020 to Q3 2022",
-                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
-                  LineColor = custom_colors_tradebal,
-                  LineThickness = 0.7,
-                  ThemeChoice = "gdocs",
-                  WiderLabels = TRUE)
-}
-```
-:::
+    ::: callout-tip
+    `WiderLabels` argument is set as `TRUE` as the `Grouping` variable values are long. This setting gives them more room in the same plot size.
+    :::
 
 ::: panel-tabset
 ##### Trade Volume
@@ -1723,27 +1645,39 @@ plot_slopegraph_tradebal <- function(selected_countries) {
 #| code-summary: "Show the code"
 #| fig-height: 10
 #| fig-width: 8
-plot_slopegraph_tradevol(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
-```
 
-##### Import
+#Creating custom colors based on difference in parameters
+custom_colors_tradevol <- sgtrade_cln_qtr |> 
+  pivot_wider(id_cols = Countries,
+              names_from = Quarter,
+              values_from = Total_Trade_Volumes_BSGD) |> 
+  
+  mutate(diff_Total_Trade_Volumes = `Q3 2022` - `Q3 2020`) |> 
+  
+  mutate(col_Total_Trade_Volumes = case_when(
+    diff_Total_Trade_Volumes > 3 ~"#332288",
+    diff_Total_Trade_Volumes <= -0.5 ~"#CC6677",
+      TRUE ~ "grey"
+    )) |> 
 
-```{r, Import Slope Graph}
-#| code-fold: true
-#| code-summary: "Show the code"
-#| fig-height: 10
-#| fig-width: 8
-plot_slopegraph_import(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
-```
+#Convert the tibble to vector
+    select(Countries, col_Total_Trade_Volumes) |> 
+    deframe()
+  
+#Plotting the base plot
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Trade_Volumes_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Singapore Merchandise Trade Volumes (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_tradevol, #The vector is used here
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
 
-##### Export
-
-```{r, Export Slope Graph}
-#| code-fold: true
-#| code-summary: "Show the code"
-#| fig-height: 10
-#| fig-width: 8
-plot_slopegraph_export(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
 ```
 
 ##### Trade Balance
@@ -1753,9 +1687,138 @@ plot_slopegraph_export(c("Mainland China", "Malaysia", "United States", "South K
 #| code-summary: "Show the code"
 #| fig-height: 10
 #| fig-width: 8
-plot_slopegraph_tradebal(c("Mainland China", "Malaysia", "United States", "South Korea", "Australia", "India", "Philippines", "Cambodia", "Germany", "France", "Switzerland", "United Kingdom", "Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
+
+#Creating custom colors based on difference in parameters
+custom_colors_tradebal <- sgtrade_cln_qtr |> 
+  
+  pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Trade_Balance_BSGD) |> 
+  
+  mutate(diff_Total_Trade_Balance = `Q3 2022` - `Q3 2020`) |> 
+  
+  mutate(col_Total_Trade_Balance = case_when(
+      diff_Total_Trade_Balance > 0.5 ~"#0072B2",
+      diff_Total_Trade_Balance <= -0.5 ~"#D55E00",
+      TRUE ~ "grey"
+    )) |> 
+
+#Convert the tibble to vector
+    select(Countries, col_Total_Trade_Balance) |> 
+    deframe()
+
+#Plotting the base plot  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Trade_Balance_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Singapore Merchandise Trade Balance (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_tradebal, #The vector is used here
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
+
+```
+
+##### Imports
+
+```{r, Import Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+
+#Creating custom colors based on difference in parameters
+custom_colors_import <- sgtrade_cln_qtr |> 
+  pivot_wider(id_cols = Countries,
+              names_from = Quarter,
+              values_from = Total_Import_BSGD) |>
+  
+  mutate(diff_Total_Import = `Q3 2022` - `Q3 2020`) |> 
+  
+  mutate(col_Total_Import = case_when(
+      diff_Total_Import > 1 ~"#D55E00",
+      diff_Total_Import <= -1 ~"#0072B2",
+      TRUE ~ "grey"
+    )) |> 
+  
+#Convert the tibble to vector
+    select(Countries, col_Total_Import) |> 
+    deframe()
+
+#Plotting the base plot  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Import_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Singapore Merchandise Import Values (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_import, #The vector is used here
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
+
+```
+
+##### Exports
+
+```{r, Export Slope Graph}
+#| code-fold: true
+#| code-summary: "Show the code"
+#| fig-height: 10
+#| fig-width: 8
+
+#Creating custom colors based on difference in parameters 
+custom_colors_export <- sgtrade_cln_qtr |> 
+  pivot_wider(id_cols = Countries,
+                names_from = Quarter,
+                values_from = Total_Export_BSGD) |> 
+  
+  mutate(diff_Total_Export = `Q3 2022` - `Q3 2020`) |> 
+  
+  mutate(col_Total_Export = case_when(
+      diff_Total_Export > 1 ~"#0072B2",
+      diff_Total_Export <= -1 ~"#D55E00",
+      TRUE ~ "grey"
+    )) |> 
+  
+#Convert the tibble to vector
+    select(Countries, col_Total_Export) |> 
+    deframe()
+
+#Plotting the base plot  
+  newggslopegraph(dataframe = sgtrade_cln_qtr |> 
+                    filter(Countries %in% selected_countries),
+                  Times = Quarter,
+                  Measurement = Total_Export_BSGD,
+                  Grouping = Countries,
+                  Title = "Y-o-Y Change in Singapore Merchandise Export Values (Billion SGD)",
+                  SubTitle = "Q3 2020 to Q3 2022",
+                  Caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
+                  LineColor = custom_colors_export, #The vector is used here
+                  LineThickness = 0.7,
+                  ThemeChoice = "gdocs",
+                  WiderLabels = TRUE)
+
 ```
 :::
+
+###### 3.2.3.3 Insights
+
+As expected the smaller trading partners are overshadowed, purely due to the different scale of volumes that they are trading. However, there are interesting trends
+
+-   [Trade Volume]{.underline}: Trading volumes grow with all trading partners, except with UK which seems to shrink. It is noted that this is due to large export surge in Q2/3 2020
+
+-   [Trade Balance]{.underline}: Biggest trade surplus is achieved with Cambodia, which is significant given its status as minor partners. Largest trade deficits are seen with major partners like China, USA, and South Korea.
+
+-   [Imports]{.underline}: This graph complement the Trade Balance, highlighting significant imports gain with the trading partners, explaining the large trade deficits. Imports fell with Cambodia, partially explaining the large gain in surplus
+
+-   [Exports]{.underline}: Exports grow with major partners, with Malaysia and Cambodia having the steepest increase. Exports remain sluggish with European partners, except with Germany
 
 ###### 
 
