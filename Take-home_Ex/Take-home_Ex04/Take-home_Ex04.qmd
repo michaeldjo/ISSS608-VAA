@@ -25,7 +25,7 @@ The study period is from for **January 2020 to December 2022** period.
 
 ## **2. Data Preparation**
 
-### 2.1 Install R packages and import dataset
+### 2.1 Install R packages and import dataset {#sec-2.1}
 
 The code chunk below uses `pacman::p_load()` to check if packages are installed. If they are, they will be launched into R. The packages installed are
 
@@ -79,7 +79,7 @@ sgimport <- read_excel("data/outputFile.xlsx", sheet = "T1", range = "A10:AK129"
 sgexport <- read_excel("data/outputFile.xlsx", sheet = "T2", range = "A10:AK101" )
 ```
 
-Additional data is downloaded from [World Bank](https://data.worldbank.org/country) dataset which lists countries by world regions.
+Additional data is downloaded from [World Bank](https://data.worldbank.org/country) dataset which lists countries by world regions, which will be mainly used in @sec-3.3.
 
 Import data from excel file using `readr::read_csv()` and store it in tibble ***regions***.
 
@@ -245,7 +245,7 @@ We cannot assume that the exports are zero, just because there is no available d
 
 #### 2.2.4 Joining the two tibbles and calculate trade balance and volume
 
-`dplyr::left_join()` function is used to join ***sgimport_cln*** and ***sgexport_cln***. This is especially useful to avoid since ***sgimport_cln*** has more rows than ***sgexport_cln***.
+`dplyr::left_join()` function is used to join ***sgimport_cln*** and ***sgexport_cln***. This is especially useful to avoid unwanted data loss since ***sgimport_cln*** has more rows than ***sgexport_cln***.
 
 ::: callout-tip
 `left_join()` **takes all the values from the first tibble, and looks for matches in the second tibble**. If it finds a match, it adds the data from the second table; if not, it adds missing values.
@@ -908,7 +908,7 @@ sgtrade_cln_hor |>
 ```
 :::
 
-##### 3.1.2.3 Insights
+##### 3.1.2.3 Insights {#sec-3.1.2.3}
 
 ###### [Normalised Trade Balance Plot]{.underline}
 
@@ -1822,19 +1822,66 @@ As expected the smaller trading partners are overshadowed, purely due to the dif
 
 ###### 
 
-### 3.3 Changes in Import and Export over time
+### 3.3 Changes in Import and Export over time {#sec-3.3}
 
-#### 3.3.1 Data Preparation
+A lot of emphasis in above sections are placed in trade balance and volume individually, yet there is an interactive way to see both in the same plot in relation to import and export values by using animation. The purpose of this plot is to display how Singapore trading performance fare with each countries over the period of study.
+
+#### 3.3.1 Design Consideration
+
+-   In order to have more data points, all countries with trade volume larger than Sri Lanka (refer to @sec-3.1.2.3 ) will included
+
+-   The basic shape of the plot is bubble plot with Export in y-axis and Import in x-axis, each bubble represents a country
+
+-   To include the trading volume dimension, the size of the bubble should be proportional to its trade volume
+
+-   As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in @sec-2.1 . To distinguish the countries, data label will be provided in each bubble
+
+-   To reduce disproportion between large trading partners and small ones, both axis needs to be scaled logarithmically
+
+-   Plot reference line diagonally between x and y-axis to show the division between Trade Surplus and Trade Deficit
+
+::: callout-tip
+Some details in the plot can help to enhance the visual aesthetics, such as:
+
+-   Using colorblind friendly palette
+
+-   Display the values in Billions SGD rather than the raw values
+
+-   Display the period of interest in the subtitle
+:::
+
+#### 3.3.2 Preparation of visualisation
+
+##### [Data Preparation]{.underline}
+
+-   ***filtered_countries*** contain the list of countries with trade volume larger than Sri Lanka. This is manually selected by removing the bottom 13 countries from ***sgtrade_top_ctry***
+
+-   Clean the ***regions*** tibble by changing the names of countries manually to match with those in ***sgtrade_cln***. In this case, "Brunei", "Czechia" and "China" need to be changed accordingly using `dplyr::mutate()` function. Store this in new tibble called ***regions_cln***
+
+-   Create new tibble called ***sgtrade_cln_ani*** by joining ***sgtrade_cln*** with ***regions_cln*** tibble. `dplyr::left_join()` is used to avoid unwanted data loss since ***sgtrade_cln*** has more rows than ***regions_cln***
+
+    ::: callout-important
+    It is important to divide the **Import_SGD**, **Export_SGD**, and **Trade_Volumes_SGD** by 1B to display the values in Billions SGD
+    :::
+
+-   Use `dplyr::filter()` to filter the countries in ***sgtrade_cln_ani*** based on the newly defined ***filtered_countries***
 
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
+
+#Remove countries with trade volume below Sri Lanka
+#52-13 = 39
+filtered_countries <- sgtrade_top_ctry$Countries [1:39]
+
+#Clean the region tibble by matching the name with Countries in sgtrade_cln
 regions_cln <- regions |> 
     mutate(Countries = case_when(Countries == "Brunei" ~ "Brunei Darussalam",
                                  Countries == "Czechia" ~ "Czech Republic",
                                  Countries == "China" ~ "Mainland China",
                                  TRUE~Countries))
 
+#Create new tibble by joining sgtrade_cln with regions_cln
 sgtrade_cln_ani <- sgtrade_cln |> 
   select(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) |> 
   
@@ -1842,18 +1889,59 @@ sgtrade_cln_ani <- sgtrade_cln |>
          Export_SGD = round(Export_SGD/1000000000, 1),
          Trade_Volumes_SGD = round(Trade_Volumes_SGD/1000000000, 1)) |> 
   
-  left_join(regions_cln, by = c('Countries' = 'Countries'))
-
-sgtrade_cln_ani
+  left_join(regions_cln, by = c('Countries' = 'Countries')) |> 
+  
+#Filter the countries as per filtered_countries
+  filter(Countries %in% filtered_countries)
 ```
 
-#### 3.3.2 Building the plot
+##### [Plotting the main graph]{.underline}
+
+Steps used to create the plot
+
+-   Base plot is created using `ggplot2::geom_point()`, specifying the color argument by **Region**
+
+-   Reference line is created using `ggplot2::geom_abline()` to draw diagonal line. The `linetype` argument is specified as `"dashed"`
+
+-   The country label in each bubble is created using `ggplot2::geom_label()`
+
+-   The size of the bubble is scaled using `scale_size()` function, specifying the smallest and largest size
+
+-   `scale_color_manual()` is used to manually set the color scheme
+
+    ::: callout-tip
+    The color choice for colorblind-friendly is based on this [article](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
+    :::
+
+-   `guides()` is used to customise the legends. The `size` argument is set to `FALSE` as we do not want to display the bubble size as legend to avoid overcrowding the plot; while the `color` argument is specified to have 2 rows
+
+-   `coord_equal()` is used to ensure equal scales for both x and y coordinates to ensure balance
+
+-   `scale_x_log10()` and `scale_y_log10()` are used to set both axis in logarithmic scales
+
+-   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions
+
+    ::: callout-tip
+    We can specify the `subtitle` with `{format(frame_time, '%b %Y')}` to display the period on `%b %Y` format (i.e., Jan 2020)
+    :::
+
+-   `gganimate::transition_time()` specifies the datetime variable to base its animation from. In this case, we use the **Month_Year** variable
+
+-   `gganimate::ease_aes()` controls the easing of the aesthetics. By specifying it as `linear`, the animation will progress linearly
+
+The entire plot above is stored to new variable called ***pa***, which is a `gganim` object
+
+-   gganimate::animate() takes the pa variable and render it to animation. In this case, we can specify the `duration` and `fps`
+
+    ::: callout-tip
+    In addition to above argument, number of frames (`nframes`) could also be specified. But only 2oo3 could be specified. In this case, the `duration` is specified as 25 second (1/3 sec per month) and the `fps` is set as 30 to improve smoothness (default is 10)
+    :::
 
 ```{r, Changes in Import and Export over time}
 #| code-fold: true
 #| code-summary: "Show the code"
-#| eval: false
 
+#Plotting the base plot
 pa <- ggplot(data = sgtrade_cln_ani,
        aes(x = Import_SGD,
            y = Export_SGD,
@@ -1861,8 +1949,9 @@ pa <- ggplot(data = sgtrade_cln_ani,
   
   geom_point(aes(size = Trade_Volumes_SGD),
              alpha = 0.7,
-             show.legend = F) +
-  
+             show.legend = T) +
+ 
+#Plotting the reference line 
   geom_abline(intercept = 0, 
               slope = 1,
               linewidth = 0.7,
@@ -1870,30 +1959,71 @@ pa <- ggplot(data = sgtrade_cln_ani,
               linetype = "dashed",
               col = "grey40") +
   
+#Display the label of each country
   geom_label(aes(label = Countries,
                       group = Countries),
                   show.legend = FALSE,
                   size = 3) +
   
+#Set the bubble size range
   scale_size(range = c(5,45)) +
   
-  scale_x_log10() +
-  scale_y_log10() +
+#Setting the colors for the main plot 
+  scale_color_manual(values = c("#DC3220", "#76C2E8", "#009E73", "#E69F00", "#332288", "#AA4499")) +
   
+#Customsie the legend
+  guides(size = FALSE,
+         color = guide_legend(nrow = 2,
+                              override.aes = list(size = 2))) +
+  
+#Ensure equal coordinates between x and y-axis
+  coord_equal() +
+
+#Convert the x and y-axis to log10 coordinates
+  scale_x_log10(limits= c(0.05, 10)) +
+  scale_y_log10(limits= c(0.05, 10)) +
+  
+#Adding title, subtitle, and captions
   labs(title = 'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022',
        subtitle = "Period: {format(frame_time, '%b %Y')}",
-       x = 'Import (Billion SGD)', 
-       y = 'Export (Billion SGD)') +
+       x = 'Imports (Billion SGD)', 
+       y = 'Exports (Billion SGD)') +
   
-  theme(plot.title = element_text(size = 18, face = "bold")) +
+#Setting the theme
+  theme_bw() +
   
+  theme(plot.title = element_text(size = 20, face = "bold"),
+        plot.subtitle = element_text(size = 16),
+        axis.line.x = element_line(color="black", size = 1),
+        axis.line.y = element_line(color="black", size = 1),
+        axis.title.x = element_text(size = 16),
+        axis.title.y = element_text(size = 16),
+        axis.text.x = element_text(size = 13),
+        axis.text.y = element_text(size = 13),
+        legend.position = "bottom",
+        legend.direction = "horizontal",
+        legend.text = element_text(size = 13)) +
+  
+#Specify the transition time
   transition_time(Month_Year) + 
   
+#Specify the ease aesthetics
   ease_aes('linear') 
-
+  
+#Specify the animation parameters
 animate(pa, 
-        duration = 25, #12 months/Year x 3 years x 0.7 sec/months = 18 seconds
-        height = 800, 
-        width = 800,
+        duration = 25, #12 months/Year x 3 years x 0.33 sec/months = 25 seconds
+        height = 900, 
+        width = 900,
         fps = 30) 
 ```
+
+#### 3.3.3 Insights
+
+-   There were a lot of discussions about China, Malaysia, and the USA, but not much about other major partners like Taiwan and Hong Kong. This plot shows how little they move in trade surplus and trade deficit zone respectively, which makes it less interesting
+
+-   As expected, the majority of Singapore's trading partners are from the East Asia and Pacific region, with only the United States and India being non-members
+
+-   European trade partners, particularly Switzerland and the United Kingdom, have shown a lot of volatility. Singapore has only consistently achieved a trade surplus with the Netherlands and Belgium.
+
+-   Smaller partners have tended to be more volatile, with frequent shifts between surplus and deficit zones, particularly with Canada and Ireland.

@@ -289,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><strong>1. Overview</strong></a></li>
   <li><a href="#data-preparation" id="toc-data-preparation" class="nav-link" data-scroll-target="#data-preparation"><strong>2. Data Preparation</strong></a>
   <ul>
-  <li><a href="#install-r-packages-and-import-dataset" id="toc-install-r-packages-and-import-dataset" class="nav-link" data-scroll-target="#install-r-packages-and-import-dataset">2.1 Install R packages and import dataset</a></li>
+  <li><a href="#sec-2.1" id="toc-sec-2.1" class="nav-link" data-scroll-target="#sec-2.1">2.1 Install R packages and import dataset</a></li>
   <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link" data-scroll-target="#data-cleaning">2.2 Data cleaning</a>
   <ul>
   <li><a href="#cleaning-the-countries-data-for-sgimport-and-sgexport" id="toc-cleaning-the-countries-data-for-sgimport-and-sgexport" class="nav-link" data-scroll-target="#cleaning-the-countries-data-for-sgimport-and-sgexport">2.2.1 Cleaning the countries data for <strong><em>sgimport</em></strong> and <strong><em>sgexport</em></strong></a></li>
@@ -313,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#design-consideration" id="toc-design-consideration" class="nav-link" data-scroll-target="#design-consideration">3.1.2.1 Design Consideration</a></li>
   <li><a href="#preparation-of-visualisation" id="toc-preparation-of-visualisation" class="nav-link" data-scroll-target="#preparation-of-visualisation">3.1.2.2 Preparation of visualisation</a></li>
-  <li><a href="#insights" id="toc-insights" class="nav-link" data-scroll-target="#insights">3.1.2.3 Insights</a></li>
+  <li><a href="#sec-3.1.2.3" id="toc-sec-3.1.2.3" class="nav-link" data-scroll-target="#sec-3.1.2.3">3.1.2.3 Insights</a></li>
   <li><a href="#sec-3.1.2.4" id="toc-sec-3.1.2.4" class="nav-link" data-scroll-target="#sec-3.1.2.4">3.1.2.4 Selecting Countries for further analysis</a></li>
   </ul></li>
   </ul></li>
@@ -329,7 +329,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#design-consideration-2" id="toc-design-consideration-2" class="nav-link" data-scroll-target="#design-consideration-2">3.2.2.1 Design Consideration</a></li>
   <li><a href="#preparation-of-visualisation-2" id="toc-preparation-of-visualisation-2" class="nav-link" data-scroll-target="#preparation-of-visualisation-2">3.2.2.2 Preparation of visualisation</a></li>
-  <li><a href="#insights-1" id="toc-insights-1" class="nav-link" data-scroll-target="#insights-1">3.2.2.3 Insights</a></li>
+  <li><a href="#insights" id="toc-insights" class="nav-link" data-scroll-target="#insights">3.2.2.3 Insights</a></li>
   </ul></li>
   <li><a href="#year-over-year-changes-between-2020-and-2022" id="toc-year-over-year-changes-between-2020-and-2022" class="nav-link" data-scroll-target="#year-over-year-changes-between-2020-and-2022">3.2.3 Year-over-Year changes between 2020 and 2022</a>
   <ul class="collapse">
@@ -337,10 +337,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#preparation-of-visualisation-3" id="toc-preparation-of-visualisation-3" class="nav-link" data-scroll-target="#preparation-of-visualisation-3">3.2.3.2 Preparation of visualisation</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#changes-in-import-and-export-over-time" id="toc-changes-in-import-and-export-over-time" class="nav-link" data-scroll-target="#changes-in-import-and-export-over-time">3.3 Changes in Import and Export over time</a>
+  <li><a href="#sec-3.3" id="toc-sec-3.3" class="nav-link" data-scroll-target="#sec-3.3">3.3 Changes in Import and Export over time</a>
   <ul>
-  <li><a href="#data-preparation-5" id="toc-data-preparation-5" class="nav-link" data-scroll-target="#data-preparation-5">3.3.1 Data Preparation</a></li>
-  <li><a href="#building-the-plot" id="toc-building-the-plot" class="nav-link" data-scroll-target="#building-the-plot">3.3.2 Building the plot</a></li>
+  <li><a href="#design-consideration-4" id="toc-design-consideration-4" class="nav-link" data-scroll-target="#design-consideration-4">3.3.1 Design Consideration</a></li>
+  <li><a href="#preparation-of-visualisation-4" id="toc-preparation-of-visualisation-4" class="nav-link" data-scroll-target="#preparation-of-visualisation-4">3.3.2 Preparation of visualisation</a>
+  <ul class="collapse">
+  <li><a href="#data-preparation-5" id="toc-data-preparation-5" class="nav-link" data-scroll-target="#data-preparation-5"><u>Data Preparation</u></a></li>
+  <li><a href="#plotting-the-main-graph-4" id="toc-plotting-the-main-graph-4" class="nav-link" data-scroll-target="#plotting-the-main-graph-4"><u>Plotting the main graph</u></a></li>
+  </ul></li>
+  <li><a href="#insights-2" id="toc-insights-2" class="nav-link" data-scroll-target="#insights-2">3.3.3 Insights</a></li>
   </ul></li>
   </ul></li>
   </ul>
@@ -394,8 +399,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="data-preparation" class="level2">
 <h2 class="anchored" data-anchor-id="data-preparation"><strong>2. Data Preparation</strong></h2>
-<section id="install-r-packages-and-import-dataset" class="level3">
-<h3 class="anchored" data-anchor-id="install-r-packages-and-import-dataset">2.1 Install R packages and import dataset</h3>
+<section id="sec-2.1" class="level3">
+<h3 class="anchored" data-anchor-id="sec-2.1">2.1 Install R packages and import dataset</h3>
 <p>The code chunk below uses <code>pacman::p_load()</code> to check if packages are installed. If they are, they will be launched into R. The packages installed are</p>
 <ul>
 <li><p><code>readxl</code>: Used to read data from excel files</p></li>
@@ -439,7 +444,7 @@ Warning
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>sgexport <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"data/outputFile.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"T2"</span>, <span class="at">range =</span> <span class="st">"A10:AK101"</span> )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Additional data is downloaded from <a href="https://data.worldbank.org/country">World Bank</a> dataset which lists countries by world regions.</p>
+<p>Additional data is downloaded from <a href="https://data.worldbank.org/country">World Bank</a> dataset which lists countries by world regions, which will be mainly used in <a href="#sec-3.3">Section&nbsp;3.3</a>.</p>
 <p>Import data from excel file using <code>readr::read_csv()</code> and store it in tibble <strong><em>regions</em></strong>.</p>
 <p>This Entity and World_RegionbyWorld_Bank variable is renamed to Countries and Region for easier interpretation and future joins with other tibble.</p>
 <div class="cell">
@@ -1073,7 +1078,7 @@ Warning
 </section>
 <section id="joining-the-two-tibbles-and-calculate-trade-balance-and-volume" class="level4">
 <h4 class="anchored" data-anchor-id="joining-the-two-tibbles-and-calculate-trade-balance-and-volume">2.2.4 Joining the two tibbles and calculate trade balance and volume</h4>
-<p><code>dplyr::left_join()</code> function is used to join <strong><em>sgimport_cln</em></strong> and <strong><em>sgexport_cln</em></strong>. This is especially useful to avoid since <strong><em>sgimport_cln</em></strong> has more rows than <strong><em>sgexport_cln</em></strong>.</p>
+<p><code>dplyr::left_join()</code> function is used to join <strong><em>sgimport_cln</em></strong> and <strong><em>sgexport_cln</em></strong>. This is especially useful to avoid unwanted data loss since <strong><em>sgimport_cln</em></strong> has more rows than <strong><em>sgexport_cln</em></strong>.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1883,8 +1888,8 @@ Tip
 </div>
 </section>
 </section>
-<section id="insights" class="level5">
-<h5 class="anchored" data-anchor-id="insights">3.1.2.3 Insights</h5>
+<section id="sec-3.1.2.3" class="level5">
+<h5 class="anchored" data-anchor-id="sec-3.1.2.3">3.1.2.3 Insights</h5>
 <section id="normalised-trade-balance-plot" class="level6">
 <h6 class="anchored" data-anchor-id="normalised-trade-balance-plot"><u>Normalised Trade Balance Plot</u></h6>
 <ul>
@@ -2711,8 +2716,8 @@ Tip
 </div>
 </section>
 </section>
-<section id="insights-1" class="level5">
-<h5 class="anchored" data-anchor-id="insights-1">3.2.2.3 Insights</h5>
+<section id="insights" class="level5">
+<h5 class="anchored" data-anchor-id="insights">3.2.2.3 Insights</h5>
 <ul>
 <li><p><u>Major partners</u>: Trade volume has rebounded since Covid-19, but the trade deficit worsened from 2022. A sudden drop in trade with China, Malaysia, and the USA occurred in early 2022 due to major Shanghai lockdown and the start of the war in Ukraine. Trade volume shrinks in mid-2022 likely due to the recession</p></li>
 <li><p><u>Other regional partners</u>: Exports rebounded after Covid-19, resulting in a surplus. However, trade starts to drop in mid-2022 due to the recession. The impact of two major Covid waves in India is evident, and trade with Cambodia showed a major surplus from Q3 2020</p></li>
@@ -2992,8 +2997,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="insights-2" class="level6">
-<h6 class="anchored" data-anchor-id="insights-2">3.2.3.3 Insights</h6>
+<section id="insights-1" class="level6">
+<h6 class="anchored" data-anchor-id="insights-1">3.2.3.3 Insights</h6>
 <p>As expected the smaller trading partners are overshadowed, purely due to the different scale of volumes that they are trading. However, there are interesting trends</p>
 <ul>
 <li><p><u>Trade Volume</u>: Trading volumes grow with all trading partners, except with UK which seems to shrink. It is noted that this is due to large export surge in Q2/3 2020</p></li>
@@ -3008,97 +3013,242 @@ Tip
 </section>
 </section>
 </section>
-<section id="changes-in-import-and-export-over-time" class="level3">
-<h3 class="anchored" data-anchor-id="changes-in-import-and-export-over-time">3.3 Changes in Import and Export over time</h3>
-<section id="data-preparation-5" class="level4">
-<h4 class="anchored" data-anchor-id="data-preparation-5">3.3.1 Data Preparation</h4>
-<div class="cell">
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>regions_cln <span class="ot">&lt;-</span> regions <span class="sc">|&gt;</span> </span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">case_when</span>(Countries <span class="sc">==</span> <span class="st">"Brunei"</span> <span class="sc">~</span> <span class="st">"Brunei Darussalam"</span>,</span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"Czechia"</span> <span class="sc">~</span> <span class="st">"Czech Republic"</span>,</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Mainland China"</span>,</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>                                 <span class="cn">TRUE</span><span class="sc">~</span>Countries))</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_ani <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) <span class="sc">|&gt;</span> </span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Import_SGD =</span> <span class="fu">round</span>(Import_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> <span class="fu">round</span>(Export_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> <span class="fu">round</span>(Trade_Volumes_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(regions_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>))</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_ani</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,872 × 6
-   Month_Year Countries Import_SGD Export_SGD Trade_Volumes_SGD Region          
-   &lt;date&gt;     &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;           
- 1 2022-12-01 Belgium          0.1        0.4               0.5 Europe and Cent…
- 2 2022-11-01 Belgium          0.1        0.8               0.9 Europe and Cent…
- 3 2022-10-01 Belgium          0.1        0.4               0.4 Europe and Cent…
- 4 2022-09-01 Belgium          0.2        0.4               0.6 Europe and Cent…
- 5 2022-08-01 Belgium          0.1        0.6               0.7 Europe and Cent…
- 6 2022-07-01 Belgium          0.2        1                 1.2 Europe and Cent…
- 7 2022-06-01 Belgium          0.1        0.6               0.7 Europe and Cent…
- 8 2022-05-01 Belgium          0.1        0.6               0.7 Europe and Cent…
- 9 2022-04-01 Belgium          0.1        0.7               0.8 Europe and Cent…
-10 2022-03-01 Belgium          0.3        1.4               1.8 Europe and Cent…
-# … with 1,862 more rows</code></pre>
+<section id="sec-3.3" class="level3">
+<h3 class="anchored" data-anchor-id="sec-3.3">3.3 Changes in Import and Export over time</h3>
+<p>A lot of emphasis in above sections are placed in trade balance and volume individually, yet there is an interactive way to see both in the same plot in relation to import and export values by using animation. The purpose of this plot is to display how Singapore trading performance fare with each countries over the period of study.</p>
+<section id="design-consideration-4" class="level4">
+<h4 class="anchored" data-anchor-id="design-consideration-4">3.3.1 Design Consideration</h4>
+<ul>
+<li><p>In order to have more data points, all countries with trade volume larger than Sri Lanka (refer to <a href="#sec-3.1.2.3">Section&nbsp;3.1.2.3</a> ) will included</p></li>
+<li><p>The basic shape of the plot is bubble plot with Export in y-axis and Import in x-axis, each bubble represents a country</p></li>
+<li><p>To include the trading volume dimension, the size of the bubble should be proportional to its trade volume</p></li>
+<li><p>As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in <a href="#sec-2.1">Section&nbsp;2.1</a> . To distinguish the countries, data label will be provided in each bubble</p></li>
+<li><p>To reduce disproportion between large trading partners and small ones, both axis needs to be scaled logarithmically</p></li>
+<li><p>Plot reference line diagonally between x and y-axis to show the division between Trade Surplus and Trade Deficit</p></li>
+</ul>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some details in the plot can help to enhance the visual aesthetics, such as:</p>
+<ul>
+<li><p>Using colorblind friendly palette</p></li>
+<li><p>Display the values in Billions SGD rather than the raw values</p></li>
+<li><p>Display the period of interest in the subtitle</p></li>
+</ul>
 </div>
 </div>
 </section>
-<section id="building-the-plot" class="level4">
-<h4 class="anchored" data-anchor-id="building-the-plot">3.3.2 Building the plot</h4>
+<section id="preparation-of-visualisation-4" class="level4">
+<h4 class="anchored" data-anchor-id="preparation-of-visualisation-4">3.3.2 Preparation of visualisation</h4>
+<section id="data-preparation-5" class="level5">
+<h5 class="anchored" data-anchor-id="data-preparation-5"><u>Data Preparation</u></h5>
+<ul>
+<li><p><strong><em>filtered_countries</em></strong> contain the list of countries with trade volume larger than Sri Lanka. This is manually selected by removing the bottom 13 countries from <strong><em>sgtrade_top_ctry</em></strong></p></li>
+<li><p>Clean the <strong><em>regions</em></strong> tibble by changing the names of countries manually to match with those in <strong><em>sgtrade_cln</em></strong>. In this case, “Brunei”, “Czechia” and “China” need to be changed accordingly using <code>dplyr::mutate()</code> function. Store this in new tibble called <strong><em>regions_cln</em></strong></p></li>
+<li><p>Create new tibble called <strong><em>sgtrade_cln_ani</em></strong> by joining <strong><em>sgtrade_cln</em></strong> with <strong><em>regions_cln</em></strong> tibble. <code>dplyr::left_join()</code> is used to avoid unwanted data loss since <strong><em>sgtrade_cln</em></strong> has more rows than <strong><em>regions_cln</em></strong></p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is important to divide the <strong>Import_SGD</strong>, <strong>Export_SGD</strong>, and <strong>Trade_Volumes_SGD</strong> by 1B to display the values in Billions SGD</p>
+</div>
+</div></li>
+<li><p>Use <code>dplyr::filter()</code> to filter the countries in <strong><em>sgtrade_cln_ani</em></strong> based on the newly defined <strong><em>filtered_countries</em></strong></p></li>
+</ul>
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_ani,</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Import_SGD,</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Export_SGD,</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Region)) <span class="sc">+</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Trade_Volumes_SGD),</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> F) <span class="sc">+</span></span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, </span>
-<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="dv">1</span>,</span>
-<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.7</span>,</span>
-<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> Countries,</span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> Countries),</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span></span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022'</span>,</span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Period: {format(frame_time, '%b %Y')}"</span>,</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Import (Billion SGD)'</span>, </span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Export (Billion SGD)'</span>) <span class="sc">+</span></span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>, <span class="at">face =</span> <span class="st">"bold"</span>)) <span class="sc">+</span></span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(Month_Year) <span class="sc">+</span> </span>
-<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>) </span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(pa, </span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">duration =</span> <span class="dv">25</span>, <span class="co">#12 months/Year x 3 years x 0.7 sec/months = 18 seconds</span></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="dv">800</span>, </span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="dv">800</span>,</span>
-<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a>        <span class="at">fps =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove countries with trade volume below Sri Lanka</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#52-13 = 39</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>filtered_countries <span class="ot">&lt;-</span> sgtrade_top_ctry<span class="sc">$</span>Countries [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>]</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Clean the region tibble by matching the name with Countries in sgtrade_cln</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>regions_cln <span class="ot">&lt;-</span> regions <span class="sc">|&gt;</span> </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">case_when</span>(Countries <span class="sc">==</span> <span class="st">"Brunei"</span> <span class="sc">~</span> <span class="st">"Brunei Darussalam"</span>,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"Czechia"</span> <span class="sc">~</span> <span class="st">"Czech Republic"</span>,</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Mainland China"</span>,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="cn">TRUE</span><span class="sc">~</span>Countries))</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new tibble by joining sgtrade_cln with regions_cln</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_ani <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) <span class="sc">|&gt;</span> </span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Import_SGD =</span> <span class="fu">round</span>(Import_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> <span class="fu">round</span>(Export_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> <span class="fu">round</span>(Trade_Volumes_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(regions_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter the countries as per filtered_countries</span></span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> filtered_countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+</section>
+<section id="plotting-the-main-graph-4" class="level5">
+<h5 class="anchored" data-anchor-id="plotting-the-main-graph-4"><u>Plotting the main graph</u></h5>
+<p>Steps used to create the plot</p>
+<ul>
+<li><p>Base plot is created using <code>ggplot2::geom_point()</code>, specifying the color argument by <strong>Region</strong></p></li>
+<li><p>Reference line is created using <code>ggplot2::geom_abline()</code> to draw diagonal line. The <code>linetype</code> argument is specified as <code>"dashed"</code></p></li>
+<li><p>The country label in each bubble is created using <code>ggplot2::geom_label()</code></p></li>
+<li><p>The size of the bubble is scaled using <code>scale_size()</code> function, specifying the smallest and largest size</p></li>
+<li><p><code>scale_color_manual()</code> is used to manually set the color scheme</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The color choice for colorblind-friendly is based on this <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40">article</a></p>
+</div>
+</div></li>
+<li><p><code>guides()</code> is used to customise the legends. The <code>size</code> argument is set to <code>FALSE</code> as we do not want to display the bubble size as legend to avoid overcrowding the plot; while the <code>color</code> argument is specified to have 2 rows</p></li>
+<li><p><code>coord_equal()</code> is used to ensure equal scales for both x and y coordinates to ensure balance</p></li>
+<li><p><code>scale_x_log10()</code> and <code>scale_y_log10()</code> are used to set both axis in logarithmic scales</p></li>
+<li><p>Set the theme and add titles, subtitles, and captions using <code>theme()</code> and <code>labs()</code> functions</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We can specify the <code>subtitle</code> with <code>{format(frame_time, '%b %Y')}</code> to display the period on <code>%b %Y</code> format (i.e., Jan 2020)</p>
+</div>
+</div></li>
+<li><p><code>gganimate::transition_time()</code> specifies the datetime variable to base its animation from. In this case, we use the <strong>Month_Year</strong> variable</p></li>
+<li><p><code>gganimate::ease_aes()</code> controls the easing of the aesthetics. By specifying it as <code>linear</code>, the animation will progress linearly</p></li>
+</ul>
+<p>The entire plot above is stored to new variable called <strong><em>pa</em></strong>, which is a <code>gganim</code> object</p>
+<ul>
+<li><p>gganimate::animate() takes the pa variable and render it to animation. In this case, we can specify the <code>duration</code> and <code>fps</code></p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In addition to above argument, number of frames (<code>nframes</code>) could also be specified. But only 2oo3 could be specified. In this case, the <code>duration</code> is specified as 25 second (1/3 sec per month) and the <code>fps</code> is set as 30 to improve smoothness (default is 10)</p>
+</div>
+</div></li>
+</ul>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_ani,</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Import_SGD,</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Export_SGD,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Region)) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Trade_Volumes_SGD),</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> T) <span class="sc">+</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference line </span></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, </span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="dv">1</span>,</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.7</span>,</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Display the label of each country</span></span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> Countries,</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> Countries),</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the bubble size range</span></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the colors for the main plot </span></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#DC3220"</span>, <span class="st">"#76C2E8"</span>, <span class="st">"#009E73"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#332288"</span>, <span class="st">"#AA4499"</span>)) <span class="sc">+</span></span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Customsie the legend</span></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>                              <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure equal coordinates between x and y-axis</span></span>
+<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the x and y-axis to log10 coordinates</span></span>
+<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions</span></span>
+<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022'</span>,</span>
+<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Period: {format(frame_time, '%b %Y')}"</span>,</span>
+<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Imports (Billion SGD)'</span>, </span>
+<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Exports (Billion SGD)'</span>) <span class="sc">+</span></span>
+<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the theme</span></span>
+<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
+<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>)) <span class="sc">+</span></span>
+<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the transition time</span></span>
+<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(Month_Year) <span class="sc">+</span> </span>
+<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the ease aesthetics</span></span>
+<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>) </span>
+<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the animation parameters</span></span>
+<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(pa, </span>
+<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a>        <span class="at">duration =</span> <span class="dv">25</span>, <span class="co">#12 months/Year x 3 years x 0.33 sec/months = 25 seconds</span></span>
+<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="dv">900</span>, </span>
+<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="dv">900</span>,</span>
+<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a>        <span class="at">fps =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="Take-home_Ex04_files/figure-html/Changes in Import and Export over time-1.gif" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="insights-2" class="level4">
+<h4 class="anchored" data-anchor-id="insights-2">3.3.3 Insights</h4>
+<ul>
+<li><p>There were a lot of discussions about China, Malaysia, and the USA, but not much about other major partners like Taiwan and Hong Kong. This plot shows how little they move in trade surplus and trade deficit zone respectively, which makes it less interesting</p></li>
+<li><p>As expected, the majority of Singapore’s trading partners are from the East Asia and Pacific region, with only the United States and India being non-members</p></li>
+<li><p>European trade partners, particularly Switzerland and the United Kingdom, have shown a lot of volatility. Singapore has only consistently achieved a trade surplus with the Netherlands and Belgium.</p></li>
+<li><p>Smaller partners have tended to be more volatile, with frequent shifts between surplus and deficit zones, particularly with Canada and Ireland.</p></li>
+</ul>
 
 
 </section>
