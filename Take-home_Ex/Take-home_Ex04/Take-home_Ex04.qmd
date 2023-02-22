@@ -350,11 +350,11 @@ n_distinct(sgtrade_cln$Countries)
 
 The plots in this section offer a high-level overview of Singapore's bilateral merchandise trade performance amid Covid-19 recovery, with the aim of identifying general trends through exploratory analysis. Rather than providing detailed analyses for each country, the focus is on identifying broad patterns and relationships. This approach enables the identification of countries of interest, providing context for more focused analyses in the following section.
 
-#### 3.1.1 Overall Singapore Trade Balance Performance
+#### 3.1.1 Overall Singapore Trade Balance Performance {#sec-3.1.1}
 
 To gain an understanding of import and export trends in Singapore, we will begin with a simple time-series chart covering the period from January 2020 to December 2022.
 
-##### 3.1.1.1 Design Consideration
+##### 3.1.1.1 Design Consideration {#sec-3.1.1.1}
 
 Instead of using simple line charts, braided ribbon chart is used with the following considerations:
 
@@ -406,6 +406,7 @@ totalsgtrade_long <- totalsgtrade |>
                names_to = "Type",
                values_to = "Values")
 
+#Creating new tibble to be used for reference line
 avg_total_2020 <- totalsgtrade |> 
   filter(Year == 2020) |> 
   group_by (Year) |> 
@@ -917,7 +918,7 @@ sgtrade_cln_hor |>
 
 -   This plot provides a more balanced visualization between smaller and larger trading partners. However, it's important to note that smaller trading partners exhibit higher intensity, which is expected as small changes in trading balance are overexaggerated due to their smaller volume
 
-##### 3.1.2.4 Selecting Countries for further analysis
+##### 3.1.2.4 Selecting Countries for further analysis {#sec-3.1.2.4}
 
 Singapore's trading partners are diverse and can be broadly categorized into Major Partners, Other Regional Partners, European Partners, and Other Minor Partners. For this analysis, 16 countries were selected around the categories based on the following interesting observations:
 
@@ -977,7 +978,7 @@ Other countries are not selected because of two possible conditions : 1) their t
 
 In the previous section, 16 Singapore's trading partners have been identified to be further examined. This section aims to dissect the general overview further to see whether the patterns identified above can be explained by individual country.
 
-#### 3.2.1 Singapore Trade Performance in monthly level
+#### 3.2.1 Singapore Trade Performance on Monthly basis
 
 Having a line plot depicting Singapore trade activities are useful, but it might not be obvious enough to spot patterns at the monthly level. As such, calendar heatmap will be used.
 
@@ -1202,36 +1203,97 @@ ggplot(sgtrade_calmap |>
 
 ###### [Overall Singapore Calendar Heatmap]{.underline}
 
--   Trade volumes continue to recover from March 2021 onward post Covid-restriction throughout 2020. The volumes reached peak in March and July 2022. However, slight slowdown is observed from October 2022 following the onset of recession
--   Similar insight can be garnered from @sec-3.1.1.3 with Singapore maintaining trade surplus throughout duration, except for brief period in May 2022
+-   [Trade Volumes]{.underline}: Continue to recover from March 2021 onward post Covid-restriction throughout 2020. The volumes reached peak in March and July 2022. However, slight slowdown is observed from October 2022 following the onset of recession
+-   [Trade Balance]{.underline}: Similar insight can be garnered from @sec-3.1.1.3 with Singapore maintaining trade surplus throughout the duration, except for brief period in May 2022. Clear peaks in trade surplus were observed in August 2021, as well as in March and August 2022
 -   No other clear seasonality observed
 
 ###### [Selected Countries Calendar Heatmap]{.underline}
 
 There are a lot of insights to be garnered from here, but only few will be highlighted
 
--   Major Partners: Trade surplus turning deficit for all major partners, especially with Mainland China, United States, and South Korea from end 2021 to 2022, explaining the thinning overall trade surplus.
--   Other regional partners: Singapore seems to be maintaining thin surplus with Philippines, which evidently improving from Aug 2022 onwards. It is interesting to see the three peaks of trade surplus with Cambodia happening in Mar and Dec 2021, and Jul 2022.
--   European partners: Singapore maintains slight trade deficit with Germany and United Kingdom which seems to be reducing towards end 2022. However the same is not true with France and Switzerland, with worsening trade deficit in 2022
--   Other minor partners: The calendar heatmap still favors bigger trading partners as smaller partners are overshadowed by the rest.
+-   [Major Partners]{.underline}: Trade surplus turning deficit for all major partners, especially with Mainland China, United States, and South Korea from end 2021 to 2022, explaining the thinning overall trade surplus
+-   [Other regional partners]{.underline}: Singapore seems to be maintaining thin surplus with Philippines, which evidently improving from Aug 2022 onward. It is interesting to see the three peaks of trade surplus with Cambodia happening in Mar and Dec 2021, and Jul 2022
+-   [European partners]{.underline}: Singapore maintains slight trade deficit with Germany and United Kingdom which seems to be reducing towards end 2022. However the same is not true with France and Switzerland, with worsening trade deficit in 2022
+-   [Other minor partners]{.underline}: The calendar heatmap still favors bigger trading partners as smaller partners are overshadowed by the rest.
 
-#### 3.2.2 Singapore Trade Export and Import by Selected Countries
+#### 3.2.2 Singapore Trade Performance with Selected Countries
+
+With insights from the previous sections, it makes sense to focus more on Singapore's trading performance with selected trading partners. Using the same braided ribbon plot from @sec-3.1.1, we can gain a better understanding of import and export trends with individual trading partners.
+
+##### 3.2.2.1 Design Consideration
+
+-   Braided ribbon charts helps to visualise the areas between import and export values, highlighting Singapore trade balance with each partner organised in trellis chart.
+
+-   To reduce clutter, the words "Export" and "Import" will be color-coded in the title instead of using legend
+
+-   Referring to @sec-3.1.2.4 , the selected partners are categorised into four groups. Each category will have its own subtitle, and the insights for each group will be further expounded upon
+
+-   Reference line will be provided, representing the average import and export values in 2020 as explained above in @sec-3.1.1.1
+
+-   To help users understand the scale, the contribution of each trading partner to the total Singapore trade volume will be displayed. This allows each group to have different y-axis scale, helping to bring the minor partners trend to prominence.
+
+-   Annotations explaining the events around the world
+
+::: callout-tip
+Some details in the plot can help to enhance the visual aesthetics, such as:
+
+-   Using diverging colorblind friendly palette
+
+-   Display the values in Billions SGD rather than the raw values
+
+-   Using arrows to aid annotations
+:::
+
+##### 3.2.2.2 Preparation of visualisation
+
+###### [Creating the plot function]{.underline}
+
+Given the design consideration to have individual subtitle for each group of countries, it makes sense patch the title together using `patchwork` library. As such, the codes to process the data and plot the graph are wrapped in R function, taking in the list of countries for each group as input.
+
+Steps used to create the function:
+
+-   Create function called `plot_braid_ctry`, taking **selected_countries** as input
+
+-   Convert the **Countries** variable to factor, ordered by trade volumes in descending order using `forcats::fct_reorder()`
+
+-   Create new tibble ***sgtrade_cln_long*** which collapses the **Import_SGD** and **Export_SGD** columns to new variable **Type**. This is used for geom_line to allow plotting different lines and grouped them by color. `tidyr::pivot_longer()` is used to do this.
+
+-   ***avg_total_ctry_2020*** creates 1x3 tibble containing the average 2020 Singapore import and export values by country to draw the reference lines. Firstly ***sgtrade_cln*** is filtered for `Year == 2020`. It is then grouped and summarised by mean of **Import_SGD** and **Export_SGD**.
+
+    ::: callout-note
+    Note that min_import_export variable is created as reference variable to place the "Avg 2020" text in the plot
+    :::
+
+-   To create dynamic labels in each facet, another function called `appender` is defined to append the country's name with each `Pct_Total_Trade_Volumes`
+
+    ::: callout-tip
+    `paste0()` function is used to combine the **Pct_Total_Trade_Volumes** and string "% of Total Volumes"
+    :::
+
+-   The rest of the steps mimic the same braided ribbon plot codes created in @sec-3.1.1.2 Plotting the main graph with the addition of faceting the plots by column using `facet_wrap()`
+
+    ::: callout-tip
+    the `appender` function is used in the `labeller` argument of `facet_wrap()` to create the dynamic labels
+    :::
 
 ```{r, Function Singapore Trade Balance Plot}
 #| code-fold: true
 #| code-summary: "Show the code"
 
-plot_braid_ctry <- function(selected_countries, showlegend) {
+#Write function so the plots can be patched separately
+plot_braid_ctry <- function(selected_countries) {
 
+#Converting countries to factor, ordered by trade volumes in descending order
 sgtrade_cln$Countries <- fct_reorder(sgtrade_cln$Countries, sgtrade_cln$Total_Trade_Volumes_SGD, .desc = TRUE)
 
-#
+#Creating new tibble to be used for geom_line 
 sgtrade_cln_long <- sgtrade_cln |> 
   select(Month_Year, Countries, Year, Import_SGD, Export_SGD, Pct_Total_Trade_Volumes) |> 
   pivot_longer(cols = c(Import_SGD, Export_SGD),
                names_to = "Type",
                values_to = "Values")
 
+#Creating new tibble to be used for reference line
 avg_total_ctry_2020 <- sgtrade_cln |> 
   filter(Year == 2020) |> 
   group_by (Year, Countries) |> 
@@ -1241,7 +1303,7 @@ avg_total_ctry_2020 <- sgtrade_cln |>
   rowwise() |> mutate(min_import_export = min(import, export))
 
 
-#creating label
+#Creating additional label to display % of total trade for every country
 label_ctry <- sgtrade_top_ctry |> 
   filter(Countries %in% selected_countries)
   
@@ -1250,7 +1312,7 @@ Ctry_labels <- paste0("\n",label_ctry$Pct_Total_Trade_Volumes,"% of Total Volume
 appender <- function(string, suffix = Ctry_labels) paste0(string, suffix)
 
 
-#Plotting
+#Plotting the base plot
 ggplot(data = sgtrade_cln_long |> 
          filter(Countries %in% selected_countries)) +
   
@@ -1260,7 +1322,7 @@ ggplot(data = sgtrade_cln_long |>
                 y = Values,
                 color = Type),
             linewidth = 1.2,
-            show.legend = showlegend) +
+            show.legend = FALSE) +
   
   geom_braid(data = sgtrade_cln |> 
               filter(Countries %in% selected_countries),
@@ -1270,8 +1332,10 @@ ggplot(data = sgtrade_cln_long |>
                  fill = Import_SGD < Export_SGD),
              alpha = 0.5) +
   
+#Remove the legend 
   guides(linetype = "none", fill = "none") +
   
+#Plotting the reference lines with annotations
   geom_hline(data = avg_total_ctry_2020|> 
               filter(Countries %in% selected_countries),
              aes(yintercept = export), 
@@ -1293,13 +1357,15 @@ ggplot(data = sgtrade_cln_long |>
                 label = "Avg 2020"),
             size = 3.5,
             nudge_x = +920) +
-  
+ 
+#Setting the colors for the main plot  
   scale_color_manual(values = c("#0072B2", "#D55E00"),
                      labels = c("Export", "Import"),
                      name = NULL) +
   
   scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
   
+#Adjusting the scale
   scale_x_date(expand = c(0,0),
                limits = c(as.Date("2020-01-01"),as.Date("2022-12-31")),
                date_breaks = "1 year",
@@ -1307,9 +1373,11 @@ ggplot(data = sgtrade_cln_long |>
   
   scale_y_continuous("Trade Values",
                      labels = function(x){paste0('$', abs(x/1000000000),'B')}) +
-    
+  
+#Faceted based on Countries  
   facet_wrap(vars(Countries), ncol=4, labeller=as_labeller(appender)) +
   
+#Setting the theme
   cowplot::theme_cowplot() +
   
   theme(axis.title.x = element_blank(),
@@ -1321,7 +1389,25 @@ ggplot(data = sgtrade_cln_long |>
 }
 ```
 
-Plotting the graph
+###### [Plotting the main visualisation]{.underline}
+
+As there are four groups of countries, we will create four separate plots, namely p1, p2, p3 and p4, representing Major Partners, Other Regional Partners, European Partners, and Other Minor Partners respectively.
+
+Steps used to create the visualisation:
+
+-   To allow individual annotations in each facet, we need to specify the annotations for each plot, defining the label and arrows arguments. Each label and arrow arguments are combined into dataframe, created using `data.frame()` function to combine the `label`, **Countries**, `x`, and `y` coordinates of the text.
+
+-   Each plot is created using the `plot_braid_ctry()` function defined above with list of countries from each group as input. After which, the following functions are used
+
+    -   geom_label() is used to display the annotation in label format, taking input of label dataframe created above
+
+    -   geom_segment() is used to display the arrow, taking input of arrow dataframe created above
+
+    -   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions
+
+        ::: callout-tip
+        `element_markdown()` argument is set in `theme()` to enable markdown text to be specified in the `labs(title)`. This will allow specific color to be set on "Export" and "Import".
+        :::
 
 ```{r, Singapore Trade Balance Plot}
 #| code-fold: true
@@ -1370,13 +1456,13 @@ arrowp2$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
 arrowp2a$Countries <- factor(c("Australia", "India", "Philippines", "Cambodia"))
 
 #Specifying the annotation for p3
-p3_text <- data.frame(label = c("Start of\nrecession", "", "", "Surge in\nExports"),  
+p3_text <- data.frame(label = c("Surge in\nExports", "", "", "Surge in\nExports"),  
                          Countries = c("Germany", "France", "Switzerland", "United Kingdom"),
                          x = c(as.Date("2020-9-01"), 0, 0, as.Date("2022-6-01")),
                          y = c(1700000000, 0, 0, 1700000000))
 
 arrowp3<- data.frame(Countries = c("Germany", "France", "Switzerland", "United Kingdom"),
-                      x = c(as.Date("2021-3-01"), 0, 0, as.Date("2022-01-01")),
+                      x = c(as.Date("2021-02-01"), 0, 0, as.Date("2022-01-01")),
                       y = c(1700000000, 0, 0, 1700000000),
                       xend = c(as.Date("2022-08-01"), 0, 0, as.Date("2020-09-01")),
                       yend = c(1300000000, 0, 0, 1200000000))
@@ -1386,23 +1472,23 @@ p3_text$Countries <- factor(c("Germany", "France", "Switzerland", "United Kingdo
 arrowp3$Countries <- factor(c("Germany", "France", "Switzerland", "United Kingdom"))
 
 #Specifying the annotation for p4
-p4_text <- data.frame(label = c("Reduced Trade\nDeficit", "Enhanced\nPartnership", "", ""),  
+p4_text <- data.frame(label = c("Reduced Trade\nDeficit", "Enhanced\nPartnership", "Surge in\nImports", "Surge in\nImports"),  
                          Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
-                         x = c(as.Date("2020-12-01"), as.Date("2020-10-01"), 0, 0),
-                         y = c(600000000, 600000000, 0, 0))
+                         x = c(as.Date("2020-12-01"), as.Date("2020-10-01"), as.Date("2020-10-01"), as.Date("2020-10-01")),
+                         y = c(600000000, 600000000, 600000000, 600000000))
 
 arrowp4<- data.frame(Countries = c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"),
-                      x = c(as.Date("2021-9-01"), as.Date("2021-05-01"), 0, 0),
-                      y = c(600000000, 600000000, 0, 0),
-                      xend = c(as.Date("2022-02-01"), as.Date("2022-03-01"), 0, 0),
-                      yend = c(250000000, 300000000, 0, 0))
+                      x = c(as.Date("2021-9-01"), as.Date("2021-05-01"), as.Date("2021-03-15"), as.Date("2021-03-15")),
+                      y = c(600000000, 600000000, 600000000, 600000000),
+                      xend = c(as.Date("2022-02-01"), as.Date("2022-03-01"), as.Date("2022-05-01"), as.Date("2022-07-01")),
+                      yend = c(250000000, 300000000, 400000000, 550000000))
 
 p4_text$Countries <- factor(c("Mexico", "New Zealand", "Brunei Darussalam", "Canada"))
 
 arrowp4$Countries <- factor(c("Mexico", "New Zealand", "Brunei Darussalam", "Canada"))
 
 #Plotting the graph
-p1a <- plot_braid_ctry(c("Mainland China", "Malaysia", "United States", "South Korea"), showlegend = FALSE)
+p1a <- plot_braid_ctry(c("Mainland China", "Malaysia", "United States", "South Korea"))
 p1 <- p1a + 
   geom_label(data = p1_text,
             aes(x = x,
@@ -1414,7 +1500,7 @@ p1 <- p1a +
   labs(subtitle = "Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;<br>recession shrinks trade further in mid-2022") +
   theme(plot.subtitle = element_markdown())
 
-p2a <- plot_braid_ctry(c("Australia", "India", "Philippines", "Cambodia"), showlegend = FALSE)
+p2a <- plot_braid_ctry(c("Australia", "India", "Philippines", "Cambodia"))
 p2 <- p2a + 
   geom_label(data = p2_text,
             aes(x = x,
@@ -1426,10 +1512,10 @@ p2 <- p2a +
   geom_segment(data = arrowp2a, 
                aes(x = x, xend = xend, y = y, yend = yend), 
                colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
-  labs(subtitle = "Exports bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022") +
+  labs(subtitle = "<span style = 'color:#0072B2'>Exports</span> bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022") +
   theme(plot.subtitle = element_markdown())
 
-p3a <- plot_braid_ctry(c("Germany", "France", "Switzerland", "United Kingdom"), showlegend = FALSE)
+p3a <- plot_braid_ctry(c("Germany", "France", "Switzerland", "United Kingdom"))
 p3 <- p3a + 
   geom_label(data = p3_text,
             aes(x = x,
@@ -1438,10 +1524,10 @@ p3 <- p3a +
   geom_segment(data = arrowp3, 
                aes(x = x, xend = xend, y = y, yend = yend), 
                colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
-  labs(subtitle = "Imports rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish") +
+  labs(subtitle = "<span style = 'color:#D55E00'>Imports</span> rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish") +
   theme(plot.subtitle = element_markdown())
 
-p4a <- plot_braid_ctry(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"), showlegend = FALSE)
+p4a <- plot_braid_ctry(c("Mexico", "New Zealand", "Canada", "Brunei Darussalam"))
 p4 <- p4a + 
   geom_label(data = p4_text,
              aes(x = x,
@@ -1450,19 +1536,29 @@ p4 <- p4a +
   geom_segment(data = arrowp4, 
                aes(x = x, xend = xend, y = y, yend = yend), 
                colour = "black", alpha=0.9, arrow = arrow(type = "closed",length = unit(0.1, "inches"))) +
-  labs(subtitle = "Trade volume also makes recovery with ***minor partners*** in 2022, with exports growing to Mexico and New Zealand") +
+  labs(subtitle = "Trade volume also makes recovery with ***minor partners*** in 2022, with <span style = 'color:#0072B2'>exports</span> growing to Mexico and New Zealand") +
   theme(plot.subtitle = element_markdown())
 
-
+#Patching everything together
 final_plot <- p1 / p2 / p3 / p4
 
 final_plot + plot_annotation(
-  title = "Merchandise <span style = 'color:#0072B2'>Export</span> and <span style = 'color:#D55E00'>Import</span> Trade Values of Singapore (in SGD)<br>by selected trading partners, 2020-2022",
+  title = "Merchandise <span style = 'color:#0072B2'>Export</span> and <span style = 'color:#D55E00'>Import</span> Trade Values of Singapore (in SGD)<br>with selected trading partners, 2020-2022",
   caption = "Merchandise Trade by Region/Market from Department of Statistics, Singapore",
   theme = theme(plot.title = element_markdown(face = "bold", size = 18))
 )
 
 ```
+
+##### 3.2.2.3 Insights
+
+-   [Major partners]{.underline}: Trade volume has rebounded since Covid-19, but the trade deficit worsened from 2022. A sudden drop in trade with China, Malaysia, and the USA occurred in early 2022 due to major Shanghai lockdown and the start of the war in Ukraine. Trade volume shrinks in mid-2022 likely due to the recession
+
+-   [Other regional partners]{.underline}: Exports rebounded after Covid-19, resulting in a surplus. However, trade starts to drop in mid-2022 due to the recession. The impact of two major Covid waves in India is evident, and trade with Cambodia showed a major surplus from Q3 2020
+
+-   [European partners]{.underline}: There is high volatility in trade amid Covid-19 recovery, with a rise in imports and sluggish exports, worsening Singapore's trade deficit. There was a surge in exports to France, the UK, and Germany in 2020/2022
+
+-   [Other minor partners]{.underline}: Trade volume has rebounded, with rising exports to New Zealand (signed Enhanced Partnership) and reduced deficit with Mexico. However, there was a large surge of imports from Canada and Brunei in Q2/Q3 2022.
 
 #### 3.2.3 Year-over-Year changes between 2020 and 2022
 
