@@ -381,7 +381,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 22, 2023</p>
+      <p class="date-modified">February 23, 2023</p>
     </div>
   </div>
     
@@ -3022,7 +3022,7 @@ Tip
 <li><p>In order to have more data points, all countries with trade volume larger than Sri Lanka (refer to <a href="#sec-3.1.2.3">Section&nbsp;3.1.2.3</a> ) will included</p></li>
 <li><p>The basic shape of the plot is bubble plot with Export in y-axis and Import in x-axis, each bubble represents a country</p></li>
 <li><p>To include the trading volume dimension, the size of the bubble should be proportional to its trade volume</p></li>
-<li><p>As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in <a href="#sec-2.1">Section&nbsp;2.1</a> . To distinguish the countries, data label will be provided in each bubble</p></li>
+<li><p>As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in <a href="#sec-2.1">Section&nbsp;2.1</a> . Setting the <code>color</code> to countries will lead to overly colorful plot which is meaningless. To distinguish the countries, data label will be provided in each bubble</p></li>
 <li><p>To reduce disproportion between large trading partners and small ones, both axis needs to be scaled logarithmically</p></li>
 <li><p>Plot reference line diagonally between x and y-axis to show the division between Trade Surplus and Trade Deficit</p></li>
 </ul>
@@ -3119,10 +3119,10 @@ Tip
 <p>The color choice for colorblind-friendly is based on this <a href="https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40">article</a></p>
 </div>
 </div></li>
-<li><p><code>guides()</code> is used to customise the legends. The <code>size</code> argument is set to <code>FALSE</code> as we do not want to display the bubble size as legend to avoid overcrowding the plot; while the <code>color</code> argument is specified to have 2 rows</p></li>
+<li><p><code>guides()</code> is used to customise the legends. Here, the <code>size</code> argument is set at <code>"none"</code> as the main purpose of the animated plot is to see how the trade performance with other countries evolves over time, rather than looking at the details of trade volume. This helps to avoid overcrowding the plot with too many legends. On the other hands, the <code>color</code> argument is important as explained above and specified to have 2 rows.</p></li>
 <li><p><code>coord_equal()</code> is used to ensure equal scales for both x and y coordinates to ensure balance</p></li>
 <li><p><code>scale_x_log10()</code> and <code>scale_y_log10()</code> are used to set both axis in logarithmic scales</p></li>
-<li><p>Set the theme and add titles, subtitles, and captions using <code>theme()</code> and <code>labs()</code> functions</p>
+<li><p>Set the theme and add titles, subtitles, and captions using <code>theme()</code> and <code>labs()</code> functions. The legends are placed at the bottom of the plots by specifying <code>legend.position</code> argument to avoid shrinking the plot area further.</p>
 <div class="callout-tip callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -3190,8 +3190,8 @@ Tip
 <span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#DC3220"</span>, <span class="st">"#76C2E8"</span>, <span class="st">"#009E73"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#332288"</span>, <span class="st">"#AA4499"</span>)) <span class="sc">+</span></span>
 <span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Customsie the legend</span></span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>,</span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="st">"Regions"</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
 <span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>                              <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>))) <span class="sc">+</span></span>
 <span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure equal coordinates between x and y-axis</span></span>

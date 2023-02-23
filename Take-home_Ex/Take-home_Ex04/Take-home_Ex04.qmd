@@ -1834,7 +1834,7 @@ A lot of emphasis in above sections are placed in trade balance and volume indiv
 
 -   To include the trading volume dimension, the size of the bubble should be proportional to its trade volume
 
--   As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in @sec-2.1 . To distinguish the countries, data label will be provided in each bubble
+-   As there are 52 countries, the color of each bubble could represent regions as defined by World Bank, explained in @sec-2.1 . Setting the `color` to countries will lead to overly colorful plot which is meaningless. To distinguish the countries, data label will be provided in each bubble
 
 -   To reduce disproportion between large trading partners and small ones, both axis needs to be scaled logarithmically
 
@@ -1913,13 +1913,13 @@ Steps used to create the plot
     The color choice for colorblind-friendly is based on this [article](https://davidmathlogic.com/colorblind/#%23D81B60-%231E88E5-%23FFC107-%23004D40)
     :::
 
--   `guides()` is used to customise the legends. The `size` argument is set to `FALSE` as we do not want to display the bubble size as legend to avoid overcrowding the plot; while the `color` argument is specified to have 2 rows
+-   `guides()` is used to customise the legends. Here, the `size` argument is set at `"none"` as the main purpose of the animated plot is to see how the trade performance with other countries evolves over time, rather than looking at the details of trade volume. This helps to avoid overcrowding the plot with too many legends. On the other hands, the `color` argument is important as explained above and specified to have 2 rows.
 
 -   `coord_equal()` is used to ensure equal scales for both x and y coordinates to ensure balance
 
 -   `scale_x_log10()` and `scale_y_log10()` are used to set both axis in logarithmic scales
 
--   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions
+-   Set the theme and add titles, subtitles, and captions using `theme()` and `labs()` functions. The legends are placed at the bottom of the plots by specifying `legend.position` argument to avoid shrinking the plot area further.
 
     ::: callout-tip
     We can specify the `subtitle` with `{format(frame_time, '%b %Y')}` to display the period on `%b %Y` format (i.e., Jan 2020)
@@ -1972,8 +1972,8 @@ pa <- ggplot(data = sgtrade_cln_ani,
   scale_color_manual(values = c("#DC3220", "#76C2E8", "#009E73", "#E69F00", "#332288", "#AA4499")) +
   
 #Customsie the legend
-  guides(size = FALSE,
-         color = guide_legend(nrow = 2,
+  guides(size = "none",
+         color = guide_legend("Regions", nrow = 2,
                               override.aes = list(size = 2))) +
   
 #Ensure equal coordinates between x and y-axis
