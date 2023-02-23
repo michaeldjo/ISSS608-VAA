@@ -1,0 +1,18 @@
+---
+title: "Hands-on_Ex07"
+author: "Michael Djohan"
+date: 23 February 2023
+date-modified: "`r Sys.Date()`"
+execute: 
+  echo: true
+  eval: true
+  warning: false
+format: html
+editor: visual
+---
+
+## 1. Install and launching R packages
+
+The code chunk below uses p_load() of pacman package to check if packages are installed in the computer. If they are, then they will be launched into R. The R packages installed are:
+
+-   [**lubridate**](https://lubridate.tidyverse.org/) package to work with date and time
