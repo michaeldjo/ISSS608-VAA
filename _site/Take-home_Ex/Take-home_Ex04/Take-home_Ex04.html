@@ -2319,7 +2319,7 @@ Tip
 <ul>
 <li><p><u>Trade Volumes</u>: Continue to recover from March 2021 onward post Covid-restriction throughout 2020. The volumes reached peak in March and July 2022. However, slight slowdown is observed from October 2022 following the onset of recession</p></li>
 <li><p><u>Trade Balance</u>: Similar insight can be garnered from <a href="#sec-3.1.1.3">Section&nbsp;3.1.1.3</a> with Singapore maintaining trade surplus throughout the duration, except for brief period in May 2022. Clear peaks in trade surplus were observed in August 2021, as well as in March and August 2022</p></li>
-<li><p>No other clear seasonality observed</p></li>
+<li><p>No other clear seasonality observed, hence eliminating the need to use cycle plots in this study</p></li>
 </ul>
 </section>
 <section id="selected-countries-calendar-heatmap" class="level6">
@@ -3150,7 +3150,7 @@ Tip
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Region)) <span class="sc">+</span></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Trade_Volumes_SGD),</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> T) <span class="sc">+</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a> </span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference line </span></span>
@@ -3175,7 +3175,7 @@ Tip
 <span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Customsie the legend</span></span>
 <span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>,</span>
-<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="st">"Regions"</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">fill =</span> <span class="fu">guide_legend</span>(<span class="st">"Regions"</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
 <span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>                              <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>))) <span class="sc">+</span></span>
 <span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure equal coordinates between x and y-axis</span></span>
