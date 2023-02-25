@@ -225,6 +225,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../../Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 6</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../Hands-on_Ex/Hands-on_Ex07/Hands-on_Ex07.html" class="sidebar-item-text sidebar-link">Hands-on Exercise 7</a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -381,7 +386,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">February 23, 2023</p>
+      <p class="date-modified">February 25, 2023</p>
     </div>
   </div>
     
@@ -2289,38 +2294,17 @@ Tip
 <span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
 <span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
 <span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>)) <span class="sc">+</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions</span></span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, </span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> <span class="cn">NULL</span>, </span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Singapore's trade balance post Covid recovery: Turns &lt;span style = 'color:#D55E00'&gt;Negative&lt;/span&gt; with China, USA, and South Korea;&lt;br&gt;&lt;span style = 'color:#0072B2'&gt;Positive&lt;/span&gt; with Cambodia"</span>,</span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>     <span class="at">subtitle =</span> <span class="st">"Singapore Trade Balance against selected partners by calendar months, 2020-2022"</span>,</span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>     <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Calendar Heatmap by Countries-1.png" class="img-fluid" width="960"></p>
-</div>
-<details>
-<summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, </span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> <span class="cn">NULL</span>, </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">"Singapore's trade balance post Covid recovery: Turns &lt;span style = 'color:#D55E00'&gt;Negative&lt;/span&gt; with China, USA, and South Korea;&lt;br&gt;&lt;span style = 'color:#0072B2'&gt;Positive&lt;/span&gt; with Cambodia"</span>,</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">subtitle =</span> <span class="st">"Singapore Trade Balance against selected partners by calendar months, 2020-2022"</span>,</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>$x
-NULL
-
-$y
-NULL
-
-$title
-[1] "Singapore's trade balance post Covid recovery: Turns &lt;span style = 'color:#D55E00'&gt;Negative&lt;/span&gt; with China, USA, and South Korea;&lt;br&gt;&lt;span style = 'color:#0072B2'&gt;Positive&lt;/span&gt; with Cambodia"
-
-$subtitle
-[1] "Singapore Trade Balance against selected partners by calendar months, 2020-2022"
-
-$caption
-[1] "Merchandise Trade by Region/Market from Department of Statistics, Singapore"
-
-attr(,"class")
-[1] "labels"</code></pre>
 </div>
 </div>
 </div>
@@ -2438,113 +2422,113 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Write function so the plots can be patched separately</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>plot_braid_ctry <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Converting countries to factor, ordered by trade volumes in descending order</span></span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>sgtrade_cln<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(sgtrade_cln<span class="sc">$</span>Countries, sgtrade_cln<span class="sc">$</span>Total_Trade_Volumes_SGD, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to be used for geom_line </span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_long <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Year, Import_SGD, Export_SGD, Pct_Total_Trade_Volumes) <span class="sc">|&gt;</span> </span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(Import_SGD, Export_SGD),</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Type"</span>,</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Values"</span>)</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to be used for reference line</span></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>avg_total_ctry_2020 <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span> (Year, Countries) <span class="sc">|&gt;</span> </span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">import =</span> <span class="fu">mean</span>(Import_SGD),</span>
-<span id="cb32-19"><a href="#cb32-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">export =</span> <span class="fu">mean</span>(Export_SGD)) <span class="sc">|&gt;</span> </span>
-<span id="cb32-20"><a href="#cb32-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year_date =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(Year, <span class="st">"-01-01"</span>, <span class="at">sep =</span> <span class="st">""</span>))) <span class="sc">|&gt;</span> </span>
-<span id="cb32-21"><a href="#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">min_import_export =</span> <span class="fu">min</span>(import, export))</span>
-<span id="cb32-22"><a href="#cb32-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-23"><a href="#cb32-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-24"><a href="#cb32-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating additional label to display % of total trade for every country</span></span>
-<span id="cb32-25"><a href="#cb32-25" aria-hidden="true" tabindex="-1"></a>label_ctry <span class="ot">&lt;-</span> sgtrade_top_ctry <span class="sc">|&gt;</span> </span>
-<span id="cb32-26"><a href="#cb32-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries)</span>
-<span id="cb32-27"><a href="#cb32-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-28"><a href="#cb32-28" aria-hidden="true" tabindex="-1"></a>Ctry_labels <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,label_ctry<span class="sc">$</span>Pct_Total_Trade_Volumes,<span class="st">"% of Total Volumes"</span>)</span>
-<span id="cb32-29"><a href="#cb32-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-30"><a href="#cb32-30" aria-hidden="true" tabindex="-1"></a>appender <span class="ot">&lt;-</span> <span class="cf">function</span>(string, <span class="at">suffix =</span> Ctry_labels) <span class="fu">paste0</span>(string, suffix)</span>
-<span id="cb32-31"><a href="#cb32-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-32"><a href="#cb32-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-33"><a href="#cb32-33" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
-<span id="cb32-34"><a href="#cb32-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_long <span class="sc">|&gt;</span> </span>
-<span id="cb32-35"><a href="#cb32-35" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries)) <span class="sc">+</span></span>
-<span id="cb32-36"><a href="#cb32-36" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-37"><a href="#cb32-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> sgtrade_cln_long <span class="sc">|&gt;</span> </span>
-<span id="cb32-38"><a href="#cb32-38" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb32-39"><a href="#cb32-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Month_Year,</span>
-<span id="cb32-40"><a href="#cb32-40" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> Values,</span>
-<span id="cb32-41"><a href="#cb32-41" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> Type),</span>
-<span id="cb32-42"><a href="#cb32-42" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>,</span>
-<span id="cb32-43"><a href="#cb32-43" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb32-44"><a href="#cb32-44" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-45"><a href="#cb32-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_braid</span>(<span class="at">data =</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb32-46"><a href="#cb32-46" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb32-47"><a href="#cb32-47" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Month_Year,</span>
-<span id="cb32-48"><a href="#cb32-48" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ymin =</span> Import_SGD,</span>
-<span id="cb32-49"><a href="#cb32-49" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ymax =</span> Export_SGD,</span>
-<span id="cb32-50"><a href="#cb32-50" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Import_SGD <span class="sc">&lt;</span> Export_SGD),</span>
-<span id="cb32-51"><a href="#cb32-51" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb32-52"><a href="#cb32-52" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-53"><a href="#cb32-53" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove the legend </span></span>
-<span id="cb32-54"><a href="#cb32-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="st">"none"</span>, <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
-<span id="cb32-55"><a href="#cb32-55" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-56"><a href="#cb32-56" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference lines with annotations</span></span>
-<span id="cb32-57"><a href="#cb32-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
-<span id="cb32-58"><a href="#cb32-58" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb32-59"><a href="#cb32-59" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">yintercept =</span> export), </span>
-<span id="cb32-60"><a href="#cb32-60" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"#0072B2"</span>,</span>
-<span id="cb32-61"><a href="#cb32-61" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth=</span><span class="fl">0.8</span>,</span>
-<span id="cb32-62"><a href="#cb32-62" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb32-63"><a href="#cb32-63" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-64"><a href="#cb32-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
-<span id="cb32-65"><a href="#cb32-65" aria-hidden="true" tabindex="-1"></a>               <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb32-66"><a href="#cb32-66" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">yintercept =</span> import), </span>
-<span id="cb32-67"><a href="#cb32-67" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"#D55E00"</span>,</span>
-<span id="cb32-68"><a href="#cb32-68" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth=</span><span class="fl">0.8</span>,</span>
-<span id="cb32-69"><a href="#cb32-69" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb32-70"><a href="#cb32-70" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-71"><a href="#cb32-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
-<span id="cb32-72"><a href="#cb32-72" aria-hidden="true" tabindex="-1"></a>               <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb32-73"><a href="#cb32-73" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Year_date,</span>
-<span id="cb32-74"><a href="#cb32-74" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> min_import_export <span class="sc">-</span> <span class="fl">0.25</span><span class="sc">*</span>min_import_export,</span>
-<span id="cb32-75"><a href="#cb32-75" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">"Avg 2020"</span>),</span>
-<span id="cb32-76"><a href="#cb32-76" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">3.5</span>,</span>
-<span id="cb32-77"><a href="#cb32-77" aria-hidden="true" tabindex="-1"></a>            <span class="at">nudge_x =</span> <span class="sc">+</span><span class="dv">920</span>) <span class="sc">+</span></span>
-<span id="cb32-78"><a href="#cb32-78" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb32-79"><a href="#cb32-79" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the colors for the main plot  </span></span>
-<span id="cb32-80"><a href="#cb32-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>),</span>
-<span id="cb32-81"><a href="#cb32-81" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Export"</span>, <span class="st">"Import"</span>),</span>
-<span id="cb32-82"><a href="#cb32-82" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb32-83"><a href="#cb32-83" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-84"><a href="#cb32-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>)) <span class="sc">+</span></span>
-<span id="cb32-85"><a href="#cb32-85" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-86"><a href="#cb32-86" aria-hidden="true" tabindex="-1"></a><span class="co">#Adjusting the scale</span></span>
-<span id="cb32-87"><a href="#cb32-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),</span>
-<span id="cb32-88"><a href="#cb32-88" aria-hidden="true" tabindex="-1"></a>               <span class="at">limits =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2022-12-31"</span>)),</span>
-<span id="cb32-89"><a href="#cb32-89" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 year"</span>,</span>
-<span id="cb32-90"><a href="#cb32-90" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%Y"</span>) <span class="sc">+</span></span>
-<span id="cb32-91"><a href="#cb32-91" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-92"><a href="#cb32-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Trade Values"</span>,</span>
-<span id="cb32-93"><a href="#cb32-93" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="st">'$'</span>, <span class="fu">abs</span>(x<span class="sc">/</span><span class="dv">1000000000</span>),<span class="st">'B'</span>)}) <span class="sc">+</span></span>
-<span id="cb32-94"><a href="#cb32-94" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-95"><a href="#cb32-95" aria-hidden="true" tabindex="-1"></a><span class="co">#Faceted based on Countries  </span></span>
-<span id="cb32-96"><a href="#cb32-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Countries), <span class="at">ncol=</span><span class="dv">4</span>, <span class="at">labeller=</span><span class="fu">as_labeller</span>(appender)) <span class="sc">+</span></span>
-<span id="cb32-97"><a href="#cb32-97" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-98"><a href="#cb32-98" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the theme</span></span>
-<span id="cb32-99"><a href="#cb32-99" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
-<span id="cb32-100"><a href="#cb32-100" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb32-101"><a href="#cb32-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb32-102"><a href="#cb32-102" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
-<span id="cb32-103"><a href="#cb32-103" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
-<span id="cb32-104"><a href="#cb32-104" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
-<span id="cb32-105"><a href="#cb32-105" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>)) </span>
-<span id="cb32-106"><a href="#cb32-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-107"><a href="#cb32-107" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Write function so the plots can be patched separately</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>plot_braid_ctry <span class="ot">&lt;-</span> <span class="cf">function</span>(selected_countries) {</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Converting countries to factor, ordered by trade volumes in descending order</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>sgtrade_cln<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">fct_reorder</span>(sgtrade_cln<span class="sc">$</span>Countries, sgtrade_cln<span class="sc">$</span>Total_Trade_Volumes_SGD, <span class="at">.desc =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to be used for geom_line </span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_long <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Year, Import_SGD, Export_SGD, Pct_Total_Trade_Volumes) <span class="sc">|&gt;</span> </span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(Import_SGD, Export_SGD),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Type"</span>,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Values"</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to be used for reference line</span></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>avg_total_ctry_2020 <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span> (Year, Countries) <span class="sc">|&gt;</span> </span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">import =</span> <span class="fu">mean</span>(Import_SGD),</span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">export =</span> <span class="fu">mean</span>(Export_SGD)) <span class="sc">|&gt;</span> </span>
+<span id="cb30-20"><a href="#cb30-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Year_date =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(Year, <span class="st">"-01-01"</span>, <span class="at">sep =</span> <span class="st">""</span>))) <span class="sc">|&gt;</span> </span>
+<span id="cb30-21"><a href="#cb30-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">min_import_export =</span> <span class="fu">min</span>(import, export))</span>
+<span id="cb30-22"><a href="#cb30-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-23"><a href="#cb30-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-24"><a href="#cb30-24" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating additional label to display % of total trade for every country</span></span>
+<span id="cb30-25"><a href="#cb30-25" aria-hidden="true" tabindex="-1"></a>label_ctry <span class="ot">&lt;-</span> sgtrade_top_ctry <span class="sc">|&gt;</span> </span>
+<span id="cb30-26"><a href="#cb30-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries)</span>
+<span id="cb30-27"><a href="#cb30-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-28"><a href="#cb30-28" aria-hidden="true" tabindex="-1"></a>Ctry_labels <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,label_ctry<span class="sc">$</span>Pct_Total_Trade_Volumes,<span class="st">"% of Total Volumes"</span>)</span>
+<span id="cb30-29"><a href="#cb30-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-30"><a href="#cb30-30" aria-hidden="true" tabindex="-1"></a>appender <span class="ot">&lt;-</span> <span class="cf">function</span>(string, <span class="at">suffix =</span> Ctry_labels) <span class="fu">paste0</span>(string, suffix)</span>
+<span id="cb30-31"><a href="#cb30-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-32"><a href="#cb30-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-33"><a href="#cb30-33" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
+<span id="cb30-34"><a href="#cb30-34" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_long <span class="sc">|&gt;</span> </span>
+<span id="cb30-35"><a href="#cb30-35" aria-hidden="true" tabindex="-1"></a>         <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries)) <span class="sc">+</span></span>
+<span id="cb30-36"><a href="#cb30-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-37"><a href="#cb30-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> sgtrade_cln_long <span class="sc">|&gt;</span> </span>
+<span id="cb30-38"><a href="#cb30-38" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb30-39"><a href="#cb30-39" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Month_Year,</span>
+<span id="cb30-40"><a href="#cb30-40" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> Values,</span>
+<span id="cb30-41"><a href="#cb30-41" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> Type),</span>
+<span id="cb30-42"><a href="#cb30-42" aria-hidden="true" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="fl">1.2</span>,</span>
+<span id="cb30-43"><a href="#cb30-43" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb30-44"><a href="#cb30-44" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-45"><a href="#cb30-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_braid</span>(<span class="at">data =</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb30-46"><a href="#cb30-46" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb30-47"><a href="#cb30-47" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Month_Year,</span>
+<span id="cb30-48"><a href="#cb30-48" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ymin =</span> Import_SGD,</span>
+<span id="cb30-49"><a href="#cb30-49" aria-hidden="true" tabindex="-1"></a>                 <span class="at">ymax =</span> Export_SGD,</span>
+<span id="cb30-50"><a href="#cb30-50" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> Import_SGD <span class="sc">&lt;</span> Export_SGD),</span>
+<span id="cb30-51"><a href="#cb30-51" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb30-52"><a href="#cb30-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-53"><a href="#cb30-53" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove the legend </span></span>
+<span id="cb30-54"><a href="#cb30-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">linetype =</span> <span class="st">"none"</span>, <span class="at">fill =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb30-55"><a href="#cb30-55" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-56"><a href="#cb30-56" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference lines with annotations</span></span>
+<span id="cb30-57"><a href="#cb30-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
+<span id="cb30-58"><a href="#cb30-58" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb30-59"><a href="#cb30-59" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">yintercept =</span> export), </span>
+<span id="cb30-60"><a href="#cb30-60" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"#0072B2"</span>,</span>
+<span id="cb30-61"><a href="#cb30-61" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth=</span><span class="fl">0.8</span>,</span>
+<span id="cb30-62"><a href="#cb30-62" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb30-63"><a href="#cb30-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-64"><a href="#cb30-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
+<span id="cb30-65"><a href="#cb30-65" aria-hidden="true" tabindex="-1"></a>               <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb30-66"><a href="#cb30-66" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">yintercept =</span> import), </span>
+<span id="cb30-67"><a href="#cb30-67" aria-hidden="true" tabindex="-1"></a>             <span class="at">col =</span> <span class="st">"#D55E00"</span>,</span>
+<span id="cb30-68"><a href="#cb30-68" aria-hidden="true" tabindex="-1"></a>             <span class="at">linewidth=</span><span class="fl">0.8</span>,</span>
+<span id="cb30-69"><a href="#cb30-69" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb30-70"><a href="#cb30-70" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-71"><a href="#cb30-71" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> avg_total_ctry_2020<span class="sc">|&gt;</span> </span>
+<span id="cb30-72"><a href="#cb30-72" aria-hidden="true" tabindex="-1"></a>               <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb30-73"><a href="#cb30-73" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Year_date,</span>
+<span id="cb30-74"><a href="#cb30-74" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> min_import_export <span class="sc">-</span> <span class="fl">0.25</span><span class="sc">*</span>min_import_export,</span>
+<span id="cb30-75"><a href="#cb30-75" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> <span class="st">"Avg 2020"</span>),</span>
+<span id="cb30-76"><a href="#cb30-76" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">3.5</span>,</span>
+<span id="cb30-77"><a href="#cb30-77" aria-hidden="true" tabindex="-1"></a>            <span class="at">nudge_x =</span> <span class="sc">+</span><span class="dv">920</span>) <span class="sc">+</span></span>
+<span id="cb30-78"><a href="#cb30-78" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb30-79"><a href="#cb30-79" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the colors for the main plot  </span></span>
+<span id="cb30-80"><a href="#cb30-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#0072B2"</span>, <span class="st">"#D55E00"</span>),</span>
+<span id="cb30-81"><a href="#cb30-81" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Export"</span>, <span class="st">"Import"</span>),</span>
+<span id="cb30-82"><a href="#cb30-82" aria-hidden="true" tabindex="-1"></a>                     <span class="at">name =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb30-83"><a href="#cb30-83" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-84"><a href="#cb30-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>)) <span class="sc">+</span></span>
+<span id="cb30-85"><a href="#cb30-85" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-86"><a href="#cb30-86" aria-hidden="true" tabindex="-1"></a><span class="co">#Adjusting the scale</span></span>
+<span id="cb30-87"><a href="#cb30-87" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>),</span>
+<span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a>               <span class="at">limits =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>),<span class="fu">as.Date</span>(<span class="st">"2022-12-31"</span>)),</span>
+<span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_breaks =</span> <span class="st">"1 year"</span>,</span>
+<span id="cb30-90"><a href="#cb30-90" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_labels =</span> <span class="st">"%Y"</span>) <span class="sc">+</span></span>
+<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-92"><a href="#cb30-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Trade Values"</span>,</span>
+<span id="cb30-93"><a href="#cb30-93" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="cf">function</span>(x){<span class="fu">paste0</span>(<span class="st">'$'</span>, <span class="fu">abs</span>(x<span class="sc">/</span><span class="dv">1000000000</span>),<span class="st">'B'</span>)}) <span class="sc">+</span></span>
+<span id="cb30-94"><a href="#cb30-94" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-95"><a href="#cb30-95" aria-hidden="true" tabindex="-1"></a><span class="co">#Faceted based on Countries  </span></span>
+<span id="cb30-96"><a href="#cb30-96" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(Countries), <span class="at">ncol=</span><span class="dv">4</span>, <span class="at">labeller=</span><span class="fu">as_labeller</span>(appender)) <span class="sc">+</span></span>
+<span id="cb30-97"><a href="#cb30-97" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-98"><a href="#cb30-98" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the theme</span></span>
+<span id="cb30-99"><a href="#cb30-99" aria-hidden="true" tabindex="-1"></a>  cowplot<span class="sc">::</span><span class="fu">theme_cowplot</span>() <span class="sc">+</span></span>
+<span id="cb30-100"><a href="#cb30-100" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb30-101"><a href="#cb30-101" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb30-102"><a href="#cb30-102" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major.y =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey90"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>),</span>
+<span id="cb30-103"><a href="#cb30-103" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">color =</span> <span class="st">"grey60"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>),</span>
+<span id="cb30-104"><a href="#cb30-104" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>),</span>
+<span id="cb30-105"><a href="#cb30-105" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">0</span>,<span class="st">"line"</span>)) </span>
+<span id="cb30-106"><a href="#cb30-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-107"><a href="#cb30-107" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -2577,138 +2561,138 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p1</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>p1_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Zero Covid Policy</span><span class="sc">\n</span><span class="st">War in Ukraine"</span>, <span class="st">""</span>, <span class="st">"War in Ukraine"</span>, <span class="st">"Covid recovery"</span>),  </span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>),</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1500000000</span>, <span class="dv">0</span>, <span class="dv">1500000000</span>, <span class="dv">7500000000</span>))</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>arrowp1<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>),</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2700000000</span>, <span class="dv">0</span>, <span class="dv">2100000000</span>, <span class="dv">7000000000</span>),</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-04-01"</span>)),</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">4500000000</span>, <span class="dv">0</span>, <span class="dv">4100000000</span>, <span class="dv">2500000000</span>))</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>p1_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>arrowp1<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p2</span></span>
-<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>p2_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Covid Waves"</span>, <span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Reversal in</span><span class="sc">\n</span><span class="st">Balance"</span>),  </span>
-<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
-<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
-<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>))</span>
-<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
-<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
-<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">1850000000</span>, <span class="dv">2000000000</span>, <span class="dv">1700000000</span>),</span>
-<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-04-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
-<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">600000000</span>, <span class="dv">1400000000</span>, <span class="dv">200000000</span>))</span>
-<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
-<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1850000000</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb33-32"><a href="#cb33-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-06-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb33-33"><a href="#cb33-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1100000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
-<span id="cb33-34"><a href="#cb33-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-35"><a href="#cb33-35" aria-hidden="true" tabindex="-1"></a>p2_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb33-36"><a href="#cb33-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-41"><a href="#cb33-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p3</span></span>
-<span id="cb33-42"><a href="#cb33-42" aria-hidden="true" tabindex="-1"></a>p3_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Exports"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Exports"</span>),  </span>
-<span id="cb33-43"><a href="#cb33-43" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
-<span id="cb33-44"><a href="#cb33-44" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-9-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-6-01"</span>)),</span>
-<span id="cb33-45"><a href="#cb33-45" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>))</span>
-<span id="cb33-46"><a href="#cb33-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-47"><a href="#cb33-47" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
-<span id="cb33-48"><a href="#cb33-48" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>)),</span>
-<span id="cb33-49"><a href="#cb33-49" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>),</span>
-<span id="cb33-50"><a href="#cb33-50" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
-<span id="cb33-51"><a href="#cb33-51" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">1300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1200000000</span>))</span>
-<span id="cb33-52"><a href="#cb33-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-53"><a href="#cb33-53" aria-hidden="true" tabindex="-1"></a>p3_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
-<span id="cb33-54"><a href="#cb33-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-55"><a href="#cb33-55" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
-<span id="cb33-56"><a href="#cb33-56" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-57"><a href="#cb33-57" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p4</span></span>
-<span id="cb33-58"><a href="#cb33-58" aria-hidden="true" tabindex="-1"></a>p4_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Reduced Trade</span><span class="sc">\n</span><span class="st">Deficit"</span>, <span class="st">"Enhanced</span><span class="sc">\n</span><span class="st">Partnership"</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Imports"</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Imports"</span>),  </span>
-<span id="cb33-59"><a href="#cb33-59" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
-<span id="cb33-60"><a href="#cb33-60" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
-<span id="cb33-61"><a href="#cb33-61" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>))</span>
-<span id="cb33-62"><a href="#cb33-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-63"><a href="#cb33-63" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
-<span id="cb33-64"><a href="#cb33-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-9-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-03-15"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-03-15"</span>)),</span>
-<span id="cb33-65"><a href="#cb33-65" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>),</span>
-<span id="cb33-66"><a href="#cb33-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-03-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-05-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>)),</span>
-<span id="cb33-67"><a href="#cb33-67" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">250000000</span>, <span class="dv">300000000</span>, <span class="dv">400000000</span>, <span class="dv">550000000</span>))</span>
-<span id="cb33-68"><a href="#cb33-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-69"><a href="#cb33-69" aria-hidden="true" tabindex="-1"></a>p4_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
-<span id="cb33-70"><a href="#cb33-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-71"><a href="#cb33-71" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
-<span id="cb33-72"><a href="#cb33-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-73"><a href="#cb33-73" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the graph</span></span>
-<span id="cb33-74"><a href="#cb33-74" aria-hidden="true" tabindex="-1"></a>p1a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
-<span id="cb33-75"><a href="#cb33-75" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p1a <span class="sc">+</span> </span>
-<span id="cb33-76"><a href="#cb33-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p1_text,</span>
-<span id="cb33-77"><a href="#cb33-77" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb33-78"><a href="#cb33-78" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb33-79"><a href="#cb33-79" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb33-80"><a href="#cb33-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp1, </span>
-<span id="cb33-81"><a href="#cb33-81" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb33-82"><a href="#cb33-82" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb33-83"><a href="#cb33-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;&lt;br&gt;recession shrinks trade further in mid-2022"</span>) <span class="sc">+</span></span>
-<span id="cb33-84"><a href="#cb33-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb33-85"><a href="#cb33-85" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-86"><a href="#cb33-86" aria-hidden="true" tabindex="-1"></a>p2a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
-<span id="cb33-87"><a href="#cb33-87" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p2a <span class="sc">+</span> </span>
-<span id="cb33-88"><a href="#cb33-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p2_text,</span>
-<span id="cb33-89"><a href="#cb33-89" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb33-90"><a href="#cb33-90" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb33-91"><a href="#cb33-91" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb33-92"><a href="#cb33-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2, </span>
-<span id="cb33-93"><a href="#cb33-93" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb33-94"><a href="#cb33-94" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb33-95"><a href="#cb33-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2a, </span>
-<span id="cb33-96"><a href="#cb33-96" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb33-97"><a href="#cb33-97" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb33-98"><a href="#cb33-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"&lt;span style = 'color:#0072B2'&gt;Exports&lt;/span&gt; bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022"</span>) <span class="sc">+</span></span>
-<span id="cb33-99"><a href="#cb33-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb33-100"><a href="#cb33-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-101"><a href="#cb33-101" aria-hidden="true" tabindex="-1"></a>p3a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
-<span id="cb33-102"><a href="#cb33-102" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p3a <span class="sc">+</span> </span>
-<span id="cb33-103"><a href="#cb33-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p3_text,</span>
-<span id="cb33-104"><a href="#cb33-104" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb33-105"><a href="#cb33-105" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
-<span id="cb33-106"><a href="#cb33-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb33-107"><a href="#cb33-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp3, </span>
-<span id="cb33-108"><a href="#cb33-108" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb33-109"><a href="#cb33-109" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb33-110"><a href="#cb33-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"&lt;span style = 'color:#D55E00'&gt;Imports&lt;/span&gt; rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish"</span>) <span class="sc">+</span></span>
-<span id="cb33-111"><a href="#cb33-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb33-112"><a href="#cb33-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-113"><a href="#cb33-113" aria-hidden="true" tabindex="-1"></a>p4a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>))</span>
-<span id="cb33-114"><a href="#cb33-114" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p4a <span class="sc">+</span> </span>
-<span id="cb33-115"><a href="#cb33-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p4_text,</span>
-<span id="cb33-116"><a href="#cb33-116" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
-<span id="cb33-117"><a href="#cb33-117" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y,</span>
-<span id="cb33-118"><a href="#cb33-118" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label =</span> label)) <span class="sc">+</span></span>
-<span id="cb33-119"><a href="#cb33-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp4, </span>
-<span id="cb33-120"><a href="#cb33-120" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
-<span id="cb33-121"><a href="#cb33-121" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
-<span id="cb33-122"><a href="#cb33-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Trade volume also makes recovery with ***minor partners*** in 2022, with &lt;span style = 'color:#0072B2'&gt;exports&lt;/span&gt; growing to Mexico and New Zealand"</span>) <span class="sc">+</span></span>
-<span id="cb33-123"><a href="#cb33-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
-<span id="cb33-124"><a href="#cb33-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-125"><a href="#cb33-125" aria-hidden="true" tabindex="-1"></a><span class="co">#Patching everything together</span></span>
-<span id="cb33-126"><a href="#cb33-126" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p2 <span class="sc">/</span> p3 <span class="sc">/</span> p4</span>
-<span id="cb33-127"><a href="#cb33-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-128"><a href="#cb33-128" aria-hidden="true" tabindex="-1"></a>final_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(</span>
-<span id="cb33-129"><a href="#cb33-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Merchandise &lt;span style = 'color:#0072B2'&gt;Export&lt;/span&gt; and &lt;span style = 'color:#D55E00'&gt;Import&lt;/span&gt; Trade Values of Singapore (in SGD)&lt;br&gt;with selected trading partners, 2020-2022"</span>,</span>
-<span id="cb33-130"><a href="#cb33-130" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb33-131"><a href="#cb33-131" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">18</span>))</span>
-<span id="cb33-132"><a href="#cb33-132" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p1</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>p1_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Zero Covid Policy</span><span class="sc">\n</span><span class="st">War in Ukraine"</span>, <span class="st">""</span>, <span class="st">"War in Ukraine"</span>, <span class="st">"Covid recovery"</span>),  </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>),</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1500000000</span>, <span class="dv">0</span>, <span class="dv">1500000000</span>, <span class="dv">7500000000</span>))</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>arrowp1<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>),</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2021-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2700000000</span>, <span class="dv">0</span>, <span class="dv">2100000000</span>, <span class="dv">7000000000</span>),</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-04-01"</span>)),</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">4500000000</span>, <span class="dv">0</span>, <span class="dv">4100000000</span>, <span class="dv">2500000000</span>))</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>p1_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>arrowp1<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p2</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>p2_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Covid Waves"</span>, <span class="st">"Start of</span><span class="sc">\n</span><span class="st">recession"</span>, <span class="st">"Reversal in</span><span class="sc">\n</span><span class="st">Balance"</span>),  </span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-08-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>, <span class="dv">2000000000</span>))</span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">1850000000</span>, <span class="dv">2000000000</span>, <span class="dv">1700000000</span>),</span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-04-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">2000000000</span>, <span class="dv">600000000</span>, <span class="dv">1400000000</span>, <span class="dv">200000000</span>))</span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>),</span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1850000000</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"1970-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-06-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1100000000</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a>p2_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a>arrowp2<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a>arrowp2a<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p3</span></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a>p3_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Exports"</span>, <span class="st">""</span>, <span class="st">""</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Exports"</span>),  </span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-9-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-6-01"</span>)),</span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>))</span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>),</span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-02-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2022-01-01"</span>)),</span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">1700000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1700000000</span>),</span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-08-01"</span>), <span class="dv">0</span>, <span class="dv">0</span>, <span class="fu">as.Date</span>(<span class="st">"2020-09-01"</span>)),</span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">1300000000</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1200000000</span>))</span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a>p3_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
+<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a>arrowp3<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
+<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a><span class="co">#Specifying the annotation for p4</span></span>
+<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a>p4_text <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">label =</span> <span class="fu">c</span>(<span class="st">"Reduced Trade</span><span class="sc">\n</span><span class="st">Deficit"</span>, <span class="st">"Enhanced</span><span class="sc">\n</span><span class="st">Partnership"</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Imports"</span>, <span class="st">"Surge in</span><span class="sc">\n</span><span class="st">Imports"</span>),  </span>
+<span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
+<span id="cb31-60"><a href="#cb31-60" aria-hidden="true" tabindex="-1"></a>                         <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2020-12-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2020-10-01"</span>)),</span>
+<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a>                         <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>))</span>
+<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-63"><a href="#cb31-63" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Countries =</span> <span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>),</span>
+<span id="cb31-64"><a href="#cb31-64" aria-hidden="true" tabindex="-1"></a>                      <span class="at">x =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2021-9-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-05-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-03-15"</span>), <span class="fu">as.Date</span>(<span class="st">"2021-03-15"</span>)),</span>
+<span id="cb31-65"><a href="#cb31-65" aria-hidden="true" tabindex="-1"></a>                      <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>, <span class="dv">600000000</span>),</span>
+<span id="cb31-66"><a href="#cb31-66" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xend =</span> <span class="fu">c</span>(<span class="fu">as.Date</span>(<span class="st">"2022-02-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-03-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-05-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2022-07-01"</span>)),</span>
+<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a>                      <span class="at">yend =</span> <span class="fu">c</span>(<span class="dv">250000000</span>, <span class="dv">300000000</span>, <span class="dv">400000000</span>, <span class="dv">550000000</span>))</span>
+<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a>p4_text<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
+<span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a>arrowp4<span class="sc">$</span>Countries <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Brunei Darussalam"</span>, <span class="st">"Canada"</span>))</span>
+<span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the graph</span></span>
+<span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a>p1a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>))</span>
+<span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> p1a <span class="sc">+</span> </span>
+<span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p1_text,</span>
+<span id="cb31-77"><a href="#cb31-77" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb31-78"><a href="#cb31-78" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb31-79"><a href="#cb31-79" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb31-80"><a href="#cb31-80" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp1, </span>
+<span id="cb31-81"><a href="#cb31-81" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb31-82"><a href="#cb31-82" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb31-83"><a href="#cb31-83" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Singapore merchandise trade volume with ***major partners*** rebounds amid Covid-19 recovery, but deficit worsens;&lt;br&gt;recession shrinks trade further in mid-2022"</span>) <span class="sc">+</span></span>
+<span id="cb31-84"><a href="#cb31-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb31-85"><a href="#cb31-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-86"><a href="#cb31-86" aria-hidden="true" tabindex="-1"></a>p2a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>))</span>
+<span id="cb31-87"><a href="#cb31-87" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p2a <span class="sc">+</span> </span>
+<span id="cb31-88"><a href="#cb31-88" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p2_text,</span>
+<span id="cb31-89"><a href="#cb31-89" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb31-90"><a href="#cb31-90" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb31-91"><a href="#cb31-91" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb31-92"><a href="#cb31-92" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2, </span>
+<span id="cb31-93"><a href="#cb31-93" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb31-94"><a href="#cb31-94" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb31-95"><a href="#cb31-95" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp2a, </span>
+<span id="cb31-96"><a href="#cb31-96" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb31-97"><a href="#cb31-97" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb31-98"><a href="#cb31-98" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"&lt;span style = 'color:#0072B2'&gt;Exports&lt;/span&gt; bounced back with ***other regional partners*** with Covid-19 recovery; but hit by recession in 2022"</span>) <span class="sc">+</span></span>
+<span id="cb31-99"><a href="#cb31-99" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb31-100"><a href="#cb31-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-101"><a href="#cb31-101" aria-hidden="true" tabindex="-1"></a>p3a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>))</span>
+<span id="cb31-102"><a href="#cb31-102" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p3a <span class="sc">+</span> </span>
+<span id="cb31-103"><a href="#cb31-103" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p3_text,</span>
+<span id="cb31-104"><a href="#cb31-104" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb31-105"><a href="#cb31-105" aria-hidden="true" tabindex="-1"></a>                <span class="at">y =</span> y,</span>
+<span id="cb31-106"><a href="#cb31-106" aria-hidden="true" tabindex="-1"></a>                <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb31-107"><a href="#cb31-107" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp3, </span>
+<span id="cb31-108"><a href="#cb31-108" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb31-109"><a href="#cb31-109" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb31-110"><a href="#cb31-110" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"&lt;span style = 'color:#D55E00'&gt;Imports&lt;/span&gt; rise and volatility worsens amid Covid-19 recovery, but exports to ***major European partners*** stay sluggish"</span>) <span class="sc">+</span></span>
+<span id="cb31-111"><a href="#cb31-111" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb31-112"><a href="#cb31-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-113"><a href="#cb31-113" aria-hidden="true" tabindex="-1"></a>p4a <span class="ot">&lt;-</span> <span class="fu">plot_braid_ctry</span>(<span class="fu">c</span>(<span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>))</span>
+<span id="cb31-114"><a href="#cb31-114" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> p4a <span class="sc">+</span> </span>
+<span id="cb31-115"><a href="#cb31-115" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="at">data =</span> p4_text,</span>
+<span id="cb31-116"><a href="#cb31-116" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> x,</span>
+<span id="cb31-117"><a href="#cb31-117" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> y,</span>
+<span id="cb31-118"><a href="#cb31-118" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label =</span> label)) <span class="sc">+</span></span>
+<span id="cb31-119"><a href="#cb31-119" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> arrowp4, </span>
+<span id="cb31-120"><a href="#cb31-120" aria-hidden="true" tabindex="-1"></a>               <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">xend =</span> xend, <span class="at">y =</span> y, <span class="at">yend =</span> yend), </span>
+<span id="cb31-121"><a href="#cb31-121" aria-hidden="true" tabindex="-1"></a>               <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">alpha=</span><span class="fl">0.9</span>, <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">type =</span> <span class="st">"closed"</span>,<span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.1</span>, <span class="st">"inches"</span>))) <span class="sc">+</span></span>
+<span id="cb31-122"><a href="#cb31-122" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Trade volume also makes recovery with ***minor partners*** in 2022, with &lt;span style = 'color:#0072B2'&gt;exports&lt;/span&gt; growing to Mexico and New Zealand"</span>) <span class="sc">+</span></span>
+<span id="cb31-123"><a href="#cb31-123" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>())</span>
+<span id="cb31-124"><a href="#cb31-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-125"><a href="#cb31-125" aria-hidden="true" tabindex="-1"></a><span class="co">#Patching everything together</span></span>
+<span id="cb31-126"><a href="#cb31-126" aria-hidden="true" tabindex="-1"></a>final_plot <span class="ot">&lt;-</span> p1 <span class="sc">/</span> p2 <span class="sc">/</span> p3 <span class="sc">/</span> p4</span>
+<span id="cb31-127"><a href="#cb31-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-128"><a href="#cb31-128" aria-hidden="true" tabindex="-1"></a>final_plot <span class="sc">+</span> <span class="fu">plot_annotation</span>(</span>
+<span id="cb31-129"><a href="#cb31-129" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Merchandise &lt;span style = 'color:#0072B2'&gt;Export&lt;/span&gt; and &lt;span style = 'color:#D55E00'&gt;Import&lt;/span&gt; Trade Values of Singapore (in SGD)&lt;br&gt;with selected trading partners, 2020-2022"</span>,</span>
+<span id="cb31-130"><a href="#cb31-130" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb31-131"><a href="#cb31-131" aria-hidden="true" tabindex="-1"></a>  <span class="at">theme =</span> <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_markdown</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">18</span>))</span>
+<span id="cb31-132"><a href="#cb31-132" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Singapore Trade Balance Plot-1.png" class="img-fluid" width="960"></p>
@@ -2778,18 +2762,18 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to group time to quarter and summarise the data in quarter</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_qtr <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Quarter =</span> <span class="fu">factor</span>(<span class="fu">paste0</span>(<span class="st">"Q"</span>, <span class="fu">quarter</span>(Month_Year), <span class="st">" "</span>, <span class="fu">year</span>(Month_Year))), <span class="at">.after =</span> Month) <span class="sc">|&gt;</span> </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Q3 2020"</span>, <span class="st">"Q3 2022"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries, Quarter) <span class="sc">|&gt;</span> </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Balance_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Trade_Balance_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Trade_Volumes_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Trade_Volumes_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Import_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Import_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Export_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Export_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>))</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Select the chosen 16 countries</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>selected_countries <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>, <span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>, <span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>, <span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating new tibble to group time to quarter and summarise the data in quarter</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_qtr <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Quarter =</span> <span class="fu">factor</span>(<span class="fu">paste0</span>(<span class="st">"Q"</span>, <span class="fu">quarter</span>(Month_Year), <span class="st">" "</span>, <span class="fu">year</span>(Month_Year))), <span class="at">.after =</span> Month) <span class="sc">|&gt;</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Quarter <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Q3 2020"</span>, <span class="st">"Q3 2022"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Countries, Quarter) <span class="sc">|&gt;</span> </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total_Trade_Balance_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Trade_Balance_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Trade_Volumes_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Trade_Volumes_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Import_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Import_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>),</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total_Export_BSGD =</span> <span class="fu">round</span>(<span class="fu">sum</span>(Export_SGD)<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">2</span>))</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Select the chosen 16 countries</span></span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>selected_countries <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Mainland China"</span>, <span class="st">"Malaysia"</span>, <span class="st">"United States"</span>, <span class="st">"South Korea"</span>, <span class="st">"Australia"</span>, <span class="st">"India"</span>, <span class="st">"Philippines"</span>, <span class="st">"Cambodia"</span>, <span class="st">"Germany"</span>, <span class="st">"France"</span>, <span class="st">"Switzerland"</span>, <span class="st">"United Kingdom"</span>, <span class="st">"Mexico"</span>, <span class="st">"New Zealand"</span>, <span class="st">"Canada"</span>, <span class="st">"Brunei Darussalam"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -2833,37 +2817,37 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>custom_colors_tradevol <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> Quarter,</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Trade_Volumes_BSGD) <span class="sc">|&gt;</span> </span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Trade_Volumes =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Trade_Volumes =</span> <span class="fu">case_when</span>(</span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    diff_Total_Trade_Volumes <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">~</span><span class="st">"#332288"</span>,</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>    diff_Total_Trade_Volumes <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#CC6677"</span>,</span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Trade_Volumes) <span class="sc">|&gt;</span> </span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Trade_Volumes_BSGD,</span>
-<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
-<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Trade Volumes (Billion SGD)"</span>,</span>
-<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
-<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_tradevol, <span class="co">#The vector is used here</span></span>
-<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
-<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
-<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>custom_colors_tradevol <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> Quarter,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Trade_Volumes_BSGD) <span class="sc">|&gt;</span> </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Trade_Volumes =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Trade_Volumes =</span> <span class="fu">case_when</span>(</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    diff_Total_Trade_Volumes <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">~</span><span class="st">"#332288"</span>,</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>    diff_Total_Trade_Volumes <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#CC6677"</span>,</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Trade_Volumes) <span class="sc">|&gt;</span> </span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Trade_Volumes_BSGD,</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Trade Volumes (Billion SGD)"</span>,</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb33-28"><a href="#cb33-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_tradevol, <span class="co">#The vector is used here</span></span>
+<span id="cb33-29"><a href="#cb33-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
+<span id="cb33-30"><a href="#cb33-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
+<span id="cb33-31"><a href="#cb33-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Trade Volume Slope Graph-1.png" class="img-fluid" width="768"></p>
@@ -2874,38 +2858,38 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>custom_colors_tradebal <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_from =</span> Quarter,</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> Total_Trade_Balance_BSGD) <span class="sc">|&gt;</span> </span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Trade_Balance =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Trade_Balance =</span> <span class="fu">case_when</span>(</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Trade_Balance <span class="sc">&gt;</span> <span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>      diff_Total_Trade_Balance <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Trade_Balance) <span class="sc">|&gt;</span> </span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Trade_Balance_BSGD,</span>
-<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
-<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Trade Balance (Billion SGD)"</span>,</span>
-<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
-<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_tradebal, <span class="co">#The vector is used here</span></span>
-<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
-<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
-<span id="cb36-32"><a href="#cb36-32" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>custom_colors_tradebal <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_from =</span> Quarter,</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> Total_Trade_Balance_BSGD) <span class="sc">|&gt;</span> </span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Trade_Balance =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Trade_Balance =</span> <span class="fu">case_when</span>(</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Trade_Balance <span class="sc">&gt;</span> <span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>      diff_Total_Trade_Balance <span class="sc">&lt;=</span> <span class="sc">-</span><span class="fl">0.5</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Trade_Balance) <span class="sc">|&gt;</span> </span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Trade_Balance_BSGD,</span>
+<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
+<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Trade Balance (Billion SGD)"</span>,</span>
+<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
+<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_tradebal, <span class="co">#The vector is used here</span></span>
+<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
+<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
+<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Trade Balance Slope Graph-1.png" class="img-fluid" width="768"></p>
@@ -2916,37 +2900,37 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>custom_colors_import <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> Quarter,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Import_BSGD) <span class="sc">|&gt;</span></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Import =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Import =</span> <span class="fu">case_when</span>(</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>      diff_Total_Import <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Import <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
-<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Import) <span class="sc">|&gt;</span> </span>
-<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
-<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
-<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
-<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Import_BSGD,</span>
-<span id="cb37-24"><a href="#cb37-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
-<span id="cb37-25"><a href="#cb37-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Import Values (Billion SGD)"</span>,</span>
-<span id="cb37-26"><a href="#cb37-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
-<span id="cb37-27"><a href="#cb37-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb37-28"><a href="#cb37-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_import, <span class="co">#The vector is used here</span></span>
-<span id="cb37-29"><a href="#cb37-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
-<span id="cb37-30"><a href="#cb37-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
-<span id="cb37-31"><a href="#cb37-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>custom_colors_import <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> Quarter,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> Total_Import_BSGD) <span class="sc">|&gt;</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Import =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Import =</span> <span class="fu">case_when</span>(</span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>      diff_Total_Import <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Import <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
+<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Import) <span class="sc">|&gt;</span> </span>
+<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
+<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
+<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
+<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Import_BSGD,</span>
+<span id="cb35-24"><a href="#cb35-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
+<span id="cb35-25"><a href="#cb35-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Import Values (Billion SGD)"</span>,</span>
+<span id="cb35-26"><a href="#cb35-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
+<span id="cb35-27"><a href="#cb35-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb35-28"><a href="#cb35-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_import, <span class="co">#The vector is used here</span></span>
+<span id="cb35-29"><a href="#cb35-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
+<span id="cb35-30"><a href="#cb35-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
+<span id="cb35-31"><a href="#cb35-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Import Slope Graph-1.png" class="img-fluid" width="768"></p>
@@ -2957,37 +2941,37 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters </span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>custom_colors_export <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_from =</span> Quarter,</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> Total_Export_BSGD) <span class="sc">|&gt;</span> </span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Export =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Export =</span> <span class="fu">case_when</span>(</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>      diff_Total_Export <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Export <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Export) <span class="sc">|&gt;</span> </span>
-<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
-<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
-<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
-<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
-<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
-<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Export_BSGD,</span>
-<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
-<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Export Values (Billion SGD)"</span>,</span>
-<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
-<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
-<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_export, <span class="co">#The vector is used here</span></span>
-<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
-<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
-<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Creating custom colors based on difference in parameters </span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>custom_colors_export <span class="ot">&lt;-</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> Countries,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">names_from =</span> Quarter,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">values_from =</span> Total_Export_BSGD) <span class="sc">|&gt;</span> </span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_Total_Export =</span> <span class="st">`</span><span class="at">Q3 2022</span><span class="st">`</span> <span class="sc">-</span> <span class="st">`</span><span class="at">Q3 2020</span><span class="st">`</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">col_Total_Export =</span> <span class="fu">case_when</span>(</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>      diff_Total_Export <span class="sc">&gt;</span> <span class="dv">1</span> <span class="sc">~</span><span class="st">"#0072B2"</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>      diff_Total_Export <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">1</span> <span class="sc">~</span><span class="st">"#D55E00"</span>,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"grey"</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    )) <span class="sc">|&gt;</span> </span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the tibble to vector</span></span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(Countries, col_Total_Export) <span class="sc">|&gt;</span> </span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">deframe</span>()</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot  </span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">newggslopegraph</span>(<span class="at">dataframe =</span> sgtrade_cln_qtr <span class="sc">|&gt;</span> </span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">filter</span>(Countries <span class="sc">%in%</span> selected_countries),</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Times =</span> Quarter,</span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Measurement =</span> Total_Export_BSGD,</span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Grouping =</span> Countries,</span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Title =</span> <span class="st">"Y-o-Y Change in Singapore Merchandise Export Values (Billion SGD)"</span>,</span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>                  <span class="at">SubTitle =</span> <span class="st">"Q3 2020 to Q3 2022"</span>,</span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Caption =</span> <span class="st">"Merchandise Trade by Region/Market from Department of Statistics, Singapore"</span>,</span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineColor =</span> custom_colors_export, <span class="co">#The vector is used here</span></span>
+<span id="cb36-29"><a href="#cb36-29" aria-hidden="true" tabindex="-1"></a>                  <span class="at">LineThickness =</span> <span class="fl">0.7</span>,</span>
+<span id="cb36-30"><a href="#cb36-30" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ThemeChoice =</span> <span class="st">"gdocs"</span>,</span>
+<span id="cb36-31"><a href="#cb36-31" aria-hidden="true" tabindex="-1"></a>                  <span class="at">WiderLabels =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Export Slope Graph-1.png" class="img-fluid" width="768"></p>
@@ -3071,29 +3055,29 @@ Important
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove countries with trade volume below Sri Lanka</span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#52-13 = 39</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>filtered_countries <span class="ot">&lt;-</span> sgtrade_top_ctry<span class="sc">$</span>Countries [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>]</span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Clean the region tibble by matching the name with Countries in sgtrade_cln</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>regions_cln <span class="ot">&lt;-</span> regions <span class="sc">|&gt;</span> </span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">case_when</span>(Countries <span class="sc">==</span> <span class="st">"Brunei"</span> <span class="sc">~</span> <span class="st">"Brunei Darussalam"</span>,</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"Czechia"</span> <span class="sc">~</span> <span class="st">"Czech Republic"</span>,</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Mainland China"</span>,</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="cn">TRUE</span><span class="sc">~</span>Countries))</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new tibble by joining sgtrade_cln with regions_cln</span></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_ani <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) <span class="sc">|&gt;</span> </span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Import_SGD =</span> <span class="fu">round</span>(Import_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> <span class="fu">round</span>(Export_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> <span class="fu">round</span>(Trade_Volumes_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(regions_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter the countries as per filtered_countries</span></span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> filtered_countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Remove countries with trade volume below Sri Lanka</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co">#52-13 = 39</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>filtered_countries <span class="ot">&lt;-</span> sgtrade_top_ctry<span class="sc">$</span>Countries [<span class="dv">1</span><span class="sc">:</span><span class="dv">39</span>]</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Clean the region tibble by matching the name with Countries in sgtrade_cln</span></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>regions_cln <span class="ot">&lt;-</span> regions <span class="sc">|&gt;</span> </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Countries =</span> <span class="fu">case_when</span>(Countries <span class="sc">==</span> <span class="st">"Brunei"</span> <span class="sc">~</span> <span class="st">"Brunei Darussalam"</span>,</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"Czechia"</span> <span class="sc">~</span> <span class="st">"Czech Republic"</span>,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>                                 Countries <span class="sc">==</span> <span class="st">"China"</span> <span class="sc">~</span> <span class="st">"Mainland China"</span>,</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="cn">TRUE</span><span class="sc">~</span>Countries))</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co">#Create new tibble by joining sgtrade_cln with regions_cln</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>sgtrade_cln_ani <span class="ot">&lt;-</span> sgtrade_cln <span class="sc">|&gt;</span> </span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Month_Year, Countries, Import_SGD, Export_SGD, Trade_Volumes_SGD) <span class="sc">|&gt;</span> </span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-16"><a href="#cb37-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Import_SGD =</span> <span class="fu">round</span>(Import_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
+<span id="cb37-17"><a href="#cb37-17" aria-hidden="true" tabindex="-1"></a>         <span class="at">Export_SGD =</span> <span class="fu">round</span>(Export_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>),</span>
+<span id="cb37-18"><a href="#cb37-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">Trade_Volumes_SGD =</span> <span class="fu">round</span>(Trade_Volumes_SGD<span class="sc">/</span><span class="dv">1000000000</span>, <span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb37-19"><a href="#cb37-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-20"><a href="#cb37-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(regions_cln, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">'Countries'</span> <span class="ot">=</span> <span class="st">'Countries'</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb37-21"><a href="#cb37-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb37-22"><a href="#cb37-22" aria-hidden="true" tabindex="-1"></a><span class="co">#Filter the countries as per filtered_countries</span></span>
+<span id="cb37-23"><a href="#cb37-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Countries <span class="sc">%in%</span> filtered_countries)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3159,81 +3143,81 @@ Tip
 <div class="cell">
 <details>
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_ani,</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Import_SGD,</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Export_SGD,</span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Region)) <span class="sc">+</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Trade_Volumes_SGD),</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> T) <span class="sc">+</span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference line </span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, </span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="dv">1</span>,</span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.7</span>,</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Display the label of each country</span></span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> Countries,</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> Countries),</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the bubble size range</span></span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the colors for the main plot </span></span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#DC3220"</span>, <span class="st">"#76C2E8"</span>, <span class="st">"#009E73"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#332288"</span>, <span class="st">"#AA4499"</span>)) <span class="sc">+</span></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Customsie the legend</span></span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>,</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="st">"Regions"</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a>                              <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>))) <span class="sc">+</span></span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure equal coordinates between x and y-axis</span></span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the x and y-axis to log10 coordinates</span></span>
-<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions</span></span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022'</span>,</span>
-<span id="cb40-45"><a href="#cb40-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Period: {format(frame_time, '%b %Y')}"</span>,</span>
-<span id="cb40-46"><a href="#cb40-46" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Imports (Billion SGD)'</span>, </span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Exports (Billion SGD)'</span>) <span class="sc">+</span></span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the theme</span></span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
-<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
-<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
-<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
-<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>)) <span class="sc">+</span></span>
-<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the transition time</span></span>
-<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(Month_Year) <span class="sc">+</span> </span>
-<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the ease aesthetics</span></span>
-<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>) </span>
-<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the animation parameters</span></span>
-<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(pa, </span>
-<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a>        <span class="at">duration =</span> <span class="dv">25</span>, <span class="co">#12 months/Year x 3 years x 0.33 sec/months = 25 seconds</span></span>
-<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="dv">900</span>, </span>
-<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="dv">900</span>,</span>
-<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a>        <span class="at">fps =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the base plot</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>pa <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data =</span> sgtrade_cln_ani,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Import_SGD,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> Export_SGD,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">color =</span> Region)) <span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">size =</span> Trade_Volumes_SGD),</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.legend =</span> T) <span class="sc">+</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Plotting the reference line </span></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, </span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">slope =</span> <span class="dv">1</span>,</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>              <span class="at">linewidth =</span> <span class="fl">0.7</span>,</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>              <span class="at">col =</span> <span class="st">"grey40"</span>) <span class="sc">+</span></span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a><span class="co">#Display the label of each country</span></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label</span>(<span class="fu">aes</span>(<span class="at">label =</span> Countries,</span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> Countries),</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>                  <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>                  <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the bubble size range</span></span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">45</span>)) <span class="sc">+</span></span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the colors for the main plot </span></span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#DC3220"</span>, <span class="st">"#76C2E8"</span>, <span class="st">"#009E73"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#332288"</span>, <span class="st">"#AA4499"</span>)) <span class="sc">+</span></span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Customsie the legend</span></span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">size =</span> <span class="st">"none"</span>,</span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>         <span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="st">"Regions"</span>, <span class="at">nrow =</span> <span class="dv">2</span>,</span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>                              <span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">2</span>))) <span class="sc">+</span></span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a><span class="co">#Ensure equal coordinates between x and y-axis</span></span>
+<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a><span class="co">#Convert the x and y-axis to log10 coordinates</span></span>
+<span id="cb38-40"><a href="#cb38-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb38-41"><a href="#cb38-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>(<span class="at">limits=</span> <span class="fu">c</span>(<span class="fl">0.05</span>, <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb38-42"><a href="#cb38-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-43"><a href="#cb38-43" aria-hidden="true" tabindex="-1"></a><span class="co">#Adding title, subtitle, and captions</span></span>
+<span id="cb38-44"><a href="#cb38-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Singapore Merchandise Export vs Import Trade Values from 2020 to 2022'</span>,</span>
+<span id="cb38-45"><a href="#cb38-45" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Period: {format(frame_time, '%b %Y')}"</span>,</span>
+<span id="cb38-46"><a href="#cb38-46" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">'Imports (Billion SGD)'</span>, </span>
+<span id="cb38-47"><a href="#cb38-47" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">'Exports (Billion SGD)'</span>) <span class="sc">+</span></span>
+<span id="cb38-48"><a href="#cb38-48" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-49"><a href="#cb38-49" aria-hidden="true" tabindex="-1"></a><span class="co">#Setting the theme</span></span>
+<span id="cb38-50"><a href="#cb38-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb38-51"><a href="#cb38-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-52"><a href="#cb38-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb38-53"><a href="#cb38-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb38-54"><a href="#cb38-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb38-55"><a href="#cb38-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.line.y =</span> <span class="fu">element_line</span>(<span class="at">color=</span><span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>),</span>
+<span id="cb38-56"><a href="#cb38-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb38-57"><a href="#cb38-57" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb38-58"><a href="#cb38-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb38-59"><a href="#cb38-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb38-60"><a href="#cb38-60" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb38-61"><a href="#cb38-61" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.direction =</span> <span class="st">"horizontal"</span>,</span>
+<span id="cb38-62"><a href="#cb38-62" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">13</span>)) <span class="sc">+</span></span>
+<span id="cb38-63"><a href="#cb38-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the transition time</span></span>
+<span id="cb38-65"><a href="#cb38-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transition_time</span>(Month_Year) <span class="sc">+</span> </span>
+<span id="cb38-66"><a href="#cb38-66" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-67"><a href="#cb38-67" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the ease aesthetics</span></span>
+<span id="cb38-68"><a href="#cb38-68" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">'linear'</span>) </span>
+<span id="cb38-69"><a href="#cb38-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb38-70"><a href="#cb38-70" aria-hidden="true" tabindex="-1"></a><span class="co">#Specify the animation parameters</span></span>
+<span id="cb38-71"><a href="#cb38-71" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>(pa, </span>
+<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a>        <span class="at">duration =</span> <span class="dv">25</span>, <span class="co">#12 months/Year x 3 years x 0.33 sec/months = 25 seconds</span></span>
+<span id="cb38-73"><a href="#cb38-73" aria-hidden="true" tabindex="-1"></a>        <span class="at">height =</span> <span class="dv">900</span>, </span>
+<span id="cb38-74"><a href="#cb38-74" aria-hidden="true" tabindex="-1"></a>        <span class="at">width =</span> <span class="dv">900</span>,</span>
+<span id="cb38-75"><a href="#cb38-75" aria-hidden="true" tabindex="-1"></a>        <span class="at">fps =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="Take-home_Ex04_files/figure-html/Changes in Import and Export over time-1.gif" class="img-fluid"></p>

@@ -1189,7 +1189,7 @@ ggplot(sgtrade_calmap |>
   theme(axis.ticks = element_blank(),
       legend.title = element_text(size = 8),
       legend.text = element_text(size = 8),
-      plot.title = element_markdown(face = "bold"))
+      plot.title = element_markdown(face = "bold")) +
 
 #Adding title, subtitle, and captions
   labs(x = NULL, 
