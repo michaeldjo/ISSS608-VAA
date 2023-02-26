@@ -1,6 +1,6 @@
 ---
 title: "Take-home Exercise 4"
-subtitle: "Singapore bi-lateral trade performance in 2020 to 2022"
+subtitle: "Visualising Singapore bi-lateral trade performance in 2020 to 2022"
 author: "Michael Djohan"
 date: 19 February 2023
 date-modified: "`r Sys.Date()`"
@@ -1423,7 +1423,7 @@ Steps used to create the visualisation:
 #| fig-width: 10
 
 #Specifying the annotation for p1
-p1_text <- data.frame(label = c("Zero Covid Policy\nWar in Ukraine", "", "War in Ukraine", "Covid recovery"),  
+p1_text <- data.frame(label = c("Major lockdown\nin Shanghai", "", "War in Ukraine", "Covid recovery"),  
                          Countries = c("Mainland China", "Malaysia", "United States", "South Korea"),
                          x = c(as.Date("2021-01-01"), 0, as.Date("2021-01-01"), as.Date("2020-10-01")),
                          y = c(1500000000, 0, 1500000000, 7500000000))
