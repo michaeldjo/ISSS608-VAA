@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://isss608-michaeldj.netlify.app/index.html</loc>
-    <lastmod>2023-03-02T10:37:52.908Z</lastmod>
+    <lastmod>2023-03-09T10:01:14.036Z</lastmod>
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/about.html</loc>
@@ -46,7 +46,7 @@
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/Hands-on_Ex/Hands-on_Ex04/Hands-on_Ex04.html</loc>
-    <lastmod>2023-02-23T13:01:19.555Z</lastmod>
+    <lastmod>2023-03-09T11:12:20.746Z</lastmod>
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/Hands-on_Ex/Hands-on_Ex05/Hands-on_Ex05.html</loc>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/Hands-on_Ex/Hands-on_Ex06/Hands-on_Ex06.html</loc>
-    <lastmod>2023-02-23T11:22:13.410Z</lastmod>
+    <lastmod>2023-03-09T11:09:57.861Z</lastmod>
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/Take-home_Ex/Take-home_Ex04/Take-home_Ex04.html</loc>
@@ -66,6 +66,10 @@
   </url>
   <url>
     <loc>https://isss608-michaeldj.netlify.app/Hands-on_Ex/Hands-on_Ex07/Hands-on_Ex07.html</loc>
-    <lastmod>2023-02-26T08:44:00.137Z</lastmod>
+    <lastmod>2023-03-09T11:11:52.430Z</lastmod>
+  </url>
+  <url>
+    <loc>https://isss608-michaeldj.netlify.app/Hands-on_Ex/Hands-on_Ex08/Hands-on_Ex08.html</loc>
+    <lastmod>2023-03-09T11:12:27.233Z</lastmod>
   </url>
 </urlset>

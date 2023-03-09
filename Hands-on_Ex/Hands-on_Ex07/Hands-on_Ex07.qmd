@@ -1,5 +1,5 @@
 ---
-title: "Hands-on_Ex07: Visualising and Analysing Geographic Data"
+title: "Hands-on Exercise 7: Visualising and Analysing Geographic Data"
 author: "Michael Djohan"
 date: 23 February 2023
 date-modified: "`r Sys.Date()`"
